@@ -1051,13 +1051,16 @@ class KeyboardService {
     return true; // 官方固件规范：掉电或默认重置为开启状态
   }
 
-  // 防抖/防自显优化开关 (写入硬件固件)
+  // 防抖/防自显优化开关 (写入硬件固件并提交闪存)
   async setShakeOptimization(enabled) {
     if (!this.sdk || !this.connected) return false;
     try {
       if (typeof this.sdk.setShakeOptimizationSwitch === 'function') {
         const res = await this.sdk.setShakeOptimizationSwitch(enabled ? 1 : 0);
         console.log('[SparkLink HID] 成功设置硬件防自显开关:', res);
+        try {
+          await this.paramSave('Performance');
+        } catch (e) {}
         return res;
       }
     } catch (e) {

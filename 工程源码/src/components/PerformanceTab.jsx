@@ -86,7 +86,9 @@ export default function PerformanceTab({
   const sleepTimerRef = useRef(null);
   const isInitialSleepMount = useRef(true);
 
-  // 首次连接时从硬件加载当前性能状态
+  const deviceKey = deviceProfile?.id || deviceProfile?.model || 'default';
+
+  // 首次连接时从硬件加载当前性能状态与模式
   useEffect(() => {
     if (!keyboardService.connected) return;
     const fetchBoardPerformance = async () => {
@@ -97,9 +99,51 @@ export default function PerformanceTab({
           setNeverSleep(sleepTime === 0);
         }
       } catch (e) {}
+
+      try {
+        const shake = await keyboardService.getShakeOptimization();
+        if (typeof shake === 'boolean') {
+          setDebounceEnabled(shake);
+        }
+      } catch (e) {}
+
+      try {
+        const sys = await keyboardService.getSystemType();
+        if (sys) {
+          setMacModeEnabled(sys === 'MAC');
+        }
+      } catch (e) {}
     };
     fetchBoardPerformance();
   }, [keyboardService.connected]);
+
+  // 读取已保存的设备偏好设置 (RT稳定性、防误触、Win锁、自适应校准等)
+  useEffect(() => {
+    try {
+      const saved = localStorage.getItem(`perf_prefs_${deviceKey}`);
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        if (typeof parsed.rtStabilityEnabled === 'boolean') setRtStabilityEnabled(parsed.rtStabilityEnabled);
+        if (typeof parsed.rtStabilityValue === 'number') setRtStabilityValue(parsed.rtStabilityValue);
+        if (typeof parsed.antiMisfireEnabled === 'boolean') setAntiMisfireEnabled(parsed.antiMisfireEnabled);
+        if (typeof parsed.winLockEnabled === 'boolean') setWinLockEnabled(parsed.winLockEnabled);
+        if (typeof parsed.dynamicCalibrationEnabled === 'boolean') setDynamicCalibrationEnabled(parsed.dynamicCalibrationEnabled);
+      }
+    } catch (e) {}
+  }, [deviceKey]);
+
+  // 配置项发生变动时自动实时持久化保存
+  useEffect(() => {
+    try {
+      localStorage.setItem(`perf_prefs_${deviceKey}`, JSON.stringify({
+        rtStabilityEnabled,
+        rtStabilityValue,
+        antiMisfireEnabled,
+        winLockEnabled,
+        dynamicCalibrationEnabled
+      }));
+    } catch (e) {}
+  }, [deviceKey, rtStabilityEnabled, rtStabilityValue, antiMisfireEnabled, winLockEnabled, dynamicCalibrationEnabled]);
 
   useEffect(() => {
     if (isInitialSleepMount.current) {
@@ -117,7 +161,7 @@ export default function PerformanceTab({
     };
   }, [sleepMinutes, neverSleep]);
 
-  // 防抖开关即时写入硬件
+  // 防抖开关即时写入硬件与闪存
   const handleDebounceToggle = async (val) => {
     setDebounceEnabled(val);
     if (keyboardService.connected) {
@@ -125,7 +169,7 @@ export default function PerformanceTab({
     }
   };
 
-  // Mac模式开关即时写入硬件
+  // Mac模式开关即时写入硬件与闪存
   const handleMacModeToggle = async (val) => {
     setMacModeEnabled(val);
     if (keyboardService.connected) {
@@ -169,16 +213,6 @@ export default function PerformanceTab({
       message: `回报率已切换为 ${clamped >= 1000 ? `${clamped / 1000}KHz` : `${clamped}Hz`} (${(1000 / clamped).toFixed(3)}ms)`,
       type: 'info',
       duration: 1500
-    });
-  };
-
-  const handleSaveSettings = () => {
-    if (keyboardService.connected) {
-      keyboardService.setRateOfReturn(currentRate);
-    }
-    addToast({
-      message: `性能参数已成功写入 ${deviceProfile?.shortName || '设备'} 闪存芯片！`,
-      type: 'success'
     });
   };
 
@@ -614,7 +648,7 @@ export default function PerformanceTab({
 
       </div>
 
-      {/* 底部保存与同步控制条 (严格跟随软件主色调与 CSS 变量) */}
+      {/* 底部实时状态指示条 (严格跟随软件主色调与 CSS 变量，全自动实时持久化无需手动保存) */}
       <div className="bg-[var(--bg-secondary)] border border-[var(--border-color)]/90 rounded-[8px] p-3 px-5 flex items-center justify-between shadow-2xs">
         <div className="flex items-center space-x-2 text-[12.5px] text-[var(--text-secondary)] font-medium">
           <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
@@ -630,13 +664,10 @@ export default function PerformanceTab({
           </span>
         </div>
 
-        <button
-          type="button"
-          onClick={handleSaveSettings}
-          className="px-5 py-2 rounded-xl bg-[var(--text-primary)] hover:opacity-90 text-[var(--bg-primary)] font-bold text-[13px] shadow-md transition cursor-pointer"
-        >
-          保存并同步性能设置
-        </button>
+        <div className="flex items-center space-x-1.5 text-xs text-emerald-600 dark:text-emerald-400 font-semibold bg-emerald-500/10 dark:bg-emerald-500/15 px-3 py-1.5 rounded-full border border-emerald-500/25 shadow-2xs select-none">
+          <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500 stroke-[2.5]" />
+          <span>配置实时自动同步生效中</span>
+        </div>
       </div>
 
     </div>
