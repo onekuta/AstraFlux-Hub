@@ -146,8 +146,14 @@ export default function App() {
   const canContinuousRt = supportsContinuousRt(deviceProfile);
 
   const [currentView, setCurrentView] = useState(qs.get('view') === 'device' ? 'device' : 'home'); // 'home' (主页设备选择) | 'device' (设备驱动详情)
-  const [showGlobalSettings, setShowGlobalSettings] = useState(false);
-  const [globalSettingsSection, setGlobalSettingsSection] = useState('general');
+  const [showGlobalSettings, setShowGlobalSettings] = useState(qs.get('modal') === 'settings' || qs.get('settings') === 'true');
+  const [globalSettingsSection, setGlobalSettingsSection] = useState(qs.get('section') || 'general');
+  useEffect(() => {
+    window.__openGlobalSettings = (sec) => {
+      setGlobalSettingsSection(sec || 'general');
+      setShowGlobalSettings(true);
+    };
+  }, []);
   const [activeTab, setActiveTab] = useState(qs.get('tab') || 'trigger'); // 'lighting' | 'trigger' | 'keybinds' | 'advanced' | 'performance'
   const [triggerSubTab, setTriggerSubTab] = useState(qs.get('subtab') || 'trigger'); // 'trigger' | 'deadzone' | 'switch'
   const [isConnected, setIsConnected] = useState(false);

@@ -195,7 +195,7 @@ export default function GlobalSettingsModal({
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-xs select-none p-6 animate-in fade-in duration-200">
       
       {/* 弹窗主体大卡片 (1:1 现代化卡片结构，对齐 THRM 宽屏卡片设计) */}
-      <div className="w-[1040px] max-w-[96vw] h-[680px] max-h-[94vh] bg-[var(--surface-solid-secondary)] text-[var(--text-primary)] rounded-[14px] border border-[var(--border-color)] shadow-2xl flex flex-col overflow-hidden">
+      <div className="w-[1080px] max-w-[96vw] h-[720px] max-h-[94vh] bg-[var(--surface-solid-secondary)] text-[var(--text-primary)] rounded-[14px] border border-[var(--border-color)] shadow-2xl flex flex-col overflow-hidden">
         
         {/* 顶部标题栏 */}
         <div className="h-14 px-6 bg-[var(--surface-solid-secondary)] border-b border-[var(--border-color)] flex items-center justify-between">
@@ -243,7 +243,7 @@ export default function GlobalSettingsModal({
           </aside>
 
           {/* 右侧详细内容区 (带平滑滚动) */}
-          <main className="flex-1 p-8 overflow-y-auto bg-[var(--surface-solid-secondary)] text-[var(--text-primary)] custom-scrollbar">
+          <main className="flex-1 p-6 overflow-y-auto bg-[var(--surface-solid-secondary)] text-[var(--text-primary)] custom-scrollbar">
             
             {/* 1. 常规设置 (完全 1:1 对齐图一) */}
             {activeSection === 'general' && (
@@ -592,36 +592,36 @@ export default function GlobalSettingsModal({
                     </div>
 
                     {/* 4 项硬件与开源规格微卡片 (1:1 对齐 THRM) */}
-                    <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 pt-2 border-t border-[var(--border-color)]/70">
-                      <div className="p-2.5 rounded-xl bg-[var(--bg-secondary)]/70 border border-[var(--border-color)]/60 flex items-center space-x-2">
+                    <div className="grid grid-cols-2 gap-2.5 pt-2 border-t border-[var(--border-color)]/70">
+                      <div className="p-2.5 rounded-xl bg-[var(--bg-secondary)]/70 border border-[var(--border-color)]/60 flex items-center space-x-2.5">
                         <Cpu className="w-4 h-4 text-blue-500 shrink-0" />
                         <div className="min-w-0">
-                          <p className="text-[10px] text-[var(--text-tertiary)] truncate">当前设备固件</p>
-                          <p className="text-[11px] font-bold text-[var(--text-primary)] font-mono">0.0.3.5 <span className="text-[9px] text-blue-500 font-sans">BS2</span></p>
+                          <p className="text-[10px] text-[var(--text-tertiary)]">当前设备固件</p>
+                          <p className="text-[11px] font-bold text-[var(--text-primary)] font-mono">0.0.3.5 <span className="text-[9px] text-blue-500 font-sans font-semibold">BS2 星闪</span></p>
                         </div>
                       </div>
 
-                      <div className="p-2.5 rounded-xl bg-[var(--bg-secondary)]/70 border border-[var(--border-color)]/60 flex items-center space-x-2">
+                      <div className="p-2.5 rounded-xl bg-[var(--bg-secondary)]/70 border border-[var(--border-color)]/60 flex items-center space-x-2.5">
                         <ShieldCheck className="w-4 h-4 text-emerald-500 shrink-0" />
                         <div className="min-w-0">
-                          <p className="text-[10px] text-[var(--text-tertiary)] truncate">开源协议</p>
-                          <p className="text-[11px] font-bold text-[var(--text-primary)]">MIT License</p>
+                          <p className="text-[10px] text-[var(--text-tertiary)]">开源协议</p>
+                          <p className="text-[11px] font-bold text-[var(--text-primary)]">MIT License (开源自由)</p>
                         </div>
                       </div>
 
-                      <div className="p-2.5 rounded-xl bg-[var(--bg-secondary)]/70 border border-[var(--border-color)]/60 flex items-center space-x-2">
+                      <div className="p-2.5 rounded-xl bg-[var(--bg-secondary)]/70 border border-[var(--border-color)]/60 flex items-center space-x-2.5">
                         <Monitor className="w-4 h-4 text-amber-500 shrink-0" />
                         <div className="min-w-0">
-                          <p className="text-[10px] text-[var(--text-tertiary)] truncate">操作系统</p>
-                          <p className="text-[11px] font-bold text-[var(--text-primary)]">Win 10/11 x64</p>
+                          <p className="text-[10px] text-[var(--text-tertiary)]">操作系统</p>
+                          <p className="text-[11px] font-bold text-[var(--text-primary)]">Windows 10 / 11 (x64)</p>
                         </div>
                       </div>
 
-                      <div className="p-2.5 rounded-xl bg-[var(--bg-secondary)]/70 border border-[var(--border-color)]/60 flex items-center space-x-2">
+                      <div className="p-2.5 rounded-xl bg-[var(--bg-secondary)]/70 border border-[var(--border-color)]/60 flex items-center space-x-2.5">
                         <Wifi className="w-4 h-4 text-cyan-500 shrink-0" />
                         <div className="min-w-0">
-                          <p className="text-[10px] text-[var(--text-tertiary)] truncate">无线规范</p>
-                          <p className="text-[11px] font-bold text-[var(--text-primary)]">SLE 8KHz 极速</p>
+                          <p className="text-[10px] text-[var(--text-tertiary)]">传输规范</p>
+                          <p className="text-[11px] font-bold text-[var(--text-primary)]">星闪 SLE 8KHz 极速电竞</p>
                         </div>
                       </div>
                     </div>
@@ -636,7 +636,7 @@ export default function GlobalSettingsModal({
                           <RefreshCw className="w-4 h-4" />
                         </div>
                         <div>
-                          <h4 className="text-sm font-bold text-[var(--text-primary)] font-title">检查更新</h4>
+                          <h4 className="text-sm font-bold text-[var(--text-primary)]">检查更新</h4>
                           <p className="text-[11px] text-[var(--text-tertiary)]">获取驱动客户端最新版本与更新日志</p>
                         </div>
                       </div>
@@ -714,7 +714,7 @@ export default function GlobalSettingsModal({
                     <div className="flex items-center justify-between border-b border-[var(--border-color)]/70 pb-2.5">
                       <div className="flex items-center space-x-2">
                         <Users className="w-4 h-4 text-[var(--info-color)]" />
-                        <h4 className="text-sm font-bold text-[var(--text-primary)] font-title">鸣谢</h4>
+                        <h4 className="text-sm font-bold text-[var(--text-primary)]">鸣谢</h4>
                       </div>
                       <div className="flex items-center space-x-2 text-[11px] font-mono text-[var(--text-tertiary)]">
                         <span>4 位生态贡献</span>
@@ -859,7 +859,7 @@ export default function GlobalSettingsModal({
                     <div>
                       <div className="flex items-center space-x-2 border-b border-[var(--border-color)]/70 pb-2.5">
                         <UserCheck className="w-4 h-4 text-blue-500" />
-                        <h4 className="text-sm font-bold text-[var(--text-primary)] font-title">开发者与联系</h4>
+                        <h4 className="text-sm font-bold text-[var(--text-primary)]">开发者与联系</h4>
                       </div>
 
                       {/* 核心开发者名片 (乐禾泽 Kutaze) */}
@@ -871,7 +871,7 @@ export default function GlobalSettingsModal({
                         />
                         <div className="min-w-0">
                           <div className="flex items-center space-x-1.5">
-                            <h5 className="text-sm font-black text-[var(--text-primary)] truncate font-title">乐禾泽</h5>
+                            <h5 className="text-sm font-bold text-[var(--text-primary)] truncate">乐禾泽</h5>
                             <span className="text-[10px] font-mono font-semibold text-[var(--text-secondary)]">@Kutaze</span>
                           </div>
                           <p className="text-[10px] text-blue-500 font-medium">SparkLink Hub 独立核心作者</p>

@@ -11,8 +11,8 @@ const outDir = 'C:/Users/Lynan/.gemini/antigravity/brain/babc9b26-a62e-4b1e-955d
 app.whenReady().then(async () => {
   const win = new BrowserWindow({
     show: false,
-    width: 1380,
-    height: 880,
+    width: 1400,
+    height: 900,
     webPreferences: {
       nodeIntegration: false,
       contextIsolation: true,
@@ -20,68 +20,39 @@ app.whenReady().then(async () => {
     }
   });
 
-  const url = pathToFileURL(path.join(__dirname, '../dist/index.html')).href + '?theme=dark';
-  await win.loadURL(url);
-  await new Promise(r => setTimeout(r, 1200));
+  // 1. Dark theme top view
+  const darkUrl = pathToFileURL(path.join(__dirname, '../dist/index.html')).href + '?settings=true&section=about&theme=dark';
+  await win.loadURL(darkUrl);
+  await new Promise(r => setTimeout(r, 1500));
 
-  // Trigger opening GlobalSettingsModal at 'about' section
-  const openRes = await win.webContents.executeJavaScript(`(() => {
-    // Check if about button in sidebar exists, or dispatch settings click
-    const btns = Array.from(document.querySelectorAll('button'));
-    const aboutBtn = btns.find(b => b.textContent && b.textContent.includes('关于软件'));
-    if (aboutBtn) {
-      aboutBtn.click();
-      return { success: true, method: 'sidebar_button' };
-    }
-    const settingsBtn = document.querySelector('button[title*="常规设置"]');
-    if (settingsBtn) {
-      settingsBtn.click();
-      return { success: true, method: 'header_settings' };
-    }
-    return { success: false };
-  })()`);
-
-  console.log('Open modal result:', openRes);
-  await new Promise(r => setTimeout(r, 800));
-
-  // Switch to about tab if not already on about
-  await win.webContents.executeJavaScript(`(() => {
-    const tabs = Array.from(document.querySelectorAll('aside button'));
-    const aboutTab = tabs.find(t => t.textContent && t.textContent.includes('关于'));
-    if (aboutTab) aboutTab.click();
-  })()`);
-  await new Promise(r => setTimeout(r, 600));
-
-  // Capture dark theme screenshot
   const imageDark = await win.webContents.capturePage();
   fs.writeFileSync(path.join(outDir, 'verified_about_page_dark.png'), imageDark.toPNG());
-  console.log('Saved dark about screenshot');
+  console.log('Saved verified_about_page_dark.png');
 
-  // Switch to light theme
-  await win.webContents.executeJavaScript(`(() => {
-    document.documentElement.setAttribute('data-theme', 'light');
-    document.documentElement.classList.remove('dark');
+  // 2. Dark theme scrolled down view (Figure 5 style)
+  const scrollRes = await win.webContents.executeJavaScript(`(() => {
+    const modalMain = document.querySelector('.fixed main');
+    if (modalMain) {
+      modalMain.scrollTop = 380;
+      return { ok: true, scrollTop: modalMain.scrollTop, scrollHeight: modalMain.scrollHeight, clientHeight: modalMain.clientHeight };
+    }
+    return { ok: false };
   })()`);
+  console.log('Scroll result:', scrollRes);
   await new Promise(r => setTimeout(r, 600));
 
-  // Capture light theme screenshot
+  const imageDarkScrolled = await win.webContents.capturePage();
+  fs.writeFileSync(path.join(outDir, 'verified_about_page_dark_scrolled.png'), imageDarkScrolled.toPNG());
+  console.log('Saved verified_about_page_dark_scrolled.png');
+
+  // 3. Light theme top view
+  const lightUrl = pathToFileURL(path.join(__dirname, '../dist/index.html')).href + '?settings=true&section=about&theme=light';
+  await win.loadURL(lightUrl);
+  await new Promise(r => setTimeout(r, 1500));
+
   const imageLight = await win.webContents.capturePage();
   fs.writeFileSync(path.join(outDir, 'verified_about_page_light.png'), imageLight.toPNG());
-  console.log('Saved light about screenshot');
-
-  // Verify DOM content
-  const domCheck = await win.webContents.executeJavaScript(`(() => {
-    const text = document.body.innerText;
-    return {
-      hasKutaze: text.includes('Kutaze'),
-      hasLeHeZe: text.includes('乐禾泽'),
-      hasEmail: text.includes('time3207486260@outlook.com'),
-      hasSponsors: text.includes('麦克阿兰'),
-      hasMit: text.includes('MIT License'),
-      hasFirmware: text.includes('0.0.3.5')
-    };
-  })()`);
-  console.log('DOM verification:', JSON.stringify(domCheck, null, 2));
+  console.log('Saved verified_about_page_light.png');
 
   app.quit();
 });
