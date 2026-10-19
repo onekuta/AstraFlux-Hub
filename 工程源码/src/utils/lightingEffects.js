@@ -535,12 +535,16 @@ function adjustColorLightness(hex, lightnessPercent) {
 }
 
 /**
- * 贯穿式底灯/装饰灯带 LED 颜色计算
+ * 贯穿式底灯/装饰灯带 LED 颜色与阴影计算
+ * 支持实时动态动效运算 (L1常亮, L2随波逐流, L3呼吸模式, L4流光漫延)
+ * 完美支持单键自定义涂色叠加与全彩光谱流转
  */
 export function computeStripLedColor({
   mode = 1,
   ledIndex = 0,
+  index = 0,
   totalLeds = 34,
+  total = 34,
   tick = 0,
   brightness = 100,
   speed = 50,
@@ -550,10 +554,31 @@ export function computeStripLedColor({
   customColor = null,
   isOpen = true,
 }) {
-  if (customColor) return customColor;
-  if (!isOpen) return '#101318';
+  const actualIndex = (typeof index === 'number') ? index : (ledIndex || 0);
+  const actualTotal = total || totalLeds || 34;
 
   const bri = Math.max(0.15, brightness / 100);
+
+  if (customColor) {
+    return {
+      bg: customColor,
+      rawColor: customColor,
+      boxShadow: isOpen ? `0 0 ${Math.round(10 * bri)}px ${customColor}cc, 0 0 ${Math.round(18 * bri)}px ${customColor}66` : 'none',
+      isCustom: true,
+      toString() { return this.bg; }
+    };
+  }
+
+  if (!isOpen) {
+    return {
+      bg: '#12161f',
+      rawColor: '#12161f',
+      boxShadow: 'none',
+      isCustom: false,
+      toString() { return this.bg; }
+    };
+  }
+
   const speedFactor = (speed <= 50)
     ? 0.35 + (speed / 50) * 0.65
     : 1.0 + ((speed - 50) / 50) * 1.2;
@@ -561,44 +586,69 @@ export function computeStripLedColor({
   const dirSign = direction === 0 ? 1 : -1;
   const isRainbow = selectStaticColor === 0;
 
+  const activeColor = (selectStaticColor >= 1 && selectStaticColor <= 7 && OFFICIAL_STATIC_COLORS[selectStaticColor])
+    ? OFFICIAL_STATIC_COLORS[selectStaticColor]
+    : (baseColor || '#FF3D3D');
+
+  let finalColor = activeColor;
+
   switch (mode) {
-    case 0: { // 底灯常亮
+    case 0: { // L1: 底灯常亮
       if (isRainbow) {
-        const hue = Math.round((ledIndex / totalLeds * 360) % 360);
-        return `hsl(${hue}, 95%, ${Math.round(50 * bri)}%)`;
+        const hue = Math.round(((actualIndex / actualTotal) * 360) % 360);
+        finalColor = `hsl(${hue}, 95%, ${Math.round(50 * bri)}%)`;
+      } else {
+        finalColor = activeColor;
       }
-      return baseColor;
+      break;
     }
 
-    case 1: { // 底灯随波逐流 (环绕流动)
+    case 1: { // L2: 底灯随波逐流 (环绕流动)
       if (isRainbow) {
-        const hue = Math.round((ledIndex / totalLeds * 360 - dirSign * t * 140 + 36000) % 360);
-        return `hsl(${hue}, 95%, ${Math.round(50 * bri)}%)`;
+        const hue = Math.round(((actualIndex / actualTotal) * 360 - dirSign * t * 140 + 36000) % 360);
+        finalColor = `hsl(${hue}, 95%, ${Math.round(50 * bri)}%)`;
+      } else {
+        const wave = (Math.sin((actualIndex / actualTotal) * Math.PI * 2 - dirSign * t * 2.8) + 1) / 2;
+        finalColor = adjustColorLightness(activeColor, Math.round((18 + 42 * wave) * bri));
       }
-      const wave = (Math.sin((ledIndex / totalLeds) * Math.PI * 2 - dirSign * t * 2.8) + 1) / 2;
-      return adjustColorLightness(baseColor, Math.round((18 + 42 * wave) * bri));
+      break;
     }
 
-    case 2: { // 底灯呼吸
+    case 2: { // L3: 底灯呼吸
       const wave = (Math.sin(t * 2.0) + 1) / 2;
       if (isRainbow) {
         const hue = Math.round((t * 50) % 360);
-        return `hsl(${hue}, 95%, ${Math.round((14 + 46 * wave) * bri)}%)`;
+        finalColor = `hsl(${hue}, 95%, ${Math.round((14 + 46 * wave) * bri)}%)`;
+      } else {
+        finalColor = adjustColorLightness(activeColor, Math.round((12 + 50 * wave) * bri));
       }
-      return adjustColorLightness(baseColor, Math.round((12 + 50 * wave) * bri));
+      break;
     }
 
-    case 3: { // 底灯流光漫延
-      const phase = (ledIndex / totalLeds) * Math.PI * 4 - dirSign * t * 3.2;
+    case 3: { // L4: 底灯流光漫延
+      const phase = (actualIndex / actualTotal) * Math.PI * 4 - dirSign * t * 3.2;
       const wave = (Math.sin(phase) + 1) / 2;
       if (isRainbow) {
-        const hue = Math.round(((ledIndex / totalLeds) * 720 - dirSign * t * 180 + 36000) % 360);
-        return `hsl(${hue}, 95%, ${Math.round((20 + 36 * wave) * bri)}%)`;
+        const hue = Math.round(((actualIndex / actualTotal) * 720 - dirSign * t * 180 + 36000) % 360);
+        finalColor = `hsl(${hue}, 95%, ${Math.round((20 + 36 * wave) * bri)}%)`;
+      } else {
+        finalColor = adjustColorLightness(activeColor, Math.round((15 + 45 * wave) * bri));
       }
-      return adjustColorLightness(baseColor, Math.round((15 + 45 * wave) * bri));
+      break;
     }
 
     default:
-      return baseColor;
+      finalColor = activeColor;
+      break;
   }
+
+  return {
+    bg: finalColor,
+    rawColor: finalColor,
+    boxShadow: (isOpen && finalColor !== 'transparent' && finalColor !== '#12161f')
+      ? `0 0 ${Math.round(10 * bri)}px ${finalColor}bb, 0 0 ${Math.round(18 * bri)}px ${finalColor}55`
+      : 'none',
+    isCustom: false,
+    toString() { return this.bg; }
+  };
 }

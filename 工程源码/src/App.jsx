@@ -828,79 +828,6 @@ export default function App() {
     return () => cancelAnimationFrame(animId);
   }, [activeTab]);
 
-  // ── 实时读取物理键盘灯光 (对齐官方 v2-views Zc 架构，通过官方 HID 协议实时读取当前发光物理 LED 矩阵) ──
-  // 默认常驻开启 (true)；仅在进入「灯光设置」时与键盘进行 HID 实时灯光通讯；离开灯光界面时自动停止通讯并由键盘留存板载预设
-  const [isLiveHwLightingSync, setIsLiveHwLightingSync] = useState(() => {
-    try {
-      const stored = localStorage.getItem('sparklink_live_hw_lighting_sync');
-      return stored !== null ? stored === 'true' : true;
-    } catch (e) {
-      return true;
-    }
-  });
-  const [liveHardwareMatrix, setLiveHardwareMatrix] = useState(null);
-
-  // 物理灯光高频轮询监听 (仅在处于灯光 Tab 且设备已连接时进行通讯；离开灯光 Tab 时立即挂起轮询，留存键盘板载预设)
-  useEffect(() => {
-    if (!isLiveHwLightingSync || !isConnected || activeTab !== 'lighting') {
-      setLiveHardwareMatrix(null);
-      return;
-    }
-
-    let isMounted = true;
-    let isFetching = false;
-    let timerId = null;
-
-    // 动态同步间隔：对齐官方 Gc(lightingSpeed): 110 - Math.floor(speed / 10) * 10 ms
-    const pollInterval = Math.max(50, Math.min(120, 110 - Math.floor((lightingSpeed || 50) / 10) * 10));
-
-    const fetchLiveLighting = async () => {
-      if (!isMounted || isFetching) return;
-      isFetching = true;
-      try {
-        const matrix = await keyboardService.getLightingCustom('Keyboard', 6, 21);
-        if (isMounted && Array.isArray(matrix) && Array.isArray(matrix[0])) {
-          setLiveHardwareMatrix(matrix);
-        }
-      } catch (err) {
-        // 降低控制台高频重试噪音
-      } finally {
-        isFetching = false;
-        if (isMounted) {
-          timerId = setTimeout(fetchLiveLighting, pollInterval);
-        }
-      }
-    };
-
-    fetchLiveLighting();
-
-    return () => {
-      isMounted = false;
-      if (timerId) clearTimeout(timerId);
-      setLiveHardwareMatrix(null);
-    };
-  }, [isLiveHwLightingSync, isConnected, activeTab, lightingSpeed]);
-
-  const handleToggleLiveHwLightingSync = useCallback(() => {
-    setIsLiveHwLightingSync((prev) => {
-      const next = !prev;
-      try {
-        localStorage.setItem('sparklink_live_hw_lighting_sync', String(next));
-      } catch (e) {}
-      if (next) {
-        if (isConnected) {
-          addToast({ message: '已开启【实时读取物理灯效】：虚拟键盘将 1:1 实时直读物理单片机发光矩阵', type: 'success' });
-        } else {
-          addToast({ message: '物理直读已就绪：检测到设备离线，当前运行 30FPS 算法动画；连接物理键盘后将无缝直读', type: 'info' });
-        }
-      } else {
-        addToast({ message: '已切换为【驱动内置高精算法动画】(30 FPS 流畅演算)', type: 'info' });
-        setLiveHardwareMatrix(null);
-      }
-      return next;
-    });
-  }, [isConnected, addToast]);
-
   // 自定义按键灯光状态 (对齐截屏4)
   const [customKeyColors, setCustomKeyColors] = useState({});
   const [currentLightingColor, setCurrentLightingColor] = useState('#0284C7');
@@ -912,10 +839,6 @@ export default function App() {
   const [hardwareIsDoubleLight, setHardwareIsDoubleLight] = useState(null);
 
   // 综合判定是否双灯键盘 (AE64-MAX 等上下双灯位设计)：
-  // 1. 硬件 probe 直接上报双灯
-  // 2. deviceProfile 标记 doubleLight / doubleLighting / dualLamps / isDoubleLighting
-  // 3. features 数组中包含 '双灯位' / '双灯'
-  // 4. 型号名称或芯片设备名包含 AE64 / DUAL / 双灯
   const isDoubleLight = useMemo(() => {
     if (hardwareIsDoubleLight === true) return true;
     if (deviceProfile?.features?.doubleLight || deviceProfile?.features?.doubleLighting) return true;
@@ -965,6 +888,94 @@ export default function App() {
     }
   }, [hasDecorateLighting, activeLightingArea]);
 
+  // ── 实时读取物理键盘灯光 (对齐官方 v2-views Zc 架构，通过官方 HID 协议实时读取当前发光物理 LED 矩阵) ──
+  // 默认常驻开启 (true)；仅在进入「灯光设置」时与键盘进行 HID 实时灯光通讯；离开灯光界面时自动停止通讯并由键盘留存板载预设
+  const [isLiveHwLightingSync, setIsLiveHwLightingSync] = useState(() => {
+    try {
+      const stored = localStorage.getItem('sparklink_live_hw_lighting_sync');
+      return stored !== null ? stored === 'true' : true;
+    } catch (e) {
+      return true;
+    }
+  });
+  const [liveHardwareMatrix, setLiveHardwareMatrix] = useState(null);
+  const [liveDecorateMatrix, setLiveDecorateMatrix] = useState(null);
+
+  // 物理灯光高频轮询监听 (仅在处于灯光 Tab 且设备已连接时进行通讯；离开灯光 Tab 时立即挂起轮询，留存键盘板载预设)
+  useEffect(() => {
+    if (!isLiveHwLightingSync || !isConnected || activeTab !== 'lighting') {
+      setLiveHardwareMatrix(null);
+      setLiveDecorateMatrix(null);
+      return;
+    }
+
+    let isMounted = true;
+    let isFetching = false;
+    let timerId = null;
+
+    // 动态同步间隔：对齐官方 Gc(speed): 110 - Math.floor(speed / 10) * 10 ms
+    const activeSpeed = activeLightingArea === 'keyboard' ? (lightingSpeed || 50) : (stripSpeed || 50);
+    const pollInterval = Math.max(50, Math.min(120, 110 - Math.floor(activeSpeed / 10) * 10));
+
+    const fetchLiveLighting = async () => {
+      if (!isMounted || isFetching) return;
+      isFetching = true;
+      try {
+        if (activeLightingArea === 'keyboard') {
+          const matrix = await keyboardService.getLightingCustom('Keyboard', 6, 21);
+          if (isMounted && Array.isArray(matrix) && Array.isArray(matrix[0])) {
+            setLiveHardwareMatrix(matrix);
+          }
+        } else {
+          const areaName = activeLightingArea === 'decorate2' ? 'Decorate2' : 'Decorate1';
+          const rows = decorateConfig?.rows || (decorateConfig?.rowLayout ? decorateConfig.rowLayout.length : 2);
+          const cols = decorateConfig?.cols || (decorateConfig?.rowLayout ? Math.max(...decorateConfig.rowLayout) : 17);
+          const matrix = await keyboardService.getDecorateCustom(areaName, rows, cols);
+          if (isMounted && Array.isArray(matrix) && Array.isArray(matrix[0])) {
+            setLiveDecorateMatrix(matrix);
+          }
+        }
+      } catch (err) {
+        // 降低控制台高频重试噪音
+      } finally {
+        isFetching = false;
+        if (isMounted) {
+          timerId = setTimeout(fetchLiveLighting, pollInterval);
+        }
+      }
+    };
+
+    fetchLiveLighting();
+
+    return () => {
+      isMounted = false;
+      if (timerId) clearTimeout(timerId);
+      setLiveHardwareMatrix(null);
+      setLiveDecorateMatrix(null);
+    };
+  }, [isLiveHwLightingSync, isConnected, activeTab, lightingSpeed, stripSpeed, activeLightingArea, decorateConfig]);
+
+  const handleToggleLiveHwLightingSync = useCallback(() => {
+    setIsLiveHwLightingSync((prev) => {
+      const next = !prev;
+      try {
+        localStorage.setItem('sparklink_live_hw_lighting_sync', String(next));
+      } catch (e) {}
+      if (next) {
+        if (isConnected) {
+          addToast({ message: '已开启【实时读取物理灯效】：虚拟键盘将 1:1 实时直读物理单片机发光矩阵', type: 'success' });
+        } else {
+          addToast({ message: '物理直读已就绪：检测到设备离线，当前运行 30FPS 算法动画；连接物理键盘后将无缝直读', type: 'info' });
+        }
+      } else {
+        addToast({ message: '已切换为【驱动内置高精算法动画】(30 FPS 流畅演算)', type: 'info' });
+        setLiveHardwareMatrix(null);
+        setLiveDecorateMatrix(null);
+      }
+      return next;
+    });
+  }, [isConnected, addToast]);
+
   // 当切换到底灯数量不同的设备时，清除超出范围的单颗涂色
   useEffect(() => {
     setStripCustomColors((prev) => {
@@ -981,6 +992,30 @@ export default function App() {
       return changed ? filtered : prev;
     });
   }, [bottomLedCount]);
+
+  // 当用户在主键盘与底灯之间切换时，若设备在线，立即同步读取当前区域的板载硬件配置
+  useEffect(() => {
+    if (!isConnected || activeTab !== 'lighting') return;
+    if (activeLightingArea !== 'keyboard') {
+      const areaName = activeLightingArea === 'decorate2' ? 'Decorate2' : 'Decorate1';
+      keyboardService.getLightingBase(areaName, 'Base', 'SingleLighting').then((hwDecorate) => {
+        if (hwDecorate && typeof hwDecorate === 'object') {
+          if (typeof hwDecorate.mode === 'number') setStripMode(hwDecorate.mode);
+          if (typeof hwDecorate.selectStaticColor === 'number') setStripStaticColor(hwDecorate.selectStaticColor);
+          if (typeof hwDecorate.luminance === 'number') setStripBrightness(hwDecorate.luminance);
+          if (typeof hwDecorate.speed === 'number') setStripSpeed(hwDecorate.speed);
+          if (hwDecorate.direction !== undefined) {
+            const dirNum = (hwDecorate.direction === 1 || hwDecorate.direction === 'Backward') ? 1 : 0;
+            setStripDirection(dirNum);
+          }
+          if (hwDecorate.open !== undefined) {
+            const isOpen = hwDecorate.open === 'Open' || hwDecorate.open === 3 || hwDecorate.open === true;
+            setStripLightEnabled(isOpen);
+          }
+        }
+      }).catch(() => {});
+    }
+  }, [activeLightingArea, isConnected, activeTab]);
 
   // 改键映射状态 (按设备独立隔离，按层级 win_default, win_fn, mac_default, mac_fn)
   const [activeKeybindLayer, setActiveKeybindLayer] = useState('win_default');
@@ -1466,6 +1501,36 @@ export default function App() {
           }
         } catch (e) {
           console.log('读取板载灯光参数跳过', e);
+        }
+
+        // 连接后回读装饰灯/底灯板载参数 (模式、亮度、速度、开关、色彩)
+        try {
+          const hwDecorate = await keyboardService.getLightingBase('Decorate1', 'Base', 'SingleLighting');
+          if (hwDecorate && typeof hwDecorate === 'object') {
+            if (typeof hwDecorate.mode === 'number') {
+              setStripMode(hwDecorate.mode);
+            }
+            if (typeof hwDecorate.selectStaticColor === 'number') {
+              setStripStaticColor(hwDecorate.selectStaticColor);
+            }
+            if (typeof hwDecorate.luminance === 'number') {
+              setStripBrightness(hwDecorate.luminance);
+            }
+            if (typeof hwDecorate.speed === 'number') {
+              setStripSpeed(hwDecorate.speed);
+            }
+            if (hwDecorate.direction !== undefined) {
+              const dirNum = (hwDecorate.direction === 1 || hwDecorate.direction === 'Backward') ? 1 : 0;
+              setStripDirection(dirNum);
+            }
+            if (hwDecorate.open !== undefined) {
+              const isOpen = hwDecorate.open === 'Open' || hwDecorate.open === 3 || hwDecorate.open === true;
+              setStripLightEnabled(isOpen);
+            }
+            console.log('[SparkLink HID] 已从板载内存同步底灯参数:', hwDecorate);
+          }
+        } catch (e) {
+          console.log('读取板载底灯参数跳过', e);
         }
 
         // 连接后回读真实硬件按键 (优先 KeyA / KeyW) 的板载触发性能参数，让界面与键盘同步
@@ -2994,116 +3059,35 @@ export default function App() {
                 </div>
               )}
 
-              {/* 当处于灯带/底灯页面时：根据机型规格动态渲染底灯矩阵 (AE64-MAX 31颗[17,14] / ES68 26颗[13,13] / 硬件动态探测) */}
+              {/* 当处于灯带/底灯页面时：高颜值一体化沉浸式电竞底壳与全息氛围光效仿真 */}
               {activeTab === 'lighting' && activeLightingArea !== 'keyboard' ? (
-                <div className="w-full flex-1 flex flex-col items-center justify-center py-4 px-3 select-none">
-                  {/* 仿真键盘底壳卡片：深灰带倒角底壳，精准对齐官方驱动实机外观与色调 */}
-                  <div className="relative w-full max-w-4xl py-8 px-6 rounded-2xl bg-[#59606d] dark:bg-[#343a46] border border-white/15 shadow-[0_16px_36px_rgba(0,0,0,0.3)] flex flex-col items-center justify-center transition-all">
-                    {/* 按照机型行规格渲染按行排列的 LED 珠 (AE64-MAX: 第1行17颗, 第2行14颗) */}
-                    <div className="flex flex-col items-start gap-3 w-fit max-w-full overflow-x-auto p-1">
-                      {(() => {
-                        let currentLedIndex = 0;
-                        return decorateConfig.rowLayout.map((rowSize, rIdx) => {
-                          const startIdx = currentLedIndex;
-                          currentLedIndex += rowSize;
-                          return (
-                            <div key={rIdx} className="flex items-center justify-start gap-2 sm:gap-2.5">
-                              {Array.from({ length: rowSize }).map((_, inRowIdx) => {
-                                const idx = startIdx + inRowIdx;
-                                const isCustom = stripCustomColors[idx] !== undefined;
-                                const { bg, boxShadow } = computeStripLedColor({
-                                  index: idx,
-                                  total: bottomLedCount,
-                                  mode: stripMode,
-                                  tick: animTick,
-                                  speed: stripSpeed,
-                                  brightness: stripBrightness,
-                                  direction: stripDirection,
-                                  baseColor: currentLightingColor,
-                                  isOpen: stripLightEnabled,
-                                  selectStaticColor: stripStaticColor,
-                                  customColor: stripCustomColors[idx] || null,
-                                });
-
-                                return (
-                                  <button
-                                    key={idx}
-                                    type="button"
-                                    onMouseDown={(e) => {
-                                      if (e.button === 0) {
-                                        handleSetStripLedColor(idx, currentLightingColor);
-                                      } else if (e.button === 2) {
-                                        e.preventDefault();
-                                        handleClearStripLedColor(idx);
-                                      }
-                                    }}
-                                    onMouseEnter={(e) => {
-                                      if ((e.buttons & 1) === 1) {
-                                        handleSetStripLedColor(idx, currentLightingColor);
-                                      } else if ((e.buttons & 2) === 2) {
-                                        handleClearStripLedColor(idx);
-                                      }
-                                    }}
-                                    onContextMenu={(e) => {
-                                      e.preventDefault();
-                                      handleClearStripLedColor(idx);
-                                    }}
-                                    style={{
-                                      background: bg,
-                                      boxShadow: boxShadow,
-                                    }}
-                                    className="relative w-7 h-7 sm:w-8 sm:h-8 rounded-[6px] border border-white/20 transition-all duration-150 hover:scale-115 hover:z-20 cursor-pointer shadow-md group shrink-0"
-                                    title={`底灯 LED #${idx + 1}：鼠标左键拖拽涂色，右键取消`}
-                                  >
-                                    {isCustom && (
-                                      <span className="absolute top-1 right-1 w-1.5 h-1.5 rounded-full bg-white shadow-xs ring-1 ring-black/40" />
-                                    )}
-                                  </button>
-                                );
-                              })}
-                            </div>
-                          );
-                        });
-                      })()}
-                    </div>
-
-                    {/* 居中提示文本 (完全对齐官方驱动实机文字与鼠标图标) */}
-                    <div
-                      className="flex items-center justify-center gap-1.5 mt-5 text-[13px] font-medium select-none"
-                      style={{ color: 'rgba(255, 255, 255, 0.92)' }}
-                    >
-                      <span className="text-sm">🖱️</span>
-                      <span>鼠标左键拖拽修改灯光颜色，右键点击取消灯光颜色</span>
-                    </div>
-                  </div>
-
-                  {/* 全机型通用 · 底部贯穿式全息导光管 / 氛围灯效物理仿真 */}
+                <div className="w-full h-full flex flex-col items-center justify-center p-2 select-none min-h-0">
                   {(() => {
                     const modelUpper = (deviceProfile?.model || deviceProfile?.name || deviceProfile?.shortName || chipDeviceName || '').toUpperCase();
-                    let stripSimTitle = '星闪键盘 底部全息导光管/氛围灯物理仿真';
-                    if (modelUpper.includes('ES68')) {
-                      stripSimTitle = '前行者 ES68 底部贯穿式全息导光管物理仿真';
-                    } else if (modelUpper.includes('AE64')) {
-                      stripSimTitle = 'AE64-MAX 底部电竞环形氛围灯光效物理仿真';
+                    let stripSimTitle = '星闪键盘 底部氛围灯效';
+                    if (modelUpper.includes('AE64')) {
+                      stripSimTitle = 'AE64-MAX 底部电竞环形氛围灯';
+                    } else if (modelUpper.includes('ES68')) {
+                      stripSimTitle = '前行者 ES68 底部贯穿式全息导光管';
                     } else if (modelUpper.includes('DV63')) {
-                      stripSimTitle = 'DV63 底部双翼全息漫反射氛围灯物理仿真';
+                      stripSimTitle = 'DV63 底部双翼漫反射氛围灯';
                     } else if (modelUpper.includes('75')) {
-                      stripSimTitle = '星闪 75 底部贯穿式全息电竞氛围灯物理仿真';
+                      stripSimTitle = '星闪 75 底部贯穿式电竞氛围灯';
                     } else if (modelUpper.includes('87')) {
-                      stripSimTitle = '星闪 87 底部贯穿式全息电竞氛围灯物理仿真';
+                      stripSimTitle = '星闪 87 底部贯穿式电竞氛围灯';
                     } else if (modelUpper.includes('98')) {
-                      stripSimTitle = '星闪 98 底部贯穿式全息电竞氛围灯物理仿真';
+                      stripSimTitle = '星闪 98 底部贯穿式电竞氛围灯';
                     } else {
                       const cleanName = deviceProfile?.shortName || deviceProfile?.name || chipDeviceName || '星闪键盘';
-                      stripSimTitle = `${cleanName} 底部全息导光管/氛围灯物理仿真`;
+                      stripSimTitle = `${cleanName} 底部氛围灯`;
                     }
 
                     const hasSplitRows = decorateConfig.rowLayout && decorateConfig.rowLayout.length > 1;
 
                     return (
-                      <div className="w-full max-w-4xl mt-4 p-4 rounded-xl bg-[#0f131a] border border-white/20 shadow-2xl flex flex-col gap-3 select-none">
-                        {/* 顶栏信息与状态：采用高对比度纯白与高饱和荧光绿，消除浅色主题下文字发暗/无对比度的问题 */}
-                        <div className="flex flex-wrap items-center justify-between gap-2 text-xs px-1">
+                      <div className="relative w-full max-w-4xl py-3 px-5 rounded-2xl bg-[#141822] border border-white/15 shadow-[0_12px_32px_rgba(0,0,0,0.4)] flex flex-col items-center justify-between gap-2.5 transition-all">
+                        {/* 顶栏信息与状态栏 */}
+                        <div className="flex flex-wrap items-center justify-between gap-2 text-xs w-full px-1">
                           <div className="flex items-center space-x-2.5">
                             <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse shadow-[0_0_8px_#34d399] shrink-0" />
                             <span className="font-extrabold text-white text-[13px] tracking-wide drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)]">
@@ -3149,14 +3133,113 @@ export default function App() {
                                 stripMode === 1 ? `随波逐流 · ${stripDirection === 0 ? '逆时针' : '顺时针'}` :
                                 (stripMode === 2 || stripMode === 7) ? `闪耀彩虹 · ${stripDirection === 0 ? '逆时针' : '顺时针'}` :
                                 `流光漫延 · ${stripDirection === 0 ? '逆时针' : '顺时针'}`
-                              ) : '灯带已关闭'}
+                              ) : '底灯已关闭'}
                             </span>
                           </div>
                         </div>
 
-                        {/* 导光管发光渲染区：支持一体贯穿全息管与双翼分路独立管 */}
+                        {/* 按照机型行规格渲染按行排列的真实发光 LED 珠 (AE64-MAX: 第1行17颗, 第2行17颗; ES68: 13+13) */}
+                        <div className="flex flex-col items-center gap-2 w-fit max-w-full overflow-x-auto py-1 px-2">
+                          {(() => {
+                            let currentLedIndex = 0;
+                            return decorateConfig.rowLayout.map((rowSize, rIdx) => {
+                              const startIdx = currentLedIndex;
+                              currentLedIndex += rowSize;
+                              return (
+                                <div key={rIdx} className="flex items-center justify-center gap-1.5 sm:gap-2">
+                                  {Array.from({ length: rowSize }).map((_, inRowIdx) => {
+                                    const idx = startIdx + inRowIdx;
+                                    const isCustom = stripCustomColors[idx] !== undefined;
+
+                                    // 计算实时驱动动画色彩
+                                    const simColor = computeStripLedColor({
+                                      index: idx,
+                                      ledIndex: idx,
+                                      total: bottomLedCount,
+                                      totalLeds: bottomLedCount,
+                                      mode: stripMode,
+                                      tick: animTick,
+                                      speed: stripSpeed,
+                                      brightness: stripBrightness,
+                                      direction: stripDirection,
+                                      baseColor: currentLightingColor,
+                                      isOpen: stripLightEnabled,
+                                      selectStaticColor: stripStaticColor,
+                                      customColor: stripCustomColors[idx] || null,
+                                    });
+
+                                    let finalBg = simColor.bg;
+                                    let finalShadow = simColor.boxShadow;
+                                    let finalIsCustom = isCustom || simColor.isCustom;
+
+                                    // 若物理直读在线且收到单片机 Decorate 矩阵，直接以真机硬件发光为准
+                                    if (isLiveHwLightingSync && liveDecorateMatrix) {
+                                      let hwCell = null;
+                                      if (liveDecorateMatrix[rIdx] && liveDecorateMatrix[rIdx][inRowIdx]) {
+                                        hwCell = liveDecorateMatrix[rIdx][inRowIdx];
+                                      } else {
+                                        const flat = liveDecorateMatrix.flat();
+                                        if (flat[idx]) hwCell = flat[idx];
+                                      }
+                                      if (hwCell && typeof hwCell.R === 'number') {
+                                        if (!stripLightEnabled) {
+                                          finalBg = '#12161f';
+                                          finalShadow = 'none';
+                                        } else {
+                                          const cellColor = `rgb(${hwCell.R}, ${hwCell.G}, ${hwCell.B})`;
+                                          const isLit = hwCell.R > 4 || hwCell.G > 4 || hwCell.B > 4;
+                                          finalBg = isLit ? cellColor : '#12161f';
+                                          finalShadow = isLit ? `0 0 10px ${cellColor}cc, 0 0 18px ${cellColor}66` : 'none';
+                                          if (hwCell.isCustom) finalIsCustom = true;
+                                        }
+                                      }
+                                    }
+
+                                    return (
+                                      <button
+                                        key={idx}
+                                        type="button"
+                                        onMouseDown={(e) => {
+                                          if (e.button === 0) {
+                                            handleSetStripLedColor(idx, currentLightingColor);
+                                          } else if (e.button === 2) {
+                                            e.preventDefault();
+                                            handleClearStripLedColor(idx);
+                                          }
+                                        }}
+                                        onMouseEnter={(e) => {
+                                          if ((e.buttons & 1) === 1) {
+                                            handleSetStripLedColor(idx, currentLightingColor);
+                                          } else if ((e.buttons & 2) === 2) {
+                                            handleClearStripLedColor(idx);
+                                          }
+                                        }}
+                                        onContextMenu={(e) => {
+                                          e.preventDefault();
+                                          handleClearStripLedColor(idx);
+                                        }}
+                                        style={{
+                                          background: finalBg,
+                                          boxShadow: finalShadow,
+                                        }}
+                                        className="relative w-6 h-6 sm:w-7 sm:h-7 rounded-[6px] border border-white/20 transition-all duration-150 hover:scale-120 hover:z-20 cursor-pointer group shrink-0"
+                                        title={`底灯 LED #${idx + 1}：鼠标左键点选/拖拽涂色，右键取消`}
+                                      >
+                                        {finalIsCustom && (
+                                          <span className="absolute top-0.5 right-0.5 w-1.5 h-1.5 rounded-full bg-white shadow-xs ring-1 ring-black/50" />
+                                        )}
+                                      </button>
+                                    );
+                                  })}
+                                </div>
+                              );
+                            });
+                          })()}
+                        </div>
+
+                        {/* 底部全息漫反射导光管 (无缝集成在卡片内) */}
                         {(!hasSplitRows || stripSimViewMode === 'unified') ? (
-                          <div className="relative w-full h-8 rounded-full p-1 bg-black/90 border border-white/20 shadow-2xl flex items-center overflow-hidden">
+                          <div className="relative w-full h-5 sm:h-6 rounded-full p-0.5 bg-black/80 border border-white/20 shadow-xl flex items-center overflow-hidden">
                             <div
                               className="w-full h-full rounded-full transition-all duration-75"
                               style={{
@@ -3164,7 +3247,9 @@ export default function App() {
                                   const ledIdx = Math.round((i / (arr.length - 1)) * (bottomLedCount - 1));
                                   const c = computeStripLedColor({
                                     index: ledIdx,
+                                    ledIndex: ledIdx,
                                     total: bottomLedCount,
+                                    totalLeds: bottomLedCount,
                                     mode: stripMode,
                                     tick: animTick,
                                     speed: stripSpeed,
@@ -3175,26 +3260,27 @@ export default function App() {
                                     selectStaticColor: stripStaticColor,
                                     customColor: stripCustomColors[ledIdx] || null,
                                   });
-                                  return `${c.bg} ${(i / (arr.length - 1) * 100).toFixed(1)}%`;
+                                  const cColor = c.bg || c;
+                                  return `${cColor} ${(i / (arr.length - 1) * 100).toFixed(1)}%`;
                                 }).join(', ')})`,
-                                filter: stripLightEnabled ? `drop-shadow(0 0 ${Math.round(18 * (stripBrightness / 100))}px rgba(255,255,255,0.85))` : 'none',
+                                filter: stripLightEnabled ? `drop-shadow(0 0 ${Math.round(14 * (stripBrightness / 100))}px rgba(255,255,255,0.85))` : 'none',
                                 opacity: stripLightEnabled ? Math.max(0.25, stripBrightness / 100) : 0.08,
                               }}
                             />
                           </div>
                         ) : (
-                          <div className="flex flex-col gap-2.5 w-full">
+                          <div className="flex flex-col gap-1.5 w-full">
                             {decorateConfig.rowLayout.map((rowSize, rIdx) => {
                               const startIdx = rIdx === 0 ? 0 : decorateConfig.rowLayout.slice(0, rIdx).reduce((a, b) => a + b, 0);
-                              const rowName = rIdx === 0 ? '前沿 / 上翼漫反射导光条' : '后沿 / 下翼漫反射导光条';
+                              const rowName = rIdx === 0 ? '前沿漫反射导光条' : '后沿漫反射导光条';
                               const sampleSteps = Math.min(25, Math.max(9, rowSize));
                               return (
-                                <div key={rIdx} className="flex flex-col gap-1 w-full">
-                                  <div className="flex items-center justify-between text-[11px] px-1 text-zinc-300 font-mono">
+                                <div key={rIdx} className="flex flex-col gap-0.5 w-full">
+                                  <div className="flex items-center justify-between text-[10px] px-1 text-zinc-400 font-mono">
                                     <span className="font-semibold text-white/90">{rowName}</span>
-                                    <span className="text-zinc-400">{rowSize} LED (灯珠 #{startIdx + 1} ~ #{startIdx + rowSize})</span>
+                                    <span>{rowSize} LED (#{startIdx + 1} ~ #{startIdx + rowSize})</span>
                                   </div>
-                                  <div className="relative w-full h-7 rounded-full p-1 bg-black/90 border border-white/20 shadow-xl flex items-center overflow-hidden">
+                                  <div className="relative w-full h-4 sm:h-5 rounded-full p-0.5 bg-black/80 border border-white/20 shadow-md flex items-center overflow-hidden">
                                     <div
                                       className="w-full h-full rounded-full transition-all duration-75"
                                       style={{
@@ -3202,7 +3288,9 @@ export default function App() {
                                           const ledIdx = startIdx + Math.round((i / (sampleSteps - 1)) * (rowSize - 1));
                                           const c = computeStripLedColor({
                                             index: ledIdx,
+                                            ledIndex: ledIdx,
                                             total: bottomLedCount,
+                                            totalLeds: bottomLedCount,
                                             mode: stripMode,
                                             tick: animTick,
                                             speed: stripSpeed,
@@ -3213,9 +3301,10 @@ export default function App() {
                                             selectStaticColor: stripStaticColor,
                                             customColor: stripCustomColors[ledIdx] || null,
                                           });
-                                          return `${c.bg} ${(i / (sampleSteps - 1) * 100).toFixed(1)}%`;
+                                          const cColor = c.bg || c;
+                                          return `${cColor} ${(i / (sampleSteps - 1) * 100).toFixed(1)}%`;
                                         }).join(', ')})`,
-                                        filter: stripLightEnabled ? `drop-shadow(0 0 ${Math.round(14 * (stripBrightness / 100))}px rgba(255,255,255,0.85))` : 'none',
+                                        filter: stripLightEnabled ? `drop-shadow(0 0 ${Math.round(12 * (stripBrightness / 100))}px rgba(255,255,255,0.85))` : 'none',
                                         opacity: stripLightEnabled ? Math.max(0.25, stripBrightness / 100) : 0.08,
                                       }}
                                     />
@@ -3225,6 +3314,15 @@ export default function App() {
                             })}
                           </div>
                         )}
+
+                        {/* 居中提示文本 */}
+                        <div
+                          className="flex items-center justify-center gap-1.5 text-[11px] font-medium select-none"
+                          style={{ color: 'rgba(255, 255, 255, 0.75)' }}
+                        >
+                          <span className="text-xs">🖱️</span>
+                          <span>鼠标左键拖拽修改灯光颜色，右键点击取消灯光颜色</span>
+                        </div>
                       </div>
                     );
                   })()}

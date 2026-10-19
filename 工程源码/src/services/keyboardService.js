@@ -741,6 +741,28 @@ class KeyboardService {
     return null;
   }
 
+  // 实时读取装饰灯带/底灯物理矩阵 (通过官方 SDK getDecorate1Custom 或 getLightingCustom)
+  async getDecorateCustom(area = 'Decorate1', rows = 2, cols = 17) {
+    if (!this.sdk || !this.connected) return null;
+    try {
+      if (typeof this.sdk.getDecorate1Custom === 'function') {
+        const matrix = await this.sdk.getDecorate1Custom({ area, rows, cols });
+        if (Array.isArray(matrix) && Array.isArray(matrix[0])) {
+          return matrix;
+        }
+      }
+      if (typeof this.sdk.getLightingCustom === 'function') {
+        const matrix = await this.sdk.getLightingCustom({ area, rows, cols });
+        if (Array.isArray(matrix) && Array.isArray(matrix[0])) {
+          return matrix;
+        }
+      }
+    } catch (e) {
+      // 降低高频轮询时的 warning 噪点
+    }
+    return null;
+  }
+
   // 读取指定坐标的高级键配置 (对齐官方 SDK getHigherKey)
   async getHigherKey({ row, col }) {
     if (!this.sdk || !this.connected) return null;
