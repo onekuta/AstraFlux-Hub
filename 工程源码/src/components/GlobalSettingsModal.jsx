@@ -24,10 +24,21 @@ import {
   Users,
   Code,
   UserCheck,
-  FileText
+  FileText,
+  DownloadCloud,
+  Database,
+  ArrowUpCircle,
+  FolderOpen,
+  PackageCheck,
+  AlertTriangle,
+  ShieldAlert,
+  Save,
+  Link as LinkIcon,
 } from 'lucide-react';
 import AstraFluxLogo from './AstraFluxLogo';
 import { useToast } from './ToastProvider';
+import { updaterService } from '../services/updaterService';
+import { customDeviceRegistry } from '../services/customDeviceRegistry';
 import kutazeAvatar from '../assets/avatar_kutaze.png';
 
 function GithubIcon({ className = "w-4 h-4" }) {
@@ -223,7 +234,242 @@ export default function GlobalSettingsModal({
   const [notifyLockKeys, setNotifyLockKeys] = useState(false);
   const [notifyLowBattery, setNotifyLowBattery] = useState(true);
 
-  const [isCheckingUpdate, setIsCheckingUpdate] = useState(false);
+  // 同步外部 initialSection
+  React.useEffect(() => {
+    if (initialSection) {
+      setActiveSection(initialSection);
+    }
+  }, [initialSection]);
+
+  // 更新中心状态 (数据库更新 & 驱动软件更新)
+  const [libVersion, setLibVersion] = useState(() => updaterService.getCurrentLibVersion());
+  const [dbUpdateUrl, setDbUpdateUrl] = useState(() => updaterService.getDbUpdateUrl());
+  const [appUpdateUrl, setAppUpdateUrl] = useState(() => updaterService.getAppUpdateUrl());
+  
+  // 数据库更新状态
+  const [isCheckingDb, setIsCheckingDb] = useState(false);
+  const [dbCheckResult, setDbCheckResult] = useState(null);
+  const [isUpdatingDb, setIsUpdatingDb] = useState(false);
+
+  // 驱动更新状态
+  const [isCheckingApp, setIsCheckingApp] = useState(false);
+  const [appCheckResult, setAppCheckResult] = useState(null);
+  const [isUpdatingApp, setIsUpdatingApp] = useState(false);
+  const [appDownloadProgress, setAppDownloadProgress] = useState(0);
+
+  // 综合更新检测状态
+  const [isCheckingBoth, setIsCheckingBoth] = useState(false);
+
+  // 每次打开弹窗或切换至更新中心时重新读取最新直链与版本
+  React.useEffect(() => {
+    if (isOpen) {
+      setLibVersion(updaterService.getCurrentLibVersion());
+      setDbUpdateUrl(updaterService.getDbUpdateUrl());
+      setAppUpdateUrl(updaterService.getAppUpdateUrl());
+    }
+  }, [isOpen, activeSection]);
+
+  const isDbConfigured = Boolean(dbUpdateUrl && !dbUpdateUrl.includes('your_account'));
+  const isAppConfigured = Boolean(appUpdateUrl && !appUpdateUrl.includes('your_account'));
+
+  const maskUrl = (url) => {
+    if (!url || url.includes('your_account')) return '暂未配置有效直链';
+    if (url.length <= 44) return url;
+    return url.slice(0, 24) + '...' + url.slice(-16);
+  };
+
+  // 1. 检查并更新数据库 (外设适配库 / 轴体行程数据库)
+  const handleCheckAndUpdateDb = async () => {
+    setIsCheckingDb(true);
+    setDbCheckResult(null);
+    const targetDbUrl = updaterService.getDbUpdateUrl();
+    setDbUpdateUrl(targetDbUrl);
+
+    try {
+      const res = await updaterService.checkBothVersions({
+        dbUrl: targetDbUrl,
+        appUrl: '',
+      });
+      setDbCheckResult(res);
+
+      if (!isDbConfigured) {
+        addToast({
+          message: '暂未在开发者后台配置有效的数据库更新链接',
+          type: 'warning',
+        });
+      } else if (res.libError) {
+        addToast({ message: `检查数据库失败: ${res.libError}`, type: 'error' });
+      } else if (res.hasLibUpdate) {
+        addToast({
+          message: `发现最新外设数据库 (版本: ${res.cloudLibVersion}，共 ${res.cloudLibTotalDevices} 款)，可立即热更新！`,
+          type: 'info',
+        });
+      } else {
+        addToast({ message: '当前外设适配库已是最新版本！', type: 'success' });
+      }
+    } catch (err) {
+      addToast({ message: `检查数据库异常: ${err.message}`, type: 'error' });
+    } finally {
+      setIsCheckingDb(false);
+    }
+  };
+
+  // 一键差量热覆写数据库
+  const handleApplyDbUpdate = async () => {
+    setIsUpdatingDb(true);
+    try {
+      const downloadUrl = dbCheckResult?.libDownloadUrl || updaterService.getDbUpdateUrl();
+      const res = await updaterService.performOnlineDbUpdate(downloadUrl, dbCheckResult?.rawDbData);
+      setLibVersion(updaterService.getCurrentLibVersion());
+      setDbCheckResult(prev => prev ? { ...prev, hasLibUpdate: false } : null);
+      addToast({
+        message: `🎉 数据库更新成功！已无感覆写并生效 ${res.count} 款键盘适配数据 (版本: ${res.libVersion})！`,
+        type: 'success',
+        duration: 3500,
+      });
+    } catch (err) {
+      addToast({ message: `更新数据库失败: ${err.message}`, type: 'error' });
+    } finally {
+      setIsUpdatingDb(false);
+    }
+  };
+
+  // 导入本地离线适配库包
+  const handleImportOfflineLib = async (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    try {
+      const isZip = file.name.endsWith('.spkdb') || file.name.endsWith('.zip');
+      if (isZip) {
+        addToast({ message: `正在校验并解包离线数据库包 [${file.name}]...`, type: 'info' });
+        const arrayBuf = await file.arrayBuffer();
+        const res = await updaterService.importOfflineBundle(arrayBuf, file.name);
+        setLibVersion(updaterService.getCurrentLibVersion());
+        addToast({
+          message: `🎉 成功导入外设数据库包 (V${res.libVersion})！已生效 ${res.count} 款键盘硬件档案！`,
+          type: 'success',
+        });
+      } else {
+        const text = await file.text();
+        const res = updaterService.importOfflineLibFile(text);
+        setLibVersion(updaterService.getCurrentLibVersion());
+        if (res.isSingleProbe) {
+          addToast({
+            message: `🎉 成功导入探针硬件包【${res.deviceName} (${res.vHex}:${res.pHex})】！`,
+            type: 'success',
+          });
+        } else {
+          addToast({
+            message: `离线数据库已成功导入并覆写！共生效 ${res.count} 款设备适配 (版本: ${res.libVersion})！`,
+            type: 'success',
+          });
+        }
+      }
+    } catch (err) {
+      addToast({ message: `导入离线包失败: ${err.message}`, type: 'error' });
+    } finally {
+      e.target.value = '';
+    }
+  };
+
+  // 2. 检查并更新驱动软件客户端本体
+  const handleCheckAndUpdateApp = async () => {
+    setIsCheckingApp(true);
+    setAppCheckResult(null);
+    const targetAppUrl = updaterService.getAppUpdateUrl();
+    setAppUpdateUrl(targetAppUrl);
+
+    try {
+      const res = await updaterService.checkBothVersions({
+        dbUrl: '',
+        appUrl: targetAppUrl,
+      });
+      setAppCheckResult(res);
+
+      if (!isAppConfigured) {
+        addToast({
+          message: '暂未在开发者后台配置有效的驱动客户端更新链接',
+          type: 'warning',
+        });
+      } else if (res.appError) {
+        addToast({ message: `检查驱动更新失败: ${res.appError}`, type: 'error' });
+      } else if (res.hasAppUpdate) {
+        addToast({
+          message: `发现驱动客户端新版本 (V${res.cloudAppVersion})，可一键自动覆盖安装！`,
+          type: 'info',
+        });
+      } else {
+        addToast({ message: '当前驱动客户端已是最新版本！', type: 'success' });
+      }
+    } catch (err) {
+      addToast({ message: `检查驱动异常: ${err.message}`, type: 'error' });
+    } finally {
+      setIsCheckingApp(false);
+    }
+  };
+
+  // 一键下载并自动覆盖安装驱动
+  const handleInstallAppUpdate = async () => {
+    setIsUpdatingApp(true);
+    setAppDownloadProgress(0);
+    try {
+      addToast({ message: '正在下载新版驱动安装包，下载完成后将自动启动覆盖安装...', type: 'info' });
+      const targetUrl = appCheckResult?.appDownloadUrl || updaterService.getAppUpdateUrl();
+      const res = await updaterService.performOnlineAppUpdate(targetUrl, (progress) => {
+        setAppDownloadProgress(progress.percent || 0);
+      });
+      if (res.browserOpened) {
+        addToast({ message: '已为您在浏览器打开最新安装包下载页面！', type: 'success' });
+      }
+    } catch (err) {
+      addToast({ message: `下载安装包失败: ${err.message}`, type: 'error' });
+    } finally {
+      setIsUpdatingApp(false);
+    }
+  };
+
+  // 手动在浏览器打开安装包下载页面
+  const handleOpenAppBrowserDownload = () => {
+    const url = appCheckResult?.appDownloadUrl || updaterService.getAppUpdateUrl();
+    if (url) {
+      openExternal(url, '最新驱动安装包下载');
+    }
+  };
+
+  // 3. 综合比对检查全部更新
+  const handleCheckBothUpdates = async () => {
+    setIsCheckingBoth(true);
+    try {
+      const targetDbUrl = updaterService.getDbUpdateUrl();
+      const targetAppUrl = updaterService.getAppUpdateUrl();
+      setDbUpdateUrl(targetDbUrl);
+      setAppUpdateUrl(targetAppUrl);
+
+      const res = await updaterService.checkBothVersions({
+        dbUrl: targetDbUrl,
+        appUrl: targetAppUrl,
+      });
+      setDbCheckResult(res);
+      setAppCheckResult(res);
+
+      if (res.hasLibUpdate || res.hasAppUpdate) {
+        addToast({
+          message: `检测到可用更新！${res.hasLibUpdate ? '【键盘数据库可更新】' : ''} ${res.hasAppUpdate ? '【驱动客户端有新版】' : ''}`,
+          type: 'info',
+        });
+      } else if (!res.libError && !res.appError) {
+        addToast({ message: '检测完毕：外设数据库与驱动客户端当前均为最新版本！', type: 'success' });
+      } else {
+        addToast({ message: '检测完成，部分更新通道未配置有效直链', type: 'warning' });
+      }
+    } catch (err) {
+      addToast({ message: `综合检测异常: ${err.message}`, type: 'error' });
+    } finally {
+      setIsCheckingBoth(false);
+    }
+  };
+
   const [expandedFaq, setExpandedFaq] = useState(0); // 默认展开第1项常见问题 (对齐截图)
   const [expandedLicenseGroups, setExpandedLicenseGroups] = useState({ 0: true }); // 默认展开第1类开源组件 (对齐截图)
 
@@ -243,17 +489,7 @@ export default function GlobalSettingsModal({
   };
 
   const handleCheckUpdate = () => {
-    if (isCheckingUpdate) return;
-    setIsCheckingUpdate(true);
-    addToast({ message: '正在检查最新驱动版本与更新信息...', type: 'info', duration: 1200 });
-    setTimeout(() => {
-      setIsCheckingUpdate(false);
-      addToast({
-        message: '当前已是最新稳定版本 (v1.1.0 · 2026 开源发布版)',
-        type: 'success',
-        duration: 3000
-      });
-    }, 1200);
+    handleCheckBothUpdates();
   };
 
   if (!isOpen) return null;
@@ -286,6 +522,7 @@ export default function GlobalSettingsModal({
           <aside className="w-56 p-5 border-r border-[var(--border-color)] bg-[var(--bg-tertiary)]/50 flex flex-col space-y-1.5">
             {[
               { id: 'general', label: '常规设置', icon: Settings2 },
+              { id: 'updates', label: '软件更新', icon: DownloadCloud },
               { id: 'notifications', label: '消息通知', icon: Bell },
               { id: 'feedback', label: '反馈', icon: MessageSquare },
               { id: 'about', label: '关于', icon: Info },
@@ -465,7 +702,350 @@ export default function GlobalSettingsModal({
               </div>
             )}
 
-            {/* 2. 消息通知 (纯键盘专用通知) */}
+            {/* 2. 软件与外设适配库更新中心 (两大专属区域：更新数据库 & 更新软件) */}
+            {activeSection === 'updates' && (
+              <div className="space-y-3.5 max-w-4xl animate-in fade-in duration-150">
+                
+                {/* 顶部标题栏与快捷入口 */}
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 pb-2.5 border-b border-[var(--border-color)]">
+                  <div className="flex items-center space-x-2.5">
+                    <div className="w-8 h-8 rounded-xl bg-blue-500/10 text-blue-500 flex items-center justify-center">
+                      <DownloadCloud className="w-4 h-4" />
+                    </div>
+                    <div>
+                      <h2 className="text-base font-black font-title text-[var(--text-primary)]">
+                        软件与适配库更新
+                      </h2>
+                      <p className="text-[11px] text-[var(--text-tertiary)]">
+                        双通道云端检测：外设适配数据库热更与驱动客户端本体全量升级
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="flex items-center space-x-2">
+                    <button
+                      type="button"
+                      onClick={onOpenDevLab}
+                      className="px-3 py-1.5 rounded-xl bg-[var(--bg-secondary)] hover:bg-[var(--bg-tertiary)] border border-[var(--border-color)] text-xs font-bold text-[var(--text-primary)] flex items-center space-x-1.5 cursor-pointer transition shadow-xs"
+                      title="进入开发者后台配置云端更新返链"
+                    >
+                      <ShieldAlert className="w-3.5 h-3.5 text-amber-500" />
+                      <span>开发者后台 (配置云端返链)</span>
+                    </button>
+                  </div>
+                </div>
+
+                {/* 顶部概览大卡片 (承载原 SettingsTab 更新卡片头部与一键全量检测) */}
+                <div className="p-3.5 rounded-xl bg-[var(--bg-primary)]/80 border border-[var(--border-color)] shadow-xs space-y-2">
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                    <div className="flex items-center gap-2 flex-wrap">
+                      <span className="text-xs font-mono px-2.5 py-0.5 rounded-full bg-sky-500/10 text-sky-600 dark:text-sky-400 font-bold border border-sky-500/20 whitespace-nowrap">
+                        驱动客户端: V{updaterService.getCurrentAppVersion()}
+                      </span>
+                      <span className="text-xs font-mono px-2.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 font-bold border border-emerald-500/20 whitespace-nowrap">
+                        外设适配库: {libVersion} ({customDeviceRegistry.getTotalCount()}款)
+                      </span>
+                    </div>
+
+                    <button
+                      type="button"
+                      onClick={handleCheckBothUpdates}
+                      disabled={isCheckingBoth}
+                      className="px-3.5 py-1.5 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-bold text-xs rounded-xl transition shadow-xs cursor-pointer flex items-center space-x-1.5 disabled:opacity-60"
+                    >
+                      <RefreshCw className={`w-3.5 h-3.5 ${isCheckingBoth ? 'animate-spin' : ''}`} />
+                      <span>{isCheckingBoth ? '正在检查两项更新...' : '综合检测两项更新'}</span>
+                    </button>
+                  </div>
+
+                  <p className="text-[11px] text-[var(--text-secondary)] leading-relaxed">
+                    支持「差量库秒级热更新」与「本体全量覆盖升级」。新键盘与轴体适配数据即时生效，无需反复重装 100MB 驱动客户端；如遇功能大版本迭代，可一键覆盖安装最新客户端。
+                  </p>
+                </div>
+
+                {/* 两大独立操作更新区域 (并列分栏：更新数据库 vs 更新软件) */}
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-3.5">
+
+                  {/* 区域 1：更新数据库 (键盘适配库与轴体行程数据库) */}
+                  <div className="p-4 rounded-xl bg-[var(--bg-primary)]/80 border border-[var(--border-color)] shadow-xs flex flex-col justify-between space-y-3">
+                    <div className="space-y-2.5">
+                      {/* 区域标题 */}
+                      <div className="flex items-center justify-between border-b border-[var(--border-color)]/70 pb-2">
+                        <div className="flex items-center space-x-2">
+                          <Database className="w-4 h-4 text-sky-500" />
+                          <h3 className="text-sm font-bold text-[var(--text-primary)]">更新数据库</h3>
+                        </div>
+                        <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-sky-500/10 text-sky-600 dark:text-sky-400 border border-sky-500/20">
+                          对应后台: 返链 ①
+                        </span>
+                      </div>
+
+                      <p className="text-[11px] text-[var(--text-secondary)] leading-relaxed">
+                        包含各配列键盘键位映射、物理 LED 拓扑、出厂校准以及高精度磁轴行程参数数据库。
+                      </p>
+
+                      {/* 状态徽标与返链展示 */}
+                      <div className="p-2.5 rounded-lg bg-[var(--bg-secondary)]/70 border border-[var(--border-color)]/70 space-y-1.5 text-xs">
+                        <div className="flex items-center justify-between">
+                          <span className="text-[var(--text-tertiary)]">当前库版本</span>
+                          <span className="font-mono font-bold text-emerald-500">{libVersion}</span>
+                        </div>
+                        <div className="flex items-center justify-between">
+                          <span className="text-[var(--text-tertiary)]">已收录硬件档案</span>
+                          <span className="font-mono font-bold text-[var(--text-primary)]">{customDeviceRegistry.getTotalCount()} 款键盘</span>
+                        </div>
+                        <div className="flex items-center justify-between pt-1 border-t border-[var(--border-color)]/50">
+                          <span className="text-[var(--text-tertiary)]">云端返链状态</span>
+                          <span className={`font-mono text-[11px] truncate max-w-[180px] ${isDbConfigured ? 'text-sky-500 font-medium' : 'text-amber-500'}`} title={dbUpdateUrl}>
+                            {maskUrl(dbUpdateUrl)}
+                          </span>
+                        </div>
+                      </div>
+
+                      {/* 未配置直链提示框 (1:1 还原用户截图红圈提示) */}
+                      {!isDbConfigured && (
+                        <div className="p-2.5 rounded-lg bg-amber-500/10 border border-amber-500/20 text-xs text-amber-700 dark:text-amber-300 space-y-1">
+                          <div className="flex items-center space-x-1.5 font-bold">
+                            <AlertTriangle className="w-3.5 h-3.5 shrink-0" />
+                            <span>云端数据库更新地址未设置</span>
+                          </div>
+                          <p className="text-[11px] leading-relaxed text-[var(--text-secondary)]">
+                            暂未配置数据库 Manifest 直链。开发者可在后台配置 Gitee/云盘直链，普通用户亦可直接点击下方「导入离线适配包」使用社群分发的数据包。
+                          </p>
+                          <div className="pt-0.5">
+                            <button
+                              type="button"
+                              onClick={onOpenDevLab}
+                              className="text-[11px] font-bold text-amber-600 dark:text-amber-400 hover:underline cursor-pointer flex items-center space-x-1"
+                            >
+                              <span>前往开发者后台配置返链 ①</span>
+                              <ExternalLink className="w-3 h-3" />
+                            </button>
+                          </div>
+                        </div>
+                      )}
+
+                      {/* 检测结果反馈 */}
+                      {dbCheckResult && isDbConfigured && (
+                        <div className="p-2.5 rounded-lg border border-[var(--border-color)] bg-[var(--bg-secondary)] space-y-2">
+                          {dbCheckResult.libError ? (
+                            <div className="flex items-center space-x-2 text-xs text-rose-500">
+                              <AlertTriangle className="w-4 h-4 shrink-0" />
+                              <span>数据库检测异常: {dbCheckResult.libError}</span>
+                            </div>
+                          ) : dbCheckResult.hasLibUpdate ? (
+                            <div className="p-2 rounded-lg bg-emerald-500/10 border border-emerald-500/20 space-y-1.5">
+                              <div className="flex items-center justify-between">
+                                <div className="text-xs font-bold text-emerald-600 dark:text-emerald-400 flex items-center space-x-1.5">
+                                  <PackageCheck className="w-3.5 h-3.5" />
+                                  <span>发现新版键盘适配库 (V{dbCheckResult.cloudLibVersion})</span>
+                                </div>
+                                <span className="text-[11px] font-mono text-emerald-500 font-bold">
+                                  {dbCheckResult.cloudLibTotalDevices} 款设备
+                                </span>
+                              </div>
+                              <p className="text-[11px] text-[var(--text-secondary)]">
+                                体积约数十 KB，无感秒级加载，无需重新安装客户端
+                              </p>
+                              <button
+                                type="button"
+                                onClick={handleApplyDbUpdate}
+                                disabled={isUpdatingDb}
+                                className="w-full py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs rounded-lg transition cursor-pointer flex items-center justify-center space-x-1.5 shadow-xs"
+                              >
+                                <RefreshCw className={`w-3.5 h-3.5 ${isUpdatingDb ? 'animate-spin' : ''}`} />
+                                <span>{isUpdatingDb ? '正在覆写数据库...' : '一键秒级更新数据库'}</span>
+                              </button>
+                            </div>
+                          ) : (
+                            <div className="flex items-center space-x-2 text-xs text-emerald-600 dark:text-emerald-400 font-bold">
+                              <CheckCircle2 className="w-4 h-4 shrink-0" />
+                              <span>当前外设适配库已是最新版本！</span>
+                            </div>
+                          )}
+                        </div>
+                      )}
+                    </div>
+
+                    {/* 按钮操作组 (更新数据库 + 导入离线适配包) */}
+                    <div className="space-y-1.5 pt-2 border-t border-[var(--border-color)]/70">
+                      <button
+                        type="button"
+                        onClick={handleCheckAndUpdateDb}
+                        disabled={isCheckingDb}
+                        className="w-full py-2 bg-sky-600 hover:bg-sky-700 disabled:opacity-60 text-white font-bold text-xs rounded-xl transition shadow-xs cursor-pointer flex items-center justify-center space-x-1.5"
+                      >
+                        <RefreshCw className={`w-3.5 h-3.5 ${isCheckingDb ? 'animate-spin' : ''}`} />
+                        <span>{isCheckingDb ? '正在拉取数据库...' : '检查并更新数据库'}</span>
+                      </button>
+
+                      <label className="w-full py-2 px-3 border border-amber-500/30 bg-amber-500/10 hover:bg-amber-500/20 text-amber-600 dark:text-amber-400 font-bold text-xs rounded-xl transition cursor-pointer flex items-center justify-center space-x-1.5 shadow-xs">
+                        <FolderOpen className="w-3.5 h-3.5 shrink-0" />
+                        <span>导入离线适配包 (.spkdb / .json)</span>
+                        <input
+                          type="file"
+                          accept=".spkdb,.zip,.json"
+                          onChange={handleImportOfflineLib}
+                          className="hidden"
+                        />
+                      </label>
+                    </div>
+                  </div>
+
+                  {/* 区域 2：更新软件 (驱动客户端程序本体) */}
+                  <div className="p-4 rounded-xl bg-[var(--bg-primary)]/80 border border-[var(--border-color)] shadow-xs flex flex-col justify-between space-y-3">
+                    <div className="space-y-2.5">
+                      {/* 区域标题 */}
+                      <div className="flex items-center justify-between border-b border-[var(--border-color)]/70 pb-2">
+                        <div className="flex items-center space-x-2">
+                          <ArrowUpCircle className="w-4 h-4 text-indigo-500" />
+                          <h3 className="text-sm font-bold text-[var(--text-primary)]">更新软件</h3>
+                        </div>
+                        <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 border border-indigo-500/20">
+                          对应后台: 返链 ②
+                        </span>
+                      </div>
+
+                      <p className="text-[11px] text-[var(--text-secondary)] leading-relaxed">
+                        包含 Electron 驱动客户端核心进程、USB/星闪底层 HID 协议栈与前端操作界面。
+                      </p>
+
+                      {/* 状态徽标与返链展示 */}
+                      <div className="p-2.5 rounded-lg bg-[var(--bg-secondary)]/70 border border-[var(--border-color)]/70 space-y-1.5 text-xs">
+                        <div className="flex items-center justify-between">
+                          <span className="text-[var(--text-tertiary)]">当前驱动版本</span>
+                          <span className="font-mono font-bold text-sky-500">v{updaterService.getCurrentAppVersion()}</span>
+                        </div>
+                        <div className="flex items-center justify-between">
+                          <span className="text-[var(--text-tertiary)]">发行渠道</span>
+                          <span className="font-medium text-[var(--text-primary)]">正式稳定版 (开源免安装)</span>
+                        </div>
+                        <div className="flex items-center justify-between pt-1 border-t border-[var(--border-color)]/50">
+                          <span className="text-[var(--text-tertiary)]">云端返链状态</span>
+                          <span className={`font-mono text-[11px] truncate max-w-[180px] ${isAppConfigured ? 'text-indigo-500 font-medium' : 'text-amber-500'}`} title={appUpdateUrl}>
+                            {maskUrl(appUpdateUrl)}
+                          </span>
+                        </div>
+                      </div>
+
+                      {/* 未配置直链提示框 */}
+                      {!isAppConfigured && (
+                        <div className="p-2.5 rounded-lg bg-amber-500/10 border border-amber-500/20 text-xs text-amber-700 dark:text-amber-300 space-y-1">
+                          <div className="flex items-center space-x-1.5 font-bold">
+                            <AlertTriangle className="w-3.5 h-3.5 shrink-0" />
+                            <span>云端驱动更新地址未设置</span>
+                          </div>
+                          <p className="text-[11px] leading-relaxed text-[var(--text-secondary)]">
+                            暂未配置驱动更新直链。开发者可在后台配置 Setup.exe 安装包直链或 manifest.json 清单。普通用户亦可点击下方「打开发布页」手动获取。
+                          </p>
+                          <div className="pt-0.5">
+                            <button
+                              type="button"
+                              onClick={onOpenDevLab}
+                              className="text-[11px] font-bold text-amber-600 dark:text-amber-400 hover:underline cursor-pointer flex items-center space-x-1"
+                            >
+                              <span>前往开发者后台配置返链 ②</span>
+                              <ExternalLink className="w-3 h-3" />
+                            </button>
+                          </div>
+                        </div>
+                      )}
+
+                      {/* 检测结果与覆盖安装卡片 */}
+                      {appCheckResult && isAppConfigured && (
+                        <div className="p-2.5 rounded-lg border border-[var(--border-color)] bg-[var(--bg-secondary)] space-y-2">
+                          {appCheckResult.appError ? (
+                            <div className="flex items-center space-x-2 text-xs text-rose-500">
+                              <AlertTriangle className="w-4 h-4 shrink-0" />
+                              <span>驱动检测异常: {appCheckResult.appError}</span>
+                            </div>
+                          ) : appCheckResult.hasAppUpdate ? (
+                            <div className="p-2 rounded-lg bg-sky-500/10 border border-sky-500/20 space-y-1.5">
+                              <div className="flex items-center justify-between">
+                                <div className="text-xs font-bold text-sky-600 dark:text-sky-400 flex items-center space-x-1.5">
+                                  <ArrowUpCircle className="w-3.5 h-3.5" />
+                                  <span>发现新版本驱动 (V{appCheckResult.cloudAppVersion})</span>
+                                </div>
+                              </div>
+                              <p className="text-[11px] text-[var(--text-secondary)] leading-relaxed">
+                                {appCheckResult.appChangelog || '包含最新星闪连接稳定性优化与性能提升'}
+                              </p>
+
+                              {/* 下载进度条 */}
+                              {isUpdatingApp && (
+                                <div className="space-y-1">
+                                  <div className="flex justify-between text-xs text-[var(--text-secondary)] font-mono">
+                                    <span>下载安装包中...</span>
+                                    <span>{appDownloadProgress}%</span>
+                                  </div>
+                                  <div className="w-full bg-[var(--border-color)] h-1.5 rounded-full overflow-hidden">
+                                    <div
+                                      className="bg-sky-500 h-full transition-all duration-200"
+                                      style={{ width: `${appDownloadProgress}%` }}
+                                    ></div>
+                                  </div>
+                                </div>
+                              )}
+
+                              <div className="flex items-center space-x-2 pt-1">
+                                <button
+                                  type="button"
+                                  onClick={handleInstallAppUpdate}
+                                  disabled={isUpdatingApp}
+                                  className="flex-1 py-1.5 bg-sky-600 hover:bg-sky-700 text-white font-bold text-xs rounded-lg transition cursor-pointer flex items-center justify-center space-x-1 disabled:opacity-60"
+                                >
+                                  <DownloadCloud className="w-3 h-3" />
+                                  <span>{isUpdatingApp ? '正在下载...' : '一键覆盖安装'}</span>
+                                </button>
+                                <button
+                                  type="button"
+                                  onClick={handleOpenAppBrowserDownload}
+                                  className="px-3 py-1.5 border border-[var(--border-color)] bg-[var(--bg-secondary)] hover:bg-[var(--border-color)] text-[var(--text-secondary)] font-bold text-xs rounded-lg transition cursor-pointer flex items-center space-x-1"
+                                >
+                                  <ExternalLink className="w-3 h-3" />
+                                  <span>浏览器下载</span>
+                                </button>
+                              </div>
+                            </div>
+                          ) : (
+                            <div className="flex items-center space-x-2 text-xs text-emerald-600 dark:text-emerald-400 font-bold">
+                              <CheckCircle2 className="w-4 h-4 shrink-0" />
+                              <span>当前驱动客户端已是最新版本！</span>
+                            </div>
+                          )}
+                        </div>
+                      )}
+                    </div>
+
+                    {/* 按钮操作组 (检查驱动新版本 + 打开发布页) */}
+                    <div className="space-y-1.5 pt-2 border-t border-[var(--border-color)]/70">
+                      <button
+                        type="button"
+                        onClick={handleCheckAndUpdateApp}
+                        disabled={isCheckingApp}
+                        className="w-full py-2 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 disabled:opacity-60 text-white font-bold text-xs rounded-xl transition shadow-xs cursor-pointer flex items-center justify-center space-x-1.5"
+                      >
+                        <RefreshCw className={`w-3.5 h-3.5 ${isCheckingApp ? 'animate-spin' : ''}`} />
+                        <span>{isCheckingApp ? '正在查询版本...' : '检查并更新驱动客户端'}</span>
+                      </button>
+
+                      <button
+                        type="button"
+                        onClick={() => openExternal('https://github.com/Kutaze', 'GitHub Releases')}
+                        className="w-full py-2 bg-[var(--bg-secondary)] hover:bg-[var(--bg-tertiary)] border border-[var(--border-color)] text-[var(--text-primary)] font-bold text-xs rounded-xl transition cursor-pointer flex items-center justify-center space-x-1.5 shadow-xs"
+                      >
+                        <ExternalLink className="w-3.5 h-3.5 text-[var(--text-tertiary)]" />
+                        <span>打开发布页 (Releases)</span>
+                      </button>
+                    </div>
+                  </div>
+
+                </div>
+
+              </div>
+            )}
+
+            {/* 3. 消息通知 (纯键盘专用通知) */}
             {activeSection === 'notifications' && (
               <div className="space-y-4 max-w-2xl">
                 <h2 className="text-base font-black font-title text-[var(--text-primary)] pb-2 border-b border-[var(--border-color)]">
@@ -735,11 +1315,20 @@ export default function GlobalSettingsModal({
                       <button
                         type="button"
                         onClick={handleCheckUpdate}
-                        disabled={isCheckingUpdate}
+                        disabled={isCheckingBoth}
                         className="w-full py-2 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 disabled:opacity-70 text-white font-bold text-xs rounded-xl transition shadow-sm cursor-pointer flex items-center justify-center space-x-2"
                       >
-                        <RefreshCw className={`w-3.5 h-3.5 ${isCheckingUpdate ? 'animate-spin' : ''}`} />
-                        <span>{isCheckingUpdate ? '正在检查版本...' : '立即检查更新'}</span>
+                        <RefreshCw className={`w-3.5 h-3.5 ${isCheckingBoth ? 'animate-spin' : ''}`} />
+                        <span>{isCheckingBoth ? '正在检查版本...' : '立即检查更新'}</span>
+                      </button>
+
+                      <button
+                        type="button"
+                        onClick={() => setActiveSection('updates')}
+                        className="w-full py-1.5 px-3 bg-[var(--bg-secondary)] hover:bg-[var(--bg-tertiary)] border border-[var(--border-color)] text-[var(--text-secondary)] hover:text-[var(--text-primary)] text-xs font-bold rounded-xl transition cursor-pointer flex items-center justify-center space-x-1.5"
+                      >
+                        <DownloadCloud className="w-3.5 h-3.5 text-blue-500" />
+                        <span>进入软件与数据库更新中心</span>
                       </button>
 
                       <div className="flex items-center justify-between text-xs pt-1 px-1">

@@ -708,43 +708,16 @@ export function analyzeDeviceCapabilities(descriptor = {}) {
 }
 
 /**
- * 动态获取当前键盘底灯/装饰灯规格 (支持不同机型不同底灯数量适配)
+ * 动态获取当前键盘底灯/装饰灯规格 (支持不同机型不同底灯数量自动检测与切换)
  * 优先级:
- * 1. 硬件底层 SDK 上报的 lightingAreas (count, rows, cols)
- * 2. 设备配置文件中针对 SKU 特征定义的规格 (如 AE64-MAX 31颗 [17, 14], ES68 26颗 [13, 13])
- * 3. 动态算子推导兜底
+ * 1. 硬件底层 SDK 真实上报的 lightingArea (count, rows, cols)
+ * 2. profile 明确配置的 decorateLighting 或 stripLighting (如 AE64-MAX 34颗 [17, 17], ES68 26颗 [13, 13])
+ * 3. customDeviceRegistry 或官方预设库中收录的对应型号拓扑
+ * 4. 型号名称特征匹配 (AE64 -> 34颗, ES68 -> 26颗)
+ * 5. 若设备不支持底灯，返回 count: 0 (自动隐藏底灯调节/预览)
  */
-export function getDecorateLightingConfig(profile, lightingArea, overrideCount = null) {
-  const modelName = (profile?.model || profile?.name || profile?.shortName || '').toUpperCase();
-  const isAe64 = modelName.includes('AE64');
-  const isEs68 = modelName.includes('ES68');
-
-  // 用户手动指定的数量优先（解决不同批次/客制化底灯数量差异，导致物理末尾灯珠控制不上的问题）
-  if (typeof overrideCount === 'number' && overrideCount > 0) {
-    const count = overrideCount;
-    if (count <= 16) {
-      return {
-        count,
-        rows: 1,
-        cols: count,
-        rowLayout: [count],
-        name: '装饰灯1',
-        isStripTube: true,
-      };
-    }
-    const r1 = Math.ceil(count / 2);
-    const r2 = count - r1;
-    return {
-      count,
-      rows: 2,
-      cols: r1,
-      rowLayout: [r1, r2],
-      name: '装饰灯1',
-      isStripTube: true,
-    };
-  }
-
-  // 1. 如果硬件底层 SDK 明确上报了装饰灯区参数，以硬件真实上报为主
+export function getDecorateLightingConfig(profile, lightingArea) {
+  // 1. 如果硬件底层 SDK 明确上报了装饰灯区参数且有真实数量，以硬件真实上报为主
   if (lightingArea && typeof lightingArea.count === 'number' && lightingArea.count > 0) {
     const count = lightingArea.count;
     const rows = lightingArea.rows || (count > 16 ? 2 : 1);
@@ -762,14 +735,88 @@ export function getDecorateLightingConfig(profile, lightingArea, overrideCount =
       rows,
       cols: Math.max(rowLayout[0], cols),
       rowLayout,
-      name: '装饰灯1',
+      name: lightingArea.name || '装饰灯1',
       isStripTube: true,
+      source: 'hardware_probe',
     };
   }
 
-  // 2. 根据 profile 配置或型号匹配
-  // AE64-MAX 物理底壳环形灯带标准为 34 颗 LED (首行 17 颗 + 次行 17 颗)，杜绝 31 颗漏掉 3 颗导致控制不上的物理缺陷
-  if (isAe64) {
+  // 2. 根据 profile 档案中显式定义的 decorateLighting
+  if (profile?.decorateLighting && typeof profile.decorateLighting === 'object' && profile.decorateLighting.count > 0) {
+    const count = profile.decorateLighting.count;
+    const rows = profile.decorateLighting.rows || (count > 16 ? 2 : 1);
+    const cols = profile.decorateLighting.cols || Math.ceil(count / rows);
+    const rowLayout = profile.decorateLighting.rowLayout || (rows === 1 ? [count] : [Math.ceil(count / 2), count - Math.ceil(count / 2)]);
+    return {
+      ...profile.decorateLighting,
+      count,
+      rows,
+      cols,
+      rowLayout,
+      name: profile.decorateLighting.name || '装饰灯1',
+      isStripTube: true,
+      source: 'profile_config',
+    };
+  }
+
+  // 3. 根据 profile 档案中显式定义的 stripLighting
+  if (profile?.stripLighting && typeof profile.stripLighting === 'object' && profile.stripLighting.count > 0) {
+    const count = profile.stripLighting.count;
+    const rows = profile.stripLighting.rows || (count > 16 ? 2 : 1);
+    const cols = profile.stripLighting.cols || Math.ceil(count / rows);
+    const rowLayout = rows === 1 ? [count] : [Math.ceil(count / 2), count - Math.ceil(count / 2)];
+    return {
+      count,
+      rows,
+      cols,
+      rowLayout,
+      name: '装饰灯1',
+      isStripTube: true,
+      source: 'profile_strip',
+    };
+  }
+
+  // 4. 从 customDeviceRegistry 查询该设备档案
+  if (customDeviceRegistry && (profile?.vendorId || profile?.productId)) {
+    const regProfile = customDeviceRegistry.getProfile(profile.vendorId, profile.productId);
+    if (regProfile) {
+      if (regProfile.decorateLighting && regProfile.decorateLighting.count > 0) {
+        const count = regProfile.decorateLighting.count;
+        const rows = regProfile.decorateLighting.rows || (count > 16 ? 2 : 1);
+        const cols = regProfile.decorateLighting.cols || Math.ceil(count / rows);
+        return {
+          ...regProfile.decorateLighting,
+          count,
+          rows,
+          cols,
+          rowLayout: regProfile.decorateLighting.rowLayout || (rows === 1 ? [count] : [Math.ceil(count / 2), count - Math.ceil(count / 2)]),
+          name: regProfile.decorateLighting.name || '装饰灯1',
+          isStripTube: true,
+          source: 'registry_profile',
+        };
+      }
+      if (regProfile.stripLighting && regProfile.stripLighting.count > 0) {
+        const count = regProfile.stripLighting.count;
+        const rows = regProfile.stripLighting.rows || (count > 16 ? 2 : 1);
+        const cols = regProfile.stripLighting.cols || Math.ceil(count / rows);
+        return {
+          count,
+          rows,
+          cols,
+          rowLayout: rows === 1 ? [count] : [Math.ceil(count / 2), count - Math.ceil(count / 2)],
+          name: '装饰灯1',
+          isStripTube: true,
+          source: 'registry_strip',
+        };
+      }
+    }
+  }
+
+  // 5. 型号名称特征精准匹配
+  const modelName = (profile?.model || profile?.name || profile?.shortName || profile?.id || '').toUpperCase();
+  
+  // AE64 系列 (如 AE64-MAX): 物理底壳环形灯带标准为 34 颗 LED (首行 17 颗 + 次行 17 颗)
+  if (modelName.includes('AE64')) {
     return {
       count: 34,
       rows: 2,
@@ -777,10 +824,12 @@ export function getDecorateLightingConfig(profile, lightingArea, overrideCount =
       rowLayout: [17, 17],
       name: '装饰灯1',
       isStripTube: true,
+      source: 'sku_ae64',
     };
   }
 
-  if (isEs68) {
+  // ES68 系列 (如 前行者 ES68 破晓): 贯穿式 ARGB 漫反射灯带标准为 26 颗 LED (2 行 x 13 列)
+  if (modelName.includes('ES68')) {
     return {
       count: 26,
       rows: 2,
@@ -788,14 +837,25 @@ export function getDecorateLightingConfig(profile, lightingArea, overrideCount =
       rowLayout: [13, 13],
       name: '装饰灯1',
       isStripTube: true,
+      source: 'sku_es68',
     };
   }
 
-  if (profile?.decorateLighting && typeof profile.decorateLighting === 'object') {
-    return { ...profile.decorateLighting, isStripTube: true };
+  // 6. 若设备明确不支持底灯，返回 count: 0 (自动不开放底灯调节)
+  const hasDecoFeature = !!profile?.features?.decorateLighting || !!profile?.features?.stripLighting;
+  if (!hasDecoFeature) {
+    return {
+      count: 0,
+      rows: 0,
+      cols: 0,
+      rowLayout: [],
+      name: '无底灯',
+      isStripTube: false,
+      source: 'none',
+    };
   }
 
-  // 3. 通用兜底
+  // 7. 通用兜底 (34 颗 [17, 17])
   return {
     count: 34,
     rows: 2,
@@ -803,6 +863,7 @@ export function getDecorateLightingConfig(profile, lightingArea, overrideCount =
     rowLayout: [17, 17],
     name: '装饰灯1',
     isStripTube: true,
+    source: 'fallback',
   };
 }
 

@@ -9,18 +9,14 @@ import {
   Power,
   Cpu,
   RefreshCw,
-  FolderOpen,
-  ArrowUpCircle,
   CheckCircle2,
   AlertTriangle,
   ExternalLink,
   ShieldCheck,
-  PackageCheck,
 } from 'lucide-react';
 import { useToast } from './ToastProvider';
 import { keyboardService } from '../services/keyboardService';
 import { updaterService } from '../services/updaterService';
-import { customDeviceRegistry } from '../services/customDeviceRegistry';
 import { checkKeyboardFirmwareUpdate, VENDOR_FIRMWARE_CHANNELS } from '../services/firmwareService';
 
 export default function SettingsTab({ 
@@ -38,14 +34,6 @@ export default function SettingsTab({
   const [isRestoring, setIsRestoring] = useState(false);
   const [isRecovering, setIsRecovering] = useState(false);
 
-  // OTA 云端更新与库更新
-  const [isCheckingOTA, setIsCheckingOTA] = useState(false);
-  const [otaResult, setOtaResult] = useState(null);
-  const [isApplyingLibUpdate, setIsApplyingLibUpdate] = useState(false);
-  const [isDownloadingApp, setIsDownloadingApp] = useState(false);
-  const [downloadProgress, setDownloadProgress] = useState(0);
-  const [libVersion, setLibVersion] = useState(() => updaterService.getCurrentLibVersion());
-
   // 键盘硬件固件升级 (官方通道与原厂源)
   const [isCheckingFw, setIsCheckingFw] = useState(false);
   const [fwCheckResult, setFwCheckResult] = useState(null);
@@ -54,126 +42,6 @@ export default function SettingsTab({
   const [devClickCount, setDevClickCount] = useState(0);
 
   const shortName = deviceProfile?.shortName || '设备';
-
-  // 云端更新检测 (包含驱动本体与设备适配库)
-  const handleCheckOTA = async () => {
-    setIsCheckingOTA(true);
-    setOtaResult(null);
-    try {
-      const res = await updaterService.checkForUpdates();
-      setOtaResult(res);
-      if (!res.configured) {
-        addToast({
-          message: '未配置云端更新地址，请先通过底部或快捷键进入开发者后台配置下载直链',
-          type: 'info',
-        });
-      } else if (res.error) {
-        addToast({ message: `检查更新失败: ${res.error}`, type: 'warning' });
-      } else if (res.hasLibUpdate || res.hasAppUpdate) {
-        addToast({
-          message: `发现可用更新！${res.hasLibUpdate ? '【设备适配库更新】' : ''} ${res.hasAppUpdate ? '【驱动本体新版本】' : ''}`,
-          type: 'info',
-        });
-      } else {
-        addToast({ message: '当前驱动程序与键盘适配库均为最新版本！', type: 'success' });
-      }
-    } catch (err) {
-      addToast({ message: `检查更新异常: ${err.message}`, type: 'error' });
-    } finally {
-      setIsCheckingOTA(false);
-    }
-  };
-
-  // 一键差量热更新设备适配库 (无需重装驱动)
-  const handleApplyLibUpdate = async () => {
-    if (!otaResult?.manifest) return;
-    setIsApplyingLibUpdate(true);
-    try {
-      const res = await updaterService.applyLibUpdate(otaResult.manifest);
-      setLibVersion(updaterService.getCurrentLibVersion());
-      // 更新结果状态
-      setOtaResult((prev) => prev ? { ...prev, hasLibUpdate: false } : null);
-      addToast({
-        message: `热更新成功！已无感同步 ${res.count} 款键盘适配数据，无需重启或重装驱动！`,
-        type: 'success',
-      });
-    } catch (err) {
-      addToast({ message: `更新适配库失败: ${err.message}`, type: 'error' });
-    } finally {
-      setIsApplyingLibUpdate(false);
-    }
-  };
-
-  // 一键下载并自动覆盖安装驱动本体
-  const handleInstallAppUpdate = async () => {
-    if (!otaResult?.manifest) return;
-    setIsDownloadingApp(true);
-    setDownloadProgress(0);
-    try {
-      addToast({ message: '正在下载新版驱动安装包，下载完成后将自动启动覆盖安装...', type: 'info' });
-      const res = await updaterService.installAppUpdate(otaResult.manifest, (progress) => {
-        setDownloadProgress(progress.percent || 0);
-      });
-      if (res.browserOpened) {
-        addToast({ message: '已为您在浏览器打开最新安装包下载页面！', type: 'success' });
-      }
-    } catch (err) {
-      addToast({ message: `下载更新失败: ${err.message}`, type: 'error' });
-    } finally {
-      setIsDownloadingApp(false);
-    }
-  };
-
-  // 手动在浏览器打开安装包下载页面
-  const handleOpenBrowserDownload = () => {
-    const url = otaResult?.manifest?.appDownloadUrl;
-    if (url) {
-      if (window.electronAPI?.openExternalUrl) {
-        window.electronAPI.openExternalUrl(url);
-      } else {
-        window.open(url, '_blank');
-      }
-    }
-  };
-
-  // 导入本地离线适配库包 (支持单个 .spkdb / .zip 集合包 或 单机探针/数据库 .json)
-  const handleImportOfflineLib = async (e) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
-
-    try {
-      const isZip = file.name.endsWith('.spkdb') || file.name.endsWith('.zip');
-      if (isZip) {
-        addToast({ message: `正在校验并解包数据库集合包 [${file.name}]...`, type: 'info' });
-        const arrayBuf = await file.arrayBuffer();
-        const res = await updaterService.importOfflineBundle(arrayBuf, file.name);
-        setLibVersion(updaterService.getCurrentLibVersion());
-        addToast({
-          message: `🎉 成功导入星闪全量外设数据库集合包 (V${res.libVersion})！已覆盖生效 ${res.count} 款键盘硬件档案，无需重启驱动！`,
-          type: 'success',
-        });
-      } else {
-        const text = await file.text();
-        const res = updaterService.importOfflineLibFile(text);
-        setLibVersion(updaterService.getCurrentLibVersion());
-        if (res.isSingleProbe) {
-          addToast({
-            message: `🎉 成功解析并导入探针硬件包【${res.deviceName} (${res.vHex}:${res.pHex})】！已无缝合入驱动数据库（包含 ${res.totalKeys} 键物理矩阵、${res.totalLeds} 颗灯珠拓扑与出厂校准）！`,
-            type: 'success',
-          });
-        } else {
-          addToast({
-            message: `全量离线数据库已成功导入并覆写！共生效 ${res.count} 款键盘适配 (库版本: ${res.libVersion})，无需重装驱动！`,
-            type: 'success',
-          });
-        }
-      }
-    } catch (err) {
-      addToast({ message: `导入解析失败: ${err.message}`, type: 'error' });
-    } finally {
-      e.target.value = '';
-    }
-  };
 
   // 检查键盘硬件底层固件 (向官方 api.sparklinkplayjoy.com 查询)
   const handleCheckFirmware = async () => {
@@ -295,156 +163,8 @@ export default function SettingsTab({
     <div className="panel-operation flex-1">
       <div className="operation-columns">
 
-        {/* 左列：更新维护 (驱动本体OTA / 设备适配库热更新 / 键盘固件) */}
+        {/* 左列：键盘硬件底层固件 (IAP/DFU) */}
         <div className="col space-y-4">
-
-          {/* 驱动与适配库在线更新 (云端推送 + 离线导入) */}
-          <div className="section-box p-4 rounded-xl border border-[var(--border-color)] bg-[var(--bg-secondary)] space-y-3">
-            <div className="flex flex-wrap items-center justify-between gap-2">
-              <h3 className="section-title flex items-center text-sm font-bold text-[var(--text-primary)] shrink-0">
-                <DownloadCloud className="w-4 h-4 mr-1.5 text-[var(--info-color)] shrink-0" />
-                <span>驱动与适配库更新</span>
-              </h3>
-              <div className="flex items-center gap-1.5 flex-wrap shrink-0">
-                <span className="text-xs font-mono px-2.5 py-0.5 rounded-full bg-sky-500/10 text-sky-600 dark:text-sky-400 font-bold border border-sky-500/20 whitespace-nowrap">
-                  驱动: V{updaterService.getCurrentAppVersion()}
-                </span>
-                <span className="text-xs font-mono px-2.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 font-bold border border-emerald-500/20 whitespace-nowrap">
-                  适配库: {libVersion} ({customDeviceRegistry.getTotalCount()}款)
-                </span>
-              </div>
-            </div>
-
-            <p className="text-xs text-[var(--text-secondary)] leading-relaxed font-medium">
-              支持「差量库秒级热更新」与「本体全量覆盖升级」。新键盘适配数据即时生效，无需反复重装 100MB 驱动客户端。
-            </p>
-
-            {/* 操作按钮区 (自适应换行，防窄窗口截断) */}
-            <div className="flex items-center gap-2 pt-1 flex-wrap">
-              <button
-                onClick={handleCheckOTA}
-                disabled={isCheckingOTA}
-                className="btn btn-primary text-xs flex items-center space-x-1.5 py-1.5 px-3.5 disabled:opacity-60 cursor-pointer shadow-sm shrink-0 font-bold"
-              >
-                <RefreshCw className={`w-3.5 h-3.5 ${isCheckingOTA ? 'animate-spin' : ''}`} />
-                <span>{isCheckingOTA ? '正在检查云端...' : '检查云端更新'}</span>
-              </button>
-
-              <label className="btn text-xs flex items-center space-x-1.5 py-1.5 px-3.5 border border-amber-500/30 bg-amber-500/10 hover:bg-amber-500/20 text-amber-600 dark:text-amber-400 font-bold transition cursor-pointer shadow-sm">
-                <FolderOpen className="w-3.5 h-3.5 shrink-0" />
-                <span className="truncate">导入离线适配包 (.spkdb / .json)</span>
-                <input
-                  type="file"
-                  accept=".spkdb,.zip,.json"
-                  onChange={handleImportOfflineLib}
-                  className="hidden"
-                />
-              </label>
-            </div>
-
-            {/* 云端更新检测结果卡片 */}
-            {otaResult && (
-              <div className="p-3 rounded-xl border border-[var(--border-color)] bg-[var(--bg-tertiary)] space-y-2 mt-2">
-                {!otaResult.configured ? (
-                  <div className="flex items-start space-x-2 text-xs text-amber-600 dark:text-amber-400">
-                    <AlertTriangle className="w-4 h-4 mt-0.5 shrink-0" />
-                    <div className="space-y-1">
-                      <div className="text-xs font-bold">云端更新地址未设置</div>
-                      <div className="text-xs text-[var(--text-secondary)] leading-relaxed">
-                        暂未配置 Manifest 直链。开发者可在底部点击版本 7 次进入后台配置 Gitee/云盘直链。普通用户亦可直接点击「导入离线适配库」使用社群分发的数据包。
-                      </div>
-                    </div>
-                  </div>
-                ) : otaResult.error ? (
-                  <div className="flex items-center space-x-2 text-xs text-rose-500 font-medium">
-                    <AlertTriangle className="w-4 h-4 shrink-0" />
-                    <span>检测更新失败: {otaResult.error}</span>
-                  </div>
-                ) : !otaResult.hasLibUpdate && !otaResult.hasAppUpdate ? (
-                  <div className="flex items-center space-x-2 text-xs text-emerald-600 dark:text-emerald-400 font-bold">
-                    <CheckCircle2 className="w-4 h-4 shrink-0" />
-                    <span>当前驱动本体与外设适配库均已是最新版本！</span>
-                  </div>
-                ) : (
-                  <div className="space-y-2.5">
-                    {/* 1. 适配库有更新 */}
-                    {otaResult.hasLibUpdate && (
-                      <div className="p-2.5 rounded-lg bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-between">
-                        <div>
-                          <div className="text-xs font-bold text-emerald-600 dark:text-emerald-400 flex items-center space-x-1.5">
-                            <PackageCheck className="w-3.5 h-3.5" />
-                            <span>发现最新键盘适配库 ({otaResult.manifest?.libVersion})</span>
-                          </div>
-                          <div className="text-xs text-[var(--text-secondary)] mt-0.5">
-                            体积约数十 KB，无感秒级加载，无需重新安装客户端
-                          </div>
-                        </div>
-                        <button
-                          onClick={handleApplyLibUpdate}
-                          disabled={isApplyingLibUpdate}
-                          className="px-3 py-1 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs rounded-lg transition cursor-pointer flex items-center space-x-1 disabled:opacity-60"
-                        >
-                          <RefreshCw className={`w-3 h-3 ${isApplyingLibUpdate ? 'animate-spin' : ''}`} />
-                          <span>{isApplyingLibUpdate ? '正在加载...' : '一键秒级更新'}</span>
-                        </button>
-                      </div>
-                    )}
-
-                    {/* 2. 驱动本体有新版本 */}
-                    {otaResult.hasAppUpdate && (
-                      <div className="p-2.5 rounded-lg bg-sky-500/10 border border-sky-500/20 space-y-2">
-                        <div className="flex items-center justify-between">
-                          <div>
-                            <div className="text-xs font-bold text-sky-600 dark:text-sky-400 flex items-center space-x-1.5">
-                              <ArrowUpCircle className="w-3.5 h-3.5" />
-                              <span>驱动程序新版本发布 (V{otaResult.manifest?.appVersion})</span>
-                            </div>
-                            <div className="text-xs text-[var(--text-secondary)] mt-0.5">
-                              {otaResult.manifest?.changelog || '优化星闪连接稳定性与多设备切换性能'}
-                            </div>
-                          </div>
-                        </div>
-
-                        {/* 下载进度条 */}
-                        {isDownloadingApp && (
-                          <div className="space-y-1">
-                            <div className="flex justify-between text-xs text-[var(--text-secondary)] font-mono">
-                              <span>下载安装包中...</span>
-                              <span>{downloadProgress}%</span>
-                            </div>
-                            <div className="w-full bg-[var(--border-color)] h-1.5 rounded-full overflow-hidden">
-                              <div
-                                className="bg-sky-500 h-full transition-all duration-200"
-                                style={{ width: `${downloadProgress}%` }}
-                              ></div>
-                            </div>
-                          </div>
-                        )}
-
-                        <div className="flex items-center space-x-2 pt-1">
-                          <button
-                            onClick={handleInstallAppUpdate}
-                            disabled={isDownloadingApp}
-                            className="px-3 py-1 bg-sky-600 hover:bg-sky-700 text-white font-bold text-xs rounded-lg transition cursor-pointer flex items-center space-x-1 disabled:opacity-60"
-                          >
-                            <DownloadCloud className="w-3 h-3" />
-                            <span>{isDownloadingApp ? '正在下载...' : '一键自动覆盖安装'}</span>
-                          </button>
-                          <button
-                            onClick={handleOpenBrowserDownload}
-                            className="px-3 py-1 border border-[var(--border-color)] bg-[var(--bg-secondary)] hover:bg-[var(--border-color)] text-[var(--text-secondary)] font-bold text-xs rounded-lg transition cursor-pointer flex items-center space-x-1"
-                          >
-                            <ExternalLink className="w-3 h-3" />
-                            <span>浏览器手动下载安装包</span>
-                          </button>
-                        </div>
-                      </div>
-                    )}
-                  </div>
-                )}
-              </div>
-            )}
-          </div>
 
           {/* 键盘硬件底层固件升级 (IAP/DFU) */}
           <div className="section-box p-4 rounded-xl border border-[var(--border-color)] bg-[var(--bg-secondary)] space-y-3">
@@ -665,7 +385,19 @@ export default function SettingsTab({
               驱动版本: V{updaterService.getCurrentAppVersion()} (开源发布版)
             </span>
             <div className="flex items-center space-x-2">
-              <span className="text-[var(--info-color)] font-bold font-sans">SPARKLINK HUB (开源项目)</span>
+              <button
+                type="button"
+                onClick={() => {
+                  if (typeof window !== 'undefined' && window.__openGlobalSettings) {
+                    window.__openGlobalSettings('updates');
+                  }
+                }}
+                className="text-xs px-2.5 py-1 rounded-lg bg-[var(--info-color)]/10 hover:bg-[var(--info-color)]/20 text-[var(--info-color)] font-bold transition flex items-center space-x-1 cursor-pointer"
+                title="软件与外设适配库更新已迁移至软件设置，点此直达"
+              >
+                <DownloadCloud className="w-3.5 h-3.5" />
+                <span>软件与适配库更新</span>
+              </button>
               <button
                 onClick={onOpenDevLab}
                 className="text-xs px-2 py-0.5 rounded bg-[var(--bg-tertiary)] hover:bg-[var(--border-color)] text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition cursor-pointer font-mono font-semibold"
