@@ -947,33 +947,40 @@ export default function App() {
   const [stripCustomColors, setStripCustomColors] = useState({}); // { [ledIndex]: hex }
   const [stripSimViewMode, setStripSimViewMode] = useState('unified'); // 'unified' | 'split'
 
-  // 用户可针对当前客制化板子微调底灯数量（解决不同板子物理底灯数量差异导致末尾灯珠控制不上）
-  const [customStripCount, setCustomStripCount] = useState(() => {
-    try {
-      const devId = deviceProfile?.id || 'default';
-      const saved = localStorage.getItem(`strip_led_count_${devId}`);
-      return saved ? parseInt(saved, 10) : null;
-    } catch {
-      return null;
-    }
-  });
-
-  const handleUpdateStripCount = (newCount) => {
-    const val = Math.max(1, Math.min(64, newCount));
-    setCustomStripCount(val);
-    try {
-      const devId = deviceProfile?.id || 'default';
-      localStorage.setItem(`strip_led_count_${devId}`, String(val));
-    } catch {}
-    addToast({ message: `底灯数量已设为 ${val} 颗 LED！`, type: 'info' });
-  };
-
-  // 动态底灯/装饰灯规格 (支持真实硬件探测、客制化板子数量自定义、AE64-MAX 34颗 [17, 17] / ES68 26颗 [13, 13])
+  // 动态底灯/装饰灯规格 (支持真实硬件探测、型号自动检测与切换，不开放用户手动调节)
   const decorateConfig = useMemo(() => {
-    return getDecorateLightingConfig(deviceProfile, lightingAreas[1], customStripCount);
-  }, [deviceProfile, lightingAreas, customStripCount]);
+    return getDecorateLightingConfig(deviceProfile, lightingAreas[1]);
+  }, [deviceProfile, lightingAreas]);
   const bottomLedCount = decorateConfig.count;
-  const hasDecorateLighting = (lightingAreas && lightingAreas.length > 1) || !!deviceProfile?.features?.decorateLighting || !!deviceProfile?.features?.stripLighting || (deviceProfile?.model && (deviceProfile.model.includes('AE64') || deviceProfile.model.includes('ES68')));
+  const hasDecorateLighting = (lightingAreas && lightingAreas.length > 1) || 
+    decorateConfig.count > 0 ||
+    !!deviceProfile?.features?.decorateLighting || 
+    !!deviceProfile?.features?.stripLighting || 
+    (deviceProfile?.model && (deviceProfile.model.includes('AE64') || deviceProfile.model.includes('ES68')));
+
+  // 若当前键盘无底灯/装饰灯，自动将高亮区域回退至主键盘
+  useEffect(() => {
+    if (!hasDecorateLighting && activeLightingArea !== 'keyboard') {
+      setActiveLightingArea('keyboard');
+    }
+  }, [hasDecorateLighting, activeLightingArea]);
+
+  // 当切换到底灯数量不同的设备时，清除超出范围的单颗涂色
+  useEffect(() => {
+    setStripCustomColors((prev) => {
+      const filtered = {};
+      let changed = false;
+      Object.keys(prev).forEach((k) => {
+        const idx = parseInt(k, 10);
+        if (idx < bottomLedCount) {
+          filtered[idx] = prev[k];
+        } else {
+          changed = true;
+        }
+      });
+      return changed ? filtered : prev;
+    });
+  }, [bottomLedCount]);
 
   // 改键映射状态 (按设备独立隔离，按层级 win_default, win_fn, mac_default, mac_fn)
   const [activeKeybindLayer, setActiveKeybindLayer] = useState('win_default');
@@ -4100,7 +4107,6 @@ export default function App() {
                 if (hex) setCurrentLightingColor(hex);
               }}
               bottomLedCount={bottomLedCount}
-              onUpdateStripCount={handleUpdateStripCount}
               onApplyAllKeyColor={(color) => {
                 const allColors = {};
                 ACTIVE_LAYOUT.forEach(row => row.forEach(k => {

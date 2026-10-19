@@ -181,7 +181,6 @@ export default function LightingTab({
   hasDecorateLighting = true,
   onApplyAllKeyColor,
   bottomLedCount = 34,
-  onUpdateStripCount,
   isLiveHwLightingSync = false,
   onToggleLiveHwLightingSync,
   isConnected = false,
@@ -787,29 +786,17 @@ export default function LightingTab({
             </>
           ) : (
             <>
-              {/* 底灯数量快速调节与客制化板子预设 */}
-              {bottomLedCount && onUpdateStripCount && (
-                <div className="flex items-center space-x-1 px-2 py-0.5 rounded-lg bg-[var(--bg-secondary)] border border-[var(--border-color)]">
+              {/* 底灯配置自动识别展示 (不开放用户手动调节，跟随键盘硬件配置自动切换) */}
+              {bottomLedCount > 0 && (
+                <div 
+                  className="flex items-center space-x-1 px-2.5 py-1 rounded-lg bg-[var(--bg-secondary)] border border-[var(--border-color)] shadow-2xs"
+                  title="底灯数量根据当前键盘硬件配置信息自动识别并适配，无需手动调节"
+                >
                   <span className="text-[11px] font-medium text-[var(--text-tertiary)]">底灯:</span>
-                  <button
-                    type="button"
-                    onClick={() => onUpdateStripCount(bottomLedCount - 1)}
-                    className="w-5 h-5 flex items-center justify-center rounded bg-[var(--bg-tertiary)] hover:bg-[var(--primary-15)] text-xs font-bold text-[var(--text-primary)] cursor-pointer"
-                    title="减少1颗底灯"
-                  >
-                    -
-                  </button>
-                  <span className="font-mono font-bold text-xs text-[var(--info-color)] min-w-[20px] text-center">
+                  <span className="font-mono font-bold text-xs text-[var(--info-color)]">
                     {bottomLedCount}
                   </span>
-                  <button
-                    type="button"
-                    onClick={() => onUpdateStripCount(bottomLedCount + 1)}
-                    className="w-5 h-5 flex items-center justify-center rounded bg-[var(--bg-tertiary)] hover:bg-[var(--primary-15)] text-xs font-bold text-[var(--text-primary)] cursor-pointer"
-                    title="增加1颗底灯"
-                  >
-                    +
-                  </button>
+                  <span className="text-[10px] text-[var(--text-tertiary)]">颗</span>
                 </div>
               )}
 
