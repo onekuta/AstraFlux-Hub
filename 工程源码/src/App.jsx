@@ -259,8 +259,12 @@ export default function App() {
         }
 
         if (silentlyConnect && !keyboardService.connected) {
-          console.log('[SparkLink AutoScan] 主页自主检索到已建库设备，正在自动握手默认方案:', preferred.displayName);
-          keyboardService.autoConnect(preferred.hidDevice || preferred).catch(() => {});
+          if (keyboardService.isResettingRate) {
+            console.log('[SparkLink AutoScan] 正在回报率自愈重连序列中，跳过此轮外部自动连接');
+          } else {
+            console.log('[SparkLink AutoScan] 主页自主检索到已建库设备，正在自动握手默认方案:', preferred.displayName);
+            keyboardService.autoConnect(preferred.hidDevice || preferred).catch(() => {});
+          }
         }
       }
 
@@ -1586,6 +1590,7 @@ export default function App() {
       syncedDeviceIdRef.current = null;
       refreshAuthorizedDevices(true);
     };
+    window.__refreshAuthorizedDevices = refreshAuthorizedDevices;
     navigator.hid?.addEventListener?.('connect', onHidChange);
     navigator.hid?.addEventListener?.('disconnect', onHidChange);
 
@@ -2733,6 +2738,9 @@ export default function App() {
               });
             }
             try {
+              if (typeof keyboardService._clearAllSdkQueues === 'function') {
+                keyboardService._clearAllSdkQueues();
+              }
               // 优先尝试直接连接已识别的设备，避免不必要的系统授权弹窗
               const ok = await keyboardService.autoConnect(dev.hidDevice || dev);
               if (!ok && typeof keyboardService.requestPermission === 'function') {
@@ -2740,6 +2748,9 @@ export default function App() {
               }
             } catch (err) {
               console.warn('onConnectSpecific fallback to autoConnect:', err);
+              if (typeof keyboardService._clearAllSdkQueues === 'function') {
+                keyboardService._clearAllSdkQueues();
+              }
               await keyboardService.autoConnect(dev.hidDevice || dev).catch(() => {});
             }
             await refreshAuthorizedDevices(false);

@@ -210,9 +210,9 @@ export default function PerformanceTab({
       }
     }
     addToast({
-      message: `回报率已切换为 ${clamped >= 1000 ? `${clamped / 1000}KHz` : `${clamped}Hz`} (${(1000 / clamped).toFixed(3)}ms)`,
+      message: `回报率已切换为 ${clamped >= 1000 ? `${clamped / 1000}KHz` : `${clamped}Hz`} (${(1000 / clamped).toFixed(3)}ms)，硬件自愈重连中...`,
       type: 'info',
-      duration: 1500
+      duration: 2000
     });
   };
 

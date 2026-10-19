@@ -264,10 +264,41 @@ class KeyboardService {
     }
   }
 
+  // 彻底排空与重置 SDK 内部指令队列与设备单例句柄，防止硬件掉电/重启时产生死锁毒包
+  _clearAllSdkQueues() {
+    try {
+      if (this.sdk?.deviceBase) {
+        this.sdk.deviceBase.globalCommandQueue = {};
+        this.sdk.deviceBase.globalCommandQueueMultiple = {};
+        if (this.sdk.deviceBase.commandQueueWrapper) {
+          this.sdk.deviceBase.commandQueueWrapper.commandQueue = [];
+          this.sdk.deviceBase.commandQueueWrapper.isFlushing = false;
+        }
+        if (this.sdk.deviceBase.commandQueueWrapperMultiple) {
+          this.sdk.deviceBase.commandQueueWrapperMultiple.commandQueue = [];
+          this.sdk.deviceBase.commandQueueWrapperMultiple.isFlushing = false;
+        }
+      }
+      if (this.sdk?.deviceBase?.hidService) {
+        const hs = this.sdk.deviceBase.hidService;
+        hs.isReconnecting = false;
+        hs.isInputReportListenerSetup = false;
+        if (hs.inputReportManager) {
+          try { hs.inputReportManager.clear(); } catch (e) {}
+          hs.inputReportManager = null;
+        }
+        hs.device = null;
+        hs.hidDevices = {};
+      }
+    } catch (e) {
+      console.warn('[SparkLink HID] 清理 SDK 队列与单例异常:', e);
+    }
+  }
+
   // 尝试连接并握手 (可传入指定的 HIDDevice 以连接多设备中的某一台)
-  async autoConnect(preferredDevice = null) {
-    // 互斥锁：如果正在握手连接中，直接返回，避免 USB HID 并发死锁
-    if (this.isConnecting) return false;
+  async autoConnect(preferredDevice = null, allowDuringReset = false) {
+    // 互斥锁：如果正在回报率重置中 (且非自愈序列显式调用) 或正在握手连接中，直接跳过
+    if (this.isConnecting || (this.isResettingRate && !allowDuringReset)) return false;
 
     // 若已经处于连接状态，且没有指定连接其它硬件，直接复用当前连接
     if (this.connected && this.device && !preferredDevice) {
@@ -356,18 +387,25 @@ class KeyboardService {
         console.log('[SparkLink HID] 正在初始化设备 ID:', targetDevice.id, rawDev.productName);
 
         // 清空 commandQueue 避免上次异常或物理断开残留的指令死锁
-        try {
-          if (this.sdk?.deviceBase?.commandQueueWrapper) {
-            this.sdk.deviceBase.commandQueueWrapper.commandQueue = [];
-            this.sdk.deviceBase.commandQueueWrapper.isFlushing = false;
-          }
-          if (this.sdk?.deviceBase?.commandQueueWrapperMultiple) {
-            this.sdk.deviceBase.commandQueueWrapperMultiple.commandQueue = [];
-            this.sdk.deviceBase.commandQueueWrapperMultiple.isFlushing = false;
-          }
-        } catch (e) {}
+        this._clearAllSdkQueues();
 
-        await this.sdk.init(targetDevice.id);
+        try {
+          await this.sdk.init(targetDevice.id);
+        } catch (initErr) {
+          console.warn('[SparkLink HID] sdk.init 执行捕获:', initErr);
+        }
+
+        // 严格物理校验：只有底层 HID 句柄真正成功 opened，才继续推进行政连接状态
+        const hsDev = this.sdk?.deviceBase?.hidService?.device;
+        const isOpened = !!(rawDev.opened || hsDev?.opened);
+        if (!isOpened) {
+          console.warn('[SparkLink HID] 设备物理句柄打开失败 (opened=false)，取消连接状态，等待重试');
+          this._clearAllSdkQueues();
+          this.connected = false;
+          this.device = null;
+          return false;
+        }
+
         this.device = rawDev;
         this.connected = true;
 
@@ -399,6 +437,7 @@ class KeyboardService {
           }
         } catch (e) {
           console.warn('读取键盘硬件参数/SN跳过:', e);
+          this._clearAllSdkQueues();
         }
 
         // 2. 读取硬件功能特性 (轴体/磁轴/连接方式/灯光等)
@@ -409,6 +448,7 @@ class KeyboardService {
           }
         } catch (e) {
           console.warn('读取硬件特性跳过:', e);
+          this._clearAllSdkQueues();
         }
 
         // 3. 读取设备协议版本
@@ -418,6 +458,7 @@ class KeyboardService {
           }
         } catch (e) {
           console.warn('读取设备协议跳过:', e);
+          this._clearAllSdkQueues();
         }
 
         // 动态分析设备能力：读取硬件支持的回报率列表
@@ -431,6 +472,7 @@ class KeyboardService {
           }
         } catch (e) {
           console.log('读取硬件回报率列表跳过', e);
+          this._clearAllSdkQueues();
         }
 
         // 读取硬件 USB 模式与 3.0 驱动状态
@@ -443,6 +485,7 @@ class KeyboardService {
           }
         } catch (e) {
           console.log('读取 USBModeStatus 跳过', e);
+          this._clearAllSdkQueues();
         }
 
         this.deviceProfile = analyzeDeviceCapabilities({
@@ -457,6 +500,7 @@ class KeyboardService {
       }
     } catch (error) {
       console.error('[SparkLink HID] 连接失败:', error);
+      this._clearAllSdkQueues();
     } finally {
       this.isConnecting = false;
     }
@@ -1578,21 +1622,11 @@ class KeyboardService {
     console.log('[SparkLink HID] 启动回报率切换平滑自愈重连序列...', lastDeviceInfo);
     this.isResettingRate = true;
 
-    // 1. 释放旧的死句柄与死锁队列，确保 Windows HID 底层释放句柄
+    // 1. 彻底释放旧的死句柄与死锁队列，确保 Windows HID 底层释放句柄
+    this._clearAllSdkQueues();
     try {
-      if (this.sdk?.closeDevice) {
-        await this.sdk.closeDevice().catch(() => {});
-      }
-    } catch (e) {}
-
-    try {
-      if (this.sdk?.deviceBase?.commandQueueWrapper) {
-        this.sdk.deviceBase.commandQueueWrapper.commandQueue = [];
-        this.sdk.deviceBase.commandQueueWrapper.isFlushing = false;
-      }
-      if (this.sdk?.deviceBase?.commandQueueWrapperMultiple) {
-        this.sdk.deviceBase.commandQueueWrapperMultiple.commandQueue = [];
-        this.sdk.deviceBase.commandQueueWrapperMultiple.isFlushing = false;
+      if (this.device && this.device.opened) {
+        await this.device.close().catch(() => {});
       }
     } catch (e) {}
 
@@ -1601,35 +1635,62 @@ class KeyboardService {
     this.isConnecting = false;
     this.emitChange();
 
-    // 2. 单片机 USB PHY 重启需要物理时间，等待 600ms 后开始步进式探测
-    await new Promise((r) => setTimeout(r, 600));
+    // 2. 单片机 USB PHY 重启需要物理时间，等待 700ms 避开硬件复位峰值
+    await new Promise((r) => setTimeout(r, 700));
 
-    // 3. 渐进式多轮探测重连 (第 1~7 轮递进等待)
-    const retryDelays = [500, 600, 800, 1000, 1200, 1500, 2000];
+    // 3. 递进式探测重连 (多轮递进等待，给予 Windows USB 堆栈充足的重新枚举时间)
+    const retryDelays = [400, 600, 800, 1000, 1200, 1500, 2000, 2500];
+    let connectedSuccess = false;
+
     for (let attempt = 0; attempt < retryDelays.length; attempt++) {
       if (this.connected && this.device) {
         console.log(`[SparkLink HID] 设备已在第 ${attempt} 轮自动重连成功！`);
+        connectedSuccess = true;
         break;
       }
 
       console.log(`[SparkLink HID] 回报率重连探测 第 ${attempt + 1}/${retryDelays.length} 轮...`);
       try {
-        if (navigator.hid) {
+        // 先清理所有残留队列，确保本轮尝试处于最纯净的状态
+        this._clearAllSdkQueues();
+
+        // 优先使用 listAuthorizedDevices 获取已归一化并筛选出 vendor 接口的设备列表
+        const authorizedList = await this.listAuthorizedDevices(true);
+        let matchTarget = authorizedList.find((d) => {
+          if (lastDeviceInfo.vendorId && d.vendorId === lastDeviceInfo.vendorId) {
+            if (!lastDeviceInfo.productId || d.productId === lastDeviceInfo.productId) return true;
+          }
+          return false;
+        }) || authorizedList.find((d) => SPARKLINK_VIDS.includes(d.vendorId));
+
+        // 若归一化列表暂未命中，穿透读取 navigator.hid.getDevices() 并严格优先匹配 vendor usagePage
+        if (!matchTarget && navigator.hid) {
           const rawDevices = await navigator.hid.getDevices();
-          const matchTarget = rawDevices.find((d) => {
+          const targetDevices = rawDevices.filter((d) => {
             if (lastDeviceInfo.vendorId && d.vendorId === lastDeviceInfo.vendorId) {
               if (!lastDeviceInfo.productId || d.productId === lastDeviceInfo.productId) return true;
             }
-            return false;
-          }) || rawDevices.find((d) => SPARKLINK_VIDS.includes(d.vendorId));
+            return SPARKLINK_VIDS.includes(d.vendorId);
+          });
 
-          if (matchTarget) {
-            console.log('[SparkLink HID] 发现重连后的新 USB 句柄:', matchTarget.productName, matchTarget.vendorId, matchTarget.productId);
-            const success = await this.autoConnect(matchTarget);
-            if (success) {
-              console.log('[SparkLink HID] 回报率切换后自愈重连成功！');
-              break;
-            }
+          if (targetDevices.length > 0) {
+            // 严格优先选择具有厂商通信集合的 HID 接口
+            matchTarget = targetDevices.find((d) =>
+              d.collections?.some((c) => c.usagePage === SPARKLINK_USAGE_PAGE || (c.usagePage >= 0xff00 && c.usagePage <= 0xffff))
+            ) || targetDevices[0];
+          }
+        }
+
+        if (matchTarget) {
+          const rawDev = matchTarget.hidDevice || matchTarget.data || matchTarget;
+          console.log('[SparkLink HID] 发现重连后的新 USB 句柄:', rawDev.productName, rawDev.vendorId, rawDev.productId);
+
+          // 传入 allowDuringReset = true 允许在自愈重连序列中建立物理连接
+          const success = await this.autoConnect(rawDev, true);
+          if (success && this.connected && this.device) {
+            console.log('[SparkLink HID] 回报率切换后自愈重连成功！');
+            connectedSuccess = true;
+            break;
           }
         }
       } catch (err) {
@@ -1640,6 +1701,17 @@ class KeyboardService {
     }
 
     this.isResettingRate = false;
+    this.emitChange();
+
+    // 如果自愈序列全部耗尽仍未连上，触发全局刷新作为兜底保底
+    if (!connectedSuccess) {
+      console.warn('[SparkLink HID] 回报率自愈重连轮次耗尽，触发兜底设备扫描');
+      try {
+        if (typeof window.__refreshAuthorizedDevices === 'function') {
+          window.__refreshAuthorizedDevices(true);
+        }
+      } catch (e) {}
+    }
   }
 
   // 设置硬件回报率 (自动转换 Hz 为 SDK 寄存器指令如 R8KHz，若为 16K/32K 则联动 setUSBMode)
@@ -1675,6 +1747,9 @@ class KeyboardService {
           await this.paramSave('HighPollingRateReset');
         } catch (e) { /* ignore */ }
 
+        // 清理由于断开可能残留在队列中的多余指令
+        this._clearAllSdkQueues();
+
         // 启动自愈重连序列，确保 USB PHY 复位后平滑无感重新建立通信，无需重启客户端
         this.handleRateChangeResetSequence({
           vendorId: lastVendorId,
@@ -1687,6 +1762,7 @@ class KeyboardService {
       }
     } catch (e) {
       console.error('设置硬件回报率失败:', e);
+      this._clearAllSdkQueues();
     }
     return false;
   }
