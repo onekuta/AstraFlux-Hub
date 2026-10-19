@@ -1,97 +1,80 @@
 import React from 'react';
 
 /**
- * AstraFlux-HUB (星流驱动HUB) 品牌矢量莫比乌斯无限环 Logo (旗舰 V2 版)
+ * AstraFlux-HUB (星流驱动HUB) 品牌矢量战翼 Logo (方案 D · Velocity-Blades)
  * 
- * 1. 造型：纯正 3D 莫比乌斯立体双环扭带，通透镂空负空间，告别实心臃肿
- * 2. 色彩：荧光天青蓝 (#00E5FF -> #3755F0) 至高能洋红紫 (#4A34EE -> #9E00FF -> #FF00A0)，立体穿插高光脊线
- * 3. 细节：中央交汇节点镶嵌灵动高能 Astra 四芒星核
- * 4. 双模自适应：
- *    - 浅色模式：纯净珍珠白微透光基座 (bg-slate-100/90)，与浅色标题栏浑然天成
- *    - 深色模式：曜石暗夜黑基座 + 极光青微光晕 (dark:bg-[#0c111e])，极客电竞质感拉满
+ * 1. 造型：双子掠影战翼 (Velocity Blades) —— 平行错位疾速破空的极客流线，象征 8KHz 极速电竞性能与毫秒级瞬发响应
+ * 2. 色彩：
+ *    - 上战翼：荧光天青至高能电竞蓝 (#00F5FF -> #00A2FF -> #3B82F6)
+ *    - 下战翼：极光紫至霓虹洋红 (#6366F1 -> #A855F7 -> #FF2E93)
+ * 3. 深浅自适应：
+ *    - 浅色模式：纯净珍珠白微透底座，与白色/浅灰标题栏天然一体
+ *    - 深色模式：深邃曜石黑底座 + 极光青微发光轮廓
  */
 export default function AstraFluxLogo({ className = "w-7 h-7", rounded = "rounded-lg" }) {
   return (
     <div 
       className={`relative overflow-hidden flex items-center justify-center shrink-0 ${rounded} ${className} 
-        bg-slate-100/95 border border-slate-200/90 shadow-[0_2px_8px_rgba(0,0,0,0.05)]
-        dark:bg-[#0c111e] dark:border-cyan-500/35 dark:shadow-[0_0_20px_rgba(0,242,254,0.22)]
+        bg-slate-100/95 border border-slate-200/90 shadow-2xs
+        dark:bg-[#0c101c] dark:border-cyan-500/35 dark:shadow-[0_0_18px_rgba(0,242,254,0.2)]
         transition-colors duration-200`}
     >
       <svg 
-        viewBox="0 0 160 100" 
-        className="w-[88%] h-[88%]" 
+        viewBox="0 0 100 100" 
+        className="w-[84%] h-[84%]" 
         fill="none" 
         xmlns="http://www.w3.org/2000/svg"
       >
         <defs>
-          {/* 左侧青蓝渐变 (荧光青 -> 湛蓝 -> 宝蓝) */}
-          <linearGradient id="af_mobius_cyan_blue" x1="15" y1="50" x2="80" y2="50" gradientUnits="userSpaceOnUse">
-            <stop offset="0%" stopColor="#00E5FF" />
-            <stop offset="50%" stopColor="#0091FF" />
-            <stop offset="100%" stopColor="#3755F0" />
+          {/* 上战翼渐变 (荧光青 -> 亮天蓝 -> 宝蓝) */}
+          <linearGradient id="af_vb_top" x1="18" y1="26" x2="76" y2="46" gradientUnits="userSpaceOnUse">
+            <stop offset="0%" stopColor="#00F5FF" />
+            <stop offset="45%" stopColor="#00A2FF" />
+            <stop offset="100%" stopColor="#3B82F6" />
           </linearGradient>
 
-          {/* 右侧霓虹紫粉渐变 (深紫 -> 亮紫 -> 洋红) */}
-          <linearGradient id="af_mobius_purple_magenta" x1="80" y1="50" x2="145" y2="50" gradientUnits="userSpaceOnUse">
-            <stop offset="0%" stopColor="#4A34EE" />
-            <stop offset="50%" stopColor="#9E00FF" />
-            <stop offset="100%" stopColor="#FF00A0" />
+          {/* 下战翼渐变 (电竞紫 -> 霓虹紫晶 -> 荧光粉红) */}
+          <linearGradient id="af_vb_bottom" x1="32" y1="54" x2="90" y2="74" gradientUnits="userSpaceOnUse">
+            <stop offset="0%" stopColor="#6366F1" />
+            <stop offset="50%" stopColor="#A855F7" />
+            <stop offset="100%" stopColor="#FF2E93" />
           </linearGradient>
 
-          {/* 3D 空间立体交叉投影 */}
-          <filter id="af_mobius_twist_shadow" x="-30%" y="-30%" width="160%" height="160%">
-            <feDropShadow dx="0" dy="5" stdDeviation="4" floodColor="#1e1b4b" floodOpacity="0.28" />
+          {/* 战翼立体微投影 */}
+          <filter id="af_vb_shadow" x="-20%" y="-20%" width="140%" height="140%">
+            <feDropShadow dx="0" dy="2.5" stdDeviation="2.5" floodColor="#1e1b4b" floodOpacity="0.22" />
           </filter>
         </defs>
 
-        {/* 1. 底层段：右环与后穿越段 */}
-        <path 
-          d="M 80,50 C 95,68 112,76 126,67 C 140,58 141,39 127,29 C 113,19 96,32 80,50" 
-          stroke="url(#af_mobius_purple_magenta)" 
-          strokeWidth="16" 
-          strokeLinecap="round" 
-        />
+        <g filter="url(#af_vb_shadow)">
+          {/* 上战翼 (右掠流光刃) */}
+          <path 
+            d="M 22,28 L 62,28 C 72,28 78,35 74,44 L 34,44 C 24,44 18,37 22,28 Z" 
+            fill="url(#af_vb_top)" 
+          />
+          {/* 上战翼高光导轨线 */}
+          <path 
+            d="M 26,31 L 60,31 C 67,31 71,36 68,41" 
+            stroke="#ffffff" 
+            strokeWidth="1.4" 
+            strokeLinecap="round" 
+            opacity="0.75" 
+          />
 
-        {/* 2. 顶层段：左环并从上方穿过中心 (带立体投影，形成真实莫比乌斯交织) */}
-        <path 
-          d="M 80,50 C 65,32 48,24 34,33 C 20,42 19,61 33,71 C 47,81 64,68 80,50 C 92,36 104,26 116,29" 
-          stroke="url(#af_mobius_cyan_blue)" 
-          strokeWidth="16" 
-          strokeLinecap="round" 
-          filter="url(#af_mobius_twist_shadow)" 
-        />
-
-        {/* 3. 右环闭合补充 (右上方平滑交接) */}
-        <path 
-          d="M 112,28 C 124,30 137,42 128,58" 
-          stroke="url(#af_mobius_purple_magenta)" 
-          strokeWidth="16" 
-          strokeLinecap="round" 
-        />
-
-        {/* 4. 高光丝带脊线 (凸显流体金属与玻璃通透折射感) */}
-        <path 
-          d="M 34,33 C 22,41 21,58 33,68 C 46,78 61,67 76,52" 
-          stroke="#ffffff" 
-          strokeWidth="2.2" 
-          strokeLinecap="round" 
-          opacity="0.85" 
-        />
-        <path 
-          d="M 126,67 C 138,59 139,42 127,32 C 115,22 100,34 86,48" 
-          stroke="#ffffff" 
-          strokeWidth="2" 
-          strokeLinecap="round" 
-          opacity="0.75" 
-        />
-
-        {/* 5. 焦点 Astra 四芒微星耀 */}
-        <path 
-          d="M 80,41 Q 80,50 71,50 Q 80,50 80,59 Q 80,50 89,50 Q 80,50 80,41 Z" 
-          fill="#ffffff" 
-        />
-        <circle cx="80" cy="50" r="1.8" fill="#00E5FF" />
+          {/* 下战翼 (错位右掠，形成电竞速度剪影) */}
+          <path 
+            d="M 36,56 L 76,56 C 86,56 92,63 88,72 L 48,72 C 38,72 32,65 36,56 Z" 
+            fill="url(#af_vb_bottom)" 
+          />
+          {/* 下战翼高光导轨线 */}
+          <path 
+            d="M 40,59 L 74,59 C 81,59 85,64 82,69" 
+            stroke="#ffffff" 
+            strokeWidth="1.4" 
+            strokeLinecap="round" 
+            opacity="0.7" 
+          />
+        </g>
       </svg>
     </div>
   );

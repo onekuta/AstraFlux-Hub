@@ -9,50 +9,56 @@ app.commandLine.appendSwitch('disable-gpu');
 const outDir = 'C:/Users/Lynan/.gemini/antigravity/brain/babc9b26-a62e-4b1e-955d-2be516999335';
 
 app.whenReady().then(async () => {
-  const win = new BrowserWindow({
-    show: false,
-    width: 1400,
-    height: 900,
-    webPreferences: {
-      nodeIntegration: false,
-      contextIsolation: true,
-      preload: path.join(__dirname, '../electron/preload.cjs')
-    }
+  const win = new BrowserWindow({ 
+    show: false, 
+    width: 1400, 
+    height: 900, 
+    webPreferences: { preload: path.join(__dirname, '../electron/preload.cjs') } 
   });
-
-  // 1. Dark theme top view
-  const darkUrl = pathToFileURL(path.join(__dirname, '../dist/index.html')).href + '?settings=true&section=about&theme=dark';
-  await win.loadURL(darkUrl);
+  await win.loadURL(pathToFileURL(path.join(__dirname, '../dist/index.html')).href + '?settings=true&section=about&theme=dark');
   await new Promise(r => setTimeout(r, 1500));
+  
+  // 1. Initial top
+  const imgTop = await win.webContents.capturePage();
+  fs.writeFileSync(path.join(outDir, 'verified_about_page_dark.png'), imgTop.toPNG());
+  console.log('Saved top');
 
-  const imageDark = await win.webContents.capturePage();
-  fs.writeFileSync(path.join(outDir, 'verified_about_page_dark.png'), imageDark.toPNG());
-  console.log('Saved verified_about_page_dark.png');
-
-  // 2. Dark theme scrolled down view (Figure 5 style)
-  const scrollRes = await win.webContents.executeJavaScript(`(() => {
-    const modalMain = document.querySelector('.fixed main');
-    if (modalMain) {
-      modalMain.scrollTop = 380;
-      return { ok: true, scrollTop: modalMain.scrollTop, scrollHeight: modalMain.scrollHeight, clientHeight: modalMain.clientHeight };
+  // Helper to scroll and ensure painted
+  async function scrollToAndCapture(scrollTop, outFilename) {
+    await win.webContents.executeJavaScript(`(() => {
+      const m = document.querySelector(".fixed main");
+      m.style.scrollBehavior = 'auto';
+      m.scrollTop = ${scrollTop};
+    })()`);
+    
+    // Drain compositor pipeline
+    for (let i = 0; i < 3; i++) {
+      await win.webContents.executeJavaScript(`new Promise(r => requestAnimationFrame(r))`);
+      await win.webContents.capturePage();
+      await new Promise(r => setTimeout(r, 100));
     }
-    return { ok: false };
-  })()`);
-  console.log('Scroll result:', scrollRes);
-  await new Promise(r => setTimeout(r, 600));
+    
+    const finalImg = await win.webContents.capturePage();
+    fs.writeFileSync(path.join(outDir, outFilename), finalImg.toPNG());
+    console.log('Saved', outFilename);
+  }
 
-  const imageDarkScrolled = await win.webContents.capturePage();
-  fs.writeFileSync(path.join(outDir, 'verified_about_page_dark_scrolled.png'), imageDarkScrolled.toPNG());
-  console.log('Saved verified_about_page_dark_scrolled.png');
+  // 2. Scrolled middle (Sponsors & Contacts): scrollTop = 480
+  await scrollToAndCapture(480, 'verified_about_page_dark_scrolled.png');
 
-  // 3. Light theme top view
+  // 3. Scrolled bottom (FAQ & Open Source): scrollTop = 1200
+  await scrollToAndCapture(1200, 'verified_about_page_dark_bottom.png');
+
+  // 4. Light theme captures
   const lightUrl = pathToFileURL(path.join(__dirname, '../dist/index.html')).href + '?settings=true&section=about&theme=light';
   await win.loadURL(lightUrl);
   await new Promise(r => setTimeout(r, 1500));
 
-  const imageLight = await win.webContents.capturePage();
-  fs.writeFileSync(path.join(outDir, 'verified_about_page_light.png'), imageLight.toPNG());
+  const imgLightTop = await win.webContents.capturePage();
+  fs.writeFileSync(path.join(outDir, 'verified_about_page_light.png'), imgLightTop.toPNG());
   console.log('Saved verified_about_page_light.png');
+
+  await scrollToAndCapture(1200, 'verified_about_page_light_bottom.png');
 
   app.quit();
 });

@@ -9,6 +9,9 @@ import {
   CheckCircle2,
   ExternalLink,
   ChevronDown,
+  ChevronUp,
+  Scale,
+  HelpCircle,
   Monitor,
   Volume2,
   RefreshCw,
@@ -42,6 +45,68 @@ function BilibiliIcon({ className = "w-4 h-4" }) {
     </svg>
   );
 }
+
+const FAQ_ITEMS = [
+  {
+    q: '为什么切换回报率后容易不自动连接？',
+    a: '当切换 8KHz / 4KHz / 1KHz 回报率或物理热插拔时，单片机将自动重置底层 PHY 物理层。驱动已内置自动握手守护线程与单片机步进重连机制。如遇 Windows 系统偶发 USB 挂起，拔插一次数据线或在主页点击「重新识别」即可立即恢复高速通讯。'
+  },
+  {
+    q: '当前驱动客户端支持哪些星闪设备与键盘？',
+    a: '已全面支持星闪 (NearLink) SLE 8KHz 极速电竞生态键盘、BS2 系列主控、前行者/迈从/渴创等品牌星闪方案设备，以及 60% / 64 / 68 / 75% / 87 / 98 / 104 等常见客制化与量产配列。'
+  },
+  {
+    q: '星闪无线扫描不到设备时应如何处理？',
+    a: '请确保星闪专用无线接收器已插入电脑 USB 3.0/2.0 接口，键盘机身拨档已切换至星闪无线档位且电量充足。首次配对可在设备管理页点击「添加设备」进行免驱授权识别。'
+  },
+  {
+    q: '全键消磁校准与 RT (快速触发) 参数是否常驻生效？',
+    a: '是的。在「全键消磁校准」完成行程物理下压后，死区、触发行程与动态 RT 参数将直接烧录存入键盘硬件板载 Flash 芯片。即使彻底退出驱动或更换电脑设备使用，硬件依然保持极速响应。'
+  }
+];
+
+const LICENSE_GROUPS = [
+  {
+    category: '应用框架与运行时',
+    items: [
+      { name: 'electron', version: 'v34.3.0', license: 'MIT' },
+      { name: 'vite', version: 'v8.3.4', license: 'MIT' },
+      { name: 'react', version: 'v19.2.8', license: 'MIT' },
+      { name: 'react-dom', version: 'v19.2.8', license: 'MIT' },
+      { name: 'node.js', version: 'v24.2.0', license: 'MIT' },
+      { name: '@sparklinkplayjoy/sdk', version: 'v2.1.0', license: 'Apache-2.0' },
+    ]
+  },
+  {
+    category: '界面与前端库',
+    items: [
+      { name: 'tailwindcss', version: 'v4.1.0', license: 'MIT' },
+      { name: 'lucide-react', version: 'v1.16.0', license: 'ISC' },
+      { name: 'clsx', version: 'v2.1.1', license: 'MIT' },
+      { name: 'tailwind-merge', version: 'v3.0.0', license: 'MIT' },
+      { name: 'canvas-confetti', version: 'v1.9.4', license: 'MIT' },
+      { name: 'postcss', version: 'v8.5.3', license: 'MIT' },
+    ]
+  },
+  {
+    category: '设备通讯与系统集成',
+    items: [
+      { name: 'WebHID API', version: 'W3C Std', license: 'W3C' },
+      { name: 'electron-updater', version: 'v6.6.2', license: 'MIT' },
+      { name: 'asar', version: 'v3.2.0', license: 'MIT' },
+      { name: 'ws (WebSocket)', version: 'v8.18.0', license: 'MIT' },
+    ]
+  },
+  {
+    category: '字体与排版资产',
+    items: [
+      { name: 'PangMenZhengDao (庞门正道标题体)', version: 'v1.0', license: '免费商用' },
+      { name: 'Noto Sans SC (思源黑体)', version: 'v2.0', license: 'OFL-1.1' },
+      { name: 'JetBrains Mono', version: 'v2.3', license: 'OFL-1.1' },
+      { name: 'Smiley Sans (得意黑)', version: 'v1.1', license: 'OFL-1.1' },
+    ]
+  }
+];
 
 export default function GlobalSettingsModal({ 
   isOpen, 
@@ -159,6 +224,8 @@ export default function GlobalSettingsModal({
   const [notifyLowBattery, setNotifyLowBattery] = useState(true);
 
   const [isCheckingUpdate, setIsCheckingUpdate] = useState(false);
+  const [expandedFaq, setExpandedFaq] = useState(0); // 默认展开第1项常见问题 (对齐截图)
+  const [expandedLicenseGroups, setExpandedLicenseGroups] = useState({ 0: true }); // 默认展开第1类开源组件 (对齐截图)
 
   const openExternal = (url, label) => {
     try {
@@ -959,6 +1026,149 @@ export default function GlobalSettingsModal({
 
                   </div>
 
+                </div>
+
+                {/* 5. 常见问题解答 (1:1 学习截图常见问题解答折叠卡片) */}
+                <div className="p-5 rounded-2xl bg-[var(--bg-primary)]/80 border border-[var(--border-color)] shadow-xs space-y-3">
+                  <div className="flex items-center space-x-2 border-b border-[var(--border-color)]/70 pb-2.5">
+                    <HelpCircle className="w-4 h-4 text-blue-500" />
+                    <h4 className="text-sm font-bold text-[var(--text-primary)]">常见问题解答</h4>
+                  </div>
+
+                  <div className="space-y-2 pt-1">
+                    {FAQ_ITEMS.map((faq, idx) => {
+                      const isExpanded = expandedFaq === idx;
+                      return (
+                        <div 
+                          key={idx}
+                          className="rounded-xl border border-[var(--border-color)]/70 bg-[var(--bg-secondary)]/50 overflow-hidden transition"
+                        >
+                          <button
+                            type="button"
+                            onClick={() => setExpandedFaq(isExpanded ? null : idx)}
+                            className="w-full px-4 py-3 text-left flex items-center justify-between transition hover:bg-[var(--bg-secondary)] cursor-pointer"
+                          >
+                            <span className="text-xs font-semibold text-[var(--text-primary)]">
+                              {faq.q}
+                            </span>
+                            {isExpanded ? (
+                              <ChevronUp className="w-4 h-4 text-blue-500 shrink-0 ml-2" />
+                            ) : (
+                              <ChevronDown className="w-4 h-4 text-[var(--text-tertiary)] shrink-0 ml-2" />
+                            )}
+                          </button>
+
+                          {isExpanded && (
+                            <div className="px-4 pb-3.5 pt-1 text-[11.5px] text-[var(--text-secondary)] leading-relaxed border-t border-[var(--border-color)]/40 bg-[var(--bg-primary)]/40">
+                              {faq.a}
+                            </div>
+                          )}
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+
+                {/* 6. 开源声明 (1:1 学习截图开源声明与组件库明细) */}
+                <div className="p-5 rounded-2xl bg-[var(--bg-primary)]/80 border border-[var(--border-color)] shadow-xs space-y-4">
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-[var(--border-color)]/70 pb-3">
+                    <div className="flex items-center space-x-2">
+                      <Scale className="w-4 h-4 text-indigo-500" />
+                      <h4 className="text-sm font-bold text-[var(--text-primary)]">开源声明</h4>
+                    </div>
+
+                    <div className="flex items-center space-x-2">
+                      <span className="text-[10px] font-bold px-2.5 py-0.5 rounded-full bg-blue-500/15 text-blue-600 dark:text-blue-400 border border-blue-500/20">
+                        SPARKLINK HUB 自身以 MIT 协议授权
+                      </span>
+                      <span className="text-[11px] font-mono text-[var(--text-tertiary)]">
+                        共 48 个组件
+                      </span>
+                    </div>
+                  </div>
+
+                  <p className="text-xs text-[var(--text-secondary)] leading-relaxed">
+                    SPARKLINK HUB 以 MIT 协议开源。本软件的发行版本包含下列开源组件，各自按其原始许可证条款分发；完整许可证正文与版权声明见对应项目仓库。
+                  </p>
+
+                  {/* 分类折叠组件列表 */}
+                  <div className="space-y-2.5">
+                    {LICENSE_GROUPS.map((group, gIdx) => {
+                      const isGroupExpanded = !!expandedLicenseGroups[gIdx];
+                      return (
+                        <div 
+                          key={gIdx}
+                          className="rounded-xl border border-[var(--border-color)]/70 bg-[var(--bg-secondary)]/40 overflow-hidden"
+                        >
+                          <button
+                            type="button"
+                            onClick={() => {
+                              setExpandedLicenseGroups(prev => ({
+                                ...prev,
+                                [gIdx]: !prev[gIdx]
+                              }));
+                            }}
+                            className="w-full px-4 py-2.5 flex items-center justify-between bg-[var(--bg-secondary)]/60 hover:bg-[var(--bg-secondary)] transition cursor-pointer text-left"
+                          >
+                            <span className="text-xs font-bold text-[var(--text-primary)]">
+                              {group.category}
+                            </span>
+                            <div className="flex items-center space-x-2">
+                              <span className="text-[10.5px] font-mono text-[var(--text-tertiary)]">
+                                {group.items.length}
+                              </span>
+                              {isGroupExpanded ? (
+                                <ChevronUp className="w-3.5 h-3.5 text-[var(--text-tertiary)]" />
+                              ) : (
+                                <ChevronDown className="w-3.5 h-3.5 text-[var(--text-tertiary)]" />
+                              )}
+                            </div>
+                          </button>
+
+                          {isGroupExpanded && (
+                            <div className="p-3 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 border-t border-[var(--border-color)]/50 bg-[var(--bg-primary)]/30">
+                              {group.items.map((pkg, pIdx) => (
+                                <div 
+                                  key={pIdx}
+                                  className="p-2 rounded-lg bg-[var(--bg-secondary)]/60 border border-[var(--border-color)]/50 flex items-center justify-between text-[11px]"
+                                >
+                                  <div className="min-w-0 pr-1">
+                                    <span className="font-mono font-medium text-[var(--text-primary)] truncate block">
+                                      {pkg.name}
+                                    </span>
+                                    <span className="text-[10px] text-[var(--text-tertiary)] font-mono">
+                                      {pkg.version}
+                                    </span>
+                                  </div>
+                                  <span className="text-[9.5px] px-1.5 py-0.2 rounded bg-blue-500/10 text-blue-500 font-mono font-bold shrink-0 border border-blue-500/20">
+                                    {pkg.license}
+                                  </span>
+                                </div>
+                              ))}
+                            </div>
+                          )}
+                        </div>
+                      );
+                    })}
+                  </div>
+
+                  {/* 声明黄色/琥珀色提示框 (1:1 还原截图底部) */}
+                  <div className="p-3 rounded-xl bg-amber-500/10 border border-amber-500/20 text-[11px] text-amber-700 dark:text-amber-300 leading-relaxed">
+                    星闪 (NearLink) 与相关徽标为国际星闪无线短距通信联盟商标；外设硬件与芯片固件由各品牌官方独立维护。本软件为开源客制化驱动项目，遵循自由分发协议。
+                  </div>
+
+                  {/* 底部右侧查看源码按钮 */}
+                  <div className="flex justify-end pt-1">
+                    <button
+                      type="button"
+                      onClick={() => openExternal('https://github.com/Kutaze', 'GitHub 开源仓库')}
+                      className="px-4 py-2 rounded-xl bg-[var(--bg-secondary)] hover:bg-[var(--bg-tertiary)] border border-[var(--border-color)] text-xs font-bold text-[var(--text-primary)] flex items-center space-x-1.5 cursor-pointer transition shadow-xs"
+                    >
+                      <GithubIcon className="w-3.5 h-3.5" />
+                      <span>查看本项目源码 (GitHub)</span>
+                      <ExternalLink className="w-3 h-3 text-[var(--text-tertiary)]" />
+                    </button>
+                  </div>
                 </div>
 
               </div>
