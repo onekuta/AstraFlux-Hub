@@ -29,7 +29,8 @@ import {
   FolderArchive,
   Layers,
   Send,
-  ArrowRight
+  ArrowRight,
+  Info
 } from 'lucide-react';
 import { 
   resolveLayoutForProfile, 
@@ -2869,11 +2870,22 @@ export default function App() {
           </div>
           </div>
 
-          {/* 侧栏底部（对应官方 .menu-footer） */}
-          <div className="sidebar-footer">
-            <button className="ghost-button" onClick={() => setShowCalibrateModal(true)}>
-              <RotateCcw className="w-4 h-4" />
+          {/* 侧栏底部（对应官方 .menu-footer 与 THRM 风格侧栏底部导航） */}
+          <div className="sidebar-footer flex flex-col gap-1.5">
+            <button className="ghost-button !h-10 text-xs" onClick={() => setShowCalibrateModal(true)}>
+              <RotateCcw className="w-3.5 h-3.5" />
               <span className="truncate">全键消磁校准</span>
+            </button>
+            <button 
+              className="ghost-button !h-10 text-xs" 
+              onClick={() => {
+                setGlobalSettingsSection('about');
+                setShowGlobalSettings(true);
+              }}
+              title="关于软件、开发者与开源生态"
+            >
+              <Info className="w-3.5 h-3.5" />
+              <span className="truncate">关于软件</span>
             </button>
           </div>
         </aside>
