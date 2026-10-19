@@ -36,9 +36,12 @@ export default function KeyTravelIndicator({
   const totalSubTicks = Math.round(majorSteps[majorSteps.length - 1] * 10);
   const subTicks = Array.from({ length: totalSubTicks + 1 }, (_, i) => i * 0.1);
 
+  const isMedium = compact === 'medium';
+  const isCompact = compact === true;
+
   return (
     <div
-      className={`relative rounded-[8px] ${compact ? 'p-2' : 'p-4'} flex flex-col justify-between transition-colors select-none bg-[var(--bg-secondary)] border border-[var(--border-color)] text-[var(--text-primary)] shadow-2xs ${className}`}
+      className={`relative rounded-[8px] ${isCompact ? 'p-2' : isMedium ? 'p-2.5' : 'p-4'} flex flex-col justify-between transition-colors select-none bg-[var(--bg-secondary)] border border-[var(--border-color)] text-[var(--text-primary)] shadow-2xs ${className}`}
     >
       {/* 顶部标题区 */}
       <div className="flex items-center justify-between mb-1">
@@ -63,24 +66,24 @@ export default function KeyTravelIndicator({
       </div>
 
       {/* 中间核心视觉联动区：轴体线框 + 标尺刻度 + 水银柱 */}
-      <div className={`flex items-center justify-center my-auto ${compact ? 'py-0.5 gap-3' : 'py-2 gap-6 sm:gap-8'}`}>
+      <div className={`flex items-center justify-center my-auto ${isCompact ? 'py-0.5 gap-3' : isMedium ? 'py-1 gap-5' : 'py-2 gap-6 sm:gap-8'}`}>
         
         {/* 1. 轴体剖面图 (黑白线稿剖面风格，轴柱下沉位移) */}
         <div className="flex flex-col items-center justify-center shrink-0">
           <SwitchCrossSection
             travel={currentDepth}
             maxTravel={safeMax}
-            width={compact ? 66 : 108}
-            height={compact ? 76 : 136}
+            width={isCompact ? 66 : isMedium ? 88 : 108}
+            height={isCompact ? 76 : isMedium ? 114 : 136}
             strokeColor={isDark ? '#71717a' : '#475569'}
           />
         </div>
 
         {/* 2. 标尺刻度 + 水银深度柱 (1:1 还原迈从截图) */}
-        <div className={`flex items-stretch relative shrink-0 ${compact ? 'h-[78px]' : 'h-[154px]'}`}>
+        <div className={`flex items-stretch relative shrink-0 ${isCompact ? 'h-[78px]' : isMedium ? 'h-[114px]' : 'h-[154px]'}`}>
           
           {/* 左侧刻度数值与横向细刻度线 */}
-          <div className={`flex flex-col justify-between items-end pr-1.5 py-[1px] font-mono select-none text-zinc-400 dark:text-zinc-500 ${compact ? 'text-[8px]' : 'text-[10.5px]'}`}>
+          <div className={`flex flex-col justify-between items-end pr-1.5 py-[1px] font-mono select-none text-zinc-400 dark:text-zinc-500 ${isCompact ? 'text-[8px]' : isMedium ? 'text-[9px]' : 'text-[10.5px]'}`}>
             {majorSteps.map((val) => (
               <span key={val} className="leading-none tabular-nums font-medium">
                 {val.toFixed(2)}
@@ -116,7 +119,7 @@ export default function KeyTravelIndicator({
 
           {/* 3. 迈从同款浅蓝圆角水银柱 */}
           <div
-            className={`${compact ? 'w-5.5' : 'w-7.5 sm:w-8'} h-full rounded-md border overflow-hidden relative flex flex-col transition-colors shadow-2xs ${
+            className={`${isCompact ? 'w-5.5' : isMedium ? 'w-6.5' : 'w-7.5 sm:w-8'} h-full rounded-md border overflow-hidden relative flex flex-col transition-colors shadow-2xs ${
               isDark
                 ? 'bg-zinc-800/40 border-zinc-700/80'
                 : 'bg-white border-[#cbd5e1]'
@@ -143,13 +146,13 @@ export default function KeyTravelIndicator({
               top: `${Math.min(100, Math.max(0, depthRatio * 100))}%`,
               transform: 'translateY(-50%)'
             }}
-            className={`absolute ${compact ? '-right-19' : '-right-22'} flex items-center transition-all duration-75 select-none pointer-events-none`}
+            className={`absolute ${isCompact ? '-right-19' : isMedium ? '-right-20' : '-right-22'} flex items-center transition-all duration-75 select-none pointer-events-none`}
           >
             {/* 指向水银柱的水平连接线 */}
             <div className="w-1.5 h-[1.5px] bg-[#0052ef] dark:bg-sky-400 mr-1" />
-            <div className={`${compact ? 'px-1.5 py-0.5' : 'px-2 py-0.5'} rounded-[5px] border border-blue-400/40 bg-[var(--bg-secondary)] shadow-sm flex flex-col items-start font-mono`}>
+            <div className={`${isCompact ? 'px-1.5 py-0.5' : isMedium ? 'px-1.5 py-0.5' : 'px-2 py-0.5'} rounded-[5px] border border-blue-400/40 bg-[var(--bg-secondary)] shadow-sm flex flex-col items-start font-mono`}>
               <span
-                className={`${compact ? 'text-[10px]' : 'text-xs'} font-black tracking-tight tabular-nums ${
+                className={`${isCompact ? 'text-[10px]' : isMedium ? 'text-[11px]' : 'text-xs'} font-black tracking-tight tabular-nums ${
                   currentDepth > 0
                     ? isDark
                       ? 'text-sky-400'
@@ -160,11 +163,11 @@ export default function KeyTravelIndicator({
                 }`}
               >
                 {currentDepth.toFixed(2)}
-                <span className={`${compact ? 'text-[8.5px]' : 'text-[10px]'} font-normal ml-0.5`}>mm</span>
+                <span className={`${isCompact ? 'text-[8.5px]' : isMedium ? 'text-[9px]' : 'text-[10px]'} font-normal ml-0.5`}>mm</span>
               </span>
 
               {hallValue != null && (
-                <span className={`${compact ? 'text-[7.5px]' : 'text-[9px]'} text-zinc-400 dark:text-zinc-500 font-mono leading-none mt-0.5`}>
+                <span className={`${isCompact ? 'text-[7.5px]' : isMedium ? 'text-[8px]' : 'text-[9px]'} text-zinc-400 dark:text-zinc-500 font-mono leading-none mt-0.5`}>
                   AD: {hallValue}
                 </span>
               )}
@@ -175,9 +178,9 @@ export default function KeyTravelIndicator({
       </div>
 
       {/* 底部小字说明 (1:1 迈从原图媒体文本) */}
-      <div className={`text-center ${compact ? 'pt-0.5' : 'pt-2'}`}>
+      <div className={`text-center ${isCompact ? 'pt-0.5' : isMedium ? 'pt-1' : 'pt-2'}`}>
         <span
-          className={`font-medium tracking-wide ${compact ? 'text-[9px]' : 'text-[11px]'} ${
+          className={`font-medium tracking-wide ${isCompact ? 'text-[9px]' : isMedium ? 'text-[10px]' : 'text-[11px]'} ${
             isDark ? 'text-zinc-500' : 'text-gray-400'
           }`}
         >

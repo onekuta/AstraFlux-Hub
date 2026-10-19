@@ -63,8 +63,14 @@ export default function CalibrationModal({
 
   // 键盘校准开关
   const [calibrationEnabled, setCalibrationEnabled] = useState(true);
-  // 是否展开顶部校准注意事项与步骤卡片 (按用户需求默认展开说明，用户可随时点击顶部按钮折叠)
-  const [showInstructions, setShowInstructions] = useState(true);
+  // 是否展开顶部校准注意事项与步骤卡片 (按用户需求默认展开说明，用户可随时点击顶部按钮折叠，支持 URL 参数测试)
+  const [showInstructions, setShowInstructions] = useState(() => {
+    try {
+      const p = new URLSearchParams(window.location.search);
+      if (p.has('calInstruct')) return p.get('calInstruct') === 'true';
+    } catch (e) {}
+    return true;
+  });
 
   const [selectedAxisOverride, setSelectedAxisOverride] = useState(null);
   const [showAxisDropdown, setShowAxisDropdown] = useState(false);
@@ -451,10 +457,10 @@ export default function CalibrationModal({
       <div className="w-[calc(100vw-24px)] max-w-[1344px] h-[calc(100vh-24px)] max-h-[834px] rounded-[14px] border border-[var(--border-color)] bg-[var(--bg-secondary)] text-[var(--text-primary)] shadow-2xl flex flex-col overflow-hidden animate-in zoom-in-95 duration-150">
         
         {/* 顶部标题栏 */}
-        <div className="h-10 px-3.5 border-b border-[var(--border-color)] bg-[var(--bg-tertiary)] flex items-center justify-between shrink-0">
-          <div className="flex items-center space-x-2.5 min-w-0">
-            <h2 className="text-xs font-bold font-title modal-title flex items-center truncate text-[var(--text-primary)]">
-              <Sparkles className="w-3.5 h-3.5 mr-1 text-[var(--info-color)] shrink-0" />
+        <div className="h-12 px-4 border-b border-[var(--border-color)] bg-[var(--bg-tertiary)] flex items-center justify-between shrink-0">
+          <div className="flex items-center space-x-3 min-w-0">
+            <h2 className="text-sm font-bold font-title modal-title flex items-center truncate text-[var(--text-primary)]">
+              <Sparkles className="w-4 h-4 mr-1.5 text-[var(--info-color)] shrink-0" />
               轴体全键校准
             </h2>
 
@@ -463,19 +469,19 @@ export default function CalibrationModal({
               <button
                 type="button"
                 onClick={() => setShowAxisDropdown(!showAxisDropdown)}
-                className="text-[10.5px] font-mono font-bold text-[var(--info-color)] bg-[var(--primary-04)] hover:bg-[var(--primary-09)] px-2.5 py-0.5 rounded-[5px] border border-[var(--primary-15)] hover:border-[var(--info-color)] transition cursor-pointer flex items-center gap-1 shrink-0"
+                className="text-xs font-mono font-bold text-[var(--info-color)] bg-[var(--primary-04)] hover:bg-[var(--primary-09)] px-3 py-1 rounded-[6px] border border-[var(--primary-15)] hover:border-[var(--info-color)] transition cursor-pointer flex items-center gap-1.5 shrink-0 shadow-2xs"
                 title="点击切换校准所用轴体基准"
               >
                 <span>{effectiveCurrentAxis?.name || '天际线轴'}</span>
-                <span className="text-[10px] opacity-75 font-normal">(Max {(maxTravel || 3.55).toFixed(2)}mm)</span>
-                <ChevronDown className="w-2.5 h-2.5 opacity-70" />
+                <span className="text-[10.5px] opacity-75 font-normal">(Max {(maxTravel || 3.55).toFixed(2)}mm)</span>
+                <ChevronDown className="w-3 h-3 opacity-70" />
               </button>
 
               {showAxisDropdown && (
-                <div className="absolute left-0 top-full mt-1 w-56 max-h-56 overflow-y-auto rounded-lg bg-[var(--bg-secondary)] border border-[var(--border-color)] shadow-2xl z-[600] py-1 text-xs divide-y divide-[var(--border-color)]/40">
-                  <div className="px-2.5 py-1 text-[10px] font-bold text-[var(--text-secondary)] bg-[var(--bg-tertiary)] flex items-center justify-between">
+                <div className="absolute left-0 top-full mt-1 w-60 max-h-60 overflow-y-auto rounded-lg bg-[var(--bg-secondary)] border border-[var(--border-color)] shadow-2xl z-[600] py-1 text-xs divide-y divide-[var(--border-color)]/40">
+                  <div className="px-3 py-1.5 text-[10.5px] font-bold text-[var(--text-secondary)] bg-[var(--bg-tertiary)] flex items-center justify-between">
                     <span>选择校准轴体 SKU</span>
-                    <span className="text-[9px] text-[var(--info-color)]">官方 V3 映射</span>
+                    <span className="text-[9.5px] text-[var(--info-color)] font-mono">官方 V3 映射</span>
                   </div>
                   {(axisList && axisList.length > 0 ? axisList : [
                     { id: 788, name: '天际线轴', maxTravel: 3.55, badge: 'AE64-MAX标配' },
@@ -492,17 +498,17 @@ export default function CalibrationModal({
                           setSelectedAxisOverride(ax);
                           setShowAxisDropdown(false);
                         }}
-                        className={`w-full px-2.5 py-1.5 text-left flex items-center justify-between transition cursor-pointer hover:bg-[var(--primary-04)] ${
+                        className={`w-full px-3 py-2 text-left flex items-center justify-between transition cursor-pointer hover:bg-[var(--primary-04)] ${
                           isAxSelected ? 'text-[var(--info-color)] font-bold bg-[var(--primary-04)]' : 'text-[var(--text-primary)]'
                         }`}
                       >
                         <div className="flex flex-col min-w-0">
-                          <span className="truncate text-xs">{ax.name}</span>
-                          <span className="text-[10px] text-[var(--text-secondary)] font-mono">
+                          <span className="truncate text-xs font-medium">{ax.name}</span>
+                          <span className="text-[10.5px] text-[var(--text-secondary)] font-mono">
                             {ax.badge || ax.brand || ''} · {parseFloat(ax.maxTravel || 3.50).toFixed(2)}mm
                           </span>
                         </div>
-                        {isAxSelected && <Check className="w-3.5 h-3.5 text-[var(--info-color)] shrink-0" />}
+                        {isAxSelected && <Check className="w-4 h-4 text-[var(--info-color)] shrink-0" />}
                       </button>
                     );
                   })}
@@ -510,26 +516,26 @@ export default function CalibrationModal({
               )}
             </div>
 
-            <span className="text-[11px] font-mono shrink-0 text-[var(--text-secondary)]">
+            <span className="text-xs font-mono shrink-0 text-[var(--text-secondary)]">
               进度: <strong className="text-emerald-500 font-bold">{calibratedKeys.size}</strong> / {TOTAL_KEYS} 键
             </span>
           </div>
 
-          <div className="flex items-center space-x-1.5 shrink-0">
+          <div className="flex items-center space-x-2 shrink-0">
             <button
               id="btn-calibration-instructions"
               type="button"
               onClick={() => setShowInstructions(!showInstructions)}
-              className="text-[10.5px] px-2 py-0.5 rounded-[6px] border border-[var(--border-color)] bg-[var(--bg-secondary)] hover:border-[var(--info-color)] text-[var(--text-secondary)] hover:text-[var(--info-color)] transition cursor-pointer flex items-center gap-1"
+              className="text-xs font-medium px-3 py-1.5 rounded-[7px] border border-[var(--border-color)] bg-[var(--bg-secondary)] hover:border-[var(--info-color)] text-[var(--text-secondary)] hover:text-[var(--info-color)] transition cursor-pointer flex items-center gap-1.5 shadow-2xs"
               title={showInstructions ? '收起校准说明' : '展开校准说明'}
             >
-              <Info className="w-3 h-3 text-[var(--info-color)]" />
+              <Info className="w-3.5 h-3.5 text-[var(--info-color)]" />
               <span>{showInstructions ? '收起说明' : '校准说明'}</span>
-              {showInstructions ? <ChevronUp className="w-2.5 h-2.5" /> : <ChevronDown className="w-2.5 h-2.5" />}
+              {showInstructions ? <ChevronUp className="w-3 h-3" /> : <ChevronDown className="w-3 h-3" />}
             </button>
 
-            <div className="flex items-center space-x-1.5 px-2 py-0.5 rounded-[6px] border border-[var(--border-color)] bg-[var(--bg-secondary)]">
-              <span className="text-[11px] font-semibold text-[var(--text-secondary)]">
+            <div className="flex items-center space-x-2 px-3 py-1.5 rounded-[7px] border border-[var(--border-color)] bg-[var(--bg-secondary)] shadow-2xs">
+              <span className="text-xs font-semibold text-[var(--text-secondary)]">
                 硬件校准
               </span>
               <label className="relative inline-flex items-center cursor-pointer shrink-0">
@@ -547,25 +553,25 @@ export default function CalibrationModal({
                   }}
                   className="sr-only peer"
                 />
-                <div className="w-7 h-4 bg-[var(--primary-15)] peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-3 after:w-3 after:transition-all peer-checked:bg-[var(--primary-color)]"></div>
+                <div className="w-9 h-5 bg-[var(--primary-15)] peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-[var(--primary-color)]"></div>
               </label>
             </div>
 
             <button
               type="button"
               onClick={handleRestart}
-              className="px-2 py-0.5 rounded-[6px] border border-[var(--border-color)] hover:border-[var(--info-color)] text-[11px] font-semibold text-[var(--info-color)] bg-[var(--bg-secondary)] hover:bg-[var(--primary-04)] transition cursor-pointer flex items-center"
+              className="px-3 py-1.5 rounded-[7px] border border-[var(--border-color)] hover:border-[var(--info-color)] text-xs font-semibold text-[var(--info-color)] bg-[var(--bg-secondary)] hover:bg-[var(--primary-04)] transition cursor-pointer flex items-center shadow-2xs"
             >
-              <RotateCcw className="w-3 h-3 mr-1" />
+              <RotateCcw className="w-3.5 h-3.5 mr-1.5" />
               重新校准
             </button>
 
             <button
               type="button"
               onClick={handleExit}
-              className="px-2 py-0.5 rounded-[6px] border border-[var(--border-color)] hover:border-red-400 text-[11px] font-semibold text-[var(--text-secondary)] hover:text-red-500 bg-[var(--bg-secondary)] hover:bg-red-50/10 transition cursor-pointer flex items-center"
+              className="px-3 py-1.5 rounded-[7px] border border-[var(--border-color)] hover:border-red-400 text-xs font-semibold text-[var(--text-secondary)] hover:text-red-500 bg-[var(--bg-secondary)] hover:bg-red-50/10 transition cursor-pointer flex items-center shadow-2xs"
             >
-              <X className="w-3 h-3 mr-1" />
+              <X className="w-3.5 h-3.5 mr-1.5" />
               退出校准
             </button>
           </div>
@@ -722,33 +728,33 @@ export default function CalibrationModal({
             </div>
           </div>
 
-          {/* 3. 实时行程深度波形监控 */}
-          <div className="p-2 mx-3.5 mb-2 rounded-[10px] border border-[var(--border-color)] bg-[var(--bg-secondary)] flex flex-col shrink-0 min-h-[90px]">
-            <div className="flex items-center justify-between pb-1 mb-1 border-b border-[var(--border-color)]">
-              <span className="text-[11px] font-bold text-[var(--text-primary)] flex items-center gap-1.5">
-                <Activity className="w-3.5 h-3.5 text-[#0052ef]" />
+          {/* 3. 实时行程深度波形监控 (自适应弹性填充高度) */}
+          <div className="p-2.5 mx-3.5 mb-2.5 rounded-[10px] border border-[var(--border-color)] bg-[var(--bg-secondary)] flex flex-col flex-1 min-h-[125px] shadow-2xs">
+            <div className="flex items-center justify-between pb-1.5 mb-1.5 border-b border-[var(--border-color)]">
+              <span className="text-xs font-bold text-[var(--text-primary)] flex items-center gap-1.5">
+                <Activity className="w-4 h-4 text-[#0052ef]" />
                 实时行程深度波形监控
               </span>
-              <span className="text-[10px] font-mono text-[var(--text-secondary)]">
+              <span className="text-xs font-mono text-[var(--text-secondary)]">
                 当前按键: <strong className="text-[#0052ef]">{activeKey?.label || '无'}</strong> ({activeAxisInfo.name} · Max {maxTravel.toFixed(2)}mm) | 当前深度: <strong className="text-emerald-500 font-bold">{currentTravel.toFixed(2)} mm</strong>
               </span>
             </div>
 
-            <div className="relative h-[62px] w-full flex items-center">
-              <div className="w-12 h-full flex flex-col justify-between items-end pr-1.5 text-[8.5px] font-mono text-zinc-400 select-none shrink-0 py-0.5">
+            <div className="relative flex-1 w-full min-h-[75px] flex items-stretch">
+              <div className="w-12 h-full flex flex-col justify-between items-end pr-2 text-[9.5px] font-mono text-zinc-400 select-none shrink-0 py-1">
                 <span>{maxTravel.toFixed(1)}mm</span>
                 <span>{(maxTravel * 0.50).toFixed(1)}mm</span>
                 <span>0mm</span>
               </div>
 
-              <div className="flex-1 h-full relative overflow-hidden bg-slate-50/50 dark:bg-zinc-800/40 rounded border border-zinc-200/60 dark:border-zinc-700/60">
-                <div className="absolute inset-0 flex flex-col justify-between pointer-events-none py-0.5">
+              <div className="flex-1 h-full relative overflow-hidden bg-slate-50/50 dark:bg-zinc-800/40 rounded-[6px] border border-zinc-200/60 dark:border-zinc-700/60">
+                <div className="absolute inset-0 flex flex-col justify-between pointer-events-none py-1">
                   <div className="w-full h-[1px] bg-zinc-200/50 dark:bg-zinc-700/50" />
                   <div className="w-full h-[1px] bg-zinc-200/50 dark:bg-zinc-700/50" />
                   <div className="w-full h-[1px] bg-zinc-300 dark:bg-zinc-600" />
                 </div>
 
-                <svg className="w-full h-full overflow-visible" preserveAspectRatio="none" viewBox="0 0 650 62">
+                <svg className="w-full h-full" preserveAspectRatio="none" viewBox="0 0 650 100">
                   <defs>
                     <linearGradient id="waveGradient" x1="0" y1="0" x2="0" y2="1">
                       <stop offset="0%" stopColor="#0052ef" stopOpacity="0.45" />
@@ -758,15 +764,15 @@ export default function CalibrationModal({
                   {(() => {
                     const points = travelHistory.map((val, idx) => {
                       const x = (idx / (travelHistory.length - 1)) * 650;
-                      const y = 56 - (Math.min(maxTravel, Math.max(0, val)) / (maxTravel || 3.55)) * 50;
+                      const y = 92 - (Math.min(maxTravel, Math.max(0, val)) / (maxTravel || 3.55)) * 84;
                       return `${x.toFixed(1)},${y.toFixed(1)}`;
                     });
                     const dLine = `M ${points.join(' L ')}`;
-                    const dArea = `${dLine} L 650,62 L 0,62 Z`;
+                    const dArea = `${dLine} L 650,100 L 0,100 Z`;
                     return (
                       <>
                         <path d={dArea} fill="url(#waveGradient)" />
-                        <path d={dLine} fill="none" stroke="#0052ef" strokeWidth="1.5" strokeLinejoin="round" />
+                        <path d={dLine} fill="none" stroke="#0052ef" strokeWidth="1.8" strokeLinejoin="round" />
                       </>
                     );
                   })()}
@@ -775,36 +781,36 @@ export default function CalibrationModal({
             </div>
           </div>
 
-          {/* 4. 下方分栏：左侧触发键程剖面标尺 + 右侧实时监控统计 */}
-          <div className="p-2 mx-3.5 mb-2.5 grid grid-cols-12 gap-2.5 border border-[var(--border-color)] rounded-[10px] bg-[var(--bg-tertiary)] shrink-0 min-h-[125px]">
+          {/* 4. 下方分栏：左侧触发键程剖面标尺 + 右侧实时监控统计 (弹性填充剩余高度) */}
+          <div className="p-2.5 mx-3.5 mb-3 grid grid-cols-12 gap-3 border border-[var(--border-color)] rounded-[10px] bg-[var(--bg-tertiary)] flex-[1.15] min-h-[175px] shadow-2xs">
             {/* 左侧：迈从同款触发键程 2D 剖面与刻度柱 */}
-            <div className="col-span-12 md:col-span-5 flex flex-col justify-stretch">
+            <div className="col-span-12 md:col-span-5 flex flex-col justify-stretch h-full">
               <KeyTravelIndicator
                 travel={currentTravel}
                 maxTravel={maxTravel}
                 activeKeyLabel={activeKey?.label || ''}
                 hallValue={activeHallValue}
                 isCalibrated={isCurrentKeyCalibrated}
-                className="h-full rounded-[8px] !p-1.5"
+                className="h-full rounded-[8px] !p-2"
                 showExtraMetrics={false}
-                compact={true}
+                compact="medium"
               />
             </div>
 
             {/* 右侧：按键校准实时指标面板 */}
-            <div className="col-span-12 md:col-span-7 rounded-[8px] p-2 border border-[var(--border-color)] bg-[var(--bg-secondary)] flex flex-col justify-between shadow-2xs">
-              <div className="flex items-center justify-between pb-1 border-b border-[var(--border-color)]">
+            <div className="col-span-12 md:col-span-7 rounded-[8px] p-2.5 border border-[var(--border-color)] bg-[var(--bg-secondary)] flex flex-col justify-between shadow-2xs h-full">
+              <div className="flex items-center justify-between pb-1.5 border-b border-[var(--border-color)]">
                 <div className="flex items-center space-x-1.5">
                   <Activity className="w-3.5 h-3.5 text-[var(--info-color)]" />
-                  <span className="text-[11px] font-bold text-[var(--text-primary)]">按键实时校准监控</span>
+                  <span className="text-xs font-bold text-[var(--text-primary)]">按键实时校准监控</span>
                 </div>
 
                 {activeKey ? (
                   <div className="flex items-center space-x-1.5">
-                    <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-[var(--primary-04)] text-[var(--info-color)] border border-[var(--primary-15)]">
+                    <span className="text-xs font-mono font-bold px-2 py-0.5 rounded bg-[var(--primary-04)] text-[var(--info-color)] border border-[var(--primary-15)]">
                       当前按键: [{activeKey.label}]
                     </span>
-                    <span className={`text-[10px] font-bold px-2 py-0.5 rounded ${
+                    <span className={`text-xs font-bold px-2.5 py-0.5 rounded ${
                       isCurrentKeyCalibrated
                         ? 'bg-emerald-500/15 text-emerald-500 border border-emerald-500/30'
                         : 'bg-amber-500/15 text-amber-500 border border-amber-500/30'
@@ -813,65 +819,65 @@ export default function CalibrationModal({
                     </span>
                   </div>
                 ) : (
-                  <span className="text-[10px] text-[var(--text-disabled)] font-mono">
+                  <span className="text-xs text-[var(--text-disabled)] font-mono">
                     请按压物理键盘按键...
                   </span>
                 )}
               </div>
 
-              {/* 三大状态卡片 (精细紧凑化，保留充足数值呼吸感) */}
-              <div className="grid grid-cols-3 gap-1.5 my-1">
-                <div className="p-1.5 rounded-[6px] border border-[var(--border-color)] bg-[var(--bg-tertiary)] flex flex-col justify-between">
-                  <span className="text-[9px] text-[var(--text-secondary)] font-medium leading-none mb-0.5">实时行程深度</span>
-                  <div className="flex items-baseline space-x-0.5 my-0.5">
-                    <span className={`text-[14px] font-black font-mono tracking-tight leading-none ${
+              {/* 三大状态卡片 (居中自适应高度，大字号呈现) */}
+              <div className="grid grid-cols-3 gap-2 my-auto py-1">
+                <div className="p-2 sm:p-2.5 rounded-[8px] border border-[var(--border-color)] bg-[var(--bg-tertiary)] flex flex-col justify-between">
+                  <span className="text-[10.5px] text-[var(--text-secondary)] font-medium leading-none mb-1">实时行程深度</span>
+                  <div className="flex items-baseline space-x-1 my-1">
+                    <span className={`text-lg sm:text-xl font-black font-mono tracking-tight leading-none ${
                       currentTravel > 0 ? 'text-[#0052ef]' : 'text-[var(--text-primary)]'
                     }`}>
                       {currentTravel.toFixed(2)}
                     </span>
-                    <span className="text-[8.5px] text-[var(--text-disabled)] font-mono">mm</span>
+                    <span className="text-[10px] text-[var(--text-disabled)] font-mono">mm</span>
                   </div>
-                  <div className="text-[8px] text-[var(--text-disabled)] leading-none truncate">
+                  <div className="text-[9.5px] text-[var(--text-disabled)] leading-none truncate font-mono">
                     最大 {maxTravel.toFixed(2)}mm
                   </div>
                 </div>
 
-                <div className="p-1.5 rounded-[6px] border border-[var(--border-color)] bg-[var(--bg-tertiary)] flex flex-col justify-between">
-                  <span className="text-[9px] text-[var(--text-secondary)] font-medium leading-none mb-0.5">当前霍尔读数</span>
-                  <div className="flex items-baseline space-x-0.5 my-0.5">
-                    <span className={`text-[14px] font-black font-mono tracking-tight leading-none ${
+                <div className="p-2 sm:p-2.5 rounded-[8px] border border-[var(--border-color)] bg-[var(--bg-tertiary)] flex flex-col justify-between">
+                  <span className="text-[10.5px] text-[var(--text-secondary)] font-medium leading-none mb-1">当前霍尔读数</span>
+                  <div className="flex items-baseline space-x-1 my-1">
+                    <span className={`text-lg sm:text-xl font-black font-mono tracking-tight leading-none ${
                       currentTravel > 0 ? 'text-emerald-500' : 'text-[var(--text-primary)]'
                     }`}>
                       {activeHallValue || 2700}
                     </span>
                   </div>
-                  <div className="text-[8px] text-[var(--text-disabled)] leading-none truncate">
+                  <div className="text-[9.5px] text-[var(--text-disabled)] leading-none truncate font-mono">
                     基准 ~{(activeKey && baseAdcRef.current[activeKey.id]) || 2700} AD
                   </div>
                 </div>
 
-                <div className="p-1.5 rounded-[6px] border border-[var(--border-color)] bg-[var(--bg-tertiary)] flex flex-col justify-between">
-                  <span className="text-[9px] text-[var(--text-secondary)] font-medium leading-none mb-0.5">已完成按键</span>
-                  <div className="flex items-baseline space-x-0.5 my-0.5">
-                    <span className="text-[14px] font-black font-mono text-emerald-500 tracking-tight leading-none">
+                <div className="p-2 sm:p-2.5 rounded-[8px] border border-[var(--border-color)] bg-[var(--bg-tertiary)] flex flex-col justify-between">
+                  <span className="text-[10.5px] text-[var(--text-secondary)] font-medium leading-none mb-1">已完成按键</span>
+                  <div className="flex items-baseline space-x-1 my-1">
+                    <span className="text-lg sm:text-xl font-black font-mono text-emerald-500 tracking-tight leading-none">
                       {calibratedKeys.size}
                     </span>
-                    <span className="text-[8.5px] text-[var(--text-disabled)] font-mono">/ {TOTAL_KEYS}</span>
+                    <span className="text-[10px] text-[var(--text-disabled)] font-mono">/ {TOTAL_KEYS}</span>
                   </div>
-                  <div className="text-[8px] text-[var(--text-disabled)] leading-none truncate">
+                  <div className="text-[9.5px] text-[var(--text-disabled)] leading-none truncate font-mono">
                     {Math.round((calibratedKeys.size / TOTAL_KEYS) * 100)}%
                   </div>
                 </div>
               </div>
 
               {/* 底部全键校准进度条 */}
-              <div className="pt-1 border-t border-[var(--border-color)] flex items-center justify-between gap-2">
+              <div className="pt-2 border-t border-[var(--border-color)] flex items-center justify-between gap-3">
                 <div className="flex-1 min-w-0">
-                  <div className="flex items-center justify-between text-[9.5px] font-mono text-[var(--text-disabled)] mb-0.5">
-                    <span>校准进度</span>
-                    <span>{calibratedKeys.size} / {TOTAL_KEYS} 键</span>
+                  <div className="flex items-center justify-between text-[10.5px] font-mono text-[var(--text-disabled)] mb-1">
+                    <span>全键校准进度</span>
+                    <span>{calibratedKeys.size} / {TOTAL_KEYS} 键 ({Math.round((calibratedKeys.size / TOTAL_KEYS) * 100)}%)</span>
                   </div>
-                  <div className="h-1.5 w-full bg-[var(--bg-tertiary)] rounded-full overflow-hidden border border-[var(--border-color)]/50">
+                  <div className="h-2 w-full bg-[var(--bg-tertiary)] rounded-full overflow-hidden border border-[var(--border-color)]/50">
                     <div
                       style={{ width: `${(calibratedKeys.size / TOTAL_KEYS) * 100}%` }}
                       className="h-full bg-gradient-to-r from-[#0052ef] to-emerald-500 transition-all duration-300"
@@ -882,10 +888,10 @@ export default function CalibrationModal({
                 <button
                   type="button"
                   onClick={handleCalibrateAll}
-                  className="px-2 py-0.5 rounded-[6px] border border-[var(--border-color)] hover:border-emerald-500 text-[10px] font-semibold text-emerald-600 dark:text-emerald-400 bg-[var(--bg-tertiary)] hover:bg-emerald-500/10 transition flex items-center space-x-1 cursor-pointer shrink-0"
+                  className="px-3 py-1.5 rounded-[7px] border border-[var(--border-color)] hover:border-emerald-500 text-xs font-semibold text-emerald-600 dark:text-emerald-400 bg-[var(--bg-tertiary)] hover:bg-emerald-500/10 transition flex items-center space-x-1.5 cursor-pointer shrink-0 shadow-2xs"
                   title="快速标记全部按键校准通过"
                 >
-                  <Check className="w-3 h-3" />
+                  <Check className="w-3.5 h-3.5" />
                   <span>全部标为已校准</span>
                 </button>
               </div>
