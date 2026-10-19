@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AstraFlux-HUB - 星流驱动 (通用磁轴与电竞外设开源中心)</title>
+    <link rel="icon" type="image/png" href="/icon.png" />
+    <!--
+      字体不再引用任何在线 CDN。
+      原先这里挂了 Google Fonts（Noto Sans SC + JetBrains Mono），但本软件是
+      完全离线的绿色版，该请求永远失败 → 字体一路回落到「微软雅黑」，这正是
+      界面观感差的根因。现在正文/标题字体已随包内置（见 src/assets/fonts/），
+      @font-face 声明在 src/index.css 顶部。
+    -->
+    <!-- 启动即时应用深/浅主题（防止首屏白屏闪烁 / FOUC / 离线截屏动效冻结） -->
+    <script>
+      (function() {
+        try {
+          var q = new URLSearchParams(window.location.search).get('theme');
+          var s = localStorage.getItem('eweadn-theme');
+          var d = (q === 'dark' || q === 'light') ? q : (s === 'dark' || s === 'light') ? s : (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+          document.documentElement.setAttribute('data-theme', d);
+          if (d === 'dark') document.documentElement.classList.add('dark');
+        } catch(e) {}
+      })();
+    </script>
+  </head>
+  <body class="bg-[var(--bg-primary)] text-[var(--text-primary)] subpixel-antialiased select-none overflow-hidden">
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>

@@ -1,0 +1,323 @@
+{
+  "meta": {
+    "probeVersion": "v1.4.4",
+    "collectedAt": "2026-10-14T16:35:00.000Z",
+    "generator": "SparkLink PlayJoy PCB Probe Tool",
+    "probeMode": "WebHID",
+    "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36 Edg/130.0.0.0"
+  },
+  "hardwareFingerprint": {
+    "vendorIdHex": "0x1CA6",
+    "productIdHex": "0x300D",
+    "vendorIdDec": 7334,
+    "productIdDec": 12301,
+    "productName": "AE64-MAX Gaming Keyboard",
+    "manufacturerName": "JWick / JiangWan",
+    "serialNumber": "JW-AE64M-20261014-001",
+    "deviceInfo": {
+      "type": 1,
+      "subType": 0,
+      "boardId": 3145729,
+      "appVersion": "1.0.4.0",
+      "pcbVersion": "1-0-0-0",
+      "runModeVersion": 0,
+      "sn": "JW-AE64M-20261014-001",
+      "timestamp": "2026101414:20"
+    },
+    "protocolVersion": {
+      "mainVersion": 1,
+      "subVersion": 0,
+      "hardwareVersion": 1,
+      "softwareVersion": 0
+    },
+    "hidInterfaces": [
+      {
+        "usagePage": 65456,
+        "usage": 1,
+        "usagePageHex": "0xFFB0",
+        "usageHex": "0x0001",
+        "isSparklinkVendorPort": true,
+        "isStandardKeyboardPort": false
+      },
+      {
+        "usagePage": 1,
+        "usage": 6,
+        "usagePageHex": "0x0001",
+        "usageHex": "0x0006",
+        "isSparklinkVendorPort": false,
+        "isStandardKeyboardPort": true
+      }
+    ]
+  },
+  "deviceProfile": {
+    "id": "pcb_1ca6_300d",
+    "brand": "江湾",
+    "model": "AE64-MAX",
+    "name": "江湾 AE64-MAX 磁轴键盘",
+    "shortName": "AE64-MAX",
+    "type": "keyboard",
+    "layout": "64keys",
+    "layoutName": "左移64配列",
+    "totalKeyCount": 64,
+    "vendorId": 7334,
+    "productId": 12301,
+    "vendorIdHex": "0x1CA6",
+    "productIdHex": "0x300D",
+    "connectionType": "wired",
+    "connectionLabel": "USB 极速有线",
+    "isWired": true,
+    "hasBattery": false,
+    "maxPollingRate": 8000,
+    "hardRateCeiling": 8000,
+    "supportedPollingRates": [
+      1000,
+      2000,
+      4000,
+      8000
+    ],
+    "defaultPollingRate": 8000,
+    "minActuationPoint": 0.001,
+    "defaultAxis": "青龙磁轴",
+    "features": {
+      "magneticAxis": true,
+      "rtSupport": true,
+      "socdSupport": true,
+      "dksSupport": true,
+      "mptSupport": true,
+      "furyMode": true,
+      "rgbLighting": true,
+      "hallCalibration": true,
+      "continuousRt": true,
+      "doubleLighting": true,
+      "stripLighting": true,
+      "shakeOptimization": true
+    }
+  },
+  "matrixLayout": {
+    "totalKeys": 64,
+    "matrixRows": 5,
+    "matrixCols": 14,
+    "layoutCategory": "64keys",
+    "layoutName": "左移64配列",
+    "physicalKeys": [
+      {
+        "row": 1,
+        "col": 0,
+        "ratio": 1,
+        "defaultKeycode": 41,
+        "label": "Esc"
+      },
+      {
+        "row": 1,
+        "col": 1,
+        "ratio": 1,
+        "defaultKeycode": 30,
+        "label": "1"
+      },
+      {
+        "row": 1,
+        "col": 2,
+        "ratio": 1,
+        "defaultKeycode": 31,
+        "label": "2"
+      },
+      {
+        "row": 1,
+        "col": 3,
+        "ratio": 1,
+        "defaultKeycode": 32,
+        "label": "3"
+      },
+      {
+        "row": 1,
+        "col": 4,
+        "ratio": 1,
+        "defaultKeycode": 33,
+        "label": "4"
+      },
+      {
+        "row": 1,
+        "col": 5,
+        "ratio": 1,
+        "defaultKeycode": 34,
+        "label": "5"
+      },
+      {
+        "row": 1,
+        "col": 6,
+        "ratio": 1,
+        "defaultKeycode": 35,
+        "label": "6"
+      },
+      {
+        "row": 1,
+        "col": 7,
+        "ratio": 1,
+        "defaultKeycode": 36,
+        "label": "7"
+      },
+      {
+        "row": 1,
+        "col": 8,
+        "ratio": 1,
+        "defaultKeycode": 37,
+        "label": "8"
+      },
+      {
+        "row": 1,
+        "col": 9,
+        "ratio": 1,
+        "defaultKeycode": 38,
+        "label": "9"
+      },
+      {
+        "row": 1,
+        "col": 10,
+        "ratio": 1,
+        "defaultKeycode": 39,
+        "label": "0"
+      },
+      {
+        "row": 1,
+        "col": 11,
+        "ratio": 1,
+        "defaultKeycode": 45,
+        "label": "-"
+      },
+      {
+        "row": 1,
+        "col": 12,
+        "ratio": 1,
+        "defaultKeycode": 46,
+        "label": "="
+      },
+      {
+        "row": 1,
+        "col": 13,
+        "ratio": 2,
+        "defaultKeycode": 42,
+        "label": "Backspace"
+      },
+      {
+        "row": 5,
+        "col": 6,
+        "ratio": 6.25,
+        "defaultKeycode": 44,
+        "label": "Space"
+      }
+    ]
+  },
+  "lightingTopology": {
+    "isDoubleLighting": true,
+    "doubleLightingRaw": 1,
+    "lightingAreas": [
+      {
+        "index": 0,
+        "areaName": "Keyboard",
+        "count": 64,
+        "rows": 6,
+        "cols": 21
+      },
+      {
+        "index": 1,
+        "areaName": "Decorate1",
+        "count": 16,
+        "rows": 1,
+        "cols": 16
+      }
+    ],
+    "spaceLamps": {
+      "hasIndependentSpaceLamps": true,
+      "count": 5,
+      "coordinates": [
+        {
+          "index": 1,
+          "row": 5,
+          "col": 4
+        },
+        {
+          "index": 2,
+          "row": 5,
+          "col": 5
+        },
+        {
+          "index": 3,
+          "row": 5,
+          "col": 6
+        },
+        {
+          "index": 4,
+          "row": 5,
+          "col": 7
+        },
+        {
+          "index": 5,
+          "row": 5,
+          "col": 8
+        }
+      ]
+    },
+    "stripLighting": {
+      "hasStrip": true,
+      "stripCols": 16,
+      "stripRows": 1
+    }
+  },
+  "performanceSpec": {
+    "supportedPollingRates": [
+      1000,
+      2000,
+      4000,
+      8000
+    ],
+    "currentPollingRate": 8000,
+    "maxPollingRate": 8000,
+    "hardwareRateCeiling": 8000,
+    "rtPrecisionMm": 0.001,
+    "usbModeStatus": {
+      "mode": 0,
+      "driverStatus": 1,
+      "isEnhanceDriverRequired": false
+    },
+    "shakeOptimizationSwitch": 1,
+    "higherKeyCapabilities": {
+      "rs": true,
+      "socd": true,
+      "dks": true,
+      "mt": true,
+      "tgl": true,
+      "mpt": true,
+      "end": true
+    },
+    "boardConfigSlots": {
+      "total": 4,
+      "current": "Config1",
+      "list": [
+        "Config1",
+        "Config2",
+        "Config3",
+        "Config4"
+      ]
+    }
+  },
+  "axisAndCalibration": {
+    "boardAxisList": [
+      {
+        "id": 1,
+        "name": "青龙磁轴",
+        "stroke": 3.4,
+        "minAp": 0.01,
+        "maxAp": 3.3
+      },
+      {
+        "id": 2,
+        "name": "磁玉 Pro",
+        "stroke": 3.5,
+        "minAp": 0.01,
+        "maxAp": 3.4
+      }
+    ],
+    "defaultAxis": "青龙磁轴",
+    "hallCalibrationSupported": true
+  }
+}

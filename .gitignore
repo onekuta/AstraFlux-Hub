@@ -1,0 +1,49 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Node dependencies
+node_modules/
+dist/
+dist-electron/
+release/
+release-v4/
+.asar-tmp/
+scratch/
+scratch_official/
+scratch_v2/
+
+# Electron binary artifacts and large executables (>50MB/100MB Github limit)
+*.exe
+*.lnk
+*.dll
+*.iso
+*.dmg
+*.asar
+*.bin
+*.mp4
+
+# Specific large folders
+参考内容包/
+旧版本存档/
+reference_docs/
+tools/electron-bin/
+软件本体/
+
+# OS / Editor files
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Environment variables
+.env
+.env.local
+.env.*.local

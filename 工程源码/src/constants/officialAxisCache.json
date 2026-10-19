@@ -1,0 +1,3776 @@
+[
+  {
+    "axis_id": 1,
+    "axis_name": "磁玉pro",
+    "drive_range": "3.3",
+    "axi_brand_id": 3,
+    "doctrine_range_left": "3.5",
+    "doctrine_range_right": "0.2",
+    "factory_name": "佳达隆",
+    "axis_color": "#70cb9a",
+    "image_url": "https://api.sparklinkplayjoy.com/storage/images/202505/oKMtD0q5PQ6kK3IgfgIZqF6BB4CkA6MmVafofVC6.png",
+    "created_at": "2025-03-26 12:36:44",
+    "brand": "GATERON",
+    "axi_brands": {
+      "id": 3,
+      "brand_name_cn": "GATERON"
+    }
+  },
+  {
+    "axis_id": 2,
+    "axis_name": "万磁王RGB",
+    "drive_range": "3.3",
+    "axi_brand_id": 4,
+    "doctrine_range_left": "3.4",
+    "doctrine_range_right": "0.2",
+    "factory_name": "TTC",
+    "axis_color": "#a04444",
+    "image_url": "https://api.sparklinkplayjoy.com/storage/images/202505/CisjDwXU8DrOJdmUvGpTAlzafOnff6SJW6OGFdON.png",
+    "created_at": "2025-03-26 12:36:44",
+    "brand": "TTC",
+    "axi_brands": {
+      "id": 4,
+      "brand_name_cn": "TTC"
+    }
+  },
+  {
+    "axis_id": 3,
+    "axis_name": "万磁王",
+    "drive_range": "3.3",
+    "axi_brand_id": 4,
+    "doctrine_range_left": "3.5",
+    "doctrine_range_right": "0.2",
+    "factory_name": "TTC",
+    "axis_color": "#5f3873",
+    "image_url": "https://api.sparklinkplayjoy.com/storage/images/202505/HeIzhD54bgWY2EYahr7gu6pKE2sA17esUcnaW7KB.png",
+    "created_at": "2025-03-26 12:36:44",
+    "brand": "TTC",
+    "axi_brands": {
+      "id": 4,
+      "brand_name_cn": "TTC"
+    }
+  },
+  {
+    "axis_id": 4,
+    "axis_name": "磁玉gaming",
+    "drive_range": "3.3",
+    "axi_brand_id": 3,
+    "doctrine_range_left": "3.5",
+    "doctrine_range_right": "0.2",
+    "factory_name": "佳达隆",
+    "axis_color": "#a7e1d6",
+    "image_url": "https://api.sparklinkplayjoy.com/storage/images/202505/ltuvwNxbemOdvHtiF6Hvme7W4FjdM7qEBOMj9yeM.png",
+    "created_at": "2025-03-26 12:36:44",
+    "brand": "GATERON",
+    "axi_brands": {
+      "id": 3,
+      "brand_name_cn": "GATERON"
+    }
+  },
+  {
+    "axis_id": 5,
+    "axis_name": "天王轴",
+    "drive_range": "3.3",
+    "axi_brand_id": 4,
+    "doctrine_range_left": "3.5",
+    "doctrine_range_right": "0.2",
+    "factory_name": "TTC",
+    "axis_color": "#2bc2bd",
+    "image_url": "https://api.sparklinkplayjoy.com/storage/images/202505/h59UUO7dh9OKGxsNQ4ZR7olDb8mz8QzHUeK7O5sX.png",
+    "created_at": "2025-03-26 12:36:44",
+    "brand": "TTC",
+    "axi_brands": {
+      "id": 4,
+      "brand_name_cn": "TTC"
+    }
+  },
+  {
+    "axis_id": 6,
+    "axis_name": "天王轴电竞",
+    "drive_range": "3.3",
+    "axi_brand_id": 4,
+    "doctrine_range_left": "3.4",
+    "doctrine_range_right": "0.1",
+    "factory_name": "TTC",
+    "axis_color": "#ed6810",
+    "image_url": "https://api.sparklinkplayjoy.com/storage/images/202505/TJcuMvR71LtUkt2QM65MMc4qkUQ2BOlXwPc9PAtg.png",
+    "created_at": "2025-03-26 12:36:44",
+    "brand": "TTC",
+    "axi_brands": {
+      "id": 4,
+      "brand_name_cn": "TTC"
+    }
+  },
+  {
+    "axis_id": 7,
+    "axis_name": "POM万磁王",
+    "drive_range": "3.3",
+    "axi_brand_id": 4,
+    "doctrine_range_left": "3.4",
+    "doctrine_range_right": "0.2",
+    "factory_name": "TTC",
+    "axis_color": "#ddcde6",
+    "image_url": "https://api.sparklinkplayjoy.com/storage/images/202505/cQjxD9S9uflh2IXEJcbfVigLZUlKjOCX5KMVZjPw.png",
+    "created_at": "2025-03-26 12:36:44",
+    "brand": "TTC",
+    "axi_brands": {
+      "id": 4,
+      "brand_name_cn": "TTC"
+    }
+  },
+  {
+    "axis_id": 8,
+    "axis_name": "双轨磁白轴",
+    "drive_range": "3.8",
+    "axi_brand_id": 3,
+    "doctrine_range_left": "4.0",
+    "doctrine_range_right": "0.2",
+    "factory_name": "佳达隆",
+    "axis_color": "#c45353",
+    "image_url": "https://api.sparklinkplayjoy.com/storage/images/202505/pSMUbRc07uzcI7xZoxX8tI2leVpavajC1nGBkyh8.png",
+    "created_at": "2025-03-26 12:36:44",
+    "brand": "GATERON",
+    "axi_brands": {
+      "id": 3,
+      "brand_name_cn": "GATERON"
+    }
+  },
+  {
+    "axis_id": 9,
+    "axis_name": "海木磁轴",
+    "drive_range": "3.5",
+    "axi_brand_id": 1,
+    "doctrine_range_left": "3.5",
+    "doctrine_range_right": "0.2",
+    "factory_name": "海木",
+    "axis_color": "#76d388",
+    "image_url": "#",
+    "created_at": "2025-03-26 12:36:44",
+    "brand": "other",
+    "axi_brands": {
+      "id": 1,
+      "brand_name_cn": "other"
+    }
+  },
+  {
+    "axis_id": 10,
+    "axis_name": "磁墨轴",
+    "drive_range": "3.6",
+    "axi_brand_id": 1,
+    "doctrine_range_left": "3.6",
+    "doctrine_range_right": "0.2",
+    "factory_name": "",
+    "axis_color": "#daf459",
+    "image_url": "https://curl.sparklinkplayjoy.com/#",
+    "created_at": "2025-03-26 12:36:44",
+    "brand": "other",
+    "axi_brands": {
+      "id": 1,
+      "brand_name_cn": "other"
+    }
+  },
+  {
+    "axis_id": 11,
+    "axis_name": "咏春轴",
+    "drive_range": "3.4",
+    "axi_brand_id": 1,
+    "doctrine_range_left": "3.4",
+    "doctrine_range_right": "0.2",
+    "factory_name": "",
+    "axis_color": "#62c8ed",
+    "image_url": "https://api.sparklinkplayjoy.com/storage/images/202505/fXiIef36AIJeaSOrZ8DdUe7MgJNyDVbpMfd8K9Xn.png",
+    "created_at": "2025-03-26 12:36:44",
+    "brand": "other",
+    "axi_brands": {
+      "id": 1,
+      "brand_name_cn": "other"
+    }
+  },
+  {
+    "axis_id": 12,
+    "axis_name": "IPI雷电轴",
+    "drive_range": "3.4",
+    "axi_brand_id": 1,
+    "doctrine_range_left": "3.4",
+    "doctrine_range_right": "0.2",
+    "factory_name": "",
+    "axis_color": "#a074e1",
+    "image_url": "https://curl.sparklinkplayjoy.com/#",
+    "created_at": "2025-03-26 12:36:44",
+    "brand": "other",
+    "axi_brands": {
+      "id": 1,
+      "brand_name_cn": "other"
+    }
+  },
+  {
+    "axis_id": 13,
+    "axis_name": "利维坦轴",
+    "drive_range": "3.4",
+    "axi_brand_id": 1,
+    "doctrine_range_left": "3.4",
+    "doctrine_range_right": "0.2",
+    "factory_name": "禾金",
+    "axis_color": "#eb6363",
+    "image_url": "https://curl.sparklinkplayjoy.com/#",
+    "created_at": "2025-03-26 12:36:44",
+    "brand": "other",
+    "axi_brands": {
+      "id": 1,
+      "brand_name_cn": "other"
+    }
+  },
+  {
+    "axis_id": 14,
+    "axis_name": "黑皇轴",
+    "drive_range": "3.4",
+    "axi_brand_id": 1,
+    "doctrine_range_left": "3.4",
+    "doctrine_range_right": "0.2",
+    "factory_name": "狼珠",
+    "axis_color": "#76d388",
+    "image_url": "https://api.sparklinkplayjoy.com/storage/images/202505/uNTzicmLM2FP704TXqxkQt7zFmKCklboKxEJNA8V.png",
+    "created_at": "2025-03-26 12:36:44",
+    "brand": "other",
+    "axi_brands": {
+      "id": 1,
+      "brand_name_cn": "other"
+    }
+  },
+  {
+    "axis_id": 15,
+    "axis_name": "形意轴",
+    "drive_range": "3.4",
+    "axi_brand_id": 1,
+    "doctrine_range_left": "3.4",
+    "doctrine_range_right": "0.2",
+    "factory_name": "狼珠",
+    "axis_color": "#f4eb6e",
+    "image_url": "https://api.sparklinkplayjoy.com/storage/images/202505/J8K7uxrO3SK36hhl9akYfhgBvf7uVfgIMMQfybiL.png",
+    "created_at": "2025-03-26 12:36:44",
+    "brand": "other",
+    "axi_brands": {
+      "id": 1,
+      "brand_name_cn": "other"
+    }
+  },
+  {
+    "axis_id": 16,
+    "axis_name": "磁轴16",
+    "drive_range": "3.7",
+    "axi_brand_id": 1,
+    "doctrine_range_left": "3.7",
+    "doctrine_range_right": "0.2",
+    "factory_name": "",
+    "axis_color": "#ddcde6",
+    "image_url": "https://curl.sparklinkplayjoy.com/#",
+    "created_at": "2025-03-26 12:36:44",
+    "brand": "other",
+    "axi_brands": {
+      "id": 1,
+      "brand_name_cn": "other"
+    }
+  },
+  {
+    "axis_id": 17,
+    "axis_name": "心悦粉磁轴",
+    "drive_range": "3.8",
+    "axi_brand_id": 1,
+    "doctrine_range_left": "3.8",
+    "doctrine_range_right": "0.2",
+    "factory_name": "",
+    "axis_color": "#5f3873",
+    "image_url": "https://curl.sparklinkplayjoy.com/#",
+    "created_at": "2025-03-26 12:36:44",
+    "brand": "other",
+    "axi_brands": {
+      "id": 1,
+      "brand_name_cn": "other"
+    }
+  },
+  {
+    "axis_id": 18,
+    "axis_name": "磁玉轴",
+    "drive_range": "3.3",
+    "axi_brand_id": 3,
+    "doctrine_range_left": "3.3",
+    "doctrine_range_right": "0.2",
+    "factory_name": "",
+    "axis_color": "#a04444",
+    "image_url": "https://curl.sparklinkplayjoy.com/#",
+    "created_at": "2025-03-26 12:36:44",
+    "brand": "GATERON",
+    "axi_brands": {
+      "id": 3,
+      "brand_name_cn": "GATERON"
+    }
+  },
+  {
+    "axis_id": 19,
+    "axis_name": "默认轴",
+    "drive_range": "3.3",
+    "axi_brand_id": 1,
+    "doctrine_range_left": "3.3",
+    "doctrine_range_right": "0.2",
+    "factory_name": "",
+    "axis_color": "#70cb9a",
+    "image_url": "https://curl.sparklinkplayjoy.com/#",
+    "created_at": "2025-03-26 12:36:44",
+    "brand": "other",
+    "axi_brands": {
+      "id": 1,
+      "brand_name_cn": "other"
+    }
+  },
+  {
+    "axis_id": 20,
+    "axis_name": "默认轴",
+    "drive_range": "3.6",
+    "axi_brand_id": 1,
+    "doctrine_range_left": "3.6",
+    "doctrine_range_right": "0.2",
+    "factory_name": "",
+    "axis_color": "#ddcde6",
+    "image_url": "https://curl.sparklinkplayjoy.com/#",
+    "created_at": "2025-03-26 12:36:44",
+    "brand": "other",
+    "axi_brands": {
+      "id": 1,
+      "brand_name_cn": "other"
+    }
+  },
+  {
+    "axis_id": 21,
+    "axis_name": "合金轴",
+    "drive_range": "3.4",
+    "axi_brand_id": 1,
+    "doctrine_range_left": "3.4",
+    "doctrine_range_right": "0.2",
+    "factory_name": "未知",
+    "axis_color": "#78f4d7",
+    "image_url": "https://api.sparklinkplayjoy.com/storage/images/202503/a3sAI0nhxjwBvqws4X9floAet3U2iuhbdSzJ849m.jpg",
+    "created_at": "2025-03-26 12:36:44",
+    "brand": "other",
+    "axi_brands": {
+      "id": 1,
+      "brand_name_cn": "other"
+    }
+  },
+  {
+    "axis_id": 22,
+    "axis_name": "默认轴",
+    "drive_range": "3.5",
+    "axi_brand_id": 1,
+    "doctrine_range_left": "3.5",
+    "doctrine_range_right": "0.3",
+    "factory_name": "",
+    "axis_color": "#f4eb6e",
+    "image_url": "https://curl.sparklinkplayjoy.com/#",
+    "created_at": "2025-03-26 12:36:44",
+    "brand": "other",
+    "axi_brands": {
+      "id": 1,
+      "brand_name_cn": "other"
+    }
+  },
+  {
+    "axis_id": 23,
+    "axis_name": "紫星轴",
+    "drive_range": "3.5",
+    "axi_brand_id": 1,
+    "doctrine_range_left": "3.5",
+    "doctrine_range_right": "0.2",
+    "factory_name": "",
+    "axis_color": "#5d46ee",
+    "image_url": "https://curl.sparklinkplayjoy.com/#",
+    "created_at": "2025-03-26 12:36:44",
+    "brand": "other",
+    "axi_brands": {
+      "id": 1,
+      "brand_name_cn": "other"
+    }
+  },
+  {
+    "axis_id": 24,
+    "axis_name": "天际线轴",
+    "drive_range": "3.5",
+    "axi_brand_id": 1,
+    "doctrine_range_left": "3.5",
+    "doctrine_range_right": "0.2",
+    "factory_name": "",
+    "axis_color": "#5ed2ea",
+    "image_url": "https://curl.sparklinkplayjoy.com/#",
+    "created_at": "2025-03-26 12:36:44",
+    "brand": "other",
+    "axi_brands": {
+      "id": 1,
+      "brand_name_cn": "other"
+    }
+  },
+  {
+    "axis_id": 25,
+    "axis_name": "冰磁轴",
+    "drive_range": "3.4",
+    "axi_brand_id": 1,
+    "doctrine_range_left": "3.4",
+    "doctrine_range_right": "0.2",
+    "factory_name": "",
+    "axis_color": "#4ddc3d",
+    "image_url": "https://curl.sparklinkplayjoy.com/#",
+    "created_at": "2025-03-26 12:36:44",
+    "brand": "other",
+    "axi_brands": {
+      "id": 1,
+      "brand_name_cn": "other"
+    }
+  },
+  {
+    "axis_id": 26,
+    "axis_name": "泰山轴",
+    "drive_range": "3.4",
+    "axi_brand_id": 1,
+    "doctrine_range_left": "3.4",
+    "doctrine_range_right": "0.2",
+    "factory_name": "",
+    "axis_color": "#dd9a35",
+    "image_url": "https://curl.sparklinkplayjoy.com/#",
+    "created_at": "2025-03-26 12:36:44",
+    "brand": "other",
+    "axi_brands": {
+      "id": 1,
+      "brand_name_cn": "other"
+    }
+  },
+  {
+    "axis_id": 27,
+    "axis_name": "黑皇轴",
+    "drive_range": "3.36",
+    "axi_brand_id": 1,
+    "doctrine_range_left": "3.36",
+    "doctrine_range_right": "0.02",
+    "factory_name": "狼蛛",
+    "axis_color": "#7ff2c4",
+    "image_url": "https://curl.sparklinkplayjoy.com/#",
+    "created_at": "2025-03-26 12:36:44",
+    "brand": "other",
+    "axi_brands": {
+      "id": 1,
+      "brand_name_cn": "other"
+    }
+  },
+  {
+    "axis_id": 28,
+    "axis_name": "海皇轴",
+    "drive_range": "3.4",
+    "axi_brand_id": 1,
+    "doctrine_range_left": "3.4",
+    "doctrine_range_right": "0.2",
+    "factory_name": "未知",
+    "axis_color": "#f4eb6e",
+    "image_url": "https://api.sparklinkplayjoy.com/storage/images/202503/U6CP7cj8AC30CwHrWLuEVZk4qsxGJJEyWDES3nOh.png",
+    "created_at": "2025-03-26 12:36:44",
+    "brand": "other",
+    "axi_brands": {
+      "id": 1,
+      "brand_name_cn": "other"
+    }
+  },
+  {
+    "axis_id": 29,
+    "axis_name": "玉皇轴",
+    "drive_range": "3.4",
+    "axi_brand_id": 1,
+    "doctrine_range_left": "3.4",
+    "doctrine_range_right": "0.2",
+    "factory_name": "",
+    "axis_color": "#e66cc1",
+    "image_url": "https://curl.sparklinkplayjoy.com/#",
+    "created_at": "2025-03-26 12:36:44",
+    "brand": "other",
+    "axi_brands": {
+      "id": 1,
+      "brand_name_cn": "other"
+    }
+  },
+  {
+    "axis_id": 30,
+    "axis_name": "爱心万磁王",
+    "drive_range": "3.3",
+    "axi_brand_id": 4,
+    "doctrine_range_left": "3.3",
+    "doctrine_range_right": "0.2",
+    "factory_name": "",
+    "axis_color": "#74d1e0",
+    "image_url": "https://curl.sparklinkplayjoy.com/#",
+    "created_at": "2025-03-26 12:36:44",
+    "brand": "TTC",
+    "axi_brands": {
+      "id": 4,
+      "brand_name_cn": "TTC"
+    }
+  },
+  {
+    "axis_id": 31,
+    "axis_name": "天空轴",
+    "drive_range": "3.9",
+    "axi_brand_id": 1,
+    "doctrine_range_left": "3.9",
+    "doctrine_range_right": "0.2",
+    "factory_name": "",
+    "axis_color": "#78eacb",
+    "image_url": "https://curl.sparklinkplayjoy.com/#",
+    "created_at": "2025-03-26 12:36:44",
+    "brand": "other",
+    "axi_brands": {
+      "id": 1,
+      "brand_name_cn": "other"
+    }
+  },
+  {
+    "axis_id": 32,
+    "axis_name": "磁玉max",
+    "drive_range": "3.3",
+    "axi_brand_id": 3,
+    "doctrine_range_left": "3.3",
+    "doctrine_range_right": "0.2",
+    "factory_name": "",
+    "axis_color": "#f0f736",
+    "image_url": "https://curl.sparklinkplayjoy.com/#",
+    "created_at": "2025-03-26 12:36:44",
+    "brand": "GATERON",
+    "axi_brands": {
+      "id": 3,
+      "brand_name_cn": "GATERON"
+    }
+  },
+  {
+    "axis_id": 33,
+    "axis_name": "万磁Pro",
+    "drive_range": "3.5",
+    "axi_brand_id": 3,
+    "doctrine_range_left": "3.5",
+    "doctrine_range_right": "0.2",
+    "factory_name": "佳达隆",
+    "axis_color": "#dddddd",
+    "image_url": "https://api.sparklinkplayjoy.com/storage/images/202503/AbV5oZhXScZbgNtVqghAbZhhUVlED0kXsxhz6tot.png",
+    "created_at": "2025-03-26 12:36:44",
+    "brand": "GATERON",
+    "axi_brands": {
+      "id": 3,
+      "brand_name_cn": "GATERON"
+    }
+  },
+  {
+    "axis_id": 34,
+    "axis_name": "红莲轴",
+    "drive_range": "3.2",
+    "axi_brand_id": 1,
+    "doctrine_range_left": "3.3",
+    "doctrine_range_right": "0.2",
+    "factory_name": "",
+    "axis_color": "#e2fb7e",
+    "image_url": "https://curl.sparklinkplayjoy.com/#",
+    "created_at": "2025-03-26 12:36:44",
+    "brand": "other",
+    "axi_brands": {
+      "id": 1,
+      "brand_name_cn": "other"
+    }
+  },
+  {
+    "axis_id": 35,
+    "axis_name": "八宝轴",
+    "drive_range": "3.5",
+    "axi_brand_id": 1,
+    "doctrine_range_left": "3.5",
+    "doctrine_range_right": "0.2",
+    "factory_name": "",
+    "axis_color": "#ddcde6",
+    "image_url": "https://curl.sparklinkplayjoy.com/#",
+    "created_at": "2025-03-26 12:36:44",
+    "brand": "other",
+    "axi_brands": {
+      "id": 1,
+      "brand_name_cn": "other"
+    }
+  },
+  {
+    "axis_id": 36,
+    "axis_name": "禾金轴",
+    "drive_range": "3.5",
+    "axi_brand_id": 1,
+    "doctrine_range_left": "3.5",
+    "doctrine_range_right": "0.3",
+    "factory_name": "",
+    "axis_color": "#62c8ed",
+    "image_url": "https://curl.sparklinkplayjoy.com/#",
+    "created_at": "2025-03-26 12:36:44",
+    "brand": "other",
+    "axi_brands": {
+      "id": 1,
+      "brand_name_cn": "other"
+    }
+  },
+  {
+    "axis_id": 37,
+    "axis_name": "佳达隆轴",
+    "drive_range": "3.7",
+    "axi_brand_id": 3,
+    "doctrine_range_left": "3.7",
+    "doctrine_range_right": "0.2",
+    "factory_name": "",
+    "axis_color": "#f14545",
+    "image_url": "https://curl.sparklinkplayjoy.com/#",
+    "created_at": "2025-03-26 12:36:44",
+    "brand": "GATERON",
+    "axi_brands": {
+      "id": 3,
+      "brand_name_cn": "GATERON"
+    }
+  },
+  {
+    "axis_id": 38,
+    "axis_name": "磁白轴",
+    "drive_range": "3.4",
+    "axi_brand_id": 1,
+    "doctrine_range_left": "3.4",
+    "doctrine_range_right": "0.2",
+    "factory_name": "",
+    "axis_color": "#f4eb6e",
+    "image_url": "https://api.sparklinkplayjoy.com/storage/images/202505/EwPPFRT9ZCjIa3xN0g7GN8es6WfWItDtxTNTsdPK.png",
+    "created_at": "2025-03-26 12:36:44",
+    "brand": "other",
+    "axi_brands": {
+      "id": 1,
+      "brand_name_cn": "other"
+    }
+  },
+  {
+    "axis_id": 39,
+    "axis_name": "幻晶轴",
+    "drive_range": "3.6",
+    "axi_brand_id": 1,
+    "doctrine_range_left": "3.6",
+    "doctrine_range_right": "0.2",
+    "factory_name": "",
+    "axis_color": "#4ddc3d",
+    "image_url": "https://api.sparklinkplayjoy.com/storage/images/202505/NqUVWfHYkHyPQ8PxgB4JGxmIQl5mGlaYg4y0kLDq.png",
+    "created_at": "2025-03-26 12:36:44",
+    "brand": "other",
+    "axi_brands": {
+      "id": 1,
+      "brand_name_cn": "other"
+    }
+  },
+  {
+    "axis_id": 40,
+    "axis_name": "蓝冰轴",
+    "drive_range": "3.4",
+    "axi_brand_id": 1,
+    "doctrine_range_left": "3.4",
+    "doctrine_range_right": "0.2",
+    "factory_name": "",
+    "axis_color": "#e66cc1",
+    "image_url": "https://curl.sparklinkplayjoy.com/#",
+    "created_at": "2025-03-26 12:36:44",
+    "brand": "other",
+    "axi_brands": {
+      "id": 1,
+      "brand_name_cn": "other"
+    }
+  },
+  {
+    "axis_id": 41,
+    "axis_name": "粉皇轴",
+    "drive_range": "3.4",
+    "axi_brand_id": 1,
+    "doctrine_range_left": "3.4",
+    "doctrine_range_right": "0.2",
+    "factory_name": "",
+    "axis_color": "#ddcde6",
+    "image_url": "https://curl.sparklinkplayjoy.com/#",
+    "created_at": "2025-03-26 12:36:44",
+    "brand": "other",
+    "axi_brands": {
+      "id": 1,
+      "brand_name_cn": "other"
+    }
+  },
+  {
+    "axis_id": 42,
+    "axis_name": "磁力MAX",
+    "drive_range": "3.4",
+    "axi_brand_id": 1,
+    "doctrine_range_left": "3.4",
+    "doctrine_range_right": "0.2",
+    "factory_name": "",
+    "axis_color": "#ff005e",
+    "image_url": "https://curl.sparklinkplayjoy.com/#",
+    "created_at": "2025-03-26 12:36:44",
+    "brand": "other",
+    "axi_brands": {
+      "id": 1,
+      "brand_name_cn": "other"
+    }
+  },
+  {
+    "axis_id": 43,
+    "axis_name": "磁神轴",
+    "drive_range": "3.4",
+    "axi_brand_id": 1,
+    "doctrine_range_left": "3.4",
+    "doctrine_range_right": "0.2",
+    "factory_name": "",
+    "axis_color": "#76d388",
+    "image_url": "https://curl.sparklinkplayjoy.com/#",
+    "created_at": "2025-03-26 12:36:44",
+    "brand": "other",
+    "axi_brands": {
+      "id": 1,
+      "brand_name_cn": "other"
+    }
+  },
+  {
+    "axis_id": 44,
+    "axis_name": "二代磁白轴",
+    "drive_range": "3.8",
+    "axi_brand_id": 1,
+    "doctrine_range_left": "3.8",
+    "doctrine_range_right": "0.2",
+    "factory_name": "",
+    "axis_color": "#5d46ee",
+    "image_url": "https://curl.sparklinkplayjoy.com/#",
+    "created_at": "2025-03-26 12:36:44",
+    "brand": "other",
+    "axi_brands": {
+      "id": 1,
+      "brand_name_cn": "other"
+    }
+  },
+  {
+    "axis_id": 45,
+    "axis_name": "曜夜轴",
+    "drive_range": "3.3",
+    "axi_brand_id": 1,
+    "doctrine_range_left": "3.3",
+    "doctrine_range_right": "0.2",
+    "factory_name": "",
+    "axis_color": "#32fc00",
+    "image_url": "https://api.sparklinkplayjoy.com/storage/images/202505/Ljoj2mhnx6InbmRRtR63rulqqqqqfStCvdCrzUXX.png",
+    "created_at": "2025-03-26 12:36:44",
+    "brand": "other",
+    "axi_brands": {
+      "id": 1,
+      "brand_name_cn": "other"
+    }
+  },
+  {
+    "axis_id": 46,
+    "axis_name": "曜影轴",
+    "drive_range": "3.3",
+    "axi_brand_id": 1,
+    "doctrine_range_left": "3.3",
+    "doctrine_range_right": "0.2",
+    "factory_name": "",
+    "axis_color": "#4ddc3d",
+    "image_url": "https://api.sparklinkplayjoy.com/storage/images/202505/4zqJNgwDmBB41dScsLws1jBgoE6STSSNfooJKAYT.png",
+    "created_at": "2025-03-26 12:36:44",
+    "brand": "other",
+    "axi_brands": {
+      "id": 1,
+      "brand_name_cn": "other"
+    }
+  },
+  {
+    "axis_id": 47,
+    "axis_name": "万磁gaming围墙轴",
+    "drive_range": "3.3",
+    "axi_brand_id": 1,
+    "doctrine_range_left": "3.3",
+    "doctrine_range_right": "0.2",
+    "factory_name": "",
+    "axis_color": "#9aff56",
+    "image_url": "https://curl.sparklinkplayjoy.com/#",
+    "created_at": "2025-03-26 12:36:44",
+    "brand": "other",
+    "axi_brands": {
+      "id": 1,
+      "brand_name_cn": "other"
+    }
+  },
+  {
+    "axis_id": 48,
+    "axis_name": "佳达隆低配轴",
+    "drive_range": "3.5",
+    "axi_brand_id": 3,
+    "doctrine_range_left": "0",
+    "doctrine_range_right": "0",
+    "factory_name": "",
+    "axis_color": "#df76ef",
+    "image_url": "https://curl.sparklinkplayjoy.com/#",
+    "created_at": "2025-04-25 14:40:13",
+    "brand": "GATERON",
+    "axi_brands": {
+      "id": 3,
+      "brand_name_cn": "GATERON"
+    }
+  },
+  {
+    "axis_id": 49,
+    "axis_name": "蝠星轴",
+    "drive_range": "3.3",
+    "axi_brand_id": 1,
+    "doctrine_range_left": "3.5",
+    "doctrine_range_right": "0.2",
+    "factory_name": "",
+    "axis_color": "#f4f950",
+    "image_url": "https://curl.sparklinkplayjoy.com/#",
+    "created_at": "2025-04-25 14:40:13",
+    "brand": "other",
+    "axi_brands": {
+      "id": 1,
+      "brand_name_cn": "other"
+    }
+  },
+  {
+    "axis_id": 50,
+    "axis_name": "瑞翼鲨",
+    "drive_range": "4.0",
+    "axi_brand_id": 1,
+    "doctrine_range_left": "0",
+    "doctrine_range_right": "0",
+    "factory_name": "",
+    "axis_color": "#f16969",
+    "image_url": "https://curl.sparklinkplayjoy.com/#",
+    "created_at": "2025-04-25 14:40:13",
+    "brand": "other",
+    "axi_brands": {
+      "id": 1,
+      "brand_name_cn": "other"
+    }
+  },
+  {
+    "axis_id": 51,
+    "axis_name": "owlab ti",
+    "drive_range": "3.3",
+    "axi_brand_id": 1,
+    "doctrine_range_left": "3.3",
+    "doctrine_range_right": "0.05",
+    "factory_name": "",
+    "axis_color": "#32fc00",
+    "image_url": "https://curl.sparklinkplayjoy.com/#",
+    "created_at": "2025-04-25 14:40:13",
+    "brand": "other",
+    "axi_brands": {
+      "id": 1,
+      "brand_name_cn": "other"
+    }
+  },
+  {
+    "axis_id": 52,
+    "axis_name": "赤霄磁轴",
+    "drive_range": "3.5",
+    "axi_brand_id": 1,
+    "doctrine_range_left": "3.5",
+    "doctrine_range_right": "0.2",
+    "factory_name": "",
+    "axis_color": "#bb00ff",
+    "image_url": "https://curl.sparklinkplayjoy.com/#",
+    "created_at": "2025-04-25 14:40:13",
+    "brand": "other",
+    "axi_brands": {
+      "id": 1,
+      "brand_name_cn": "other"
+    }
+  },
+  {
+    "axis_id": 53,
+    "axis_name": "桃晶轴",
+    "drive_range": "3.5",
+    "axi_brand_id": 1,
+    "doctrine_range_left": "3.5",
+    "doctrine_range_right": "0.2",
+    "factory_name": "",
+    "axis_color": "#00aaff",
+    "image_url": "https://curl.sparklinkplayjoy.com/#",
+    "created_at": "2025-04-25 14:40:13",
+    "brand": "other",
+    "axi_brands": {
+      "id": 1,
+      "brand_name_cn": "other"
+    }
+  },
+  {
+    "axis_id": 54,
+    "axis_name": "悟空轴",
+    "drive_range": "3.4",
+    "axi_brand_id": 1,
+    "doctrine_range_left": "0",
+    "doctrine_range_right": "0",
+    "factory_name": "",
+    "axis_color": "#f14545",
+    "image_url": "https://curl.sparklinkplayjoy.com/#",
+    "created_at": "2025-04-25 14:40:13",
+    "brand": "other",
+    "axi_brands": {
+      "id": 1,
+      "brand_name_cn": "other"
+    }
+  },
+  {
+    "axis_id": 55,
+    "axis_name": "RGB万磁王",
+    "drive_range": "3.4",
+    "axi_brand_id": 4,
+    "doctrine_range_left": "3.4",
+    "doctrine_range_right": "0.1",
+    "factory_name": "",
+    "axis_color": "#00f7ff",
+    "image_url": "https://curl.sparklinkplayjoy.com/#",
+    "created_at": "2025-04-25 14:40:13",
+    "brand": "TTC",
+    "axi_brands": {
+      "id": 4,
+      "brand_name_cn": "TTC"
+    }
+  },
+  {
+    "axis_id": 56,
+    "axis_name": "绿龙轴",
+    "drive_range": "3.4",
+    "axi_brand_id": 3,
+    "doctrine_range_left": "3.4",
+    "doctrine_range_right": "0.1",
+    "factory_name": "",
+    "axis_color": "#ffff00",
+    "image_url": "https://curl.sparklinkplayjoy.com/#",
+    "created_at": "2025-04-25 14:40:13",
+    "brand": "GATERON",
+    "axi_brands": {
+      "id": 3,
+      "brand_name_cn": "GATERON"
+    }
+  },
+  {
+    "axis_id": 57,
+    "axis_name": "冰磁轴",
+    "drive_range": "3.3",
+    "axi_brand_id": 1,
+    "doctrine_range_left": "3.3",
+    "doctrine_range_right": "0.05",
+    "factory_name": "",
+    "axis_color": "#e61e1e",
+    "image_url": "https://curl.sparklinkplayjoy.com/#",
+    "created_at": "2025-04-25 14:40:13",
+    "brand": "other",
+    "axi_brands": {
+      "id": 1,
+      "brand_name_cn": "other"
+    }
+  },
+  {
+    "axis_id": 58,
+    "axis_name": "磁玉pro",
+    "drive_range": "3.4",
+    "axi_brand_id": 3,
+    "doctrine_range_left": "3.4",
+    "doctrine_range_right": "0.2",
+    "factory_name": "佳达隆",
+    "axis_color": "#05cb68",
+    "image_url": "https://curl.sparklinkplayjoy.com/#",
+    "created_at": "2025-04-25 14:40:13",
+    "brand": "GATERON",
+    "axi_brands": {
+      "id": 3,
+      "brand_name_cn": "GATERON"
+    }
+  },
+  {
+    "axis_id": 59,
+    "axis_name": "佳达隆 磁珀",
+    "drive_range": "3.5",
+    "axi_brand_id": 3,
+    "doctrine_range_left": "3.5",
+    "doctrine_range_right": "0.2",
+    "factory_name": "佳达隆",
+    "axis_color": "#6f00ff",
+    "image_url": "https://curl.sparklinkplayjoy.com/#",
+    "created_at": "2025-04-25 14:40:13",
+    "brand": "GATERON",
+    "axi_brands": {
+      "id": 3,
+      "brand_name_cn": "GATERON"
+    }
+  },
+  {
+    "axis_id": 60,
+    "axis_name": "佳达隆 万磁 Gaming",
+    "drive_range": "3.5",
+    "axi_brand_id": 3,
+    "doctrine_range_left": "3.5",
+    "doctrine_range_right": "0.2",
+    "factory_name": "佳达隆",
+    "axis_color": "#4dff00",
+    "image_url": "https://curl.sparklinkplayjoy.com/#",
+    "created_at": "2025-04-25 14:40:13",
+    "brand": "GATERON",
+    "axi_brands": {
+      "id": 3,
+      "brand_name_cn": "GATERON"
+    }
+  },
+  {
+    "axis_id": 61,
+    "axis_name": "凯华磁神",
+    "drive_range": "3.5",
+    "axi_brand_id": 1,
+    "doctrine_range_left": "3.5",
+    "doctrine_range_right": "0.2",
+    "factory_name": "凯华",
+    "axis_color": "#ff005e",
+    "image_url": "https://curl.sparklinkplayjoy.com/#",
+    "created_at": "2025-04-25 14:40:13",
+    "brand": "other",
+    "axi_brands": {
+      "id": 1,
+      "brand_name_cn": "other"
+    }
+  },
+  {
+    "axis_id": 62,
+    "axis_name": "星磁轴",
+    "drive_range": "3.5",
+    "axi_brand_id": 1,
+    "doctrine_range_left": "3.5",
+    "doctrine_range_right": "0.2",
+    "factory_name": "",
+    "axis_color": "#bb00ff",
+    "image_url": "https://curl.sparklinkplayjoy.com/#",
+    "created_at": "2025-04-25 14:40:13",
+    "brand": "other",
+    "axi_brands": {
+      "id": 1,
+      "brand_name_cn": "other"
+    }
+  },
+  {
+    "axis_id": 63,
+    "axis_name": "天青轴",
+    "drive_range": "3.6",
+    "axi_brand_id": 1,
+    "doctrine_range_left": "3.6",
+    "doctrine_range_right": "0.1",
+    "factory_name": "",
+    "axis_color": "#0022ff",
+    "image_url": "https://curl.sparklinkplayjoy.com/#",
+    "created_at": "2025-04-25 14:40:13",
+    "brand": "other",
+    "axi_brands": {
+      "id": 1,
+      "brand_name_cn": "other"
+    }
+  },
+  {
+    "axis_id": 64,
+    "axis_name": "闪雷轴",
+    "drive_range": "3.3",
+    "axi_brand_id": 1,
+    "doctrine_range_left": "3.5",
+    "doctrine_range_right": "0.2",
+    "factory_name": "",
+    "axis_color": "#159af4",
+    "image_url": "https://curl.sparklinkplayjoy.com/#",
+    "created_at": "2025-04-25 14:40:13",
+    "brand": "other",
+    "axi_brands": {
+      "id": 1,
+      "brand_name_cn": "other"
+    }
+  },
+  {
+    "axis_id": 65,
+    "axis_name": "蝶翼磁轴",
+    "drive_range": "3.5",
+    "axi_brand_id": 1,
+    "doctrine_range_left": "3.5",
+    "doctrine_range_right": "0.2",
+    "factory_name": "",
+    "axis_color": "#79ff64",
+    "image_url": "https://curl.sparklinkplayjoy.com/#",
+    "created_at": "2025-04-25 14:40:13",
+    "brand": "other",
+    "axi_brands": {
+      "id": 1,
+      "brand_name_cn": "other"
+    }
+  },
+  {
+    "axis_id": 66,
+    "axis_name": "佳达隆万磁轴 Gaming",
+    "drive_range": "3.3",
+    "axi_brand_id": 3,
+    "doctrine_range_left": "3.3",
+    "doctrine_range_right": "0.2",
+    "factory_name": "",
+    "axis_color": "#df76ef",
+    "image_url": "https://curl.sparklinkplayjoy.com/#",
+    "created_at": "2025-04-25 14:40:13",
+    "brand": "GATERON",
+    "axi_brands": {
+      "id": 3,
+      "brand_name_cn": "GATERON"
+    }
+  },
+  {
+    "axis_id": 67,
+    "axis_name": "青蛇轴",
+    "drive_range": "3.4",
+    "axi_brand_id": 4,
+    "doctrine_range_left": "3.4",
+    "doctrine_range_right": "0.2",
+    "factory_name": "",
+    "axis_color": "#9aff56",
+    "image_url": "https://curl.sparklinkplayjoy.com/#",
+    "created_at": "2025-04-25 14:40:13",
+    "brand": "TTC",
+    "axi_brands": {
+      "id": 4,
+      "brand_name_cn": "TTC"
+    }
+  },
+  {
+    "axis_id": 68,
+    "axis_name": "科泰轴",
+    "drive_range": "3.4",
+    "axi_brand_id": 4,
+    "doctrine_range_left": "3.4",
+    "doctrine_range_right": "0.2",
+    "factory_name": "",
+    "axis_color": "#4d99fc",
+    "image_url": "https://curl.sparklinkplayjoy.com/#",
+    "created_at": "2025-04-25 14:40:13",
+    "brand": "TTC",
+    "axi_brands": {
+      "id": 4,
+      "brand_name_cn": "TTC"
+    }
+  },
+  {
+    "axis_id": 69,
+    "axis_name": "TTC万磁王",
+    "drive_range": "3.4",
+    "axi_brand_id": 4,
+    "doctrine_range_left": "3.4",
+    "doctrine_range_right": "0.2",
+    "factory_name": "TTC",
+    "axis_color": "#c5ff6e",
+    "image_url": "https://curl.sparklinkplayjoy.com/#",
+    "created_at": "2025-04-25 15:11:25",
+    "brand": "TTC",
+    "axi_brands": {
+      "id": 4,
+      "brand_name_cn": "TTC"
+    }
+  },
+  {
+    "axis_id": 70,
+    "axis_name": "ti轴",
+    "drive_range": "3.3",
+    "axi_brand_id": 1,
+    "doctrine_range_left": "3.3",
+    "doctrine_range_right": "0.2",
+    "factory_name": "",
+    "axis_color": "#0cf9e9",
+    "image_url": "https://curl.sparklinkplayjoy.com/#",
+    "created_at": "2025-04-25 15:13:21",
+    "brand": "other",
+    "axi_brands": {
+      "id": 1,
+      "brand_name_cn": "other"
+    }
+  },
+  {
+    "axis_id": 71,
+    "axis_name": "磁玉pom",
+    "drive_range": "3.3",
+    "axi_brand_id": 3,
+    "doctrine_range_left": "3.3",
+    "doctrine_range_right": "0.2",
+    "factory_name": "佳达隆",
+    "axis_color": "#f1f155",
+    "image_url": "https://curl.sparklinkplayjoy.com/#",
+    "created_at": "2025-04-25 15:13:40",
+    "brand": "GATERON",
+    "axi_brands": {
+      "id": 3,
+      "brand_name_cn": "GATERON"
+    }
+  },
+  {
+    "axis_id": 72,
+    "axis_name": "如意轴",
+    "drive_range": "3.40",
+    "axi_brand_id": 1,
+    "doctrine_range_left": "3.40",
+    "doctrine_range_right": "0.20",
+    "factory_name": "",
+    "axis_color": "#71f7d7",
+    "image_url": "#",
+    "created_at": "2025-04-28 16:54:39",
+    "brand": "other",
+    "axi_brands": {
+      "id": 1,
+      "brand_name_cn": "other"
+    }
+  },
+  {
+    "axis_id": 73,
+    "axis_name": "浅粉轴",
+    "drive_range": "3.3",
+    "axi_brand_id": 1,
+    "doctrine_range_left": "3.3",
+    "doctrine_range_right": "0.2",
+    "factory_name": "",
+    "axis_color": "#81f95c",
+    "image_url": "#",
+    "created_at": "2025-04-29 09:40:31",
+    "brand": "other",
+    "axi_brands": {
+      "id": 1,
+      "brand_name_cn": "other"
+    }
+  },
+  {
+    "axis_id": 74,
+    "axis_name": "冰玉轴",
+    "drive_range": "3.3",
+    "axi_brand_id": 1,
+    "doctrine_range_left": "3.3",
+    "doctrine_range_right": "0.2",
+    "factory_name": "",
+    "axis_color": "#ef4c4c",
+    "image_url": "#",
+    "created_at": "2025-04-29 09:40:51",
+    "brand": "other",
+    "axi_brands": {
+      "id": 1,
+      "brand_name_cn": "other"
+    }
+  },
+  {
+    "axis_id": 75,
+    "axis_name": "太阳神轴",
+    "drive_range": "3.3",
+    "axi_brand_id": 4,
+    "doctrine_range_left": "3.3",
+    "doctrine_range_right": "0.1",
+    "factory_name": "TTC",
+    "axis_color": "#ffeb6d",
+    "image_url": "#",
+    "created_at": "2025-04-29 09:43:00",
+    "brand": "TTC",
+    "axi_brands": {
+      "id": 4,
+      "brand_name_cn": "TTC"
+    }
+  },
+  {
+    "axis_id": 76,
+    "axis_name": "雨露gaming",
+    "drive_range": "3.4",
+    "axi_brand_id": 1,
+    "doctrine_range_left": "3.4",
+    "doctrine_range_right": "0.2",
+    "factory_name": "",
+    "axis_color": "#fe5e5e",
+    "image_url": "#",
+    "created_at": "2025-04-30 10:43:23",
+    "brand": "other",
+    "axi_brands": {
+      "id": 1,
+      "brand_name_cn": "other"
+    }
+  },
+  {
+    "axis_id": 77,
+    "axis_name": "雷电轴",
+    "drive_range": "3.5",
+    "axi_brand_id": 1,
+    "doctrine_range_left": "3.5",
+    "doctrine_range_right": "0.2",
+    "factory_name": "",
+    "axis_color": "#ffa620",
+    "image_url": "#",
+    "created_at": "2025-04-30 10:54:52",
+    "brand": "other",
+    "axi_brands": {
+      "id": 1,
+      "brand_name_cn": "other"
+    }
+  },
+  {
+    "axis_id": 78,
+    "axis_name": "磁玉max",
+    "drive_range": "3.4",
+    "axi_brand_id": 3,
+    "doctrine_range_left": "3.4",
+    "doctrine_range_right": "0.2",
+    "factory_name": "佳达隆",
+    "axis_color": "#efebeb",
+    "image_url": "#",
+    "created_at": "2025-05-07 16:27:18",
+    "brand": "GATERON",
+    "axi_brands": {
+      "id": 3,
+      "brand_name_cn": "GATERON"
+    }
+  },
+  {
+    "axis_id": 79,
+    "axis_name": "八宝轴",
+    "drive_range": "3.6",
+    "axi_brand_id": 1,
+    "doctrine_range_left": "3.6",
+    "doctrine_range_right": "0.1",
+    "factory_name": "",
+    "axis_color": "#ff1616",
+    "image_url": "https://api.sparklinkplayjoy.com/storage/images/202505/KVZ0kCvXwJ1b0sdN6HlWl1NWQ1jpjyXjjHG3aON6.jpg",
+    "created_at": "2025-05-12 16:22:28",
+    "brand": "other",
+    "axi_brands": {
+      "id": 1,
+      "brand_name_cn": "other"
+    }
+  },
+  {
+    "axis_id": 80,
+    "axis_name": "锦鲤轴",
+    "drive_range": "3.3",
+    "axi_brand_id": 1,
+    "doctrine_range_left": "3.3",
+    "doctrine_range_right": "0.1",
+    "factory_name": "",
+    "axis_color": "#ff8989",
+    "image_url": "#",
+    "created_at": "2025-05-12 18:16:57",
+    "brand": "other",
+    "axi_brands": {
+      "id": 1,
+      "brand_name_cn": "other"
+    }
+  },
+  {
+    "axis_id": 81,
+    "axis_name": "沐风轴",
+    "drive_range": "3.3",
+    "axi_brand_id": 1,
+    "doctrine_range_left": "3.3",
+    "doctrine_range_right": "0.1",
+    "factory_name": "",
+    "axis_color": "#9ef3f9",
+    "image_url": "#",
+    "created_at": "2025-05-12 18:18:29",
+    "brand": "other",
+    "axi_brands": {
+      "id": 1,
+      "brand_name_cn": "other"
+    }
+  },
+  {
+    "axis_id": 82,
+    "axis_name": "精灵王轴",
+    "drive_range": "3.5",
+    "axi_brand_id": 1,
+    "doctrine_range_left": "3.5",
+    "doctrine_range_right": "0.1",
+    "factory_name": "",
+    "axis_color": "#21d60d",
+    "image_url": "#",
+    "created_at": "2025-05-15 16:45:04",
+    "brand": "other",
+    "axi_brands": {
+      "id": 1,
+      "brand_name_cn": "other"
+    }
+  },
+  {
+    "axis_id": 83,
+    "axis_name": "青花轴",
+    "drive_range": "3.3",
+    "axi_brand_id": 1,
+    "doctrine_range_left": "3.3",
+    "doctrine_range_right": "0.2",
+    "factory_name": "",
+    "axis_color": "#13eec2",
+    "image_url": "#",
+    "created_at": "2025-05-15 17:21:49",
+    "brand": "other",
+    "axi_brands": {
+      "id": 1,
+      "brand_name_cn": "other"
+    }
+  },
+  {
+    "axis_id": 84,
+    "axis_name": "蝠星轴",
+    "drive_range": "3.5",
+    "axi_brand_id": 1,
+    "doctrine_range_left": "3.5",
+    "doctrine_range_right": "0.2",
+    "factory_name": "",
+    "axis_color": "",
+    "image_url": "#",
+    "created_at": "2025-05-16 11:04:22",
+    "brand": "other",
+    "axi_brands": {
+      "id": 1,
+      "brand_name_cn": "other"
+    }
+  },
+  {
+    "axis_id": 85,
+    "axis_name": "冰皇轴",
+    "drive_range": "3.3",
+    "axi_brand_id": 1,
+    "doctrine_range_left": "3.3",
+    "doctrine_range_right": "0.2",
+    "factory_name": "索爱",
+    "axis_color": "#dde0dc",
+    "image_url": "https://api.sparklinkplayjoy.com/storage/images/202505/Y8RCsx7eGE9K2Q0H0F0w8leDtkPQ4ttg4z1NGtdd.png",
+    "created_at": "2025-05-16 17:02:37",
+    "brand": "other",
+    "axi_brands": {
+      "id": 1,
+      "brand_name_cn": "other"
+    }
+  },
+  {
+    "axis_id": 86,
+    "axis_name": "星磁轴",
+    "drive_range": "3.5",
+    "axi_brand_id": 1,
+    "doctrine_range_left": "3.5",
+    "doctrine_range_right": "0.1",
+    "factory_name": "",
+    "axis_color": "#3a6fff",
+    "image_url": "#",
+    "created_at": "2025-05-22 14:09:49",
+    "brand": "other",
+    "axi_brands": {
+      "id": 1,
+      "brand_name_cn": "other"
+    }
+  },
+  {
+    "axis_id": 87,
+    "axis_name": "登神Max",
+    "drive_range": "3.3",
+    "axi_brand_id": 1,
+    "doctrine_range_left": "3.3",
+    "doctrine_range_right": "0.2",
+    "factory_name": "",
+    "axis_color": "#843535",
+    "image_url": "#",
+    "created_at": "2025-05-22 16:42:25",
+    "brand": "other",
+    "axi_brands": {
+      "id": 1,
+      "brand_name_cn": "other"
+    }
+  },
+  {
+    "axis_id": 88,
+    "axis_name": "粉皇mini",
+    "drive_range": "3.1",
+    "axi_brand_id": 1,
+    "doctrine_range_left": "3.1",
+    "doctrine_range_right": "0.1",
+    "factory_name": "",
+    "axis_color": "#f7bbf1",
+    "image_url": "#",
+    "created_at": "2025-05-24 12:00:56",
+    "brand": "other",
+    "axi_brands": {
+      "id": 1,
+      "brand_name_cn": "other"
+    }
+  },
+  {
+    "axis_id": 89,
+    "axis_name": "登神轴",
+    "drive_range": "3.3",
+    "axi_brand_id": 1,
+    "doctrine_range_left": "3.3",
+    "doctrine_range_right": "0.2",
+    "factory_name": "",
+    "axis_color": "#c89191",
+    "image_url": "#",
+    "created_at": "2025-05-24 16:03:11",
+    "brand": "other",
+    "axi_brands": {
+      "id": 1,
+      "brand_name_cn": "other"
+    }
+  },
+  {
+    "axis_id": 90,
+    "axis_name": "登神Pro",
+    "drive_range": "3.3",
+    "axi_brand_id": 1,
+    "doctrine_range_left": "3.3",
+    "doctrine_range_right": "0.2",
+    "factory_name": "",
+    "axis_color": "#f76969",
+    "image_url": "#",
+    "created_at": "2025-05-24 16:03:33",
+    "brand": "other",
+    "axi_brands": {
+      "id": 1,
+      "brand_name_cn": "other"
+    }
+  },
+  {
+    "axis_id": 91,
+    "axis_name": "磁极轴",
+    "drive_range": "3.3",
+    "axi_brand_id": 1,
+    "doctrine_range_left": "3.3",
+    "doctrine_range_right": "0.1",
+    "factory_name": "",
+    "axis_color": "#6a6a6a",
+    "image_url": "#",
+    "created_at": "2025-05-24 16:05:47",
+    "brand": "other",
+    "axi_brands": {
+      "id": 1,
+      "brand_name_cn": "other"
+    }
+  },
+  {
+    "axis_id": 92,
+    "axis_name": "灭霸轴",
+    "drive_range": "3.5",
+    "axi_brand_id": 1,
+    "doctrine_range_left": "3.5",
+    "doctrine_range_right": "0.1",
+    "factory_name": "",
+    "axis_color": "#419efb",
+    "image_url": "#",
+    "created_at": "2025-05-27 09:21:01",
+    "brand": "other",
+    "axi_brands": {
+      "id": 1,
+      "brand_name_cn": "other"
+    }
+  },
+  {
+    "axis_id": 93,
+    "axis_name": "磁玉Air",
+    "drive_range": "3.4",
+    "axi_brand_id": 3,
+    "doctrine_range_left": "3.4",
+    "doctrine_range_right": "0.2",
+    "factory_name": "佳达隆",
+    "axis_color": "#eeeaea",
+    "image_url": "#",
+    "created_at": "2025-05-27 20:07:34",
+    "brand": "GATERON",
+    "axi_brands": {
+      "id": 3,
+      "brand_name_cn": "GATERON"
+    }
+  },
+  {
+    "axis_id": 94,
+    "axis_name": "万磁gaming轴",
+    "drive_range": "3.4",
+    "axi_brand_id": 1,
+    "doctrine_range_left": "3.4",
+    "doctrine_range_right": "0.1",
+    "factory_name": "",
+    "axis_color": "#f8f8f8",
+    "image_url": "#",
+    "created_at": "2025-05-28 12:14:25",
+    "brand": "other",
+    "axi_brands": {
+      "id": 1,
+      "brand_name_cn": "other"
+    }
+  },
+  {
+    "axis_id": 95,
+    "axis_name": "磁玉定制",
+    "drive_range": "3.4",
+    "axi_brand_id": 1,
+    "doctrine_range_left": "3.4",
+    "doctrine_range_right": "0.2",
+    "factory_name": "",
+    "axis_color": "",
+    "image_url": "#",
+    "created_at": "2025-05-29 09:15:01",
+    "brand": "other",
+    "axi_brands": {
+      "id": 1,
+      "brand_name_cn": "other"
+    }
+  },
+  {
+    "axis_id": 96,
+    "axis_name": "兵王轴",
+    "drive_range": "3.4",
+    "axi_brand_id": 4,
+    "doctrine_range_left": "3.4",
+    "doctrine_range_right": "0.2",
+    "factory_name": "",
+    "axis_color": "#ffdeac",
+    "image_url": "#",
+    "created_at": "2025-05-29 09:47:25",
+    "brand": "TTC",
+    "axi_brands": {
+      "id": 4,
+      "brand_name_cn": "TTC"
+    }
+  },
+  {
+    "axis_id": 97,
+    "axis_name": "高特轴",
+    "drive_range": "3.5",
+    "axi_brand_id": 1,
+    "doctrine_range_left": "3.5",
+    "doctrine_range_right": "0.2",
+    "factory_name": "",
+    "axis_color": "",
+    "image_url": "#",
+    "created_at": "2025-06-07 10:55:24",
+    "brand": "other",
+    "axi_brands": {
+      "id": 1,
+      "brand_name_cn": "other"
+    }
+  },
+  {
+    "axis_id": 98,
+    "axis_name": "环诺欧米伽",
+    "drive_range": "3.5",
+    "axi_brand_id": 1,
+    "doctrine_range_left": "3.5",
+    "doctrine_range_right": "0.2",
+    "factory_name": "",
+    "axis_color": "",
+    "image_url": "#",
+    "created_at": "2025-06-20 10:20:03",
+    "brand": "other",
+    "axi_brands": {
+      "id": 1,
+      "brand_name_cn": "other"
+    }
+  },
+  {
+    "axis_id": 99,
+    "axis_name": "蜜雪轴",
+    "drive_range": "3.4",
+    "axi_brand_id": 1,
+    "doctrine_range_left": "3.4",
+    "doctrine_range_right": "0.2",
+    "factory_name": "索爱",
+    "axis_color": "#e6e1e1",
+    "image_url": "#",
+    "created_at": "2025-06-20 16:43:35",
+    "brand": "other",
+    "axi_brands": {
+      "id": 1,
+      "brand_name_cn": "other"
+    }
+  },
+  {
+    "axis_id": 100,
+    "axis_name": "超神轴",
+    "drive_range": "3.4",
+    "axi_brand_id": 1,
+    "doctrine_range_left": "3.4",
+    "doctrine_range_right": "0.2",
+    "factory_name": "",
+    "axis_color": "#917f7f",
+    "image_url": "#",
+    "created_at": "2025-06-21 15:32:42",
+    "brand": "other",
+    "axi_brands": {
+      "id": 1,
+      "brand_name_cn": "other"
+    }
+  },
+  {
+    "axis_id": 101,
+    "axis_name": "冰心轴",
+    "drive_range": "3.4",
+    "axi_brand_id": 1,
+    "doctrine_range_left": "3.4",
+    "doctrine_range_right": "0.2",
+    "factory_name": "",
+    "axis_color": "#c15151",
+    "image_url": "#",
+    "created_at": "2025-06-21 15:33:06",
+    "brand": "other",
+    "axi_brands": {
+      "id": 1,
+      "brand_name_cn": "other"
+    }
+  },
+  {
+    "axis_id": 102,
+    "axis_name": "玉京子轴",
+    "drive_range": "3.3",
+    "axi_brand_id": 3,
+    "doctrine_range_left": "3.3",
+    "doctrine_range_right": "3.1",
+    "factory_name": "佳达隆",
+    "axis_color": "#fc6363",
+    "image_url": "#",
+    "created_at": "2025-06-23 15:29:03",
+    "brand": "GATERON",
+    "axi_brands": {
+      "id": 3,
+      "brand_name_cn": "GATERON"
+    }
+  },
+  {
+    "axis_id": 103,
+    "axis_name": "天空轴",
+    "drive_range": "3.3",
+    "axi_brand_id": 1,
+    "doctrine_range_left": "3.3",
+    "doctrine_range_right": "0.2",
+    "factory_name": "",
+    "axis_color": "#1858c5",
+    "image_url": "#",
+    "created_at": "2025-06-24 15:40:36",
+    "brand": "other",
+    "axi_brands": {
+      "id": 1,
+      "brand_name_cn": "other"
+    }
+  },
+  {
+    "axis_id": 104,
+    "axis_name": "糯米磁轴",
+    "drive_range": "3.4",
+    "axi_brand_id": 1,
+    "doctrine_range_left": "3.4",
+    "doctrine_range_right": "0.2",
+    "factory_name": "凯华",
+    "axis_color": "#bfa46f",
+    "image_url": "#",
+    "created_at": "2025-06-26 15:02:24",
+    "brand": "other",
+    "axi_brands": {
+      "id": 1,
+      "brand_name_cn": "other"
+    }
+  },
+  {
+    "axis_id": 105,
+    "axis_name": "磁玉gaming",
+    "drive_range": "3.4",
+    "axi_brand_id": 3,
+    "doctrine_range_left": "3.4",
+    "doctrine_range_right": "0.20",
+    "factory_name": "佳达隆",
+    "axis_color": "#1feea2",
+    "image_url": "#",
+    "created_at": "2025-06-27 16:17:01",
+    "brand": "GATERON",
+    "axi_brands": {
+      "id": 3,
+      "brand_name_cn": "GATERON"
+    }
+  },
+  {
+    "axis_id": 106,
+    "axis_name": "绿龙轴",
+    "drive_range": "3.3",
+    "axi_brand_id": 3,
+    "doctrine_range_left": "3.3",
+    "doctrine_range_right": "0.2",
+    "factory_name": "佳达隆",
+    "axis_color": "#58f429",
+    "image_url": "#",
+    "created_at": "2025-06-27 16:21:55",
+    "brand": "GATERON",
+    "axi_brands": {
+      "id": 3,
+      "brand_name_cn": "GATERON"
+    }
+  },
+  {
+    "axis_id": 107,
+    "axis_name": "磁玉Pom",
+    "drive_range": "3.4",
+    "axi_brand_id": 3,
+    "doctrine_range_left": "3.4",
+    "doctrine_range_right": "0.2",
+    "factory_name": "佳达隆",
+    "axis_color": "#e7f2ed",
+    "image_url": "#",
+    "created_at": "2025-06-27 16:36:19",
+    "brand": "GATERON",
+    "axi_brands": {
+      "id": 3,
+      "brand_name_cn": "GATERON"
+    }
+  },
+  {
+    "axis_id": 108,
+    "axis_name": "磁玉Max",
+    "drive_range": "3.4",
+    "axi_brand_id": 3,
+    "doctrine_range_left": "3.4",
+    "doctrine_range_right": "0.2",
+    "factory_name": "佳达隆",
+    "axis_color": "#edf8ee",
+    "image_url": "#",
+    "created_at": "2025-06-27 16:39:15",
+    "brand": "GATERON",
+    "axi_brands": {
+      "id": 3,
+      "brand_name_cn": "GATERON"
+    }
+  },
+  {
+    "axis_id": 109,
+    "axis_name": "磁玉Air",
+    "drive_range": "3.4",
+    "axi_brand_id": 3,
+    "doctrine_range_left": "3.4",
+    "doctrine_range_right": "0.2",
+    "factory_name": "佳达隆",
+    "axis_color": "#dff2eb",
+    "image_url": "#",
+    "created_at": "2025-06-27 16:43:17",
+    "brand": "GATERON",
+    "axi_brands": {
+      "id": 3,
+      "brand_name_cn": "GATERON"
+    }
+  },
+  {
+    "axis_id": 110,
+    "axis_name": "TTC万磁王",
+    "drive_range": "3.4",
+    "axi_brand_id": 4,
+    "doctrine_range_left": "3.4",
+    "doctrine_range_right": "0.2",
+    "factory_name": "TTC",
+    "axis_color": "#a02727",
+    "image_url": "#",
+    "created_at": "2025-06-27 16:44:57",
+    "brand": "TTC",
+    "axi_brands": {
+      "id": 4,
+      "brand_name_cn": "TTC"
+    }
+  },
+  {
+    "axis_id": 111,
+    "axis_name": "RGB万磁王",
+    "drive_range": "3.4",
+    "axi_brand_id": 4,
+    "doctrine_range_left": "3.4",
+    "doctrine_range_right": "0.2",
+    "factory_name": "TTC",
+    "axis_color": "#d02727",
+    "image_url": "#",
+    "created_at": "2025-06-27 16:46:04",
+    "brand": "TTC",
+    "axi_brands": {
+      "id": 4,
+      "brand_name_cn": "TTC"
+    }
+  },
+  {
+    "axis_id": 112,
+    "axis_name": "青蛇轴",
+    "drive_range": "3.4",
+    "axi_brand_id": 4,
+    "doctrine_range_left": "3.4",
+    "doctrine_range_right": "0.2",
+    "factory_name": "TTC",
+    "axis_color": "#136726",
+    "image_url": "#",
+    "created_at": "2025-06-27 16:46:50",
+    "brand": "TTC",
+    "axi_brands": {
+      "id": 4,
+      "brand_name_cn": "TTC"
+    }
+  },
+  {
+    "axis_id": 113,
+    "axis_name": "爱心万磁王轴",
+    "drive_range": "3.4",
+    "axi_brand_id": 4,
+    "doctrine_range_left": "3.4",
+    "doctrine_range_right": "0.2",
+    "factory_name": "TTC",
+    "axis_color": "#e69aa2",
+    "image_url": "#",
+    "created_at": "2025-06-27 16:48:19",
+    "brand": "TTC",
+    "axi_brands": {
+      "id": 4,
+      "brand_name_cn": "TTC"
+    }
+  },
+  {
+    "axis_id": 114,
+    "axis_name": "Pom万磁王轴",
+    "drive_range": "3.4",
+    "axi_brand_id": 4,
+    "doctrine_range_left": "3.4",
+    "doctrine_range_right": "0.2",
+    "factory_name": "TTC",
+    "axis_color": "#7a4595",
+    "image_url": "#",
+    "created_at": "2025-06-27 16:49:40",
+    "brand": "TTC",
+    "axi_brands": {
+      "id": 4,
+      "brand_name_cn": "TTC"
+    }
+  },
+  {
+    "axis_id": 115,
+    "axis_name": "白蛇轴",
+    "drive_range": "3.3",
+    "axi_brand_id": 4,
+    "doctrine_range_left": "3.3",
+    "doctrine_range_right": "0.2",
+    "factory_name": "TTC",
+    "axis_color": "#ecede4",
+    "image_url": "#",
+    "created_at": "2025-06-27 16:51:07",
+    "brand": "TTC",
+    "axi_brands": {
+      "id": 4,
+      "brand_name_cn": "TTC"
+    }
+  },
+  {
+    "axis_id": 116,
+    "axis_name": "天王轴电竞",
+    "drive_range": "3.4",
+    "axi_brand_id": 4,
+    "doctrine_range_left": "3.4",
+    "doctrine_range_right": "0.2",
+    "factory_name": "TTC",
+    "axis_color": "#f44e12",
+    "image_url": "#",
+    "created_at": "2025-06-27 16:54:59",
+    "brand": "TTC",
+    "axi_brands": {
+      "id": 4,
+      "brand_name_cn": "TTC"
+    }
+  },
+  {
+    "axis_id": 117,
+    "axis_name": "Ti轴",
+    "drive_range": "3.3",
+    "axi_brand_id": 1,
+    "doctrine_range_left": "3.3",
+    "doctrine_range_right": "0.2",
+    "factory_name": "禾金",
+    "axis_color": "#c8bbbd",
+    "image_url": "#",
+    "created_at": "2025-06-27 16:56:31",
+    "brand": "other",
+    "axi_brands": {
+      "id": 1,
+      "brand_name_cn": "other"
+    }
+  },
+  {
+    "axis_id": 118,
+    "axis_name": "登神Pro",
+    "drive_range": "3.4",
+    "axi_brand_id": 1,
+    "doctrine_range_left": "3.4",
+    "doctrine_range_right": "0.2",
+    "factory_name": "禾金",
+    "axis_color": "#ea48e4",
+    "image_url": "#",
+    "created_at": "2025-06-27 16:57:55",
+    "brand": "other",
+    "axi_brands": {
+      "id": 1,
+      "brand_name_cn": "other"
+    }
+  },
+  {
+    "axis_id": 119,
+    "axis_name": "泰山轴",
+    "drive_range": "3.4",
+    "axi_brand_id": 1,
+    "doctrine_range_left": "3.4",
+    "doctrine_range_right": "0.2",
+    "factory_name": "游众",
+    "axis_color": "#e2ecf1",
+    "image_url": "#",
+    "created_at": "2025-06-27 16:59:24",
+    "brand": "other",
+    "axi_brands": {
+      "id": 1,
+      "brand_name_cn": "other"
+    }
+  },
+  {
+    "axis_id": 120,
+    "axis_name": "八宝轴γ",
+    "drive_range": "3.5",
+    "axi_brand_id": 1,
+    "doctrine_range_left": "3.5",
+    "doctrine_range_right": "0.2",
+    "factory_name": "无缺",
+    "axis_color": "#f2f2de",
+    "image_url": "#",
+    "created_at": "2025-06-27 17:04:56",
+    "brand": "other",
+    "axi_brands": {
+      "id": 1,
+      "brand_name_cn": "other"
+    }
+  },
+  {
+    "axis_id": 121,
+    "axis_name": "悟空轴",
+    "drive_range": "3.4",
+    "axi_brand_id": 1,
+    "doctrine_range_left": "3.4",
+    "doctrine_range_right": "0.2",
+    "factory_name": "江湾",
+    "axis_color": "#daf8f8",
+    "image_url": "#",
+    "created_at": "2025-06-27 17:06:44",
+    "brand": "other",
+    "axi_brands": {
+      "id": 1,
+      "brand_name_cn": "other"
+    }
+  },
+  {
+    "axis_id": 122,
+    "axis_name": "冰皇轴",
+    "drive_range": "3.3",
+    "axi_brand_id": 1,
+    "doctrine_range_left": "3.3",
+    "doctrine_range_right": "0.2",
+    "factory_name": "狼蛛",
+    "axis_color": "#f7efef",
+    "image_url": "#",
+    "created_at": "2025-06-27 17:08:08",
+    "brand": "other",
+    "axi_brands": {
+      "id": 1,
+      "brand_name_cn": "other"
+    }
+  },
+  {
+    "axis_id": 123,
+    "axis_name": "极磁Pro",
+    "drive_range": "3.6",
+    "axi_brand_id": 1,
+    "doctrine_range_left": "3.6",
+    "doctrine_range_right": "0.2",
+    "factory_name": "冠泰",
+    "axis_color": "#f1b2c1",
+    "image_url": "#",
+    "created_at": "2025-06-27 17:10:08",
+    "brand": "other",
+    "axi_brands": {
+      "id": 1,
+      "brand_name_cn": "other"
+    }
+  },
+  {
+    "axis_id": 124,
+    "axis_name": "星界轴",
+    "drive_range": "3.4",
+    "axi_brand_id": 1,
+    "doctrine_range_left": "3.4",
+    "doctrine_range_right": "0.2",
+    "factory_name": "",
+    "axis_color": "#bc4949",
+    "image_url": "#",
+    "created_at": "2025-07-01 11:17:59",
+    "brand": "other",
+    "axi_brands": {
+      "id": 1,
+      "brand_name_cn": "other"
+    }
+  },
+  {
+    "axis_id": 125,
+    "axis_name": "蓝玉轴（RK）",
+    "drive_range": "3.3",
+    "axi_brand_id": 1,
+    "doctrine_range_left": "3.3",
+    "doctrine_range_right": "0.2",
+    "factory_name": "",
+    "axis_color": "#711010",
+    "image_url": "#",
+    "created_at": "2025-07-04 16:53:04",
+    "brand": "other",
+    "axi_brands": {
+      "id": 1,
+      "brand_name_cn": "other"
+    }
+  },
+  {
+    "axis_id": 126,
+    "axis_name": "冰魂轴",
+    "drive_range": "3.4",
+    "axi_brand_id": 1,
+    "doctrine_range_left": "3.4",
+    "doctrine_range_right": "0.1",
+    "factory_name": "海木",
+    "axis_color": "#edd3a1",
+    "image_url": "#",
+    "created_at": "2025-07-08 14:41:14",
+    "brand": "other",
+    "axi_brands": {
+      "id": 1,
+      "brand_name_cn": "other"
+    }
+  },
+  {
+    "axis_id": 127,
+    "axis_name": "冰神轴",
+    "drive_range": "3.4",
+    "axi_brand_id": 4,
+    "doctrine_range_left": "3.4",
+    "doctrine_range_right": "0.2",
+    "factory_name": "正牌科电",
+    "axis_color": "#86bcf2",
+    "image_url": "#",
+    "created_at": "2025-07-08 14:43:08",
+    "brand": "TTC",
+    "axi_brands": {
+      "id": 4,
+      "brand_name_cn": "TTC"
+    }
+  },
+  {
+    "axis_id": 128,
+    "axis_name": "花火磁轴",
+    "drive_range": "3.2",
+    "axi_brand_id": 3,
+    "doctrine_range_left": "3.2",
+    "doctrine_range_right": "0.1",
+    "factory_name": "佳达隆",
+    "axis_color": "#eb3f3f",
+    "image_url": "#",
+    "created_at": "2025-07-08 17:02:46",
+    "brand": "GATERON",
+    "axi_brands": {
+      "id": 3,
+      "brand_name_cn": "GATERON"
+    }
+  },
+  {
+    "axis_id": 129,
+    "axis_name": "雷电轴",
+    "drive_range": "3.2",
+    "axi_brand_id": 1,
+    "doctrine_range_left": "3.3",
+    "doctrine_range_right": "0.3",
+    "factory_name": "",
+    "axis_color": "#e3d1d1",
+    "image_url": "#",
+    "created_at": "2025-07-10 09:56:56",
+    "brand": "other",
+    "axi_brands": {
+      "id": 1,
+      "brand_name_cn": "other"
+    }
+  },
+  {
+    "axis_id": 130,
+    "axis_name": "磁音轴",
+    "drive_range": "3.3",
+    "axi_brand_id": 1,
+    "doctrine_range_left": "3.3",
+    "doctrine_range_right": "0.2",
+    "factory_name": "",
+    "axis_color": "#873e3e",
+    "image_url": "#",
+    "created_at": "2025-07-11 17:32:20",
+    "brand": "other",
+    "axi_brands": {
+      "id": 1,
+      "brand_name_cn": "other"
+    }
+  },
+  {
+    "axis_id": 131,
+    "axis_name": "BOX冰淇淋",
+    "drive_range": "3.4",
+    "axi_brand_id": 1,
+    "doctrine_range_left": "3.4",
+    "doctrine_range_right": "0.2",
+    "factory_name": null,
+    "axis_color": "#84f1a4",
+    "image_url": "#",
+    "created_at": "2025-07-25 16:35:22",
+    "brand": "other",
+    "axi_brands": {
+      "id": 1,
+      "brand_name_cn": "other"
+    }
+  },
+  {
+    "axis_id": 132,
+    "axis_name": "天使轴",
+    "drive_range": "3.4",
+    "axi_brand_id": 1,
+    "doctrine_range_left": "3.4",
+    "doctrine_range_right": "0.2",
+    "factory_name": null,
+    "axis_color": "#c9d2ce",
+    "image_url": "#",
+    "created_at": "2025-07-28 15:57:33",
+    "brand": "other",
+    "axi_brands": {
+      "id": 1,
+      "brand_name_cn": "other"
+    }
+  },
+  {
+    "axis_id": 133,
+    "axis_name": "磁王轴",
+    "drive_range": "3.4",
+    "axi_brand_id": 1,
+    "doctrine_range_left": "3.4",
+    "doctrine_range_right": "0.2",
+    "factory_name": null,
+    "axis_color": "#79e0b0",
+    "image_url": "#",
+    "created_at": "2025-07-28 15:58:10",
+    "brand": "other",
+    "axi_brands": {
+      "id": 1,
+      "brand_name_cn": "other"
+    }
+  },
+  {
+    "axis_id": 134,
+    "axis_name": "海妖轴",
+    "drive_range": "3.40",
+    "axi_brand_id": 1,
+    "doctrine_range_left": "3.40",
+    "doctrine_range_right": "0.20",
+    "factory_name": null,
+    "axis_color": "#f2e9e9",
+    "image_url": "https://api.sparklinkplayjoy.com/storage/images/202508/73T8ENiM98nBRG6lYKXQC9lON7WT77Fg9eVzkRPB.jpg",
+    "created_at": "2025-08-11 10:54:33",
+    "brand": "other",
+    "axi_brands": {
+      "id": 1,
+      "brand_name_cn": "other"
+    }
+  },
+  {
+    "axis_id": 135,
+    "axis_name": "磁白轴",
+    "drive_range": "3.2",
+    "axi_brand_id": 3,
+    "doctrine_range_left": "3.2",
+    "doctrine_range_right": "0.5",
+    "factory_name": null,
+    "axis_color": "#ffffff",
+    "image_url": "#",
+    "created_at": "2025-08-11 16:06:53",
+    "brand": "GATERON",
+    "axi_brands": {
+      "id": 3,
+      "brand_name_cn": "GATERON"
+    }
+  },
+  {
+    "axis_id": 136,
+    "axis_name": "八宝轴鼓动版",
+    "drive_range": "3.6",
+    "axi_brand_id": 1,
+    "doctrine_range_left": "3.6",
+    "doctrine_range_right": "0.05",
+    "factory_name": null,
+    "axis_color": "#ff9cbd",
+    "image_url": "#",
+    "created_at": "2025-08-12 11:01:38",
+    "brand": "other",
+    "axi_brands": {
+      "id": 1,
+      "brand_name_cn": "other"
+    }
+  },
+  {
+    "axis_id": 137,
+    "axis_name": "极磁轴",
+    "drive_range": "3.4",
+    "axi_brand_id": 1,
+    "doctrine_range_left": "3.4",
+    "doctrine_range_right": "0.2",
+    "factory_name": null,
+    "axis_color": "#22f90a",
+    "image_url": "#",
+    "created_at": "2025-08-19 12:16:40",
+    "brand": "other",
+    "axi_brands": {
+      "id": 1,
+      "brand_name_cn": "other"
+    }
+  },
+  {
+    "axis_id": 138,
+    "axis_name": "Focus磁轴",
+    "drive_range": "3.3",
+    "axi_brand_id": 1,
+    "doctrine_range_left": "3.3",
+    "doctrine_range_right": "0.3",
+    "factory_name": null,
+    "axis_color": "#f97808",
+    "image_url": "#",
+    "created_at": "2025-08-26 14:33:53",
+    "brand": "other",
+    "axi_brands": {
+      "id": 1,
+      "brand_name_cn": "other"
+    }
+  },
+  {
+    "axis_id": 139,
+    "axis_name": "龙吟轴",
+    "drive_range": "3.5",
+    "axi_brand_id": 3,
+    "doctrine_range_left": "3.5",
+    "doctrine_range_right": "0.1",
+    "factory_name": null,
+    "axis_color": "#0b4452",
+    "image_url": "#",
+    "created_at": "2025-08-27 10:36:45",
+    "brand": "GATERON",
+    "axi_brands": {
+      "id": 3,
+      "brand_name_cn": "GATERON"
+    }
+  },
+  {
+    "axis_id": 140,
+    "axis_name": "龙吟轴",
+    "drive_range": "3.4",
+    "axi_brand_id": 3,
+    "doctrine_range_left": "3.4",
+    "doctrine_range_right": "0.1",
+    "factory_name": null,
+    "axis_color": "#5e3131",
+    "image_url": "#",
+    "created_at": "2025-08-27 20:33:14",
+    "brand": "GATERON",
+    "axi_brands": {
+      "id": 3,
+      "brand_name_cn": "GATERON"
+    }
+  },
+  {
+    "axis_id": 141,
+    "axis_name": "花火粉轴",
+    "drive_range": "3.2",
+    "axi_brand_id": 3,
+    "doctrine_range_left": "3.2",
+    "doctrine_range_right": "0.1",
+    "factory_name": null,
+    "axis_color": "#985858",
+    "image_url": "#",
+    "created_at": "2025-08-27 20:39:30",
+    "brand": "GATERON",
+    "axi_brands": {
+      "id": 3,
+      "brand_name_cn": "GATERON"
+    }
+  },
+  {
+    "axis_id": 142,
+    "axis_name": "花火轴",
+    "drive_range": "3.2",
+    "axi_brand_id": 3,
+    "doctrine_range_left": "3.2",
+    "doctrine_range_right": "0.1",
+    "factory_name": null,
+    "axis_color": "#bab531",
+    "image_url": "#",
+    "created_at": "2025-08-27 20:40:02",
+    "brand": "GATERON",
+    "axi_brands": {
+      "id": 3,
+      "brand_name_cn": "GATERON"
+    }
+  },
+  {
+    "axis_id": 143,
+    "axis_name": "紫罗兰轴",
+    "drive_range": "3.5",
+    "axi_brand_id": 3,
+    "doctrine_range_left": "35",
+    "doctrine_range_right": "0.05",
+    "factory_name": null,
+    "axis_color": "#9d3eab",
+    "image_url": "#",
+    "created_at": "2025-08-27 20:40:47",
+    "brand": "GATERON",
+    "axi_brands": {
+      "id": 3,
+      "brand_name_cn": "GATERON"
+    }
+  },
+  {
+    "axis_id": 144,
+    "axis_name": "圣心轴",
+    "drive_range": "3.4",
+    "axi_brand_id": 1,
+    "doctrine_range_left": "3.4",
+    "doctrine_range_right": "0.2",
+    "factory_name": null,
+    "axis_color": "#ed4848",
+    "image_url": "#",
+    "created_at": "2025-08-28 16:12:53",
+    "brand": "other",
+    "axi_brands": {
+      "id": 1,
+      "brand_name_cn": "other"
+    }
+  },
+  {
+    "axis_id": 145,
+    "axis_name": "星球轴",
+    "drive_range": "3.50",
+    "axi_brand_id": 1,
+    "doctrine_range_left": "3.50",
+    "doctrine_range_right": "0.20",
+    "factory_name": null,
+    "axis_color": "#f1eaea",
+    "image_url": "#",
+    "created_at": "2025-08-29 17:46:11",
+    "brand": "other",
+    "axi_brands": {
+      "id": 1,
+      "brand_name_cn": "other"
+    }
+  },
+  {
+    "axis_id": 146,
+    "axis_name": "白玉磁轴",
+    "drive_range": "3.50",
+    "axi_brand_id": 1,
+    "doctrine_range_left": "3.50",
+    "doctrine_range_right": "0.10",
+    "factory_name": null,
+    "axis_color": "#9cfcd3",
+    "image_url": "#",
+    "created_at": "2025-09-01 16:52:48",
+    "brand": "other",
+    "axi_brands": {
+      "id": 1,
+      "brand_name_cn": "other"
+    }
+  },
+  {
+    "axis_id": 147,
+    "axis_name": "驭风磁轴",
+    "drive_range": "3.50",
+    "axi_brand_id": 1,
+    "doctrine_range_left": "3.50",
+    "doctrine_range_right": "0.20",
+    "factory_name": null,
+    "axis_color": "#584a07",
+    "image_url": "#",
+    "created_at": "2025-09-01 16:53:23",
+    "brand": "other",
+    "axi_brands": {
+      "id": 1,
+      "brand_name_cn": "other"
+    }
+  },
+  {
+    "axis_id": 148,
+    "axis_name": "海木轴",
+    "drive_range": "3.40",
+    "axi_brand_id": 1,
+    "doctrine_range_left": "3.40",
+    "doctrine_range_right": "0.20",
+    "factory_name": null,
+    "axis_color": "#88f7e4",
+    "image_url": "#",
+    "created_at": "2025-09-03 18:14:04",
+    "brand": "other",
+    "axi_brands": {
+      "id": 1,
+      "brand_name_cn": "other"
+    }
+  },
+  {
+    "axis_id": 149,
+    "axis_name": "环诺璃玉轴",
+    "drive_range": "3.5",
+    "axi_brand_id": 1,
+    "doctrine_range_left": "3.5",
+    "doctrine_range_right": "0.2",
+    "factory_name": null,
+    "axis_color": "#eae7e7",
+    "image_url": "#",
+    "created_at": "2025-09-04 09:35:27",
+    "brand": "other",
+    "axi_brands": {
+      "id": 1,
+      "brand_name_cn": "other"
+    }
+  },
+  {
+    "axis_id": 150,
+    "axis_name": "天霸轴",
+    "drive_range": "3.4",
+    "axi_brand_id": 4,
+    "doctrine_range_left": "3.4",
+    "doctrine_range_right": "0.2",
+    "factory_name": null,
+    "axis_color": "#3f8df4",
+    "image_url": "#",
+    "created_at": "2025-09-05 10:12:16",
+    "brand": "TTC",
+    "axi_brands": {
+      "id": 4,
+      "brand_name_cn": "TTC"
+    }
+  },
+  {
+    "axis_id": 151,
+    "axis_name": "芭比轴",
+    "drive_range": "3.5",
+    "axi_brand_id": 3,
+    "doctrine_range_left": "3.5",
+    "doctrine_range_right": "0.2",
+    "factory_name": null,
+    "axis_color": "#ffffff",
+    "image_url": "#",
+    "created_at": "2025-09-05 10:19:37",
+    "brand": "GATERON",
+    "axi_brands": {
+      "id": 3,
+      "brand_name_cn": "GATERON"
+    }
+  },
+  {
+    "axis_id": 152,
+    "axis_name": "圣谕轴",
+    "drive_range": "3.3",
+    "axi_brand_id": 1,
+    "doctrine_range_left": "3.3",
+    "doctrine_range_right": "0.2",
+    "factory_name": null,
+    "axis_color": "#4e61e3",
+    "image_url": "#",
+    "created_at": "2025-09-05 16:56:37",
+    "brand": "other",
+    "axi_brands": {
+      "id": 1,
+      "brand_name_cn": "other"
+    }
+  },
+  {
+    "axis_id": 153,
+    "axis_name": "磁绿轴",
+    "drive_range": "3.4",
+    "axi_brand_id": 3,
+    "doctrine_range_left": "3.5",
+    "doctrine_range_right": "0.2",
+    "factory_name": null,
+    "axis_color": "#598e42",
+    "image_url": "#",
+    "created_at": "2025-09-08 12:06:05",
+    "brand": "GATERON",
+    "axi_brands": {
+      "id": 3,
+      "brand_name_cn": "GATERON"
+    }
+  },
+  {
+    "axis_id": 154,
+    "axis_name": "天霸轴",
+    "drive_range": "3.5",
+    "axi_brand_id": 4,
+    "doctrine_range_left": "3.5",
+    "doctrine_range_right": "0.2",
+    "factory_name": null,
+    "axis_color": "#f27b7b",
+    "image_url": "#",
+    "created_at": "2025-09-15 10:54:56",
+    "brand": "TTC",
+    "axi_brands": {
+      "id": 4,
+      "brand_name_cn": "TTC"
+    }
+  },
+  {
+    "axis_id": 155,
+    "axis_name": "熔岩八宝轴",
+    "drive_range": "3.6",
+    "axi_brand_id": 1,
+    "doctrine_range_left": "3.6",
+    "doctrine_range_right": "0.2",
+    "factory_name": null,
+    "axis_color": "#a71010",
+    "image_url": "#",
+    "created_at": "2025-09-17 11:19:16",
+    "brand": "other",
+    "axi_brands": {
+      "id": 1,
+      "brand_name_cn": "other"
+    }
+  },
+  {
+    "axis_id": 156,
+    "axis_name": "冰晶轴",
+    "drive_range": "3.3",
+    "axi_brand_id": 1,
+    "doctrine_range_left": "3.3",
+    "doctrine_range_right": "0.2",
+    "factory_name": null,
+    "axis_color": "#4d4ab1",
+    "image_url": "#",
+    "created_at": "2025-10-10 10:52:49",
+    "brand": "other",
+    "axi_brands": {
+      "id": 1,
+      "brand_name_cn": "other"
+    }
+  },
+  {
+    "axis_id": 157,
+    "axis_name": "冰淇淋轴",
+    "drive_range": "3.4",
+    "axi_brand_id": 1,
+    "doctrine_range_left": "3.4",
+    "doctrine_range_right": "0.2",
+    "factory_name": null,
+    "axis_color": "#5f57a6",
+    "image_url": "#",
+    "created_at": "2025-10-10 10:53:32",
+    "brand": "other",
+    "axi_brands": {
+      "id": 1,
+      "brand_name_cn": "other"
+    }
+  },
+  {
+    "axis_id": 158,
+    "axis_name": "烈焰灰万磁王",
+    "drive_range": "3.4",
+    "axi_brand_id": 4,
+    "doctrine_range_left": "3.4",
+    "doctrine_range_right": "0.2",
+    "factory_name": null,
+    "axis_color": "#c8d51d",
+    "image_url": "#",
+    "created_at": "2025-10-21 17:20:30",
+    "brand": "TTC",
+    "axi_brands": {
+      "id": 4,
+      "brand_name_cn": "TTC"
+    }
+  },
+  {
+    "axis_id": 159,
+    "axis_name": "北极磁轴",
+    "drive_range": "3.4",
+    "axi_brand_id": 1,
+    "doctrine_range_left": "3.4",
+    "doctrine_range_right": "0.1",
+    "factory_name": null,
+    "axis_color": "#dcc7c7",
+    "image_url": "#",
+    "created_at": "2025-11-07 09:46:33",
+    "brand": "other",
+    "axi_brands": {
+      "id": 1,
+      "brand_name_cn": "other"
+    }
+  },
+  {
+    "axis_id": 160,
+    "axis_name": "神启轴",
+    "drive_range": "3.5",
+    "axi_brand_id": 1,
+    "doctrine_range_left": "3.5",
+    "doctrine_range_right": "0.2",
+    "factory_name": null,
+    "axis_color": "#ef4848",
+    "image_url": "#",
+    "created_at": "2025-11-07 09:55:56",
+    "brand": "other",
+    "axi_brands": {
+      "id": 1,
+      "brand_name_cn": "other"
+    }
+  },
+  {
+    "axis_id": 161,
+    "axis_name": "万磁轴",
+    "drive_range": "3.5",
+    "axi_brand_id": 3,
+    "doctrine_range_left": "3.5",
+    "doctrine_range_right": "0.2",
+    "factory_name": null,
+    "axis_color": "#bfbfbf",
+    "image_url": "#",
+    "created_at": "2025-11-07 11:31:52",
+    "brand": "GATERON",
+    "axi_brands": {
+      "id": 3,
+      "brand_name_cn": "GATERON"
+    }
+  },
+  {
+    "axis_id": 162,
+    "axis_name": "玄铁磁轴",
+    "drive_range": "3.4",
+    "axi_brand_id": 1,
+    "doctrine_range_left": "3.4",
+    "doctrine_range_right": "0.2",
+    "factory_name": null,
+    "axis_color": "#a0bce8",
+    "image_url": "#",
+    "created_at": "2025-11-08 12:27:27",
+    "brand": "other",
+    "axi_brands": {
+      "id": 1,
+      "brand_name_cn": "other"
+    }
+  },
+  {
+    "axis_id": 163,
+    "axis_name": "磁王轴",
+    "drive_range": "3.4",
+    "axi_brand_id": 1,
+    "doctrine_range_left": "3.4",
+    "doctrine_range_right": "0.2",
+    "factory_name": null,
+    "axis_color": "#f7dfdf",
+    "image_url": "#",
+    "created_at": "2025-11-08 12:28:05",
+    "brand": "other",
+    "axi_brands": {
+      "id": 1,
+      "brand_name_cn": "other"
+    }
+  },
+  {
+    "axis_id": 164,
+    "axis_name": "混元轴",
+    "drive_range": "3.4",
+    "axi_brand_id": 7,
+    "doctrine_range_left": "3.4",
+    "doctrine_range_right": "0.2",
+    "factory_name": null,
+    "axis_color": "#e5e4e9",
+    "image_url": "#",
+    "created_at": "2025-11-08 12:30:03",
+    "brand": "Unionwell",
+    "axi_brands": {
+      "id": 7,
+      "brand_name_cn": "Unionwell"
+    }
+  },
+  {
+    "axis_id": 165,
+    "axis_name": "黄金磁轴",
+    "drive_range": "3.4",
+    "axi_brand_id": 1,
+    "doctrine_range_left": "3.4",
+    "doctrine_range_right": "0.2",
+    "factory_name": null,
+    "axis_color": "#f6c001",
+    "image_url": "#",
+    "created_at": "2025-11-08 12:31:56",
+    "brand": "other",
+    "axi_brands": {
+      "id": 1,
+      "brand_name_cn": "other"
+    }
+  },
+  {
+    "axis_id": 166,
+    "axis_name": "UFO",
+    "drive_range": "3.5",
+    "axi_brand_id": 1,
+    "doctrine_range_left": "3.5",
+    "doctrine_range_right": "0.20",
+    "factory_name": null,
+    "axis_color": "#2265ed",
+    "image_url": "#",
+    "created_at": "2025-11-08 18:16:16",
+    "brand": "other",
+    "axi_brands": {
+      "id": 1,
+      "brand_name_cn": "other"
+    }
+  },
+  {
+    "axis_id": 167,
+    "axis_name": "雪曜轴",
+    "drive_range": "3.3",
+    "axi_brand_id": 1,
+    "doctrine_range_left": "3.3",
+    "doctrine_range_right": "0.2",
+    "factory_name": null,
+    "axis_color": "#eeeeee",
+    "image_url": "#",
+    "created_at": "2025-11-11 10:16:37",
+    "brand": "other",
+    "axi_brands": {
+      "id": 1,
+      "brand_name_cn": "other"
+    }
+  },
+  {
+    "axis_id": 168,
+    "axis_name": "泰坦x冠泰月岩轴",
+    "drive_range": "3.6",
+    "axi_brand_id": 10,
+    "doctrine_range_left": "3.60",
+    "doctrine_range_right": "0.02",
+    "factory_name": null,
+    "axis_color": "#d5d5d5",
+    "image_url": "#",
+    "created_at": "2025-11-13 10:30:13",
+    "brand": "Titan",
+    "axi_brands": {
+      "id": 10,
+      "brand_name_cn": "Titan"
+    }
+  },
+  {
+    "axis_id": 169,
+    "axis_name": "UFO",
+    "drive_range": "3.4",
+    "axi_brand_id": 1,
+    "doctrine_range_left": "3.4",
+    "doctrine_range_right": "0.2",
+    "factory_name": null,
+    "axis_color": "#11227b",
+    "image_url": "#",
+    "created_at": "2025-12-04 14:28:34",
+    "brand": "other",
+    "axi_brands": {
+      "id": 1,
+      "brand_name_cn": "other"
+    }
+  },
+  {
+    "axis_id": 170,
+    "axis_name": "银月轴",
+    "drive_range": "3.50",
+    "axi_brand_id": 1,
+    "doctrine_range_left": "3.50",
+    "doctrine_range_right": "",
+    "factory_name": null,
+    "axis_color": "#f8f5f5",
+    "image_url": "#",
+    "created_at": "2025-12-05 16:49:19",
+    "brand": "other",
+    "axi_brands": {
+      "id": 1,
+      "brand_name_cn": "other"
+    }
+  },
+  {
+    "axis_id": 171,
+    "axis_name": "银月轴",
+    "drive_range": "3.4",
+    "axi_brand_id": 1,
+    "doctrine_range_left": "3.4",
+    "doctrine_range_right": "0.2",
+    "factory_name": null,
+    "axis_color": "#f5f1f1",
+    "image_url": "#",
+    "created_at": "2025-12-16 10:05:01",
+    "brand": "other",
+    "axi_brands": {
+      "id": 1,
+      "brand_name_cn": "other"
+    }
+  },
+  {
+    "axis_id": 172,
+    "axis_name": "无极磁轴",
+    "drive_range": "3.4",
+    "axi_brand_id": 3,
+    "doctrine_range_left": "3.4",
+    "doctrine_range_right": "0.2",
+    "factory_name": null,
+    "axis_color": "#f4f3f3",
+    "image_url": "#",
+    "created_at": "2025-12-18 09:58:06",
+    "brand": "GATERON",
+    "axi_brands": {
+      "id": 3,
+      "brand_name_cn": "GATERON"
+    }
+  },
+  {
+    "axis_id": 174,
+    "axis_name": "华诺白磁轴",
+    "drive_range": "3.4",
+    "axi_brand_id": 1,
+    "doctrine_range_left": "3.4",
+    "doctrine_range_right": "0.2",
+    "factory_name": null,
+    "axis_color": "#d7d9c2",
+    "image_url": "#",
+    "created_at": "2025-12-20 14:31:52",
+    "brand": "other",
+    "axi_brands": {
+      "id": 1,
+      "brand_name_cn": "other"
+    }
+  },
+  {
+    "axis_id": 175,
+    "axis_name": "赤星轴",
+    "drive_range": "3.6",
+    "axi_brand_id": 10,
+    "doctrine_range_left": "3.6",
+    "doctrine_range_right": "0.2",
+    "factory_name": null,
+    "axis_color": "#982929",
+    "image_url": "#",
+    "created_at": "2026-01-07 14:21:21",
+    "brand": "Titan",
+    "axi_brands": {
+      "id": 10,
+      "brand_name_cn": "Titan"
+    }
+  },
+  {
+    "axis_id": 176,
+    "axis_name": "冰屿轴",
+    "drive_range": "3.5",
+    "axi_brand_id": 1,
+    "doctrine_range_left": "3.5",
+    "doctrine_range_right": "0.2",
+    "factory_name": null,
+    "axis_color": "#78abf8",
+    "image_url": "#",
+    "created_at": "2026-01-07 18:12:06",
+    "brand": "other",
+    "axi_brands": {
+      "id": 1,
+      "brand_name_cn": "other"
+    }
+  },
+  {
+    "axis_id": 177,
+    "axis_name": "冰耀轴",
+    "drive_range": "3.4",
+    "axi_brand_id": 7,
+    "doctrine_range_left": "3.4",
+    "doctrine_range_right": "0.2",
+    "factory_name": null,
+    "axis_color": "#e7da85",
+    "image_url": "#",
+    "created_at": "2026-01-08 11:36:39",
+    "brand": "Unionwell",
+    "axi_brands": {
+      "id": 7,
+      "brand_name_cn": "Unionwell"
+    }
+  },
+  {
+    "axis_id": 178,
+    "axis_name": "雪耀轴",
+    "drive_range": "3.4",
+    "axi_brand_id": 7,
+    "doctrine_range_left": "3.4",
+    "doctrine_range_right": "0.2",
+    "factory_name": null,
+    "axis_color": "#edd2d2",
+    "image_url": "#",
+    "created_at": "2026-01-08 11:36:58",
+    "brand": "Unionwell",
+    "axi_brands": {
+      "id": 7,
+      "brand_name_cn": "Unionwell"
+    }
+  },
+  {
+    "axis_id": 179,
+    "axis_name": "迈阿密轴",
+    "drive_range": "3.3",
+    "axi_brand_id": 10,
+    "doctrine_range_left": "3.3",
+    "doctrine_range_right": "0.2",
+    "factory_name": null,
+    "axis_color": "#ddaff1",
+    "image_url": "#",
+    "created_at": "2026-01-08 16:27:14",
+    "brand": "Titan",
+    "axi_brands": {
+      "id": 10,
+      "brand_name_cn": "Titan"
+    }
+  },
+  {
+    "axis_id": 180,
+    "axis_name": "Gambeson定制轴",
+    "drive_range": "3.40",
+    "axi_brand_id": 14,
+    "doctrine_range_left": "3.40",
+    "doctrine_range_right": "0.20",
+    "factory_name": null,
+    "axis_color": "#06ffbd",
+    "image_url": "#",
+    "created_at": "2026-01-12 15:52:09",
+    "brand": "Gambeson Switch",
+    "axi_brands": {
+      "id": 14,
+      "brand_name_cn": "Gambeson Switch"
+    }
+  },
+  {
+    "axis_id": 181,
+    "axis_name": "曜变天目轴",
+    "drive_range": "3.5",
+    "axi_brand_id": 1,
+    "doctrine_range_left": "3.5",
+    "doctrine_range_right": "0.2",
+    "factory_name": null,
+    "axis_color": "#d5dc1c",
+    "image_url": "#",
+    "created_at": "2026-01-15 14:28:04",
+    "brand": "other",
+    "axi_brands": {
+      "id": 1,
+      "brand_name_cn": "other"
+    }
+  },
+  {
+    "axis_id": 182,
+    "axis_name": "橄榄磁轴",
+    "drive_range": "3.6",
+    "axi_brand_id": 1,
+    "doctrine_range_left": "3.6",
+    "doctrine_range_right": "0.3",
+    "factory_name": null,
+    "axis_color": "#c1b657",
+    "image_url": "#",
+    "created_at": "2026-01-15 14:48:25",
+    "brand": "other",
+    "axi_brands": {
+      "id": 1,
+      "brand_name_cn": "other"
+    }
+  },
+  {
+    "axis_id": 183,
+    "axis_name": "拿铁磁轴",
+    "drive_range": "3.6",
+    "axi_brand_id": 1,
+    "doctrine_range_left": "3.6",
+    "doctrine_range_right": "0.2",
+    "factory_name": null,
+    "axis_color": "#c29090",
+    "image_url": "#",
+    "created_at": "2026-01-15 14:48:56",
+    "brand": "other",
+    "axi_brands": {
+      "id": 1,
+      "brand_name_cn": "other"
+    }
+  },
+  {
+    "axis_id": 184,
+    "axis_name": "银耳轴",
+    "drive_range": "3.5",
+    "axi_brand_id": 1,
+    "doctrine_range_left": "3.5",
+    "doctrine_range_right": "0.2",
+    "factory_name": null,
+    "axis_color": "#f5f1f1",
+    "image_url": "#",
+    "created_at": "2026-01-21 14:25:23",
+    "brand": "other",
+    "axi_brands": {
+      "id": 1,
+      "brand_name_cn": "other"
+    }
+  },
+  {
+    "axis_id": 185,
+    "axis_name": "银耳轴",
+    "drive_range": "3.3",
+    "axi_brand_id": 1,
+    "doctrine_range_left": "3.4",
+    "doctrine_range_right": "0.2",
+    "factory_name": null,
+    "axis_color": "#d9caca",
+    "image_url": "#",
+    "created_at": "2026-01-27 10:08:47",
+    "brand": "other",
+    "axi_brands": {
+      "id": 1,
+      "brand_name_cn": "other"
+    }
+  },
+  {
+    "axis_id": 186,
+    "axis_name": "Teal Jade Magnetic Switch",
+    "drive_range": "3.3",
+    "axi_brand_id": 18,
+    "doctrine_range_left": "3.3",
+    "doctrine_range_right": "0.2",
+    "factory_name": null,
+    "axis_color": "#c43c3c",
+    "image_url": "#",
+    "created_at": "2026-01-28 15:45:38",
+    "brand": "Cerakey",
+    "axi_brands": {
+      "id": 18,
+      "brand_name_cn": "Cerakey"
+    }
+  },
+  {
+    "axis_id": 187,
+    "axis_name": "极磁-晶曜轴",
+    "drive_range": "3.4",
+    "axi_brand_id": 1,
+    "doctrine_range_left": "3.4",
+    "doctrine_range_right": "0.2",
+    "factory_name": null,
+    "axis_color": "#c53a3a",
+    "image_url": "#",
+    "created_at": "2026-02-03 15:11:19",
+    "brand": "other",
+    "axi_brands": {
+      "id": 1,
+      "brand_name_cn": "other"
+    }
+  },
+  {
+    "axis_id": 188,
+    "axis_name": "蓝天轴",
+    "drive_range": "3.5",
+    "axi_brand_id": 1,
+    "doctrine_range_left": "3.5",
+    "doctrine_range_right": "0.2",
+    "factory_name": null,
+    "axis_color": "#9a3131",
+    "image_url": "#",
+    "created_at": "2026-02-07 12:26:53",
+    "brand": "other",
+    "axi_brands": {
+      "id": 1,
+      "brand_name_cn": "other"
+    }
+  },
+  {
+    "axis_id": 189,
+    "axis_name": "光键轴",
+    "drive_range": "3.6",
+    "axi_brand_id": 1,
+    "doctrine_range_left": "3.6",
+    "doctrine_range_right": "0.2",
+    "factory_name": null,
+    "axis_color": "#c3deee",
+    "image_url": "#",
+    "created_at": "2026-02-07 14:14:48",
+    "brand": "other",
+    "axi_brands": {
+      "id": 1,
+      "brand_name_cn": "other"
+    }
+  },
+  {
+    "axis_id": 190,
+    "axis_name": "灰玉轴",
+    "drive_range": "3.4",
+    "axi_brand_id": 3,
+    "doctrine_range_left": "3.4",
+    "doctrine_range_right": "0.2",
+    "factory_name": null,
+    "axis_color": "#fccccc",
+    "image_url": "#",
+    "created_at": "2026-03-02 15:06:04",
+    "brand": "GATERON",
+    "axi_brands": {
+      "id": 3,
+      "brand_name_cn": "GATERON"
+    }
+  },
+  {
+    "axis_id": 191,
+    "axis_name": "粉磁玉轴",
+    "drive_range": "3.4",
+    "axi_brand_id": 3,
+    "doctrine_range_left": "3.4",
+    "doctrine_range_right": "0.2",
+    "factory_name": null,
+    "axis_color": "FFC0CB",
+    "image_url": "#",
+    "created_at": "2026-03-02 15:10:18",
+    "brand": "GATERON",
+    "axi_brands": {
+      "id": 3,
+      "brand_name_cn": "GATERON"
+    }
+  },
+  {
+    "axis_id": 192,
+    "axis_name": "磁玉Ultra",
+    "drive_range": "3.2",
+    "axi_brand_id": 3,
+    "doctrine_range_left": "3.2",
+    "doctrine_range_right": "0.2",
+    "factory_name": null,
+    "axis_color": "#c69898",
+    "image_url": "#",
+    "created_at": "2026-03-02 15:12:51",
+    "brand": "GATERON",
+    "axi_brands": {
+      "id": 3,
+      "brand_name_cn": "GATERON"
+    }
+  },
+  {
+    "axis_id": 193,
+    "axis_name": "泰山GT",
+    "drive_range": "3.4",
+    "axi_brand_id": 1,
+    "doctrine_range_left": "3.4",
+    "doctrine_range_right": "0.2",
+    "factory_name": null,
+    "axis_color": "#f9d4d4",
+    "image_url": "#",
+    "created_at": "2026-03-02 15:23:17",
+    "brand": "other",
+    "axi_brands": {
+      "id": 1,
+      "brand_name_cn": "other"
+    }
+  },
+  {
+    "axis_id": 194,
+    "axis_name": "封神轴",
+    "drive_range": "3.5",
+    "axi_brand_id": 1,
+    "doctrine_range_left": "3.5",
+    "doctrine_range_right": "0.2",
+    "factory_name": null,
+    "axis_color": "#f5f0d4",
+    "image_url": "#",
+    "created_at": "2026-03-02 15:24:03",
+    "brand": "other",
+    "axi_brands": {
+      "id": 1,
+      "brand_name_cn": "other"
+    }
+  },
+  {
+    "axis_id": 195,
+    "axis_name": "ESU磁轴",
+    "drive_range": "3.4",
+    "axi_brand_id": 1,
+    "doctrine_range_left": "3.4",
+    "doctrine_range_right": "",
+    "factory_name": null,
+    "axis_color": "#edc1c1",
+    "image_url": "#",
+    "created_at": "2026-03-02 15:26:52",
+    "brand": "other",
+    "axi_brands": {
+      "id": 1,
+      "brand_name_cn": "other"
+    }
+  },
+  {
+    "axis_id": 196,
+    "axis_name": "璃晶磁轴",
+    "drive_range": "3.5",
+    "axi_brand_id": 1,
+    "doctrine_range_left": "3.5",
+    "doctrine_range_right": "0.2",
+    "factory_name": null,
+    "axis_color": "#f9f2f2",
+    "image_url": "#",
+    "created_at": "2026-03-16 09:16:13",
+    "brand": "other",
+    "axi_brands": {
+      "id": 1,
+      "brand_name_cn": "other"
+    }
+  },
+  {
+    "axis_id": 197,
+    "axis_name": "蓝玉磁轴",
+    "drive_range": "3.5",
+    "axi_brand_id": 1,
+    "doctrine_range_left": "3.5",
+    "doctrine_range_right": "0.2",
+    "factory_name": null,
+    "axis_color": "#b12f2f",
+    "image_url": "#",
+    "created_at": "2026-03-18 17:52:06",
+    "brand": "other",
+    "axi_brands": {
+      "id": 1,
+      "brand_name_cn": "other"
+    }
+  },
+  {
+    "axis_id": 198,
+    "axis_name": "冰玉磁轴",
+    "drive_range": "3.4",
+    "axi_brand_id": 1,
+    "doctrine_range_left": "3.4",
+    "doctrine_range_right": "0.2",
+    "factory_name": null,
+    "axis_color": "#dac2c2",
+    "image_url": "#",
+    "created_at": "2026-03-24 15:16:57",
+    "brand": "other",
+    "axi_brands": {
+      "id": 1,
+      "brand_name_cn": "other"
+    }
+  },
+  {
+    "axis_id": 199,
+    "axis_name": "喵喵轴",
+    "drive_range": "3.5",
+    "axi_brand_id": 1,
+    "doctrine_range_left": "3.5",
+    "doctrine_range_right": "0.2",
+    "factory_name": null,
+    "axis_color": "#ff94cd",
+    "image_url": "#",
+    "created_at": "2026-04-01 09:31:52",
+    "brand": "other",
+    "axi_brands": {
+      "id": 1,
+      "brand_name_cn": "other"
+    }
+  },
+  {
+    "axis_id": 200,
+    "axis_name": "HaiMu",
+    "drive_range": "3.4",
+    "axi_brand_id": 1,
+    "doctrine_range_left": "3.4",
+    "doctrine_range_right": "0.2",
+    "factory_name": null,
+    "axis_color": "#88f7e4",
+    "image_url": "#",
+    "created_at": "2026-04-02 18:22:42",
+    "brand": "other",
+    "axi_brands": {
+      "id": 1,
+      "brand_name_cn": "other"
+    }
+  },
+  {
+    "axis_id": 201,
+    "axis_name": "静音轴",
+    "drive_range": "3.5",
+    "axi_brand_id": 1,
+    "doctrine_range_left": "3.5",
+    "doctrine_range_right": "0.2",
+    "factory_name": null,
+    "axis_color": "#e09797",
+    "image_url": "#",
+    "created_at": "2026-05-07 11:25:02",
+    "brand": "other",
+    "axi_brands": {
+      "id": 1,
+      "brand_name_cn": "other"
+    }
+  },
+  {
+    "axis_id": 202,
+    "axis_name": "如意轴",
+    "drive_range": "3.4",
+    "axi_brand_id": 1,
+    "doctrine_range_left": "3.4",
+    "doctrine_range_right": "0.2",
+    "factory_name": null,
+    "axis_color": "#4791e6",
+    "image_url": "#",
+    "created_at": "2026-05-07 11:32:58",
+    "brand": "other",
+    "axi_brands": {
+      "id": 1,
+      "brand_name_cn": "other"
+    }
+  },
+  {
+    "axis_id": 203,
+    "axis_name": "粉磁轴",
+    "drive_range": "3.6",
+    "axi_brand_id": 1,
+    "doctrine_range_left": "3.6",
+    "doctrine_range_right": "0.2",
+    "factory_name": null,
+    "axis_color": "#86e4a6",
+    "image_url": "#",
+    "created_at": "2026-05-27 10:37:35",
+    "brand": "other",
+    "axi_brands": {
+      "id": 1,
+      "brand_name_cn": "other"
+    }
+  },
+  {
+    "axis_id": 204,
+    "axis_name": "射手座磁轴",
+    "drive_range": "3.4",
+    "axi_brand_id": 16,
+    "doctrine_range_left": "3.4",
+    "doctrine_range_right": "0.2",
+    "factory_name": null,
+    "axis_color": "",
+    "image_url": "#",
+    "created_at": "2026-06-12 19:00:31",
+    "brand": "AUSDOM",
+    "axi_brands": {
+      "id": 16,
+      "brand_name_cn": "AUSDOM"
+    }
+  },
+  {
+    "axis_id": 205,
+    "axis_name": "云磁轴",
+    "drive_range": "3.44",
+    "axi_brand_id": 16,
+    "doctrine_range_left": "3.44",
+    "doctrine_range_right": "0.2",
+    "factory_name": null,
+    "axis_color": "#6bef06",
+    "image_url": "#",
+    "created_at": "2026-06-12 19:03:36",
+    "brand": "AUSDOM",
+    "axi_brands": {
+      "id": 16,
+      "brand_name_cn": "AUSDOM"
+    }
+  },
+  {
+    "axis_id": 206,
+    "axis_name": "玄铁磁轴",
+    "drive_range": "3.5",
+    "axi_brand_id": 1,
+    "doctrine_range_left": "3.5",
+    "doctrine_range_right": "0.2",
+    "factory_name": null,
+    "axis_color": "#a0bce8",
+    "image_url": "#",
+    "created_at": "2026-06-18 11:26:31",
+    "brand": "other",
+    "axi_brands": {
+      "id": 1,
+      "brand_name_cn": "other"
+    }
+  },
+  {
+    "axis_id": 207,
+    "axis_name": "夜魔轴",
+    "drive_range": "3.56",
+    "axi_brand_id": 1,
+    "doctrine_range_left": "3.56",
+    "doctrine_range_right": "0.2",
+    "factory_name": null,
+    "axis_color": "",
+    "image_url": "#",
+    "created_at": "2026-06-25 11:19:03",
+    "brand": "other",
+    "axi_brands": {
+      "id": 1,
+      "brand_name_cn": "other"
+    }
+  },
+  {
+    "axis_id": 208,
+    "axis_name": "名龙晶磁",
+    "drive_range": "3.60",
+    "axi_brand_id": 1,
+    "doctrine_range_left": "3.60",
+    "doctrine_range_right": "0.2",
+    "factory_name": null,
+    "axis_color": "#7eeeea",
+    "image_url": "#",
+    "created_at": "2026-07-07 09:55:12",
+    "brand": "other",
+    "axi_brands": {
+      "id": 1,
+      "brand_name_cn": "other"
+    }
+  },
+  {
+    "axis_id": 209,
+    "axis_name": "墨羽轴",
+    "drive_range": "3.50",
+    "axi_brand_id": 1,
+    "doctrine_range_left": "3.50",
+    "doctrine_range_right": "0.20",
+    "factory_name": null,
+    "axis_color": "#f4f1f1",
+    "image_url": "#",
+    "created_at": "2026-07-08 20:03:08",
+    "brand": "other",
+    "axi_brands": {
+      "id": 1,
+      "brand_name_cn": "other"
+    }
+  },
+  {
+    "axis_id": 210,
+    "axis_name": "晶岚轴",
+    "drive_range": "3.50",
+    "axi_brand_id": 1,
+    "doctrine_range_left": "3.50",
+    "doctrine_range_right": "0.20",
+    "factory_name": null,
+    "axis_color": "#fcf0f0",
+    "image_url": "#",
+    "created_at": "2026-07-09 09:59:00",
+    "brand": "other",
+    "axi_brands": {
+      "id": 1,
+      "brand_name_cn": "other"
+    }
+  },
+  {
+    "axis_id": 211,
+    "axis_name": "万磁v2",
+    "drive_range": "3.4",
+    "axi_brand_id": 1,
+    "doctrine_range_left": "3.4",
+    "doctrine_range_right": "0.2",
+    "factory_name": null,
+    "axis_color": "",
+    "image_url": "#",
+    "created_at": "2026-07-09 11:40:08",
+    "brand": "other",
+    "axi_brands": {
+      "id": 1,
+      "brand_name_cn": "other"
+    }
+  },
+  {
+    "axis_id": 212,
+    "axis_name": "高特蓝冰轴",
+    "drive_range": "3.5",
+    "axi_brand_id": 1,
+    "doctrine_range_left": "3.5",
+    "doctrine_range_right": "0.2",
+    "factory_name": null,
+    "axis_color": "",
+    "image_url": "#",
+    "created_at": "2026-07-09 15:57:13",
+    "brand": "other",
+    "axi_brands": {
+      "id": 1,
+      "brand_name_cn": "other"
+    }
+  },
+  {
+    "axis_id": 213,
+    "axis_name": "宝马磁轴",
+    "drive_range": "3.5",
+    "axi_brand_id": 1,
+    "doctrine_range_left": "3.5",
+    "doctrine_range_right": "0.2",
+    "factory_name": null,
+    "axis_color": "",
+    "image_url": "#",
+    "created_at": "2026-07-20 11:21:04",
+    "brand": "other",
+    "axi_brands": {
+      "id": 1,
+      "brand_name_cn": "other"
+    }
+  },
+  {
+    "axis_id": 214,
+    "axis_name": "反斗万磁王轴",
+    "drive_range": "3.6",
+    "axi_brand_id": 1,
+    "doctrine_range_left": "3.6",
+    "doctrine_range_right": "0.2",
+    "factory_name": null,
+    "axis_color": "",
+    "image_url": "#",
+    "created_at": "2026-07-20 11:23:12",
+    "brand": "other",
+    "axi_brands": {
+      "id": 1,
+      "brand_name_cn": "other"
+    }
+  },
+  {
+    "axis_id": 215,
+    "axis_name": "龙神轴",
+    "drive_range": "3.45",
+    "axi_brand_id": 1,
+    "doctrine_range_left": "3.45",
+    "doctrine_range_right": "0.2",
+    "factory_name": null,
+    "axis_color": "",
+    "image_url": "#",
+    "created_at": "2026-07-20 11:25:02",
+    "brand": "other",
+    "axi_brands": {
+      "id": 1,
+      "brand_name_cn": "other"
+    }
+  },
+  {
+    "axis_id": 216,
+    "axis_name": "玉龙轴",
+    "drive_range": "3.15",
+    "axi_brand_id": 1,
+    "doctrine_range_left": "3.15",
+    "doctrine_range_right": "0.2",
+    "factory_name": null,
+    "axis_color": "",
+    "image_url": "#",
+    "created_at": "2026-07-20 11:27:24",
+    "brand": "other",
+    "axi_brands": {
+      "id": 1,
+      "brand_name_cn": "other"
+    }
+  },
+  {
+    "axis_id": 217,
+    "axis_name": "极磁轴v2",
+    "drive_range": "3.55",
+    "axi_brand_id": 1,
+    "doctrine_range_left": "3.55",
+    "doctrine_range_right": "0.2",
+    "factory_name": null,
+    "axis_color": "",
+    "image_url": "#",
+    "created_at": "2026-07-22 11:21:36",
+    "brand": "other",
+    "axi_brands": {
+      "id": 1,
+      "brand_name_cn": "other"
+    }
+  },
+  {
+    "axis_id": 218,
+    "axis_name": "暴雪八宝轴",
+    "drive_range": "3.5",
+    "axi_brand_id": 1,
+    "doctrine_range_left": "3.5",
+    "doctrine_range_right": "0.2",
+    "factory_name": null,
+    "axis_color": "#34f527",
+    "image_url": "#",
+    "created_at": "2026-07-29 09:17:17",
+    "brand": "other",
+    "axi_brands": {
+      "id": 1,
+      "brand_name_cn": "other"
+    }
+  },
+  {
+    "axis_id": 219,
+    "axis_name": "耀光轴",
+    "drive_range": "3.55",
+    "axi_brand_id": 1,
+    "doctrine_range_left": "3.55",
+    "doctrine_range_right": "0.2",
+    "factory_name": null,
+    "axis_color": "#ccddff",
+    "image_url": "#",
+    "created_at": "2026-08-28 15:35:21",
+    "brand": "other",
+    "axi_brands": {
+      "id": 1,
+      "brand_name_cn": "other"
+    }
+  },
+  {
+    "axis_id": 220,
+    "axis_name": "星瞳磁轴",
+    "drive_range": "3.6",
+    "axi_brand_id": 1,
+    "doctrine_range_left": "3.6",
+    "doctrine_range_right": "0.2",
+    "factory_name": null,
+    "axis_color": "",
+    "image_url": "#",
+    "created_at": "2026-08-31 15:33:44",
+    "brand": "other",
+    "axi_brands": {
+      "id": 1,
+      "brand_name_cn": "other"
+    }
+  },
+  {
+    "axis_id": 221,
+    "axis_name": "玉霜磁轴",
+    "drive_range": "3.60",
+    "axi_brand_id": 1,
+    "doctrine_range_left": "3.60",
+    "doctrine_range_right": "0.00",
+    "factory_name": null,
+    "axis_color": "#ffffff",
+    "image_url": "#",
+    "created_at": "2026-09-11 11:39:26",
+    "brand": "other",
+    "axi_brands": {
+      "id": 1,
+      "brand_name_cn": "other"
+    }
+  },
+  {
+    "axis_id": 222,
+    "axis_name": "桃夭轴",
+    "drive_range": "3.3",
+    "axi_brand_id": 1,
+    "doctrine_range_left": "3.5",
+    "doctrine_range_right": "0.2",
+    "factory_name": null,
+    "axis_color": "#5f3873",
+    "image_url": "https://curl.sparklinkplayjoy.com/images/202610/znV8WQdeL9Cty7pUR0WaN6f58RQRG0yO9OYa0PCr.png",
+    "created_at": "2026-10-15 16:39:09",
+    "brand": "other",
+    "axi_brands": {
+      "id": 1,
+      "brand_name_cn": "other"
+    }
+  },
+  {
+    "axis_id": 223,
+    "axis_name": "磁王Pro",
+    "drive_range": "3.3",
+    "axi_brand_id": 1,
+    "doctrine_range_left": "3.5",
+    "doctrine_range_right": "0.2",
+    "factory_name": null,
+    "axis_color": "#5f3873",
+    "image_url": "https://curl.sparklinkplayjoy.com/images/202610/NC180WYr7s59Njha1MOl9amMPAMwYEklDiS5Kzje.png",
+    "created_at": "2026-10-15 16:40:04",
+    "brand": "other",
+    "axi_brands": {
+      "id": 1,
+      "brand_name_cn": "other"
+    }
+  }
+]

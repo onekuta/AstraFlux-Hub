@@ -1,0 +1,22 @@
+{
+  "description": "星闪悦动驱动 - 开发者云端发布配置文件 (仅保存在开发者电脑，绝不分发给客户端)",
+  "platform": "local",
+  "gitee": {
+    "owner": "your_gitee_username",
+    "repo": "sparklink-hub-releases",
+    "branch": "master",
+    "accessToken": "填入你的Gitee私人令牌(Personal Access Token)",
+    "rawBaseUrl": "https://gitee.com/your_gitee_username/sparklink-hub-releases/raw/master"
+  },
+  "github": {
+    "owner": "your_github_username",
+    "repo": "sparklink-hub-releases",
+    "branch": "main",
+    "personalToken": ""
+  },
+  "appRelease": {
+    "appVersion": "1.3.0",
+    "appDownloadUrl": "https://pan.quark.cn/s/your_download_link_or_gitee_release",
+    "changelog": "优化星闪连接稳定性与新客制化 PCB 即时适配"
+  }
+}

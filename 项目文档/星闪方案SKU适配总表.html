@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>星闪方案产品 SKU 适配总表</title>
+<style>
+  :root{
+    --ink:#1c1f23;--ink-2:#4a5158;--ink-3:#767e87;
+    --line:#e3e6ea;--line-strong:#cfd4da;
+    --brand:#2f6bff;--head-bg:#eef2f8;--row-alt:#f7f9fc;
+    --warn-bg:#fff8e6;--warn-line:#f0d089;--ok:#1f7a3d;
+    --code-bg:#f2f4f7;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;padding:40px 28px 72px;background:#fff;color:var(--ink);
+    font-family:"Microsoft YaHei","微软雅黑","Noto Sans SC",-apple-system,"Segoe UI",sans-serif;
+    font-size:14px;line-height:1.75}
+  .wrap{max-width:1280px;margin:0 auto}
+  h1{font-size:26px;margin:0 0 6px;letter-spacing:.5px}
+  .sub{color:var(--ink-3);font-size:13px;margin:0 0 28px}
+  h2{font-size:19px;margin:46px 0 14px;padding-left:11px;border-left:4px solid var(--brand);line-height:1.4}
+  h3{font-size:16px;margin:28px 0 10px}
+  h3 .tagline{font-weight:400;font-size:12.5px;color:var(--ink-3)}
+  table{width:100%;border-collapse:collapse;margin:14px 0 8px;font-size:13px;line-height:1.6}
+  thead th{background:var(--head-bg);font-weight:700;text-align:left;padding:11px 12px;border:1px solid var(--line-strong);white-space:nowrap}
+  tbody td{padding:10px 12px;border:1px solid var(--line);vertical-align:top}
+  tbody tr:nth-child(even) td{background:var(--row-alt)}
+  tbody tr:hover td{background:#eef4ff}
+  td a{color:var(--brand);text-decoration:none;word-break:break-all}
+  td a:hover{text-decoration:underline}
+  code{background:var(--code-bg);border-radius:4px;padding:1px 5px;font-family:Consolas,monospace;font-size:12.5px}
+  .tag{display:inline-block;padding:1px 8px;border-radius:10px;font-size:11.5px;line-height:18px;white-space:nowrap;border:1px solid var(--line-strong);background:#f3f5f8;color:var(--ink-2)}
+  .tag.kb{background:#eef2ff;border-color:#c2cffb;color:#2b46b8}
+  .tag.pcb{background:#eaf6ee;border-color:#b7dfc4;color:#1f6b3a}
+  .tag.mouse{background:#fdf0e8;border-color:#f2c9ac;color:#a5521c}
+  .tag.q{background:#fdf0e8;border-color:#f2c9ac;color:#a5521c}
+  .ok{color:var(--ok);font-weight:700}
+  .no{color:#b03030;font-weight:700}
+  .warn{background:var(--warn-bg);border:1px solid var(--warn-line);border-radius:8px;padding:14px 18px;margin:18px 0;font-size:13px}
+  .warn strong{color:#8a5b00}
+  ul,ol{margin:10px 0 10px 4px;padding-left:22px}
+  li{margin:5px 0}
+  .note{font-size:12.5px;color:var(--ink-3);margin-top:6px}
+  .pidbox{font-family:Consolas,monospace;font-size:12px;background:var(--code-bg);border:1px solid var(--line);border-radius:6px;padding:10px 12px;line-height:1.8;word-break:break-all}
+  .pidbox b{color:var(--brand);font-weight:700}
+  .scheme-head td{background:#f0f4fb !important}
+  .scheme-head td b{font-size:14px}
+  .kpi{display:flex;gap:14px;flex-wrap:wrap;margin:18px 0 6px}
+  .kpi div{flex:1 1 170px;border:1px solid var(--line);border-radius:10px;padding:13px 16px;background:var(--row-alt)}
+  .kpi b{display:block;font-size:22px;line-height:1.3}
+  .kpi span{font-size:12.5px;color:var(--ink-3)}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <h1>星闪方案产品 SKU 适配总表</h1>
+  <p class="sub">用途：驱动产品的 SKU 适配整理 ｜ 编制时间：2026-10-14 ｜ 数据源：官方站点实抓（www.xsyd.top / v2-dev.xsyd.top）＋ 公开媒体评测 ＋ 本项目真机实测</p>
+
+  <h2>〇、「SKU 编号」口径说明（先读）</h2>
+  <ol>
+    <li><strong>星闪悦动官方没有公开的「产品型号 ↔ VID:PID」对照表</strong>。官方驱动的设备库（<code>/js/device-*.js</code>）只有 VID:PID 白名单，<strong>型号名是设备连接后从 HID 描述符运行时读取的</strong>。已实测确认：官方 JS 全量检索无产品名字段。</li>
+    <li>因此本表 <strong>SKU 编号采用 <code>VID:PID</code>（十六进制）</strong>：能确认的填具体值并注明来源；无法确认的标注「未公开」。</li>
+    <li>HID 识别要件：<code>usagePage 0xFFB0</code> + <code>usage 0x01</code>；一台键盘会枚举 MI_00~03 多个 HID 接口，驱动侧必须按 <code>vid:pid</code> 去重。</li>
+    <li>适配驱动口径：
+      <ul>
+        <li><strong>官方网页驱动（新）</strong>：<code>www.xsyd.top/v2-app</code> —— 7 VID / 222 设备白名单</li>
+        <li><strong>新双子星驱动</strong>：<code>v2-dev.xsyd.top</code> —— 3 VID / 33 设备；v2-app 识别到双子星设备会提示跳转专属页</li>
+        <li><strong>旧版本驱动</strong>：官网导航保留入口（v1）</li>
+        <li><strong>品牌自研</strong>：前行者 EHUB、艾石头 GTurbo（客户端+网页）、七彩虹自研网页驱动、WuqueStudio Polaris Twin OS</li>
+        <li><strong>星闪悦动 HUB（本项目）</strong>：ES68 / AE64-MAX / DV63 / M6 Ultra 预留 / GENERIC_KEYBOARD 兜底</li>
+      </ul>
+    </li>
+  </ol>
+
+  <h2>一、方案体系总表（10 类主控方案）</h2>
+  <table>
+    <thead><tr><th style="width:40px">#</th><th style="width:150px">方案</th><th style="width:90px">档位</th><th>架构要点</th><th style="width:80px">回报率</th><th style="width:170px">扫描率</th><th style="width:90px">RT 精度</th><th style="width:110px">典型延迟</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td><b>32K 方案</b></td><td>旗舰</td><td>前行者 × 星闪悦动联合开发；高频响应 MCU + 多路独立 ADC</td><td>32kHz</td><td>256kHz</td><td>0.001mm</td><td>实测 0.008ms</td></tr>
+      <tr><td>2</td><td><b>双子星 / 2.0</b></td><td>高端</td><td><b>双 MCU + ADC 全键直连</b>（摒弃矩阵扫描），一颗管采样/RT 运算，一颗管上报/滤波</td><td>8kHz</td><td>256kHz 全键</td><td>0.001mm</td><td>0.08ms</td></tr>
+      <tr><td>3</td><td><b>双子星 Extreme</b></td><td>高端+</td><td><b>三核</b>：2× 旗舰 MCU + 1× ADC「天眼」直连芯片，算力约 2×</td><td>8kHz</td><td>256kHz 全键</td><td>0.001mm</td><td>0.1ms 级</td></tr>
+      <tr><td>4</td><td><b>银河 600</b></td><td>高端</td><td>单旗舰主控，较上代算力 +297%、延迟 −30%</td><td>8kHz</td><td>—</td><td>0.001mm</td><td>0.06ms</td></tr>
+      <tr><td>5</td><td><b>天王星</b></td><td>中高端</td><td>单主控方案</td><td>8kHz</td><td><b>32kHz 全键 + 256kHz 通道</b></td><td>0.001mm</td><td>0.08ms</td></tr>
+      <tr><td>6</td><td><b>星闪 480</b></td><td>中高端</td><td><b>480MHz 主控 + 9 颗独立芯片协同</b>，第二代 GTurbo 算法（温漂实时修正）</td><td>8kHz</td><td>32kHz 全键 + 256kHz 单键</td><td>0.001mm</td><td>0.125ms</td></tr>
+      <tr><td>7</td><td><b>海王星 8K</b></td><td>中端</td><td>ARM 架构主控</td><td>8kHz</td><td>—</td><td>0.001mm</td><td>0.125ms</td></tr>
+      <tr><td>8</td><td><b>火星 8K</b></td><td>中端</td><td>单主控</td><td>8kHz</td><td>—</td><td>0.005mm</td><td>0.125ms</td></tr>
+      <tr><td>9</td><td><b>水星</b></td><td>入门</td><td>单主控</td><td>—</td><td>—</td><td>0.01mm</td><td>—</td></tr>
+      <tr><td>10</td><td><b>定制 / 联自研</b></td><td>按品牌</td><td>星闪悦动按品牌需求定制（黑爵 192K、无砚联自研等）</td><td>8kHz</td><td>192K~32K</td><td>0.005~0.001mm</td><td>0.125ms</td></tr>
+    </tbody>
+  </table>
+  <p class="note">⚠️ 全网公开资料<strong>均未公布具体主控芯片料号</strong>（一律只写「双 MCU / 三核 / 480MHz」），需料号只能拆机或向方案商索取。</p>
+
+  <h2>二、按方案分类的 SKU 明细</h2>
+
+  <h3>方案 1：32K 方案 <span class="tagline">（前行者 × 星闪悦动联合开发）</span></h3>
+  <table>
+    <thead><tr><th style="width:180px">产品型号</th><th style="width:110px">品牌</th><th style="width:90px">类别</th><th style="width:210px">SKU（VID:PID）</th><th>关键参数</th><th style="width:170px">适配驱动</th><th style="width:120px">状态</th><th style="width:100px">来源</th></tr></thead>
+    <tbody>
+      <tr><td><b>ES68 Dawn 破晓</b></td><td>前行者 EWEADN</td><td><span class="tag kb">成品键盘</span></td><td><code>0x1CA6:0x1C24</code><br>（7334:7204，<span class="ok">真机实测✓</span>）</td><td>32kHz 回报、256kHz 扫描、0.001mm RT、实测 0.008ms；1.6mm FR4 四层防水 PCB、贯穿式灯带 26 列</td><td>HUB 专属档案 / 官方网页驱动 / EHUB</td><td>已上市，首发 699 元</td><td><a href="https://news.qq.com/rain/a/20260414A02E9V00">腾讯新闻</a><br><a href="https://www.eweadn.cn/brandNews/detail-31.html">前行者官网</a></td></tr>
+      <tr><td>ES68 EVO</td><td>前行者</td><td><span class="tag kb">成品键盘</span></td><td><code>0x1CA6:0x1C2F</code></td><td>68EVO 配列</td><td>同 ES68 家族</td><td>在库</td><td>本项目 SKU 清单</td></tr>
+      <tr><td>ES68 EVO (Full)</td><td>前行者</td><td><span class="tag kb">成品键盘</span></td><td><code>0x1CA6:0x1C4C</code></td><td>68 配列</td><td>同上</td><td>在库</td><td>本项目 SKU 清单</td></tr>
+      <tr><td>ES68 TIANYI 天一</td><td>前行者</td><td><span class="tag kb">成品键盘</span></td><td><code>0x1CA6:0x1C50</code></td><td>68 配列</td><td>同上</td><td>在库</td><td>本项目 SKU 清单</td></tr>
+      <tr><td>ES68 Lite</td><td>前行者</td><td><span class="tag kb">成品键盘</span></td><td><code>0x1CA6:0x1C4A</code></td><td>68 配列</td><td>同上</td><td>在库</td><td>本项目 SKU 清单</td></tr>
+      <tr><td>ES68 家族（沁恒形态）</td><td>前行者</td><td><span class="tag kb">成品键盘</span></td><td><code>0x1A86:0xFE81</code><br>（6790:65153）</td><td>沁恒重枚举形态，68 配列</td><td>同上</td><td>在库</td><td>本项目 SKU 清单</td></tr>
+      <tr><td><b>ES87</b></td><td>前行者</td><td><span class="tag kb">成品键盘</span></td><td><span class="tag q">未公开</span></td><td>RT 0.001mm、0.08ms；全铝 CNC + 碳纤维定位板、87 配列翻盖快拆</td><td>预计 EHUB / 官方驱动</td><td>已发布（2025-10 发布会）</td><td><a href="https://news.qq.com/rain/a/20251024A03R6800">腾讯新闻</a></td></tr>
+      <tr><td><b>AG68</b></td><td>狼蛛 AULA</td><td><span class="tag kb">成品键盘</span></td><td><span class="tag q">未公开</span></td><td><b>32K 回报率</b>、0.001mm RT、全铝机身；AG 磁轴旗舰系列</td><td>官方网页驱动</td><td>已上市（高端旗舰）</td><td><a href="https://www.toutiao.com/a7667882911726584339">今日头条</a></td></tr>
+      <tr><td>HERO 68 HE Ultra</td><td>狼蛛 AULA</td><td><span class="tag kb">成品键盘</span></td><td><span class="tag q">未公开</span></td><td>8K 回报、<b>全键 32K / 单键 256K 扫描</b>、RT 0.005~0.001mm；全铝 CNC + 碳纤维定位板 + 灯箱</td><td>官方网页驱动</td><td>已上市，首发 399 元起</td><td><a href="https://g.pconline.com.cn/best/yuanchuang/31096132.html">太平洋科技</a></td></tr>
+    </tbody>
+  </table>
+  <p class="note">⚠️ ES68 家族「PID ↔ 子型号」映射来自本项目 <code>项目文档/SKU清单.md</code> 既有档案（官方站无静态名录），新增子型号需真机复核。</p>
+
+  <h3>方案 2：双子星 / 双子星 2.0 <span class="tagline">（双 MCU + ADC 全键直连）</span></h3>
+  <table>
+    <thead><tr><th style="width:180px">产品型号</th><th style="width:110px">品牌</th><th style="width:90px">类别</th><th style="width:150px">SKU</th><th>关键参数</th><th style="width:150px">适配驱动</th><th style="width:130px">状态</th><th style="width:100px">来源</th></tr></thead>
+    <tbody>
+      <tr><td><b>F68 RX</b></td><td>狼蛛 AULA</td><td><span class="tag kb">成品键盘</span></td><td><span class="tag q">未公开</span></td><td>8kHz、256kHz 全键扫描、0.001mm、0.08ms；双 MCU；EchoRGB 灯光引擎</td><td>官方网页驱动 / ECHO RGB</td><td>已上市，299.15 元起</td><td><a href="https://www.ithome.com/0/963/675.htm">IT之家</a></td></tr>
+      <tr><td><b>V60 Ultra</b></td><td>重力星球 GravaStar</td><td><span class="tag kb">成品键盘</span></td><td><span class="tag q">未公开</span></td><td>8kHz、256kHz 全键 + 2304kHz 单键扫描、0.001mm、0.08ms；双灯位 PCB</td><td>官方网页驱动</td><td>已上市，1198 元</td><td><a href="https://m.x-techcon.com/article/170296.html">科技区角</a></td></tr>
+      <tr><td>META60（PCB/内胆）</td><td>星闪悦动</td><td><span class="tag pcb">客制化 PCB</span></td><td>见 §三</td><td>双子星 2.0</td><td>官方网页驱动</td><td>已上市</td><td>§三</td></tr>
+      <tr><td>双子星 PCB XS60</td><td>星闪悦动</td><td><span class="tag pcb">客制化 PCB</span></td><td>见 §三</td><td>双子星</td><td>官方网页驱动</td><td>已上市</td><td>§三</td></tr>
+      <tr><td>Flux60 HE（八宝60HE）</td><td>WuqueStudio</td><td><span class="tag pcb">客制化 PCB</span></td><td><code>WS-FLUX60-HE</code></td><td>双子星；2mm 铝基板</td><td>Polaris Twin OS</td><td>已上市</td><td>§三</td></tr>
+      <tr><td>公版双子星 PCB（散卖）</td><td>星闪悦动</td><td><span class="tag pcb">客制化 PCB</span></td><td>见 §三</td><td>双子星满血版</td><td>官方网页驱动</td><td>已流通</td><td>§三</td></tr>
+      <tr><td><b>SU68 Ultra</b></td><td>江湾 Everglide</td><td><span class="tag pcb">客制化/成品</span></td><td><span class="tag q">未公开</span></td><td>双灯位、全段 0.001mm RT；双子星方案</td><td>官方网页驱动</td><td>在售，约 999 元</td><td><a href="https://taouq.com/id-MQP3P5atKtX0bQjJ3BFVYYIQtA-NeRBBocnvgWOW66HV/">淘优券</a></td></tr>
+      <tr><td><b>SU64 / SU64 Ultra</b></td><td>江湾 Everglide</td><td><span class="tag pcb">客制化 PCB / 成品</span></td><td><span class="tag q">未公开</span></td><td>双子星方案（双 MCU + ADC 全键直连）；双灯位、158 颗 SMD RGB 灯珠、2304K 扫描率、RT 0.001mm、0.08ms；GH60 兼容、悟空磁轴</td><td>星闪悦动网页驱动</td><td>已流通，海外 $139</td><td><a href="https://torontokeyboardman.ca/fr/products/everglide-su64-he-magnetic-pcb-module">Toronto KeyboardMan</a></td></tr>
+    </tbody>
+  </table>
+
+  <h3>方案 3：双子星 Extreme <span class="tagline">（三核：2×MCU + ADC 天眼直连）</span></h3>
+  <table>
+    <thead><tr><th style="width:180px">产品型号</th><th style="width:110px">品牌</th><th style="width:90px">类别</th><th style="width:150px">SKU</th><th>关键参数</th><th style="width:150px">适配驱动</th><th style="width:130px">状态</th><th style="width:100px">来源</th></tr></thead>
+    <tbody>
+      <tr><td><b>闪电 Extreme</b></td><td>VGN</td><td><span class="tag kb">成品键盘</span></td><td><span class="tag q">未公开</span></td><td>4D 游戏交互引擎；RT 0.001mm、8K、256K 全键扫描</td><td>VGN 官方驱动</td><td>已上市，约 799 元</td><td><a href="https://news.yxrb.net/2025/0529/5587.html">游戏日报</a></td></tr>
+      <tr><td>闪电 Ultra / Pro</td><td>VGN</td><td><span class="tag kb">成品键盘</span></td><td><span class="tag q">未公开</span></td><td>同系不同档</td><td>同上</td><td>已上市，约 699 元</td><td>京东 / 天猫</td></tr>
+      <tr><td>霓虹</td><td>VGN</td><td><span class="tag kb">成品键盘</span></td><td><span class="tag q">未公开</span></td><td>类闪电 ID；<b>方案未点名，待确认</b></td><td>同上</td><td>已上市，约 499 元</td><td>同上</td></tr>
+    </tbody>
+  </table>
+
+  <h3>方案 4：银河 600 <span class="tagline">（单旗舰主控）</span></h3>
+  <table>
+    <thead><tr><th style="width:180px">产品型号</th><th style="width:110px">品牌</th><th style="width:90px">类别</th><th style="width:150px">SKU</th><th>关键参数</th><th style="width:150px">适配驱动</th><th style="width:130px">状态</th><th style="width:100px">来源</th></tr></thead>
+    <tbody>
+      <tr><td><b>BOX63 旗舰版</b>（双灯位）</td><td>狼蛛 AULA × BG</td><td><span class="tag kb">成品键盘</span></td><td><span class="tag q">未公开</span></td><td>银河 600 主控（算力 +297%、延迟 −30%）；8K、RT 0.001mm、延迟 0.06ms；4 层双面铺铜 PCB + 碳纤维定位板</td><td>官方网页驱动</td><td>已上市，999 元</td><td><a href="https://new.qq.com/rain/a/20260808A04F8F00">IT之家/腾讯</a></td></tr>
+      <tr><td>BOX63 标准版（下灯位）</td><td>狼蛛 AULA × BG</td><td><span class="tag kb">成品键盘</span></td><td><span class="tag q">未公开</span></td><td>8K、RT 0.001mm、0.08ms；<b>方案名未点名</b></td><td>官方网页驱动</td><td>已上市，899 元</td><td>同上</td></tr>
+      <tr><td><b>SU66</b>（PCB/套件）</td><td>江湾 Everglide</td><td><span class="tag pcb">客制化 PCB</span></td><td><span class="tag q">未公开</span></td><td><b>银河 600</b> 主控、高主频芯片、兼容 GH60、3 年质保；单板约 700+ 元</td><td>官方网页驱动</td><td>已流通</td><td><a href="https://post.smzdm.com/p/ad7dg8wd/">什么值得买</a></td></tr>
+    </tbody>
+  </table>
+  <p class="note">⚠️ 部分媒体把「星闪悦动」误写为「星闪跃动」，同一主体。</p>
+
+  <h3>方案 5：天王星 Uranus <span class="tagline">（8K / 32K 全键扫描 + 256K 通道扫描）</span></h3>
+  <table>
+    <thead><tr><th style="width:180px">产品型号</th><th style="width:110px">品牌</th><th style="width:90px">类别</th><th style="width:150px">SKU</th><th>关键参数</th><th style="width:150px">适配驱动</th><th style="width:130px">状态</th><th style="width:100px">来源</th></tr></thead>
+    <tbody>
+      <tr><td><b>EG75 / EG75 Ultra</b></td><td>维咖 WEIKAV</td><td><span class="tag kb">成品键盘</span></td><td><span class="tag q">未公开</span></td><td>8K / 32K 全键扫描 / 256K 通道扫描、RT 0.001~3.4mm、0.08ms；全铝 CNC、FR4 定位板</td><td>官方网页驱动（FN+P 唤起）+ ECHO RGB</td><td>已上市，399~479 元</td><td><a href="https://post.m.smzdm.com/p/anve2ok2">什么值得买</a><br><a href="https://halleffectkeyboard.com?p=9846/">海外商品页</a></td></tr>
+      <tr><td><b>G768</b>（67% 配列）</td><td>索坦创新 Keyshowtime</td><td><span class="tag kb">成品键盘</span></td><td><span class="tag q">未公开</span></td><td>8K 轮询 / 32K 全键 / 256K 通道、RT 0.001mm、0.125ms；CNC 碰珠快拆、RT 四档物理预设</td><td>官方网页驱动</td><td>已上市（京东旗舰店）</td><td><a href="https://m.sohu.com/a/1058974709_122744860">搜狐</a></td></tr>
+      <tr><td><b>G775</b>（80% 配列）</td><td>索坦创新 Keyshowtime</td><td><span class="tag kb">成品键盘</span></td><td><span class="tag q">未公开</span></td><td>同 G768</td><td>同上</td><td>已上市</td><td>同上</td></tr>
+    </tbody>
+  </table>
+  <div class="warn"><strong>口径冲突：</strong>IT之家早期报道把维咖 EG75 写成「星闪悦动双子星」（256kHz 扫描），但京东标题、什么值得买评测与海外商品页均写「星闪天王星 / StarFlash Uranus」（32K 全键 + 256K 通道）。<strong>参数签名不同，应以「天王星」为准</strong>，旧报道应视为不准确。G768/G775 参数与天王星完全同构，品牌自述「联合星闪悦动自研调校」，但未点名方案名 → 归入本组并标注。</div>
+
+  <h3>方案 6：星闪 480 <span class="tagline">（480MHz 主控 + 9 颗独立芯片协同）</span></h3>
+  <table>
+    <thead><tr><th style="width:180px">产品型号</th><th style="width:110px">品牌</th><th style="width:90px">类别</th><th style="width:150px">SKU</th><th>关键参数</th><th style="width:150px">适配驱动</th><th style="width:130px">状态</th><th style="width:100px">来源</th></tr></thead>
+    <tbody>
+      <tr><td><b>MG75 MAX</b></td><td>艾石头 IROK</td><td><span class="tag kb">成品键盘</span></td><td><span class="tag q">未公开</span></td><td>8K / 32K 全键 / 256K 单键扫描 / 0.001mm / 0.125ms；PCB IP54 防水、碰珠快拆</td><td>GTurbo 网页 + 客户端</td><td>已上市，432~589 元</td><td><a href="https://post.smzdm.com/p/awwx7dok/">什么值得买</a></td></tr>
+      <tr><td><b>MG68 PLUS</b></td><td>艾石头 IROK</td><td><span class="tag kb">成品键盘</span></td><td><span class="tag q">未公开</span></td><td>星闪 480、RT 0.001mm</td><td>同上</td><td>已上市，约 368 元</td><td>京东</td></tr>
+      <tr><td><b>ND68 Pro</b></td><td>艾石头 IROK</td><td><span class="tag kb">成品键盘</span></td><td><span class="tag q">未公开</span></td><td>星闪 480、0.001mm、8K、256K 扫描、0.125ms</td><td>同上</td><td>已上市，约 254 元</td><td><a href="https://post.m.smzdm.com/p/avvpop97/">什么值得买</a></td></tr>
+      <tr><td>ND63 / ND68 系列</td><td>艾石头 IROK</td><td><span class="tag kb">成品键盘</span></td><td><span class="tag q">未公开</span></td><td>星闪 480</td><td>同上</td><td>已上市，约 211 元起</td><td>同上</td></tr>
+      <tr><td>MG75 Pro</td><td>艾石头 IROK</td><td><span class="tag kb">成品键盘</span></td><td><span class="tag q">未公开</span></td><td>星闪悦动方案、RT 0.005mm、8K、0.125ms；<b>是否 480 待确认</b></td><td>同上</td><td>已上市，339~379 元</td><td><a href="https://wiki.smzdm.com/p/r6er37d">什么值得买百科</a></td></tr>
+      <tr><td><b>AE64 Pro</b>（PCB）</td><td>江湾 Everglide</td><td><span class="tag pcb">客制化 PCB</span></td><td><span class="tag q">未公开</span></td><td><b>星闪 480</b>、60% 配列、<b>174 颗灯珠</b>、Echo RGB、8K / 32K 过扫描、RT 0.001mm；单板 129 元</td><td>官方网页驱动 + ECHO RGB</td><td>已流通</td><td><a href="https://post.smzdm.com/p/a268p3wp/">什么值得买</a></td></tr>
+      <tr><td>AE64 Pro 双灯位</td><td>江湾 Everglide</td><td><span class="tag pcb">客制化 PCB</span></td><td><span class="tag q">未公开</span></td><td>星闪 480 双灯位；现货成品可代组</td><td>官方网页驱动</td><td>已流通</td><td><a href="https://www.threads.com/@lifeboring_tw/post/DVytdYYmBRX/">Threads</a></td></tr>
+      <tr><td><b>AE68</b></td><td>江湾 Everglide</td><td><span class="tag pcb">成品/客制化</span></td><td><span class="tag q">未公开</span></td><td>江湾 AE 系（与 AE64 Pro 同族）</td><td>官方网页驱动</td><td>在售</td><td><a href="https://post.smzdm.com/p/a268p3wp/">什么值得买</a></td></tr>
+    </tbody>
+  </table>
+
+  <h3>方案 7 / 8 / 9：海王星 8K · 火星 8K · 水星 <span class="tagline">（七彩虹穿云60系列三级方案）</span></h3>
+  <table>
+    <thead><tr><th style="width:180px">产品型号</th><th style="width:110px">品牌</th><th style="width:130px">方案</th><th>关键参数</th><th style="width:150px">适配驱动</th><th style="width:130px">状态</th><th style="width:100px">来源</th></tr></thead>
+    <tbody>
+      <tr><td><b>玄甲 60 Pro</b></td><td>七彩虹 Colorful</td><td><b>海王星 8K</b></td><td>ARM 架构、RT 0.001mm、白曜轴</td><td>七彩虹自研网页驱动（免安装）</td><td>已上市，249 元</td><td><a href="https://dy.163.com/article/L3VBEM4J0511B8LM.html">IT之家/网易</a></td></tr>
+      <tr><td><b>玄甲 60 Ultra</b></td><td>七彩虹</td><td><b>海王星 8K</b></td><td>RT 0.001mm、量子蜂巢键帽</td><td>同上</td><td>已上市，369 元</td><td>同上</td></tr>
+      <tr><td>穿云玄甲流光 60</td><td>七彩虹</td><td>海王星 8K <span class="tag q">待确认</span></td><td>8K 回报</td><td>同上</td><td>已上市，约 379 元</td><td>天猫</td></tr>
+      <tr><td><b>玄甲 60</b></td><td>七彩虹</td><td><b>火星 8K</b></td><td>RT 0.005mm、晶岚轴</td><td>同上</td><td>已上市，199 元（首发 149）</td><td>同上</td></tr>
+      <tr><td><b>流光 60 / Lite</b></td><td>七彩虹</td><td><b>水星</b></td><td>RT 0.01mm 入门档</td><td>同上</td><td>已上市，149 元</td><td><a href="https://i.ifeng.com/c/8vTksnCuHit">凤凰网</a></td></tr>
+    </tbody>
+  </table>
+
+  <h3>方案 10：定制 / 联合自研方案 <span class="tagline">（按品牌定制）</span></h3>
+  <table>
+    <thead><tr><th style="width:180px">产品型号</th><th style="width:110px">品牌</th><th style="width:90px">类别</th><th style="width:200px">SKU（VID:PID）</th><th>关键参数</th><th style="width:150px">适配驱动</th><th style="width:130px">状态</th><th style="width:100px">来源</th></tr></thead>
+    <tbody>
+      <tr><td><b>AE64-MAX</b></td><td>江湾</td><td><span class="tag kb">成品键盘</span></td><td><code>0x1CA6:0x300D</code><br>（<span class="ok">真机实测✓</span>，<span class="no">官方库未收录</span>）</td><td><b>双子星方案</b>；64 键、上下双灯 + 底圈灯、8K 封顶；<b>连续快速触发</b>能力位（固件 ≥0.04，RT 行程内连续快触发）</td><td>HUB 专属档案 / 官方网页驱动</td><td>在售</td><td>本项目真机实测</td></tr>
+      <tr><td><b>DV63</b></td><td>VICTKONG</td><td><span class="tag kb">成品键盘</span></td><td><code>0x1CA6:0x7A02</code><br>（<span class="ok">真机实测✓</span>，<span class="no">官方库未收录</span>）</td><td>纯有线、8K 封顶（严禁 16K）、默认马轴（行程 3.4mm、AP 0.40mm）；高配神马轴版 32K 全键 / 256K 通道 / 0.001mm / 0.125ms；标配神驹轴版 8K / 0.005mm / 0.15ms</td><td>HUB 专属档案 / 官方网页驱动（FN+V）/ ECHO RGB</td><td>已上市，299 元起</td><td><a href="https://post.smzdm.com/p/al3l74xp">什么值得买</a></td></tr>
+      <tr><td><b>AK680 V3</b></td><td>黑爵 AJAZZ</td><td><span class="tag kb">成品键盘</span></td><td><span class="tag q">未公开</span></td><td>星闪悦动定制：8K 回报、<b>192K 扫描</b>、0.001mm 步进 RT、0.125ms；WASD 直连 ADC</td><td>官方网页驱动</td><td>已上市，299 元起</td><td><a href="https://www.sina.cn/news/detail/5309360850865522.html">新浪</a></td></tr>
+      <tr><td><b>DK63</b></td><td>前行者</td><td><span class="tag kb">成品键盘</span></td><td><span class="tag q">未公开</span></td><td>方案：星闪悦动（ZOL 规格页标注）；32K 扫描、RT 0.005mm、混磁轴</td><td>EHUB</td><td>在售，109~179 元</td><td><a href="https://detail.zol.com.cn/keyboard/eweadn/s3231/lishui/cheap_pic_5.html">ZOL</a></td></tr>
+      <tr><td><b>DK68（三模）</b></td><td>前行者</td><td><span class="tag kb">成品键盘</span></td><td><span class="tag q">未公开</span></td><td>方案：星闪悦动（ZOL 标注）；32K 扫描、RT 0.005mm、无极磁轴</td><td>EHUB</td><td>在售，约 179 元</td><td>ZOL</td></tr>
+      <tr><td><b>Slice75 HE</b></td><td>NDNH 无砚</td><td><span class="tag kb">成品键盘</span></td><td><span class="tag q">未公开</span></td><td>星闪悦动联合自研（为大磁通量八宝磁轴定制）：RT 0.005mm、真 8K</td><td>官方网页驱动</td><td>已上市</td><td><a href="http://www.inwaishe.com/article-9192-1.html">in外设</a></td></tr>
+      <tr><td><b>Slice68（神六八）</b></td><td>NDNH 无砚</td><td><span class="tag kb">成品键盘</span></td><td><span class="tag q">未公开</span></td><td>同 Slice75 HE 方案；田字 68 配列、双区 RGB（54 颗 LED 灯条）</td><td>官方网页驱动</td><td>已上市</td><td>同上</td></tr>
+      <tr><td><b>M6 Ultra</b></td><td>星闪悦动</td><td><span class="tag mouse">电竞鼠标</span></td><td><span class="tag q">未公开</span></td><td>星闪无线</td><td>HUB 预留档案</td><td>预留</td><td>本项目 SKU 清单</td></tr>
+    </tbody>
+  </table>
+  <p class="note">📌 <b>待核清单</b>：前行者 DEEP68 Pro / Deep80（导购页称星闪悦动方案，未见官方标注）；狼蛛 AG60 / HERO 68 HE Air（官网在售，方案未披露）；江湾 LV100（公开资料少）。MCHOSE Jet 75 HE 为迈从自研（128K 扫描签名不符），<b>不属于星闪悦动体系</b>。</p>
+
+  <h2>三、客制化 PCB / 内胆 SKU</h2>
+  <p>客制化 PCB 是星闪悦动方案的重要阵地，除方案商自有板（META60 / XS60）外，<strong>江湾（Everglide）与 iMK（逐日）是两条最活跃的第三方客制化 PCB 线</strong>，覆盖双子星 / 银河600 / 星闪480 三档。</p>
+  <table>
+    <thead><tr><th style="width:180px">产品型号</th><th style="width:150px">品牌 / 开发者</th><th style="width:100px">方案</th><th style="width:140px">SKU</th><th>关键参数</th><th style="width:160px">适配驱动</th><th style="width:140px">状态</th><th style="width:100px">来源</th></tr></thead>
+    <tbody>
+      <tr><td><b>META60</b></td><td>星闪悦动</td><td>双子星 2.0</td><td><span class="tag q">未公开</span></td><td>60 配列；上下双灯位 + 空格十灯 + 背部环绕灯带；<b>板载振动马达</b>（WASD 震动反馈）；8K / 256K / 0.001mm</td><td>官方网页驱动</td><td>已上市（PCB/内胆零售）</td><td><a href="https://post.m.smzdm.com/p/a6zmg4xe">什么值得买</a></td></tr>
+      <tr><td><b>双子星 PCB XS60</b></td><td>星闪悦动</td><td>双子星</td><td><span class="tag q">未公开</span></td><td>蓝/白双色 PCB、双 MCU、上下灯位、空格 10 灯珠、预装夹层</td><td>官方网页驱动</td><td>已上市</td><td><a href="https://post.m.smzdm.com/zz/p/a440d26w/">什么值得买</a></td></tr>
+      <tr><td><b>Flux60 HE（八宝60HE）</b></td><td>WuqueStudio 无缺工作室</td><td>双子星</td><td><code>WS-FLUX60-HE</code></td><td>2mm 铝基板 PCB + 铝定位板 + 软木夹心棉；8K / 256K / 0.08ms；SOCD/DKS/MPT/MT/TGL/END</td><td><b>Polaris Twin OS</b>（网页驱动，支持 19 种轴体）</td><td>已上市（官网/海外）</td><td><a href="https://shop.wuquestudio.com/products/ws-flux60-he-the-1st-alumium-hall-effect-pcb">Wuque Studio 官网</a></td></tr>
+      <tr><td>公版双子星 PCB（散卖）</td><td>星闪悦动</td><td>双子星</td><td><span class="tag q">未公开</span></td><td>满血版双 MCU，约 300 元/张</td><td>官方网页驱动</td><td>已流通（淘宝/工作室）</td><td><a href="https://m.toutiao.com/article/7648097051036713526">今日头条</a></td></tr>
+      <tr><td><b>SU68 Ultra</b></td><td>江湾 Everglide</td><td>双子星</td><td><span class="tag q">未公开</span></td><td>双灯位、全段 0.001mm RT</td><td>官方网页驱动</td><td>在售，约 999 元</td><td><a href="https://taouq.com/id-MQP3P5atKtX0bQjJ3BFVYYIQtA-NeRBBocnvgWOW66HV/">淘优券</a></td></tr>
+      <tr><td><b>SU64 / SU64 Ultra</b></td><td>江湾 Everglide</td><td>双子星</td><td><span class="tag q">未公开</span></td><td>双 MCU + ADC 全键直连；双灯位、158 颗 SMD RGB 灯珠、2304K 扫描率、RT 0.001mm、0.08ms；GH60 兼容、悟空磁轴</td><td>星闪悦动网页驱动</td><td>已流通，海外 $139</td><td><a href="https://torontokeyboardman.ca/fr/products/everglide-su64-he-magnetic-pcb-module">Toronto KeyboardMan</a></td></tr>
+      <tr><td><b>SU66</b>（PCB/套件）</td><td>江湾 Everglide</td><td>银河 600</td><td><span class="tag q">未公开</span></td><td>银河 600 主控、高主频芯片、兼容 GH60、3 年质保；单板约 700+ 元</td><td>官方网页驱动</td><td>已流通</td><td><a href="https://post.smzdm.com/p/ad7dg8wd/">什么值得买</a></td></tr>
+      <tr><td><b>AE64 Pro</b>（PCB）</td><td>江湾 Everglide</td><td>星闪 480</td><td><span class="tag q">未公开</span></td><td>60% 配列、<b>174 颗灯珠</b>、Echo RGB、8K / 32K 过扫描、RT 0.001mm；单板 129 元</td><td>官方网页驱动 + ECHO RGB</td><td>已流通</td><td><a href="https://post.smzdm.com/p/a268p3wp/">什么值得买</a></td></tr>
+      <tr><td>AE64 Pro 双灯位</td><td>江湾 Everglide</td><td>星闪 480</td><td><span class="tag q">未公开</span></td><td>星闪 480 双灯位；现货成品可代组</td><td>官方网页驱动</td><td>已流通</td><td><a href="https://www.threads.com/@lifeboring_tw/post/DVytdYYmBRX/">Threads</a></td></tr>
+      <tr><td><b>AE68</b></td><td>江湾 Everglide</td><td>待确认</td><td><span class="tag q">未公开</span></td><td>江湾 AE 系（与 AE64 Pro 同族）</td><td>官方网页驱动</td><td>在售</td><td><a href="https://post.smzdm.com/p/a268p3wp/">什么值得买</a></td></tr>
+      <tr><td><b>Chase 61 逐日</b></td><td>iMK 工作室</td><td>星闪方案</td><td><span class="tag q">未公开</span></td><td>0.01mm 精度、0.005mm 步进、0.07ms 极限延迟；下灯位全键 + 五灯珠空格 + 24 颗底灯；内胆包 498 元</td><td>星闪网页驱动（后续有软件驱动）</td><td>已发布（多团在售），终身免费维修</td><td><a href="https://www.zfrontier.com/app/flow/Vy6qEoNoWn5r">装备前线</a></td></tr>
+      <tr><td><b>逐日 SE V2</b></td><td>iMK 工作室</td><td>星闪方案</td><td><span class="tag q">未公开</span></td><td>8K 回报、16K 扫描、0.01ms；背部 25 颗灯珠、17 种回车结构；单板 68 元</td><td>自研驱动（升级自星闪驱动）</td><td>已流通</td><td><a href="https://post.m.smzdm.com/p/ako9e8w9">什么值得买</a></td></tr>
+    </tbody>
+  </table>
+  <div class="warn"><strong>两个易混点：</strong>① 淘宝 59.8 元的「XS60 GH60 PCB」是 QMK/VIA 机械轴开源板，<strong>同名不同物</strong>；② 全部星闪悦动 PCBA <strong>无开源工程</strong>，NearLink 开源键盘（TP78v3、FlashKeyboard，安信可 BS21/BS21E）属华为星闪无线生态，与星闪悦动方案无关。<br><strong>品牌归属澄清：</strong>江湾 = Everglide（<code>0x38A6</code> VID，AE64-MAX / SU / AE 系列），是星闪悦动方案的<strong>重要客制化 PCB 客户</strong>；「逐日」是 iMK 工作室的 Chase 61，<strong>独立于江湾</strong>（但同为星闪方案）。</div>
+
+  <h2>四、官方 VID:PID 全量库（驱动适配硬数据）</h2>
+
+  <h3>4.1 官方网页驱动 v2-app：7 VID / 222 设备</h3>
+  <table>
+    <thead><tr><th style="width:110px">VID (十进制)</th><th style="width:120px">VID (十六进制)</th><th style="width:80px">设备数</th><th>PID 全量（十六进制）</th></tr></thead>
+    <tbody>
+      <tr><td>7334</td><td><code>0x1CA6</code></td><td><b>209</b></td><td><div class="pidbox">0x0103 0x0104 0x0105 0x030B 0x0406 0x0409 0x0511 0x0527 0x0529 0x052A 0x052B 0x052D 0x052F 0x0532 0x0534 0x0535 0x0537 0x0814 0x0834 0x0838 0x083B 0x083E 0x0848 0x0849 0x084A 0x084B 0x084C 0x0863 0x0905 0x0906 0x0907 0x0908 0x0909 0x090C 0x090D 0x090E 0x090F 0x0911 0x0A0A 0x0A23 0x0A24 0x120C 0x1504 0x1506 0x1507 0x1508 0x150A 0x1905 0x1A08 0x1A0A 0x1A0B 0x1B05 0x1B09 0x1B0F 0x1B11 0x1B12 0x1B13 0x1B14 0x1C04 0x1C0A 0x1C0C 0x1C0F 0x1C10 0x1C11 0x1C13 0x1C14 0x1C15 0x1C18 0x1C19 0x1C1A 0x1C1B 0x1C1F 0x1C20 0x1C21 0x1C23 <b>0x1C24</b> 0x1C2F 0x1D01 0x1E03 0x1E04 0x1F03 0x2403 0x2404 0x2501 0x2503 0x28D0 0x28D1 0x28D2 0x28DB 0x2A02 0x2C08 0x2C09 0x2C0A 0x2C0B 0x2C0C 0x2C0D 0x2C0E 0x2C0F 0x2C12 0x2C13 0x2C14 0x3001 0x3002 0x3003 0x3006 0x3007 0x3008 0x3503 0x3504 0x3505 0x3506 0x3701 0x3702 0x3703 0x3801 0x3901 0x3905 0x3906 0x3907 0x390B 0x390C 0x390D 0x3912 0x3913 0x3914 0x3A04 0x3C01 0x3D08 0x3D09 0x3D0A 0x3D0B 0x3D0C 0x3E01 0x3F02 0x4001 0x4102 0x4201 0x4303 0x4304 0x4401 0x4402 0x4405 0x4506 0x4507 0x4508 0x4509 0x450A 0x450B 0x450C 0x450D 0x450E 0x450F 0x4510 0x4511 0x4512 0x4513 0x4514 0x4515 0x4516 0x4517 0x4518 0x4519 0x451A 0x451B 0x451C 0x451D 0x451E 0x451F 0x4520 0x4521 0x4523 0x4703 0x4802 0x4B03 0x4B04 0x4C01 0x4C02 0x4C03 0x4C04 0x4C06 0x4C0A 0x4D01 0x4E01 0x4F01 0x5001 0x5002 0x5101 0x5301 0x5402 0x5405 0x5406 0x5501 0x5601 0x5701 0x5801 0x5901 0x5902 0x5903 0x5904 0x5A01 0x5C01 0x5C02 0x6001 0x6101 0x6301 0x6701 0xD001 0xD002 0xE701</div></td></tr>
+      <tr><td>14502</td><td><code>0x38A6</code></td><td>7</td><td><div class="pidbox">0x271C 0x271E 0x2721 0x28D2 0x28DD 0x28DE 0x28E1</div></td></tr>
+      <tr><td>6790</td><td><code>0x1A86</code></td><td>2</td><td><div class="pidbox">0x8300 0xFE81</div></td></tr>
+      <tr><td>12771</td><td><code>0x31E3</code></td><td>1</td><td><div class="pidbox">0x1320</div></td></tr>
+      <tr><td>14108</td><td><code>0x371C</code></td><td>1</td><td><div class="pidbox">0xD003</div></td></tr>
+      <tr><td>14342</td><td><code>0x3806</code></td><td>1</td><td><div class="pidbox">0x2721</div></td></tr>
+      <tr><td>14621</td><td><code>0x391D</code></td><td>1</td><td><div class="pidbox">0x2002</div></td></tr>
+    </tbody>
+  </table>
+  <p class="note">加粗的 <code>0x1C24</code> = ES68 Dawn 破晓（唯一有真机 + 官方双重确认的型号映射）。</p>
+
+  <h3>4.2 新双子星驱动 v2-dev：3 VID / 33 设备（双子星专属页）</h3>
+  <table>
+    <thead><tr><th style="width:120px">VID</th><th style="width:80px">设备数</th><th>PID 全量（十六进制）</th></tr></thead>
+    <tbody>
+      <tr><td><code>0x1CA6</code></td><td>28</td><td><div class="pidbox">0x0103 0x0532 0x0834 0x0838 0x0A23 0x0A24 0x1504 0x1508 0x1A08 0x1B08 0x1B0B 0x1B0C 0x2C08 0x2C09 0x2C0A 0x3001 0x3003 0x3007 0x3702 0x3703 0x3801 0x3C01 0x4303 0x4304 0x4401 0x4402 0x4405 0x4509</div></td></tr>
+      <tr><td><code>0x38A6</code></td><td>4</td><td><div class="pidbox">0x271C 0x28D2 0x28DD 0x28E1</div></td></tr>
+      <tr><td><code>0x31E3</code></td><td>1</td><td><div class="pidbox">0x1320</div></td></tr>
+    </tbody>
+  </table>
+  <p class="note">v2-dev 是 v2-app 的子集（33 ⊂ 222）。若只参考双子星站，会漏连江湾（0x38A6 全部 7 条）、沁恒（0x1A86）等厂商设备。</p>
+
+  <h3>4.3 已确认的型号 ↔ VID:PID 映射</h3>
+  <table>
+    <thead><tr><th style="width:280px">型号</th><th style="width:180px">VID:PID</th><th style="width:150px">确认方式</th><th>官方库收录</th></tr></thead>
+    <tbody>
+      <tr><td>ES68 Dawn 破晓</td><td><code>0x1CA6:0x1C24</code></td><td>真机实测 ✓</td><td class="ok">✅ 收录</td></tr>
+      <tr><td>ES68 家族（EVO / EVO Full / TIANYI / Lite）</td><td><code>0x1CA6:0x1C2F</code> / <code>0x1C4C</code> / <code>0x1C50</code> / <code>0x1C4A</code></td><td>项目档案（官方库无静态名）</td><td class="ok">✅ 收录</td></tr>
+      <tr><td>ES68 家族沁恒形态</td><td><code>0x1A86:0xFE81</code></td><td>项目档案</td><td class="ok">✅ 收录</td></tr>
+      <tr><td><b>AE64-MAX</b></td><td><code>0x1CA6:0x300D</code></td><td>真机实测 ✓</td><td class="no">❌ 未收录（靠主 VID 放行）</td></tr>
+      <tr><td><b>DV63</b></td><td><code>0x1CA6:0x7A02</code></td><td>真机实测 ✓</td><td class="no">❌ 未收录（靠主 VID 放行）</td></tr>
+      <tr><td>其余 209+ 条</td><td>—</td><td><b>型号名未公开</b></td><td>型号名需连接后从 HID 读取</td></tr>
+    </tbody>
+  </table>
+
+  <h2>五、驱动适配要点（SKU 适配整理用）</h2>
+  <ol>
+    <li><strong>识别白名单</strong>：以 §四 官方库为准 + 主 VID <code>0x1CA6</code> 兜底放行（覆盖 AE64-MAX / DV63 等未入库在售机型）；<strong>不要</strong>退回 <code>SPARKLINK_VIDS.includes()</code>，避免 Dragonfly <code>0x391D:0x1A36</code>、iKF、MCHOSE 等历史授权残留冒出来。</li>
+    <li><strong>回报率档位</strong>：SDK <code>RATE_HZ_TO_SDK</code> 枚举 125Hz~32KHz 共 9 档；<strong>键盘 UI 一律封顶 8K</strong>（现发行版 SDK 键盘回报率枚举只到 <code>R8KHz</code>），32K 仅 ES68 32K 方案硬件支持且需 USB3.0 + EnhanceHidUSB 专用驱动。</li>
+    <li><strong>能力位驱动 UI</strong>：<code>features.continuousRt</code> 当前仅 AE64-MAX = true（固件 ≥0.04）；官方开放到其它机型只改一个布尔值。SDK 现版本无该协议字段，UI/下发链路已就绪、待官方开放。</li>
+    <li><strong>高级按键能力</strong>（全方案通用）：SOCD / DKS / MPT / MT / TGL / END / RS。</li>
+    <li><strong>匹配优先级</strong>：<code>DV63</code> → <code>ES68</code> → <code>AE64</code> → <code>M6</code> → GENERIC（ES68 必须排在 M6 前，否则含 "M6" 型号误判为鼠标）。</li>
+    <li><strong>多接口去重</strong>：一台键盘枚举 MI_00~03 多个 HID 接口，按 <code>vid:pid</code> 归一化（实测 29 条原始 → 2 台）。</li>
+    <li><strong>双站差异</strong>：v2-app（222）识别到双子星设备时提示跳转 v2-dev（33）专属页 —— 意味着<strong>双子星方案设备可能存在独立的驱动协议分支</strong>，SKU 适配建议按方案分组验证。</li>
+    <li><strong>SDK 版本</strong>（npm 最新，2026-08-24）：<code>@sparklinkplayjoy/hid@1.0.16</code> / <code>protocol-keyboard-v2@1.0.23</code> / <code>sdk-keyboard-v2@1.0.29</code>。</li>
+  </ol>
+
+  <h2>六、口径冲突与不确定性清单（务必保留）</h2>
+  <table>
+    <thead><tr><th style="width:40px">#</th><th style="width:230px">事项</th><th>说明</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td>维咖 EG75 方案名</td><td>IT之家写「双子星」，京东/评测/海外页写「天王星 Uranus」；参数签名（32K 全键 + 256K 通道）支持天王星，旧报道应更正</td></tr>
+      <tr><td>2</td><td>七彩虹「火星 / 海王星 / 水星」归属</td><td>官方只写「星闪 XX 方案」，未点名出品方；smzdm 分档文章将其归入「星闪悦动方案第一档」——<b>按星闪悦动体系整理但需向方案商最终确认</b></td></tr>
+      <tr><td>3</td><td>VGN 霓虹</td><td>发布会未点名方案，仅「类闪电 ID」旁证</td></tr>
+      <tr><td>4</td><td>索坦 G768/G775</td><td>参数与天王星同构，品牌自述「联合星闪悦动自研调校」，方案名未点名</td></tr>
+      <tr><td>5</td><td>狼蛛 F68 RX 报道笔误</td><td>IT之家原文后半段把 F68 RX 写成「F98 RX」</td></tr>
+      <tr><td>6</td><td>「星闪跃动」</td><td>部分媒体错别字，同指星闪悦动</td></tr>
+      <tr><td>7</td><td>主控料号</td><td>所有方案均未公布具体芯片型号</td></tr>
+      <tr><td>8</td><td>品牌成品 VID:PID</td><td>除 ES68 家族 / AE64-MAX / DV63 外，其余产品公开渠道<b>查不到 VID:PID</b>，需真机枚举获取</td></tr>
+      <tr><td>9</td><td>MCHOSE Jet 75 HE</td><td>迈从自研（128K 扫描签名不符），非星闪悦动体系</td></tr>
+      <tr><td>10</td><td>江湾 LV100 / 狼蛛 AG60 / HERO 68HE</td><td>公开资料不足，方案归属待查</td></tr>
+    </tbody>
+  </table>
+
+  <div class="kpi">
+    <div><b>10 类</b><span>主控方案（含 3 档七彩虹分级）</span></div>
+    <div><b>222 + 33</b><span>官方 VID:PID 白名单（v2-app / v2-dev）</span></div>
+    <div><b>7 个</b><span>已确认 VID:PID 的型号/家族</span></div>
+    <div><b>4 款</b><span>客制化 PCB / 内胆</span></div>
+  </div>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,1986 @@
+@import "tailwindcss";
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *, .dark, .dark *));
+
+/* ============================================================
+   星闪悦动 HUB · 全局设计规范
+   设计系统 1:1 复刻 前行者 EWEADN Hub（new-hub.eweadn.cn）
+   token 直接提取自官方 main.main.*.css，保证与官网完全一致
+   ------------------------------------------------------------
+   · 主色 = 黑 #1E2023（浅色主题）/ 白 #FFFFFF（深色主题）
+   · 页面底 #EBEDF0，卡片 #FFFFFF；深色底 #06080A，卡片 #0F131A
+   · 强调蓝 #3C61F2  成功 #00C871  警告 #FFD21F  错误 #F04248
+   · 主题切换：<html data-theme="light|dark">（跟随系统 + localStorage）
+   ============================================================ */
+
+/* ============================================================
+   字体资源（全部为「免费商用」字体，已随软件打包，完全离线可用）
+   ------------------------------------------------------------
+   · 正文 / 黑体：思源黑体 Noto Sans SC   —— SIL Open Font License 1.1
+   · 标题 / 品牌：得意黑 Smiley Sans      —— SIL Open Font License 1.1
+   · 数字 / 键码：JetBrains Mono          —— SIL Open Font License 1.1
+   共 10 个 woff2，合计约 5.9 MB，全部走 Vite 资产管线（dist/assets/）。
+
+   替换掉的两处坑：
+   ① 旧字体栈是「PingFang SC 优先」—— 该字体仅 macOS 自带，Windows 上一路回落；
+   ② index.html 里曾挂 Google Fonts CDN —— 本软件完全离线，该请求永远失败。
+   两者叠加的结果就是「字体难看」：最终渲染成微软雅黑。
+
+   ⚠️ 声明顺序有讲究，别随手调换：
+   fontsource 的子集 CSS 本身**不带 unicode-range**（两个子集是「二选一」用法）。
+   这里同时用 latin + chinese-simplified 两个子集，必须手动给 latin 补上范围，
+   且把 **chinese-simplified 放在前面、latin 放在后面**。
+   因为 CSS 规定：同 family + 同 weight 的多个 @font-face 命中同一字符时，
+   **后声明者胜**；中文子集没有 unicode-range，会匹配所有字符 ——
+   若把它放在后面，它会把 latin 字符也抢走，latin 子集永远不会被加载。
+   ============================================================ */
+/* --- Noto Sans SC 400 --- */
+@font-face {
+  font-family: 'Noto Sans SC';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('./assets/fonts/NotoSansSC-chinese-simplified-400.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Noto Sans SC';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('./assets/fonts/NotoSansSC-latin-400.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
+    U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+2074, U+20AC, U+2122,
+    U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+/* --- Noto Sans SC 500 --- */
+@font-face {
+  font-family: 'Noto Sans SC';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('./assets/fonts/NotoSansSC-chinese-simplified-500.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Noto Sans SC';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('./assets/fonts/NotoSansSC-latin-500.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
+    U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+2074, U+20AC, U+2122,
+    U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+/* --- Noto Sans SC 700 --- */
+@font-face {
+  font-family: 'Noto Sans SC';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('./assets/fonts/NotoSansSC-chinese-simplified-700.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Noto Sans SC';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('./assets/fonts/NotoSansSC-latin-700.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
+    U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+2074, U+20AC, U+2122,
+    U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+/* 标题体：庞门正道标题体（方正有力的展示体，用于产品型号 / 小标题 / 大标题）
+   ------------------------------------------------------------
+   ⚠️ 授权与另外三款不同：**不是 SIL OFL**，而是作者庞门正道（阿门）的「作者声明」——
+      企业、个人均可免费商用，但明确禁止「直接把字库作为商品出售」与「用于商标注册」。
+      本软件仅把它用于界面内的界面文案展示，属于授权范围内，可随包内置。
+
+   字重只有 Regular 一个。这里把 font-weight 声明成 400 700，
+   让标题上的 font-bold 也复用同一份字形，避免浏览器合成伪粗把方正的字形拉糊。 */
+@font-face {
+  font-family: 'PangMenZhengDao';
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url('./assets/fonts/PangMenZhengDao.woff2') format('woff2');
+}
+
+/* 备用标题体：得意黑（带轻微倾斜的展示黑体，用于品牌名与装饰性大字） */
+@font-face {
+  font-family: 'Smiley Sans';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('./assets/fonts/SmileySans-Oblique.woff2') format('woff2');
+}
+/* 等宽体：JetBrains Mono（数字、键码、坐标、时间；只取 latin 子集，约 21KB/字重） */
+@font-face {
+  font-family: 'JetBrains Mono';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('./assets/fonts/JetBrainsMono-latin-400.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
+    U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+2074, U+20AC, U+2122,
+    U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'JetBrains Mono';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('./assets/fonts/JetBrainsMono-latin-500.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
+    U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+2074, U+20AC, U+2122,
+    U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'JetBrains Mono';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('./assets/fonts/JetBrainsMono-latin-700.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
+    U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+2074, U+20AC, U+2122,
+    U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+/* ============ 浅色 / 深色 共用变量 ============ */
+:root {
+  /* ── 字体族 ──
+     正文：思源黑体（随包内置）→ 系统已装的免费商用黑体 → 平台默认中文字体
+     标题：得意黑（随包内置）
+     mono：JetBrains Mono（随包内置）→ 系统等宽，仅用于数字/坐标/键码
+     ⚠️ 改这里请同步改 tailwind.config.js 的 fontFamily */
+  --font-sans: "Noto Sans SC", "Source Han Sans SC", "思源黑体",
+    "Alibaba PuHuiTi 3.0", "阿里巴巴普惠体 3.0", "PingFang SC",
+    "Microsoft YaHei UI", "Microsoft YaHei", "Helvetica Neue", Arial, sans-serif;
+  --font-display: "PangMenZhengDao", "Smiley Sans", "Noto Sans SC", "Source Han Sans SC",
+    "Alibaba PuHuiTi 3.0", "PingFang SC", "Microsoft YaHei", sans-serif;
+  --font-title: "PangMenZhengDao", "Noto Sans SC", "Source Han Sans SC", "思源黑体",
+    "Alibaba PuHuiTi 3.0", "PingFang SC", "Microsoft YaHei UI", "Microsoft YaHei", sans-serif;
+  --font-pangmen: "PangMenZhengDao", "Noto Sans SC", "Microsoft YaHei", sans-serif;
+  --font-mono: "JetBrains Mono", "Cascadia Mono", ui-monospace, Consolas,
+    "Noto Sans SC", "Microsoft YaHei UI", "Microsoft YaHei", sans-serif;
+  /* 文本大小
+     ⚠️ 2026-10-13 第十九轮整体上调一档：原 18/16/14/14/12 在 1380×880 的桌面窗口里
+     偏小，用户明确反馈「有些地方文字还是太小了」。配套的 text-[Npx] 字面量也已同步放大。 */
+  --text-h1: 20px;
+  --text-h2: 17px;
+  --text-h3: 15px;
+  --text-body: 14px;
+  --text-caption: 13px;
+  /* 文字字重 */
+  --text-weight-black: 900;
+  --text-weight-h1: 700;
+  --text-weight-h2: 700;
+  --text-weight-h3: 500;
+  --text-weight-body: 500;
+  --text-weight-caption: 400;
+  /* 黑白默认色值变量 (增强对比度，彻底杜绝发灰、发白、模糊看不清) */
+  --color-black: rgba(0, 0, 0, 1);
+  --color-black-100: rgba(26, 28, 31, 1);
+  --color-black-85: rgba(26, 28, 31, 0.94);
+  --color-black-65: rgba(26, 28, 31, 0.86);
+  --color-black-45: rgba(26, 28, 31, 0.72);
+  --color-black-25: rgba(26, 28, 31, 0.35);
+  --color-black-22: rgba(26, 28, 31, 0.28);
+  --color-black-15: rgba(26, 28, 31, 0.18);
+  --color-black-09: rgba(26, 28, 31, 0.10);
+  --color-black-04: rgba(26, 28, 31, 0.05);
+  --color-black-01: rgba(26, 28, 31, 0.02);
+  --color-black-hover: rgba(40, 43, 48, 1);
+  --color-white-100: rgba(255, 255, 255, 1);
+  --color-white-96: rgba(255, 255, 255, 0.98);
+  --color-white-85: rgba(255, 255, 255, 0.94);
+  --color-white-65: rgba(255, 255, 255, 0.86);
+  --color-white-45: rgba(255, 255, 255, 0.72);
+  --color-white-25: rgba(255, 255, 255, 0.35);
+  --color-white-22: rgba(255, 255, 255, 0.28);
+  --color-white-15: rgba(255, 255, 255, 0.18);
+  --color-white-09: rgba(255, 255, 255, 0.11);
+  --color-white-04: rgba(255, 255, 255, 0.05);
+  --color-white-01: rgba(255, 255, 255, 0.01);
+  --color-gray-100: rgba(235, 237, 240, 1);
+  --color-gray-60: rgba(235, 237, 240, 0.6);
+  --color-dark-100: rgba(27, 28, 31, 1);
+  --color-dark-90: rgba(35, 36, 40, 1);
+  --success-color: #00C871;
+  --warning-color: #FFD21F;
+  --error-color: #F04248;
+  --info-color: #3C61F2;
+  /* 兼容历史变量名，后续新增样式请直接使用 --error-color */
+  --delete-color: var(--error-color);
+  --delete-color-hover: var(--error-color);
+  /* 壁纸控制变量 */
+  --wallpaper-blur: 0px;
+  --wallpaper-brightness: 1;
+  --window-background-alpha: 1;
+  --wallpaper-image: none;
+  --wallpaper-next-image: none;
+  --wallpaper-transition-min-opacity: 0.8;
+  --wallpaper-transition-duration: 280ms;
+  --wallpaper-fade-in-duration: 280ms;
+  --wallpaper-edge-bleed: 48px;
+  /* 遮罩蒙层背景 */
+  --mask-bg: rgba(0, 0, 0, 0.88);
+  --rainbow-color: linear-gradient(135deg, #ff4d4f, #ffa940, #fadb14, #73d13d, #36cfc9, #597ef7, #9254de);
+  /* 键帽尺寸（官方 --key-size / --key-gap） */
+  --key-size: 48px;
+  --key-gap: 4px;
+  /* 灯光灯效网格列数（官方 --lighting-mode-cols） */
+  --lighting-mode-cols: 4;
+  color-scheme: light;
+}
+
+/* ============ 浅色主题（默认） ============ */
+:root,
+[data-theme="light"] {
+  /* 主题色 */
+  --primary-color: var(--custom-primary-color-light, var(--color-black-100));
+  --primary-color-hover: var(--custom-primary-color-light-hover, var(--color-black-hover));
+  --primary-85: var(--custom-primary-85-light, var(--color-black-85));
+  --primary-65: var(--custom-primary-65-light, var(--color-black-65));
+  --primary-45: var(--custom-primary-45-light, var(--color-black-45));
+  --primary-25: var(--custom-primary-25-light, var(--color-black-25));
+  --primary-15: var(--custom-primary-15-light, var(--color-black-15));
+  --primary-09: var(--custom-primary-09-light, var(--color-black-09));
+  --primary-04: var(--custom-primary-04-light, var(--color-black-04));
+  /* 背景色 */
+  --bg-primary: var(--color-gray-100);
+  --bg-secondary: var(--color-white-100);
+  /* 不参与壁纸透明度 remap 的实色表面（弹窗等） */
+  --surface-solid-primary: var(--color-gray-100);
+  --surface-solid-secondary: var(--color-white-100);
+  --bg-tertiary: var(--color-gray-60);
+  --bg-100: var(--color-black-100);
+  --bg-85: var(--color-black-85);
+  --bg-65: var(--color-black-65);
+  --bg-45: var(--color-black-45);
+  --bg-25: var(--color-black-25);
+  --bg-15: var(--color-black-15);
+  --bg-09: var(--color-black-09);
+  --bg-04: var(--color-black-04);
+  --bg-01: var(--color-black-01);
+  /* 边框线颜色 */
+  --border-color: var(--color-black-15);
+  /* 分割线颜色 */
+  --line-color: var(--color-black-09);
+  /* 操作区「多列竖分隔线」专用：9% 在白底上对比度仅约 1.2:1，肉眼几乎不可见，
+     会被读成「三块各自独立的卡片」；这里单独提到 22%（≈1.6:1）让它真正读得出来。
+     注意：--line-color 仍保留给子标签栏下划线等「越淡越好」的场景，勿直接改它。 */
+  --col-divider-color: var(--color-black-22);
+  --wallpaper-surface-primary: var(--wallpaper-bg-primary, var(--bg-primary));
+  --wallpaper-surface-secondary: var(--wallpaper-bg-secondary, var(--bg-secondary));
+  --wallpaper-logo: none;
+  /* 文字颜色 */
+  --text-primary: var(--custom-text-primary-light, var(--color-black-100));
+  --text-secondary: var(--custom-text-secondary-light, var(--color-black-85));
+  --text-tertiary: var(--custom-text-tertiary-light, var(--color-black-65));
+  --text-disabled: var(--custom-text-disabled-light, var(--color-black-45));
+  --text-quaternary: var(--custom-text-quaternary-light, var(--color-black-25));
+  --text-hover: var(--custom-text-hover-light, var(--color-black-15));
+  --text-subtle: var(--custom-text-subtle-light, var(--color-black-04));
+  --text-inverse-100: var(--color-white-100);
+  --text-inverse-85: var(--color-white-85);
+  --text-inverse-65: var(--color-white-65);
+  --text-inverse-45: var(--color-white-45);
+  --text-inverse-25: var(--color-white-25);
+  --text-inverse-15: var(--color-white-15);
+  --text-inverse-09: var(--color-white-09);
+  --text-inverse-04: var(--color-white-04);
+  --shadow-color: rgba(0, 0, 0, 0.12);
+  --shadow-color-light: rgba(0, 0, 0, 0.08);
+  /* 数字输入框（带箭头） */
+  --number-input-border: #d3d5d6;
+  --number-input-arrow: #959698;
+  --number-input-arrow-bg: #f7f7f7;
+  --number-input-arrow-border: #dcdcde;
+  /* 按钮颜色 */
+  --btn-default-bg: var(--bg-tertiary);
+  --btn-default-text: var(--text-primary);
+  --btn-primary-bg: var(--primary-color);
+  --btn-primary-text: var(--text-inverse-100);
+  --btn-secondary-bg: var(--bg-secondary);
+  --btn-secondary-text: var(--text-primary);
+  --btn-disabled-bg: var(--bg-tertiary);
+  --btn-disabled-text: var(--text-disabled);
+  /* 开关颜色：关闭 / 打开 */
+  --switch-bg-off: var(--bg-tertiary);
+  --switch-thumb-off: var(--border-color);
+  --switch-border-off: var(--border-color);
+  --switch-bg-on: var(--primary-color);
+  --switch-thumb-on: var(--text-inverse-100);
+  --switch-border-on: var(--primary-color);
+  /* Radio 未选中边框 */
+  --radio-border-color: #1E202340;
+  /* 搜索输入框 */
+  --input-placeholder: #949597;
+  /* 章节描述 */
+  --section-description: #949597;
+  /* Tabs pill */
+  --tab-pill-text-inactive: #949597;
+  --tabspill-bg: #f6f6f6;
+  /* 小圆点（指示器）选中时的边框色 */
+  --dot-selected-border-color: #d3d3d3;
+  /* logo 图片 */
+  --logo-img: none;
+  --logo-img-shrink: none;
+  /* 空状态占位图（浅色） */
+  --empty-placeholder-img: none;
+  /* 展立参数：虚拟漂移示意图（浅色） */
+  --virtual-drift-mouse-img: none;
+  /* 滑块颜色 */
+  --slider-bg-color: #F1F2F4;
+  /* 背景色 */
+  --slider-strip-color: #D6DAE0;
+  /* 滑块颜色 */
+  --slider-thumb-up: #99A3B2;
+  --slider-thumb-down: rgba(255, 255, 255, 0.45);
+  --slider-thumb-shadow: 0 0 10px rgba(153, 163, 178, 0.45);
+  /* 拖拽按钮悬停时-边框颜色 */
+  --slider-border-color: var(--slider-strip-color);
+  /* 边框颜色 */
+  --slider-border-focus-color: var(--text-primary);
+  /* 聚焦时边框颜色 */
+  --slider-text-color: var(--text-primary);
+  /* 滑块文字颜色 */
+  --slider-text-unit-color: #7f8792;
+  /* 单位文字颜色 */
+  --slider-scale-color: #cdd2d9;
+  /* 标尺颜色 */
+  --slider-scale-color-dpi: #ffffff;
+  /* 标尺颜色 */
+  --slider-input-bg-color: var(--bg-secondary);
+  /* 输入框背景色 */
+
+  /* 弹窗颜色（不随壁纸窗口透明度变化） */
+  --modal-bg-color: var(--surface-solid-secondary);
+  --modal-title-text-color: #1e2023;
+  /* 标题文字颜色 */
+  --modal-button-confirm-bg-color: var(--modal-title-text-color);
+  --modal-button-confirm-text-color: var(--text-inverse-100);
+  --modal-button-cancel-bg-color: var(--bg-tertiary);
+  --modal-button-cancel-text-color: var(--modal-title-text-color);
+  --community-config-preview-overlay-bg: rgba(235, 237, 240, 0.75);
+  --community-stat-divider: rgba(30, 32, 35, 0.1);
+  --community-stat-icon-muted: rgba(30, 32, 35, 0.25);
+  --community-icon-hover-bg: rgba(30, 32, 35, 0.09);
+  --community-empty-icon: none;
+  /* Loading 组件 */
+  --loading-content-bg: var(--modal-bg-color);
+  --loading-content-border: rgba(255, 255, 255, 1);
+  --loading-spinner-track: rgba(30, 32, 35, 0.15);
+  --loading-spinner-active: #1E2023;
+  --loading-progress-track: rgba(0, 0, 0, 0.15);
+  --loading-progress-bar: linear-gradient(90deg, #474B52 0%, #1E2023 100%);
+  /* 调色板板颜色 */
+  --palette-bg-color: var(--bg-tertiary);
+  --palette-label-color: #1e202345;
+  --palette-el-tab-active-bg: var(--primary-color);
+  --palette-el-tab-active-color: var(--text-inverse-100);
+  --palette-el-hex-group-border: #D6DAE0;
+  --palette-el-clear-btn-bg: var(--bg-tertiary);
+  --palette-el-clear-btn-color: #1E2023;
+  --palette-colorLabel-color: #1e2023;
+  /* 设备卡片 - 休眠条（底部横条） */
+  --device-card-sleep-bg: rgba(30, 32, 35, 0.56);
+  --device-card-sleep-bar-bg: rgba(0, 0, 0, 0.25);
+  --device-card-sleep-bar-text: #FFFFFF;
+  --device-card-tips-text: #1E2023;
+  /* 连接设备按钮颜色 */
+  --connect-button-bg: var(--primary-color);
+  --connect-button-text: var(--btn-primary-text);
+  --connect-button-bg-hover: var(--primary-color-hover);
+  /* 菜单样式 */
+  --menu-bg-color: var(--bg-secondary);
+  /* DeviceStatus：独立的毛玻璃背景与悬停浮层 */
+  --devicestatus-bg: rgba(255, 255, 255, 0.8);
+  --devicestatus-overlay-mask-bg: rgba(0, 0, 0, 0.86);
+  --devicestatus-overlay-button-bg: rgba(255, 255, 255, 0.96);
+  --devicestatus-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  --menu-child-bg-color: rgba(249, 249, 252, 0.98);
+  --menu-child-bg-color-hover: rgba(30, 32, 25, 0.06);
+  --menu-equipment-before-bg1: #FFFFFF80;
+  --menu-equipment-before-bg2: #FFFFFF80;
+  --menu-equipment-bg: #FFFFFF80;
+  --menu-equipment-name-text: #0F131A;
+  --menu-equipment-power-text: rgba(30, 32, 25, 0.45);
+  --menu-patttern-before-bg: rgba(0, 0, 0, 0.86);
+  --menu-patttern-button-bg: rgba(255, 255, 255, 0.65);
+  --menu-patttern-icon-color: #ffffff;
+  --menu-list-title-text: rgba(30, 32, 35, 0.45);
+  --menu-list-child-icon: #1E2023;
+  --menu-child-list-text-arrow: #646465;
+  --menu-child-list-text-arrow-active: #1e2023;
+  --menu-line: rgba(30, 32, 25, 0.09);
+  --menu-feedback-bg: #F0F2F5;
+  --menu-feedback-text: #1E2023;
+  --menu-modal-bg: rgba(30, 32, 35, 0.04);
+  --menu-modal-border: rgba(30, 32, 35, 0.09);
+  --menu-modal-shadow: 0 0 16px rgba(0, 0, 0, 0.16);
+  --menu-modal-more-text: rgba(30, 32, 35, 1);
+  --menu-modal-title-text: #1e2023;
+  --menu-modal-desc-text: #6c6e70;
+  --menu-devicelist-item-bg: #dbdcde;
+  --menu-devicelist-item-hover-bg: #1e2023;
+  --menu-devicelist-item-hover-text: #ffffff;
+  /* 灯光样式 */
+  --lighting-operation-bg: var(--bg-secondary);
+  --lighting-operation-line: rgba(34, 38, 44, 0.08);
+  /* 全局音乐律动 — 设备列表行 / 复选框（亮主题，对齐设计稿） */
+  --music-rhythm-device-row-bg: #f5f5f5;
+  --music-rhythm-device-row-bg-hover: #ebebeb;
+  --music-rhythm-device-checkbox-bg: var(--bg-secondary);
+  --music-rhythm-device-checkbox-border: #d6dae0;
+  --music-rhythm-device-checkbox-checked-bg: #1e2023;
+  --music-rhythm-device-checkbox-checked-border: #1e2023;
+  --music-rhythm-device-checkbox-checked-icon: #ffffff;
+  /* 鼠标改键页文本颜色 */
+  --label-bg: var(--bg-secondary);
+  --label-border-color: #1e2023;
+  --connection-line-color: #1e2023;
+  --key-remapping-description: rgba(0, 0, 0, 0.4);
+  /* 滚动条（keymap 等） */
+  --scrollbar-track: var(--bg-secondary);
+  --scrollbar-thumb: #1E202317;
+  --scrollbar-thumb-hover: rgba(30, 32, 35, 0.15);
+  /* 宏样式 */
+  --macro-bg: var(--bg-secondary);
+  --macro-line: rgba(34, 38, 44, 0.09);
+  --macro-list-item-bg: var(--bg-tertiary);
+  --macro-list-item-active-bg: transparent;
+  --macro-setting-keyvalue-bg: var(--macro-list-item-bg);
+  --macro-setting-keyvalue-border: transparent;
+  --macro-setting-keyvalue-text: #1E2023;
+  --macro-recording-tips-color: #7E7E7E;
+  --macro-recording-item-bg: var(--bg-tertiary);
+  --macro-recording-item-drag: #1E2023;
+  /* 高级键样式 */
+  --advancedKey-select-key-bg: #F6F7F8;
+  --advancedKey-select-key-model-bg: #72777F;
+  --advancedKey-select-bg: var(--bg-tertiary);
+  --advancedKey-select-active-bg: #1E2023;
+  --advancedKey-select-radio-bg: none;
+  --advancedKey-select-radio-border: rgba(30, 32, 35, 0.25);
+  --advancedKey-select-radio-active-bg: var(--bg-secondary);
+  --advancedKey-select-radio-active-border: #ffffff;
+  --advancedKey-select-radio-active-svg: #000000;
+  --advancedKey-select-text: #1E2023;
+  --advancedKey-select-active-text: #FFFFFF;
+  --advancedKey-dks-tips-bg: #EBEBEB;
+  --advancedKey-dks-tips-line: #D9D9D9;
+  --advancedKey-dks-tips-text1: #1E2023;
+  --advancedKey-dks-tips-text2: #1E2023;
+  --advancedKey-dks-tips-icon001: none;
+  --advancedKey-dks-tips-icon002: none;
+  --advancedKey-dks-tips-icon003: none;
+  --advancedKey-socd-icon: none;
+  --advancedKey-rs-icon: none;
+  --advancedKey-dks-icon: none;
+  --advancedKey-mpt-icon: none;
+  --advancedKey-mt-icon: none;
+  --advancedKey-tgl-icon: none;
+  --advancedKey-end-icon: none;
+  --allKeyboardSelect-bg: var(--bg-secondary);
+  --allKeyboardSelect-shadow: rgba(25, 26, 31, 0.28);
+  --advancedKey-test-point-icon: none;
+  --advancedKey-dks-range-bg: #FFD3C5;
+  /* 接收器配对弹窗 - 圆环颜色（由内到外） */
+  --pairing-ring-1: rgba(0, 0, 0, 0.15);
+  --pairing-ring-2: rgba(0, 0, 0, 0.12);
+  --pairing-ring-3: rgba(0, 0, 0, 0.09);
+  --pairing-ring-4: rgba(0, 0, 0, 0.06);
+  --receiver-color: rgba(0, 0, 0, 0.15);
+  --receiver-color-hover: rgba(30, 32, 35);
+  /* 板载配置样式 */
+  --board-bg: var(--bg-secondary);
+  --board-title: #0f131a;
+  --board-desc: #576e8d;
+  --board-btn-import-bg: var(--bg-secondary);
+  --board-btn-import-border: var(--primary-color);
+  --board-btn-import-text: var(--primary-color);
+  --board-btn-newConfig-bg: var(--primary-color);
+  --board-btn-newConfig-text: #ffffff;
+  --board-configCard-bg: var(--bg-tertiary);
+  /* 触发样式 */
+  --default-img-url: none;
+  --taigger-img-url: none;
+  /* 性能样式 */
+  --performance-bg: var(--bg-secondary);
+  --performance-title: #1e2023;
+  --performance-desc: #7f8792;
+  /* 其他模块图标 */
+  --other-upload-icon: none;
+  /* 系统设置样式 */
+  --system-bg: var(--bg-secondary);
+  /* 连接设备样式 */
+  --connect-mask-bg: linear-gradient(to right,
+      #ebedf0 0%,
+      transparent 9%,
+      transparent 91%,
+      #ebedf0 100%);
+  --connect-name-text: #0f131a;
+  --connect-dormancy-before-bg: rgba(30, 32, 35, 0.56);
+  --connect-dormancy-bg: rgba(0, 0, 0, 0.25);
+  --connect-dormancy-text: #ffffff;
+  --connect-color-active: #D3D3D3;
+  /* 传感器模式卡片背景色 */
+  --sensor-mode-bg: #F9F9F9;
+  --sensor-mode-bg-active: var(--bg-secondary);
+  --sensor-mode-label: #1E2023;
+  --sensor-mode-description: #6C6E70;
+  --sensor-mode-icon: #1E2023;
+  /* Message 组件 - */
+  --message-bg: var(--bg-secondary);
+  --message-text: #1E2023;
+  --scaleslider-track-color: #F7F8F9;
+  --scaleslider-value-bg-color: #EFF0F3;
+  --macro-letter-bg: rgba(30, 32, 35, 0.09);
+  --sensor-rotation-btn-icon: rgba(30, 32, 35, 0.25);
+  /* 壁纸 */
+  --wallpaper-title: rgba(0, 0, 0, 0.85);
+  --wallpaper-border-color: rgba(30, 32, 35, 0.25);
+  --wallpaper-border-hover-color: rgba(30, 32, 35, 0.4);
+  --wallpaper-upload-bg: none;
+  --wallpaper-icon-bg: rgba(0, 0, 0, 0.04);
+  --wallpaper-icon-color: rgba(0, 0, 0, 0.65);
+  --wallpaper-tips-bg: rgba(255, 255, 255, 0.45);
+  --wallpaper-tips-label-color: rgba(0, 0, 0, 0.85);
+  --wallpaper-tips-value-color: rgba(0, 0, 0, 0.65);
+  --keyremap-tooltip-color: rgba(30, 32, 35, 0.75);
+  --keyremap-tooltip-text: #FFFFFF;
+  /* 键盘样式 */
+  --keyboard-bg: var(--bg-primary);
+  --beyboard-border: #EBEDF0;
+  --keyboard-bg-hover: rgba(30, 32, 35, 0.15);
+  --beyboard-border-hover: rgba(30, 32, 35, 1);
+  --beyboard-text-hover: #1E2023;
+  --keyboard-label-color: #F6F6F6;
+  --keyboard-selected-bg: #1E2023;
+  --keyboard-selected-text: #F6F6F6;
+  --keyboard-selected-text-hover: #F6F6F6;
+  --dpi-card-bg-hover: #EBECEE;
+  /* 头部更新图标 */
+  --header-update-icon-color: #1E2023;
+  --header-update-icon-hover-color: var(--primary-color-hover);
+  --header-search-input-bg: rgba(255, 255, 255, 0.65);
+  --header-search-input-bg-hover: var(--bg-secondary);
+  --header-search-input-color: rgba(30, 32, 35, 0.45);
+  /* 屏幕页样式 */
+  --screen-list-item-bg: #1E20230A;
+  --screen-list-item-border: #1E202340;
+  --screen-icon-bg: #F2F2F2A6;
+  --screen-operation-bg: #0000000A;
+  --screen-right-panel-overlay-bg: #FFFFFF73;
+  --screen-right-panel-overlay-progress-bar: linear-gradient(90deg, #474B52, #1E2023);
+  --screen-upload-icon: none;
+  /* 物理按键样式 */
+  --physical-tips-bg: var(--bg-secondary);
+  --physical-tips-beofre-bg: #1E2023;
+  --physical-tips-max-color: #1E2023;
+  --physical-tips-min-color: #6C6E70;
+  --physical-setting-bg: var(--bg-secondary);
+  --physical-setting-title-color: #1E2023;
+  --physical-hover-setting-border: #1E2023;
+  /* 板载配置样式 */
+  --config-tips-iconfont-color: rgba(30, 32, 35, 0.25);
+  --config-tips-tip-bg: var(--bg-secondary);
+  --config-tips-shadow-color: rgba(0, 0, 0, 0.35);
+  --cover-color: rgba(255, 255, 255, 0.65);
+  /* 骨架屏样式 */
+  --skeleton-bg: linear-gradient(90deg,
+      rgba(243, 244, 246, 1) 0%,
+      rgba(232, 234, 238, 1) 50%,
+      rgba(243, 244, 246, 1) 100%);
+  --skeleton-bg-keyboard: linear-gradient(90deg,
+      transparent 0%,
+      transparent 20%,
+      rgba(243, 244, 246, 1) 50%,
+      transparent 70%,
+      transparent 100%);
+  --quick-skeleton-bg: linear-gradient(90deg,
+      rgba(255, 255, 255, 1) 0%,
+      rgba(226, 229, 233, 1) 100%);
+  --syncRbg-empty-icon: none;
+  color-scheme: light;
+}
+
+/* ============ 深色主题 (中性灰 / 柔和对比 / 护眼不死黑) ============ */
+[data-theme="dark"] {
+  /* 主题色 (不再使用 100% 亮白死白，采用高级中性深灰，彻底告别晃眼白块) */
+  --primary-color: var(--custom-primary-color-dark, #3b3c43);
+  --primary-color-hover: var(--custom-primary-color-dark-hover, #484a52);
+  --primary-85: var(--custom-primary-85-dark, rgba(255, 255, 255, 0.85));
+  --primary-65: var(--custom-primary-65-dark, rgba(255, 255, 255, 0.65));
+  --primary-45: var(--custom-primary-45-dark, rgba(255, 255, 255, 0.45));
+  --primary-25: var(--custom-primary-25-dark, rgba(255, 255, 255, 0.25));
+  --primary-15: var(--custom-primary-15-dark, rgba(255, 255, 255, 0.15));
+  --primary-09: var(--custom-primary-09-dark, rgba(255, 255, 255, 0.09));
+  --primary-04: var(--custom-primary-04-dark, rgba(255, 255, 255, 0.04));
+  /* 背景色：中性深灰，绝不死黑，层级对比柔和 */
+  --bg-primary: #1b1c1f;
+  --bg-secondary: #232428;
+  /* 不参与壁纸透明度 remap 的实色表面（弹窗等） */
+  --surface-solid-primary: #1b1c1f;
+  --surface-solid-secondary: #232428;
+  --bg-tertiary: #2c2d33;
+  --bg-100: #232428;
+  --bg-85: rgba(35, 36, 40, 0.85);
+  --bg-65: rgba(35, 36, 40, 0.65);
+  --bg-45: rgba(35, 36, 40, 0.45);
+  --bg-25: rgba(35, 36, 40, 0.25);
+  --bg-15: rgba(35, 36, 40, 0.15);
+  --bg-09: rgba(35, 36, 40, 0.09);
+  --bg-04: rgba(35, 36, 40, 0.04);
+  --bg-01: rgba(35, 36, 40, 0.01);
+  --wallpaper-surface-primary: var(--wallpaper-bg-primary, var(--bg-primary));
+  --wallpaper-surface-secondary: var(--wallpaper-bg-secondary, var(--bg-secondary));
+  --wallpaper-logo: none;
+  /* 文字颜色 (对比度柔和适中，主文字为象牙白，杜绝 100% 刺目亮白) */
+  --text-primary: var(--custom-text-primary-dark, #ededef);
+  --text-secondary: var(--custom-text-secondary-dark, #9ea0a8);
+  --text-tertiary: var(--custom-text-tertiary-dark, #757680);
+  --text-disabled: var(--custom-text-disabled-dark, #54555d);
+  --text-quaternary: var(--custom-text-quaternary-dark, rgba(255, 255, 255, 0.20));
+  --text-subtle: var(--custom-text-subtle-dark, rgba(255, 255, 255, 0.05));
+  --text-inverse-100: #ffffff;
+  --text-inverse-85: rgba(255, 255, 255, 0.88);
+  --text-inverse-65: rgba(255, 255, 255, 0.68);
+  --text-inverse-45: rgba(255, 255, 255, 0.48);
+  --text-inverse-25: rgba(255, 255, 255, 0.28);
+  --text-inverse-15: rgba(255, 255, 255, 0.18);
+  --text-inverse-09: rgba(255, 255, 255, 0.10);
+  --text-inverse-04: rgba(255, 255, 255, 0.05);
+  /* 边框线颜色 (中性灰柔和线条) */
+  --border-color: rgba(255, 255, 255, 0.09);
+  /* 分割线颜色 */
+  --line-color: rgba(255, 255, 255, 0.06);
+  /* 操作区多列竖分隔线 */
+  --col-divider-color: rgba(255, 255, 255, 0.12);
+  --shadow-color: rgba(0, 0, 0, 0.4);
+  --shadow-color-light: rgba(0, 0, 0, 0.18);
+  /* 开关颜色：关闭 / 打开 */
+  --switch-bg-off: var(--bg-tertiary);
+  --switch-thumb-off: var(--border-color);
+  --switch-border-off: var(--border-color);
+  --switch-bg-on: var(--primary-color);
+  --switch-thumb-on: var(--text-inverse-100);
+  --switch-border-on: var(--primary-color);
+  /* 数字输入框（带箭头） */
+  --number-input-border: #454952;
+  --number-input-arrow: #4b4e55;
+  --number-input-arrow-bg: #131720;
+  --number-input-arrow-border: #42454d;
+  /* 按钮颜色 */
+  --btn-default-bg: var(--bg-tertiary);
+  --btn-default-text: var(--text-primary);
+  --btn-primary-bg: var(--primary-color);
+  --btn-primary-text: var(--text-inverse-100);
+  --btn-secondary-bg: var(--bg-secondary);
+  --btn-secondary-text: var(--text-primary);
+  --btn-disabled-bg: var(--bg-tertiary);
+  --btn-disabled-text: var(--text-disabled);
+  /* Radio 未选中边框 */
+  --radio-border-color: #9fa1a3;
+  /* 搜索输入框 */
+  --input-placeholder: #6f7176;
+  /* 章节描述 */
+  --section-description: #6f7176;
+  /* Tabs pill */
+  --tab-pill-text-inactive: #6f7176;
+  --tabspill-bg: #090c0f;
+  /* 小圆点（指示器）选中时的边框色 */
+  --dot-selected-border-color: #adadad;
+  /* logo 图片 */
+  --logo-img: none;
+  --logo-img-shrink: none;
+  /* 空状态占位图（深色） */
+  --empty-placeholder-img: none;
+  /* 展立参数：虚拟漂移示意图（深色） */
+  --virtual-drift-mouse-img: none;
+  /* 滑块颜色 */
+  --slider-bg-color: #2B303A;
+  /* 背景色 */
+  --slider-strip-color: #B5B7BA;
+  /* 滑块颜色 */
+  --slider-thumb-up: #D9D9D9;
+  --slider-thumb-down: rgba(255, 255, 255, 0.25);
+  --slider-thumb-shadow: transparent;
+  /* 拖拽按钮悬停时-边框颜色 */
+  --slider-border-color: #404248;
+  /* 边框颜色 */
+  --slider-border-focus-color: #ffffff;
+  /* 聚焦时边框颜色 */
+  --slider-text-color: #ffffff;
+  /* 滑块文字颜色 */
+  --slider-text-unit-color: #7a7d81;
+  /* 单位文字颜色 */
+  --slider-scale-color: #60646b;
+  /* 标尺颜色 */
+  --slider-scale-color-dpi: #2b303a;
+  /* 标尺颜色 */
+  --slider-input-bg-color: var(--bg-secondary);
+  /* 输入框背景色 */
+
+
+  /* 弹窗颜色（不随壁纸窗口透明度变化） */
+  --modal-bg-color: var(--surface-solid-secondary);
+  --modal-title-text-color: #f6f6f6;
+  /* 标题文字颜色 */
+  --modal-button-confirm-bg-color: var(--modal-title-text-color);
+  --modal-button-confirm-text-color: var(--text-inverse-100);
+  --modal-button-cancel-bg-color: var(--bg-tertiary);
+  --modal-button-cancel-text-color: var(--modal-title-text-color);
+  --community-config-preview-overlay-bg: rgba(6, 8, 10, 0.75);
+  --community-stat-divider: rgba(255, 255, 255, 0.1);
+  --community-stat-icon-muted: rgba(255, 255, 255, 0.25);
+  --community-icon-hover-bg: rgba(255, 255, 255, 0.09);
+  --community-empty-icon: none;
+  /* Loading 组件 */
+  --loading-content-bg: var(--modal-bg-color);
+  --loading-content-border: rgba(255, 255, 255, 0.25);
+  --loading-spinner-track: rgba(255, 255, 255, 0.2);
+  --loading-spinner-active: #FFFFFF;
+  --loading-progress-track: rgba(255, 255, 255, 0.15);
+  --loading-progress-bar: linear-gradient(90deg, rgba(0, 0, 0, 0.65) 0%, rgba(0, 0, 0, 1) 100%);
+  /* 调色板板颜色 */
+  /* --palette-bg-color: var(--bg-tertiary);
+  --palette-label-color: #ffffff22;
+  --palette-colorLabel-color: #c2c3c4;
+  */
+
+  --palette-bg-color: #1e202345;
+  --palette-label-color: #f3f4f6;
+  --palette-el-tab-active-bg: var(--primary-color);
+  --palette-el-tab-active-color: var(--text-inverse-100);
+  --palette-el-hex-group-border: #292b2e;
+  --palette-el-clear-btn-bg: #1E2023;
+  --palette-el-clear-btn-color: #F3F4F6;
+  --palette-colorLabel-color: #c2c3c4;
+  /* 设备卡片 - 休眠条（底部横条，略深于卡片） */
+  --device-card-sleep-bg: rgba(15, 19, 26, 0.85);
+  --device-card-sleep-bar-bg: rgba(0, 0, 0, 0.25);
+  --device-card-sleep-bar-text: #F5F6F6;
+  --device-card-tips-text: rgba(255, 255, 255, 0.85);
+  /* 连接设备按钮颜色（与浅色主题一致：主题色） */
+  --connect-button-bg: var(--primary-color);
+  --connect-button-text: var(--btn-primary-text);
+  --connect-button-bg-hover: var(--primary-color-hover);
+  /* 菜单样式 */
+  --menu-bg-color: var(--bg-secondary);
+  /* DeviceStatus：独立的毛玻璃背景与悬停浮层 */
+  --devicestatus-bg: rgba(15, 19, 26, 0.85);
+  --devicestatus-stroke-color: rgba(255, 255, 255, 0.08);
+  --devicestatus-stroke-color-end: rgba(255, 255, 255, 0);
+  --devicestatus-stroke-gradient: linear-gradient(135deg,
+      var(--devicestatus-stroke-color) 0%,
+      var(--devicestatus-stroke-color-end) 100%);
+  --devicestatus-overlay-mask-bg: rgba(0, 0, 0, 0.86);
+  --devicestatus-overlay-button-bg: rgba(255, 255, 255, 0.65);
+  --devicestatus-shadow: 0 4px 12px rgba(0, 0, 0, 0.24);
+  --menu-child-bg-color: rgba(15, 19, 26, 0.98);
+  --menu-child-bg-color-hover: rgba(255, 255, 255, 0.04);
+  --menu-equipment-before-bg1: #FFFFFF14;
+  --menu-equipment-before-bg2: #0F131A65;
+  --menu-equipment-bg: var(--bg-secondary);
+  --menu-equipment-name-text: rgba(255, 255, 255, 0.96);
+  --menu-equipment-power-text: rgba(255, 255, 255, 0.45);
+  --menu-patttern-before-bg: rgba(0, 0, 0, 0.86);
+  --menu-patttern-button-bg: rgba(255, 255, 255, 0.96);
+  --menu-patttern-icon-color: #ffffff;
+  --menu-list-title-text: rgba(255, 255, 255, 0.45);
+  --menu-list-child-icon: rgba(255, 255, 255, 0.85);
+  --menu-child-list-text-arrow: #abadaf;
+  --menu-child-list-text-arrow-active: #ffffff;
+  --menu-line: rgba(255, 255, 255, 0.09);
+  --menu-feedback-bg: var(--bg-primary);
+  --menu-feedback-text: #ffffff;
+  --menu-modal-bg: rgb(17, 21, 28, 0.04);
+  --menu-modal-border: rgba(255, 255, 255, 0.15);
+  --menu-modal-shadow: 0 0 16px rgba(255, 255, 255, 0.08);
+  --menu-modal-more-text: #F6F6F6;
+  --menu-modal-title-text: #ffffff;
+  --menu-modal-desc-text: #7b7d81;
+  --menu-devicelist-item-bg: #1e2023;
+  --menu-devicelist-item-hover-bg: #dbdcde;
+  --menu-devicelist-item-hover-text: #000000;
+  /* Message 组件  */
+  --message-bg: var(--bg-secondary);
+  --message-text: #FFFFFF;
+  /* 灯光样式 */
+  --lighting-operation-bg: var(--bg-secondary);
+  --lighting-operation-line: #22262c;
+  /* 全局音乐律动 — 设备列表行 / 复选框（暗主题，对齐设计稿） */
+  --music-rhythm-device-row-bg: #1c1c21;
+  --music-rhythm-device-row-bg-hover: #25252c;
+  --music-rhythm-device-checkbox-bg: #1c1c21;
+  --music-rhythm-device-checkbox-border: #44444a;
+  --music-rhythm-device-checkbox-checked-bg: #ffffff;
+  --music-rhythm-device-checkbox-checked-border: #ffffff;
+  --music-rhythm-device-checkbox-checked-icon: #1e2023;
+  /* 鼠标改键页颜色 */
+  --label-bg: var(--bg-secondary);
+  --label-border-color: #FFFFFF;
+  --connection-line-color: #8A8D93;
+  --key-remapping-description: rgba(255, 255, 255, 0.4);
+  /* 滚动条（keymap 等） */
+  --scrollbar-track: var(--bg-secondary);
+  --scrollbar-thumb: #FFFFFF17;
+  --scrollbar-thumb-hover: rgba(255, 255, 255, 0.15);
+  /* 宏样式 */
+  --macro-bg: var(--bg-secondary);
+  --macro-line: #22262c;
+  --macro-list-item-bg: var(--bg-tertiary);
+  --macro-setting-keyvalue-bg: var(--macro-list-item-bg);
+  --macro-setting-keyvalue-border: #292e37;
+  --macro-setting-keyvalue-text: rgba(255, 255, 255, 0.6);
+  --macro-recording-tips-color: #7e7e7e;
+  --macro-recording-item-bg: rgba(255, 255, 255, 0.09);
+  --macro-recording-item-drag: rgba(255, 255, 255, 0.3);
+  /* 高级键样式 */
+  --advancedKey-min-tit: #6F7176;
+  --advancedKey-list-item-icon: #FFFFFF80;
+  --advancedKey-after-border: #22262c;
+  --advancedKey-before-list-key-bg: rgba(255, 255, 255, 0.04);
+  --advancedKey-after-key-item-bg: rgba(255, 255, 255, 0.04);
+  --advancedKey-key-bg: rgba(255, 255, 255, 0.09);
+  --advancedKey-key-hover-bg: rgba(255, 255, 255, 0.25);
+  --advancedKey-key-hover-border: rgba(255, 255, 255, 0.85);
+  --advancedKey-select-key-bg: #14181E;
+  --advancedKey-select-key-model-bg: #FFFFFF80;
+  --advancedKey-select-bg: rgba(255, 255, 255, 0.09);
+  --advancedKey-select-active-bg: rgba(255, 255, 255, 0.65);
+  --advancedKey-select-radio-bg: none;
+  --advancedKey-select-radio-border: rgba(255, 255, 255, 0.6);
+  --advancedKey-select-radio-active-bg: #000000;
+  --advancedKey-select-radio-active-border: #000000;
+  --advancedKey-select-radio-active-svg: rgba(255, 255, 255, 0.6);
+  --advancedKey-select-text: rgba(255, 255, 255, 0.6);
+  --advancedKey-select-active-text: #000000;
+  --advancedKey-dks-tips-bg: #33363c;
+  --advancedKey-dks-tips-line: #393b42;
+  --advancedKey-dks-tips-text1: rgba(255, 255, 255, 0.65);
+  --advancedKey-dks-tips-text2: #FFFFFF;
+  --advancedKey-dks-tips-icon001: none;
+  --advancedKey-dks-tips-icon002: none;
+  --advancedKey-dks-tips-icon003: none;
+  --advancedKey-socd-icon: none;
+  --advancedKey-rs-icon: none;
+  --advancedKey-dks-icon: none;
+  --advancedKey-mpt-icon: none;
+  --advancedKey-mt-icon: none;
+  --advancedKey-tgl-icon: none;
+  --advancedKey-end-icon: none;
+  --allKeyboardSelect-bg: var(--bg-secondary);
+  --allKeyboardSelect-shadow: rgba(255, 255, 255, 0.08);
+  --advancedKey-test-point-icon: none;
+  --advancedKey-dks-range-bg: #FF501917;
+  /* 接收器配对弹窗 - 圆环颜色（由外到内：外 #10131A → 内 #21262D） */
+  --pairing-ring-1: rgba(255, 255, 255, 0.12);
+  --pairing-ring-2: rgba(255, 255, 255, 0.09);
+  --pairing-ring-3: rgba(255, 255, 255, 0.06);
+  --pairing-ring-4: rgba(255, 255, 255, 0.03);
+  --receiver-color: #33363C;
+  --receiver-color-hover: #000000;
+  /* 板载配置样式 */
+  --board-bg: var(--bg-secondary);
+  --board-title: #ffffff;
+  --board-desc: #6f7176;
+  --board-btn-import-bg: #25282f;
+  --board-btn-import-text: #ffffff;
+  --board-btn-newConfig-bg: var(--primary-color);
+  --board-btn-newConfig-text: #ffffff;
+  --board-configCard-bg: #191c23;
+  /* 触发样式 */
+  --default-img-url: none;
+  --taigger-img-url: none;
+  /* 性能样式 */
+  --performance-bg: var(--bg-secondary);
+  --performance-title: #ffffff;
+  --performance-desc: #6f7176;
+  /* 其他模块图标 */
+  --other-upload-icon: none;
+  /* 系统设置样式 */
+  --system-bg: #171b21;
+  /* 连接设备样式 */
+  --connect-mask-bg: linear-gradient(to right,
+      #06080a 0%,
+      transparent 9%,
+      transparent 91%,
+      #06080a 100%);
+  --connect-name-text: #ffffff;
+  --connect-dormancy-before-bg: rgba(30, 32, 35, 0.56);
+  --connect-dormancy-bg: rgba(0, 0, 0, 0.25);
+  --connect-dormancy-text: #ffffff;
+  --connect-color-active: rgba(255, 255, 255, 0.65);
+  /* 传感器模式卡片背景色 */
+  --sensor-mode-bg: #181c23;
+  --sensor-mode-bg-active: #000000;
+  --sensor-mode-label: #aeb0b2;
+  --sensor-mode-description: #808286;
+  --sensor-mode-icon: #85878A;
+  --scaleslider-track-color: #21242C;
+  --scaleslider-value-bg-color: #21242C;
+  --macro-letter-bg: rgba(255, 255, 255, 0.04);
+  --sensor-rotation-btn-icon: rgba(255, 255, 255, 0.4);
+  /* 壁纸 */
+  --wallpaper-title: rgba(255, 255, 255, 0.85);
+  --wallpaper-border-color: rgba(255, 255, 255, 0.15);
+  --wallpaper-border-hover-color: rgba(255, 255, 255, 0.3);
+  --wallpaper-upload-bg: none;
+  --wallpaper-icon-bg: rgba(255, 255, 255, 0.04);
+  --wallpaper-icon-color: rgba(255, 255, 255, 0.65);
+  --wallpaper-tips-bg: rgba(0, 0, 0, 0.45);
+  --wallpaper-tips-border-color: rgba(255, 255, 255, 0.09);
+  --wallpaper-tips-label-color: rgba(255, 255, 255, 0.85);
+  --wallpaper-tips-value-color: rgba(255, 255, 255, 0.65);
+  --keyremap-tooltip-color: rgba(255, 255, 255, 0.75);
+  --keyremap-tooltip-text: #000000;
+  /* 键盘样式 (中性深灰底板，与界面浑然一体) */
+  --keyboard-bg: #202126;
+  --beyboard-border: #2e3037;
+  --keyboard-bg-hover: rgba(255, 255, 255, 0.15);
+  --beyboard-border-hover: rgba(255, 255, 255, 0.85);
+  --beyboard-text-hover: #FFFFFF;
+  --keyboard-label-color: #F6F6F6;
+  --keyboard-selected-bg: rgba(255, 255, 255, 0.65);
+  --keyboard-selected-text: rgba(30, 32, 35, 1);
+  --keyboard-selected-text-hover: #0F131A;
+  --dpi-card-bg-hover: #1D232E;
+  /* 头部更新图标 */
+  --header-update-icon-color: #FFFFFF;
+  --header-update-icon-hover-color: var(--primary-color-hover);
+  --header-search-input-bg: rgba(255, 255, 255, 0.09);
+  --header-search-input-bg-hover: rgba(255, 255, 255, 0.15);
+  --header-search-input-color: rgba(255, 255, 255, 0.45);
+  /* 屏幕页样式 */
+  --screen-list-item-bg: var(--bg-secondary);
+  --screen-list-item-border: #FFFFFF26;
+  --screen-icon-bg: #FFFFFF0A;
+  --screen-operation-bg: #00000026;
+  --screen-right-panel-overlay-bg: #0F131AA6;
+  --screen-right-panel-overlay-progress-bar: linear-gradient(90deg, #FFFFFFA6, #FFFFFF);
+  --screen-upload-icon: none;
+  /* 物理按键样式 */
+  --physical-tips-bg: var(--bg-tertiary);
+  --physical-tips-beofre-bg: rgba(255, 255, 255, 0.65);
+  --physical-tips-max-color: #FFFFFF;
+  --physical-tips-min-color: rgba(255, 255, 255, 0.6);
+  --physical-setting-bg: var(--bg-secondary);
+  --physical-setting-title-color: #FFFFFF;
+  --physical-hover-setting-border: #FFFFFF;
+  /* 板载配置样式 */
+  --config-tips-iconfont-color: rgba(255, 255, 255, 0.25);
+  --config-tips-tip-bg: var(--bg-tertiary);
+  --config-tips-shadow-color: rgba(30, 32, 35, 0.65);
+  --cover-color: rgba(15, 19, 26, 0.75);
+  /* 骨架屏样式 */
+  --skeleton-bg: linear-gradient(90deg,
+      rgba(37, 40, 47, 1) 0%,
+      rgba(45, 49, 57, 1) 50%,
+      rgba(37, 40, 47, 1) 100%);
+  --skeleton-bg-keyboard: linear-gradient(90deg,
+      transparent 0%,
+      transparent 20%,
+      rgba(37, 40, 47, 1) 50%,
+      transparent 70%,
+      transparent 100%);
+  --quick-skeleton-bg: linear-gradient(90deg,
+      rgba(15, 19, 26, 1) 0%,
+      rgba(45, 49, 57, 1) 100%);
+  --syncRbg-empty-icon: none;
+  color-scheme: dark;
+}
+
+/* ============ 基础重置 ============ */
+@layer base {
+  html, body, #root {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+  }
+  body {
+    font-family: var(--font-sans);
+    font-size: var(--text-body);
+    font-weight: var(--text-weight-body);
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: geometricPrecision;
+    font-feature-settings: "kern" 1;
+    font-synthesis: none;
+    letter-spacing: normal;
+    overflow: hidden;
+    transition: background-color 0.25s ease, color 0.25s ease;
+  }
+  button { font-family: inherit; }
+  input, select, textarea { font-family: inherit; color: var(--text-primary); }
+  /* 大标题 / 小标题统一用庞门正道标题体。
+     面板内 14px 以下的说明性文字仍走思源黑体 —— 标题体笔画粗、字腔小，小字号会糊。 */
+  h1, h2 { font-family: var(--font-title); letter-spacing: 0.01em; }
+  code, kbd, pre, samp { font-family: var(--font-mono); }
+
+/* 标题体工具类：品牌名 / 模态标题。
+   注意：侧栏分组标题（.nav-group-title）只有 12px，且得意黑本身是带倾斜的展示体，
+   小字号下可读性差，故不纳入，仍用思源黑体。
+
+   下面的规则刻意写在 @layer base 之外 —— 这样它的优先级高于 Tailwind 的
+   工具类（同优先级时后声明者胜），第三方组件里的 h1/h2 也能吃到标题体。 */
+.font-display { font-family: var(--font-display); letter-spacing: 0.005em; }
+/* 标题体工具类（庞门正道标题体）：用在三处 ——
+   ① 产品型号（ES68 / AE64-MAX / 神马轴 Max 3.45mm …）
+   ② 面板小标题（.section-title / .form-section-title）
+   ③ 页面大标题（.page-title / .modal-title）
+   加 letter-spacing 是因为该字体字面方正、字距偏紧，标题上稍微放开一点更透气。 */
+.font-title,
+.font-pangmen {
+  font-family: var(--font-title);
+  letter-spacing: 0.015em;
+}
+.text-brand-gradient,
+.modal-title,
+.page-title,
+.section-title {
+  font-family: var(--font-title);
+  letter-spacing: 0.015em;
+}
+
+  ::-webkit-scrollbar { width: 8px; height: 8px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb {
+    background: var(--scrollbar-thumb);
+    border-radius: 999px;
+  }
+  ::-webkit-scrollbar-thumb:hover { background: var(--scrollbar-thumb-hover); }
+}
+
+::selection { background: var(--primary-color); color: var(--text-inverse-100); }
+button:focus-visible, input:focus-visible, select:focus-visible {
+  outline: 2px solid var(--info-color);
+  outline-offset: 1px;
+  border-radius: 8px;
+}
+
+
+/* ============================================================
+   组件层
+   ============================================================ */
+
+/* ============================================================
+   组件层 · 复刻 前行者 EWEADN Hub 视觉语言
+   所有取值均取自官方 main.*.css（token 见上方变量区）
+   结构参照：.menu-box / .device-status / .setting-before-container /
+             .lighting-main / .trigger-main / .formSection-box
+   ============================================================ */
+
+/* ---------------- 窗口外壳 ---------------- */
+.app-shell {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+}
+
+.app-titlebar {
+  height: 48px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 12px 0 16px;
+  background: var(--bg-primary);
+  -webkit-app-region: drag;
+}
+
+.app-body {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  overflow: hidden;
+}
+
+.app-content {
+  flex: 1;
+  min-width: 0;
+  min-height: 0;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 10px 14px;
+  gap: 8px;
+  /* 平滑纵向滚动，防止小高度窗口下被硬截断 */
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+/* ---------------- 侧栏（对应 .menu-box） ---------------- */
+.sidebar {
+  width: 220px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  padding: 16px;
+  background: var(--bg-primary);
+  border-right: 1px solid var(--border-color);
+  box-sizing: border-box;
+}
+
+.sidebar-logo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 28px;
+  flex-shrink: 0;
+  margin-bottom: 12px;
+  cursor: pointer;
+}
+
+.sidebar-scroll {
+  flex: 1;
+  min-height: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  scrollbar-width: thin;
+  scrollbar-color: var(--scrollbar-thumb) transparent;
+}
+.sidebar-scroll::-webkit-scrollbar { width: 6px; }
+.sidebar-scroll::-webkit-scrollbar-thumb { border-radius: 4px; background: var(--scrollbar-thumb); }
+
+/* ---------------- 设备状态卡（对应 .device-status，170px） ---------------- */
+.device-card {
+  width: 100%;
+  height: 170px;
+  flex-shrink: 0;
+  border-radius: 8px;
+  position: relative;
+  overflow: hidden;
+  margin-bottom: 12px;
+  box-shadow: var(--devicestatus-shadow);
+  background: var(--bg-tertiary);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 16px;
+  box-sizing: border-box;
+  cursor: pointer;
+  transition: background 0.25s ease;
+}
+.device-card:hover { background: var(--menu-child-bg-color-hover); }
+
+.device-card-visual {
+  position: absolute;
+  inset: 0 0 44px 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  opacity: 0.9;
+}
+
+.device-card-name {
+  font-family: var(--font-title);
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text-primary);
+  line-height: 1.3;
+  position: relative;
+  z-index: 1;
+}
+
+.device-card-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 12px;
+  color: var(--text-disabled);
+  margin-top: 4px;
+  position: relative;
+  z-index: 1;
+}
+
+.device-dot {
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  margin-right: 6px;
+  flex-shrink: 0;
+}
+.device-dot.on { background: var(--success-color); box-shadow: 0 0 6px var(--success-color); }
+.device-dot.off { background: var(--text-quaternary); }
+
+/* ---------------- 侧栏分组导航（对应 .menu-list / .menu-child / .child-list） ---------------- */
+.nav-group { width: 100%; display: flex; flex-direction: column; }
+
+.nav-group + .nav-group { margin-top: 10px; }
+
+.nav-group-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--menu-list-title-text);
+  margin-bottom: 8px;
+  padding: 0 4px;
+  letter-spacing: 0.02em;
+}
+
+.nav-list { width: 100%; display: flex; flex-direction: column; gap: 2px; }
+
+.nav-item {
+  width: 100%;
+  /* ⚠️ 40 而不是 44（第二十一轮）：默认窗口 1380×880 下，侧栏滚动区只有 484px，
+     而「配置」6 项 +「板载配置」4 项的内容高 504px —— 差 20px，
+     导致最后一项「板载 #4」被切掉下半截、还和底部按钮视觉叠在一起（用户报的「错位」）。
+     压到 40 后内容降到 476px，默认窗口刚好装下；
+     且与「板载配置」那组本来就 40px 的项高一致，整列更齐。 */
+  height: 40px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 0 14px;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-primary);
+  background: transparent;
+  box-sizing: border-box;
+  transition: background 0.18s ease, color 0.18s ease;
+  text-align: left;
+}
+.nav-item:hover { background: var(--primary-04); }
+.nav-item .nav-icon { color: var(--text-primary); flex-shrink: 0; display: flex; }
+.nav-item .nav-text { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+/* 激活态：白底 + 三色模糊柔光（官方 .shared-active-glow） */
+.nav-item.active {
+  font-weight: 700;
+  background: var(--shared-active-glow-bg, var(--bg-secondary));
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+[data-theme="dark"] .nav-item.active {
+  background: #2e3037;
+  border-color: rgba(255, 255, 255, 0.12);
+  color: var(--text-primary);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+.nav-item.active::before {
+  content: '';
+  position: absolute;
+  inset: -30px;
+  z-index: 0;
+  background:
+    radial-gradient(circle at 5% 76%, rgba(167, 147, 255, 1) 0, rgba(167, 147, 255, 0.45) 22%, transparent 48%),
+    radial-gradient(circle at 20% 28%, rgba(255, 115, 196, 1) 0, rgba(255, 115, 196, 0.45) 30%, transparent 58%),
+    radial-gradient(circle at 88% 48%, rgba(120, 219, 255, 1) 0, rgba(120, 219, 255, 0.45) 34%, transparent 62%);
+  filter: blur(25px);
+  opacity: 0.4;
+  pointer-events: none;
+  animation: shared-active-glow-drift 5s ease-in-out infinite;
+}
+[data-theme="dark"] .nav-item.active::before {
+  opacity: 0.14;
+}
+.nav-item.active > * { position: relative; z-index: 1; }
+
+.nav-item.disabled { cursor: not-allowed; opacity: 0.4; }
+.nav-item.disabled:hover { background: transparent; }
+
+/* ---------------- 侧栏底部（对应 .menu-footer） ---------------- */
+.sidebar-footer {
+  width: 100%;
+  flex-shrink: 0;
+  margin-top: 10px;
+  display: flex;
+  gap: 8px;
+  align-items: stretch;
+}
+
+.ghost-button {
+  flex: 1;
+  min-width: 0;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 12px 8px;
+  box-sizing: border-box;
+  border: 1px solid var(--line-color);
+  border-radius: 8px;
+  background: transparent;
+  color: var(--menu-feedback-text);
+  font-size: 14px;
+  cursor: pointer;
+  transition: background 0.18s ease;
+}
+.ghost-button:hover { background: var(--menu-child-bg-color-hover); }
+
+.icon-button {
+  width: 48px;
+  height: 48px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--menu-list-child-icon);
+  cursor: pointer;
+  transition: background 0.18s ease, transform 0.18s ease;
+}
+.icon-button:hover { background: var(--menu-child-bg-color-hover); }
+
+/* ---------------- 页头 ---------------- */
+.page-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-shrink: 0;
+  padding-top: 4px;
+}
+
+.page-title {
+  font-family: var(--font-title);
+  font-size: var(--text-h1);
+  font-weight: var(--text-weight-h1);
+  color: var(--text-primary);
+  letter-spacing: 0.01em;
+}
+
+.page-subtitle { font-size: var(--text-caption); color: var(--text-disabled); margin-top: 2px; }
+
+/* ---------------- 面板（键盘区 / 操作区，对应 .lighting-main / .trigger-main） ---------------- */
+.panel {
+  background: var(--bg-secondary);
+  border-radius: 10px;
+  padding: 24px;
+  box-sizing: border-box;
+}
+
+.panel-keyboard {
+  width: 100%;
+  flex: 1 1 50%;
+  min-height: 240px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.panel-operation {
+  width: 100%;
+  flex: 1 1 50%;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background: var(--bg-secondary);
+  border-radius: 8px;
+  padding: 14px 20px;
+  box-sizing: border-box;
+}
+
+/* 核心布局规范 (标准 SOP)：5:5 五五分严格对齐（上面键盘展示区 50%，下面功能区 50%） */
+.keyboard-section-top {
+  flex: 1 1 50% !important;
+  height: 50% !important;
+  max-height: 50% !important;
+  min-height: 0 !important;
+  overflow: hidden !important;
+}
+
+.panel-operation-bottom,
+.panel-operation-keybinds,
+.panel-operation-advanced {
+  flex: 1 1 50% !important;
+  height: 50% !important;
+  max-height: 50% !important;
+  min-height: 0 !important;
+  box-sizing: border-box !important;
+  overflow: hidden !important;
+  padding: 10px 18px;
+}
+
+.panel-operation-lighting {
+  flex: 1 1 50% !important;
+  height: 50% !important;
+  max-height: 50% !important;
+  min-height: 0 !important;
+  box-sizing: border-box !important;
+  overflow: hidden !important;
+  padding: 0 !important;
+}
+
+/* 灯光页：深黑 RGB 发光键盘底板（铁律 6） */
+.panel-keyboard--dark { background: #0b0f19; }
+
+/* ---------------- 通用卡片 / 表单分区 ---------------- */
+.surface {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  box-sizing: border-box;
+}
+
+.section-box { width: 100%; display: flex; flex-direction: column; }
+
+.section-head {
+  width: 100%;
+  height: 32px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.section-title {
+  font-family: var(--font-title);
+  font-size: var(--text-h2);
+  font-weight: var(--text-weight-h2);
+  color: var(--text-primary);
+}
+
+.section-desc { font-size: var(--text-caption); color: var(--section-description); }
+
+.form-section { width: 100%; }
+.form-section + .form-section { margin-top: 20px; }
+
+.form-section-title {
+  font-family: var(--font-title);
+  font-size: var(--text-h3);
+  font-weight: var(--text-weight-h3);
+  color: var(--text-secondary);
+  margin-bottom: 10px;
+}
+
+/* 竖直分隔的多列操作区（对应 .section-child-box） */
+.operation-columns { display: flex; width: 100%; height: 100%; min-height: 0; }
+.operation-columns > .col { flex: 1 1 0; min-width: 0; min-height: 0; display: flex; flex-direction: column; overflow: hidden auto; }
+.operation-columns > .col + .col { border-left: 1px solid var(--col-divider-color); padding-left: 24px; margin-left: 24px; }
+
+/* 单面板内以细线分隔的区块（性能配置页 8 个设置项） */
+.perf-section {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 100%;
+}
+.perf-section-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  width: 100%;
+}
+.operation-columns > .col > .perf-section + .perf-section,
+.operation-columns > .col > .perf-section + .perf-section-row,
+.operation-columns > .col > .perf-section-row + .perf-section,
+.operation-columns > .col > .perf-section-row + .perf-section-row {
+  margin-top: 18px;
+  padding-top: 18px;
+  border-top: 1px solid var(--col-divider-color);
+}
+
+/* ---------------- 按钮 ---------------- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  height: 40px;
+  padding: 0 20px;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  font-size: var(--text-body);
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.18s ease, color 0.18s ease, border-color 0.18s ease;
+  background: transparent;
+}
+.btn-primary { background: var(--btn-primary-bg); color: var(--btn-primary-text); }
+.btn-primary:hover { background: var(--primary-color-hover); }
+.btn-default { background: var(--btn-default-bg); color: var(--btn-default-text); }
+.btn-default:hover { background: var(--primary-09); }
+.btn-secondary { background: var(--btn-secondary-bg); color: var(--btn-secondary-text); border-color: var(--border-color); }
+.btn-secondary:hover { border-color: var(--primary-25); }
+.btn-ghost { color: var(--text-tertiary); }
+.btn-ghost:hover { background: var(--primary-04); color: var(--text-primary); }
+.btn:disabled { background: var(--btn-disabled-bg); color: var(--btn-disabled-text); cursor: not-allowed; }
+.btn-sm { height: 32px; padding: 0 14px; font-size: var(--text-caption); }
+
+/* ---------------- Tab 胶囊（对应 tabs-box / tabs pill） ---------------- */
+.pill-tabs {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  padding: 3px;
+  background: var(--tabspill-bg);
+  border-radius: 10px;
+}
+
+.pill-tab {
+  height: 34px;
+  padding: 0 18px;
+  border: none;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--tab-pill-text-inactive);
+  font-size: var(--text-body);
+  font-weight: 500;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.18s ease, color 0.18s ease;
+}
+.pill-tab:hover { color: var(--text-primary); }
+.pill-tab.active {
+  background: var(--primary-color);
+  color: var(--text-inverse-100);
+  font-weight: 700;
+}
+
+/* 下划线式次级 Tab */
+.line-tabs { display: flex; gap: 24px; border-bottom: 1px solid var(--line-color); }
+.line-tab {
+  height: 40px;
+  border: none;
+  background: transparent;
+  color: var(--text-tertiary);
+  font-size: var(--text-body);
+  cursor: pointer;
+  position: relative;
+}
+.line-tab.active { color: var(--text-primary); font-weight: 700; }
+.line-tab.active::after {
+  content: '';
+  position: absolute;
+  left: 0; right: 0; bottom: -1px;
+  height: 2px;
+  background: var(--primary-color);
+  border-radius: 2px;
+}
+
+/* ---------------- 滑块（对齐官方 --slider-*） ---------------- */
+.slider-row { width: 100%; display: flex; flex-direction: column; gap: 8px; }
+.slider-label { display: flex; align-items: center; justify-content: space-between; font-size: var(--text-body); color: var(--slider-text-color); }
+.slider-value { font-size: var(--text-caption); color: var(--slider-text-unit-color); font-variant-numeric: tabular-nums; }
+
+input[type='range'] {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 4px;
+  border-radius: 999px;
+  background: var(--slider-strip-color);
+  cursor: pointer;
+  outline: none;
+}
+input[type='range']::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--slider-thumb-up);
+  border: 3px solid var(--bg-secondary);
+  box-shadow: var(--slider-thumb-shadow);
+  transition: transform 0.12s ease;
+}
+input[type='range']::-webkit-slider-thumb:hover { transform: scale(1.15); }
+input[type='range']:disabled { opacity: 0.45; cursor: not-allowed; }
+input[type='range']:disabled::-webkit-slider-thumb { background: var(--slider-thumb-down); }
+
+/* ---------------- 竖向行程滑块（对齐官方「设置触发键程」的柱状滑轨） ----------------
+   对齐前行者官方驱动：
+   一列刻度数字（顶 0.00mm，底 safeMax mm）+ 一根竖向柱体（填充自触发行程至柱底）+ 跟随的数值标签。
+   刻度/填充都用百分比绝对定位，柱体高度由组件的 height 决定，配任意轴体行程都自适应。 */
+.vtravel {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+/* 刻度列：数字右对齐，线贴着柱体 */
+.vtravel-scale { position: relative; min-width: 42px; flex-shrink: 0; }
+
+.vtravel-major {
+  position: absolute;
+  right: 0;
+  transform: translateY(-50%); /* top 定位在刻度线上，数字与刻度线垂直居中对齐 */
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  line-height: 1;
+  color: #64748b;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+[data-theme="dark"] .vtravel-major {
+  color: #94a3b8;
+}
+.vtravel-major::after {
+  content: '';
+  width: 7px;
+  height: 1px;
+  flex-shrink: 0;
+  background: #cbd5e1;
+}
+[data-theme="dark"] .vtravel-major::after {
+  background: #475569;
+}
+
+.vtravel-minor {
+  position: absolute;
+  right: 0;
+  width: 4px;
+  height: 1px;
+  transform: translateY(-50%);
+  background: #cbd5e1;
+  opacity: 0.65;
+}
+[data-theme="dark"] .vtravel-minor {
+  background: #475569;
+}
+
+.vtravel-col { position: relative; flex-shrink: 0; }
+
+.vtravel-track {
+  position: relative;
+  width: 32px;
+  border-radius: 6px;
+  background: #ffffff;
+  border: 1.5px solid #dbeafe;
+  overflow: hidden;
+  cursor: grab;
+  touch-action: none; /* 触屏上不抢滚动手势，交给 pointer events */
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+[data-theme="dark"] .vtravel-track {
+  background: #18181b;
+  border-color: rgba(59, 130, 246, 0.4);
+}
+.vtravel-track:hover { border-color: #60a5fa; }
+.vtravel-track.dragging { cursor: grabbing; border-color: #3b82f6; }
+.vtravel-track:focus-visible {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+}
+.vtravel-track.disabled { opacity: 0.45; cursor: not-allowed; }
+
+.vtravel-fill {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: 0 0 5px 5px;
+  background: #c3d9fb;
+  border-top: 1.5px solid #60a5fa;
+  transition: top 0.06s linear, height 0.06s linear;
+  pointer-events: none;
+}
+[data-theme="dark"] .vtravel-fill {
+  background: #3b82f6;
+  border-top: 1.5px solid #93c5fd;
+}
+/* 拖拽中不要过渡，否则气泡会「追」指针 */
+.vtravel-track.dragging .vtravel-fill,
+.vtravel-col:has(.dragging) .vtravel-fill { transition: none; }
+
+.vtravel-bubble {
+  position: absolute;
+  left: calc(100% + 7px);
+  transform: translateY(-50%);
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 3px 8px;
+  border-radius: 7px;
+  background: #f1f5f9;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1.2;
+  color: #1e293b;
+  white-space: nowrap;
+  pointer-events: auto;
+  cursor: grab;
+  touch-action: none;
+  transition: top 0.06s linear, border-color 0.15s ease, box-shadow 0.15s ease;
+  z-index: 10;
+}
+[data-theme="dark"] .vtravel-bubble {
+  background: #27272a;
+  border-color: #3f3f46;
+  color: #f4f4f5;
+}
+.vtravel-bubble:hover {
+  border-color: #3b82f6;
+  box-shadow: 0 2px 6px rgba(59, 130, 246, 0.15);
+}
+.vtravel-bubble.dragging,
+.vtravel-col:has(.dragging) .vtravel-bubble {
+  transition: none;
+  cursor: grabbing;
+  border-color: #3b82f6;
+  box-shadow: 0 2px 8px rgba(59, 130, 246, 0.25);
+}
+
+/* 三角指示箭头 (贴着滑块轨道，与气泡背景同色) */
+.vtravel-bubble-arrow {
+  position: absolute;
+  left: -5px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 0;
+  height: 0;
+  border-top: 4px solid transparent;
+  border-bottom: 4px solid transparent;
+  border-right: 5px solid #f1f5f9;
+  pointer-events: none;
+}
+[data-theme="dark"] .vtravel-bubble-arrow {
+  border-right-color: #27272a;
+}
+
+.vtravel-pencil-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 3px;
+  border-radius: 4px;
+  color: var(--text-tertiary);
+  cursor: pointer;
+  transition: color 0.15s ease, background-color 0.15s ease, transform 0.1s ease;
+}
+.vtravel-pencil-btn:hover {
+  color: var(--info-color);
+  background: var(--primary-09);
+  transform: scale(1.08);
+}
+.vtravel-pencil-btn:active {
+  transform: scale(0.95);
+}
+.vtravel-pencil { width: 12.5px; height: 12.5px; }
+
+/* ---------------- 开关（对齐官方 --switch-*） ---------------- */
+.switch {
+  position: relative;
+  width: 40px;
+  height: 22px;
+  flex-shrink: 0;
+  border-radius: 999px;
+  border: 1px solid var(--switch-border-off);
+  background: var(--switch-bg-off);
+  cursor: pointer;
+  padding: 0;
+  transition: background 0.2s ease, border-color 0.2s ease;
+}
+.switch.on { background: var(--switch-bg-on); border-color: var(--switch-border-on); }
+.switch::after {
+  content: '';
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--switch-thumb-off);
+  transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1), background 0.2s ease;
+}
+.switch.on::after { transform: translateX(18px); background: var(--switch-thumb-on); }
+.switch:disabled { opacity: 0.45; cursor: not-allowed; }
+
+/* 带文字的开关行 */
+.switch-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  min-height: 40px;
+}
+
+/* ---------------- 键帽（对齐官方 --key-size / --key-gap） ---------------- */
+.keyboard-plate { flex: 1; min-height: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: var(--key-gap); }
+
+.key-row { display: flex; gap: var(--key-gap); }
+
+.keycap {
+  width: var(--key-size, 48px);
+  height: var(--key-size, 48px);
+  border-radius: 6px;
+  border: 1px solid var(--beyboard-border);
+  background: var(--bg-secondary);
+  color: var(--keyboard-label-color, var(--text-primary));
+  font-size: 12px;
+  font-weight: 600;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-sizing: border-box;
+  transition: background 0.12s ease, border-color 0.12s ease, transform 0.08s ease;
+  user-select: none;
+}
+.keycap.selected { 
+  background: rgba(59, 130, 246, 0.12); 
+  color: var(--text-primary); 
+  border: 2px solid #3b82f6; 
+  box-shadow: 0 0 0 1px rgba(59, 130, 246, 0.25), 0 2px 8px rgba(59, 130, 246, 0.2);
+}
+
+/* 深色键盘区键帽（灯光页专享，铁律 6） */
+.keycap-dark {
+  border: 1px solid #4a4c52;
+  background: linear-gradient(180deg, #2e2f32 0%, #232428 100%);
+  box-shadow: 0 2px 0 0 #15161a, 0 3px 6px -1px rgba(0, 0, 0, 0.5);
+  color: rgba(255, 255, 255, 0.85);
+}
+.keycap-dark:hover { background: #33353a; border-color: var(--info-color); }
+.keycap-dark.selected {
+  background: linear-gradient(180deg, #1a3a6b 0%, #0d2140 100%);
+  border-color: var(--info-color);
+  box-shadow: 0 2px 0 0 var(--info-color), 0 4px 12px rgba(60, 97, 242, 0.35);
+  color: #fff;
+}
+.keycap-dark.pressed { transform: translateY(1px); box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.4); }
+
+/* ---------------- 列表行 ---------------- */
+.list-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 48px;
+  padding: 10px 14px;
+  border-radius: 10px;
+  background: var(--bg-tertiary);
+  border: 1px solid transparent;
+  transition: border-color 0.18s ease, background 0.18s ease;
+}
+.list-row:hover { border-color: var(--primary-15); }
+.list-row.active { background: var(--primary-color); color: var(--text-inverse-100); }
+
+/* ---------------- 模态框 ---------------- */
+.modal-mask {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  background: var(--mask-bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  animation: shared-modal-fade-in 0.18s ease both;
+}
+
+.modal-card {
+  background: var(--modal-bg-color);
+  border-radius: 10px;
+  box-shadow: var(--menu-modal-shadow);
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  animation: shared-modal-zoom-in 0.2s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.modal-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 24px;
+  flex-shrink: 0;
+}
+.modal-title { font-size: var(--text-h2); font-weight: 700; color: var(--modal-title-text-color); }
+.modal-body { padding: 0 24px 8px; overflow-y: auto; min-height: 0; }
+.modal-foot { display: flex; justify-content: flex-end; gap: 12px; padding: 20px 24px; flex-shrink: 0; }
+
+/* ---------------- 动画（取自官方 keyframes） ---------------- */
+@keyframes shared-active-glow-drift {
+  0%   { transform: translate(-8%, 8%) rotate(0deg) scale(1.18); }
+  20%  { transform: translate(12%, -10%) rotate(78deg) scale(1.28); }
+  42%  { transform: translate(8%, 12%) rotate(180deg) scale(1.16); }
+  64%  { transform: translate(-12%, 6%) rotate(96deg) scale(1.3); }
+  84%  { transform: translate(-10%, -12%) rotate(28deg) scale(1.2); }
+  100% { transform: translate(-8%, 8%) rotate(0deg) scale(1.18); }
+}
+@keyframes shared-modal-fade-in { from { opacity: 0; } to { opacity: 1; } }
+@keyframes shared-modal-zoom-in { from { opacity: 0; transform: scale(0.96); } to { opacity: 1; transform: scale(1); } }
+@keyframes toast-slide-in { from { opacity: 0; transform: translateY(-12px); } to { opacity: 1; transform: translateY(0); } }
+
+.text-brand-gradient {
+  background: linear-gradient(45deg, #a793ff, #ff73c4 45%, #78dbff);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* ---------------- 兼容旧类名（避免既有组件失效） ---------------- */
+.panel-soft {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  box-shadow: 0 2px 12px var(--shadow-color-light);
+  transition: border-color 0.2s ease, background-color 0.2s ease;
+}
+.panel-soft:hover { border-color: var(--primary-25); }
+
+.brand-gradient-text {
+  background: linear-gradient(45deg, #a793ff, #ff73c4 45%, #78dbff);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* 常规页面：白色电竞键帽（对应官方 --keyboard-border / --keyboard-bg） */
+.keycap-lite {
+  border: 1px solid var(--border-color);
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+.keycap-lite:hover {
+  border-color: var(--info-color);
+  color: var(--info-color);
+  background: var(--bg-primary);
+  box-shadow: 0 2px 6px rgba(0, 82, 239, 0.15);
+}
+.keycap-lite-selected {
+  background: rgba(59, 130, 246, 0.12) !important;
+  border: 2px solid #3b82f6 !important;
+  color: var(--text-primary) !important;
+  box-shadow: 0 0 0 1px rgba(59, 130, 246, 0.25), 0 2px 8px rgba(59, 130, 246, 0.2) !important;
+  z-index: 10;
+}
+[data-theme="dark"] .keycap-lite-selected {
+  background: rgba(59, 130, 246, 0.22) !important;
+  border-color: #60a5fa !important;
+  color: #ffffff !important;
+  box-shadow: 0 0 0 1px rgba(96, 165, 250, 0.35), 0 0 10px rgba(59, 130, 246, 0.3) !important;
+}
+.keycap-lite-pressed {
+  transform: translateY(2px) !important;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.12) !important;
+}
+
+.keycap-light { border: 1px solid #4a4c52; background: linear-gradient(180deg, #2e2f32 0%, #232428 100%); box-shadow: 0 2px 0 0 #15161a, 0 3px 6px -1px rgba(0, 0, 0, 0.5); color: rgba(255, 255, 255, 0.85); }
+.keycap-light:hover { background: #33353a; border-color: var(--info-color); box-shadow: 0 2px 0 0 var(--info-color), 0 4px 10px -2px rgba(60, 97, 242, 0.35); }
+.keycap-light-selected { background: linear-gradient(180deg, #1a3a6b 0%, #0d2140 100%) !important; border: 1.5px solid var(--info-color) !important; box-shadow: 0 2px 0 0 var(--info-color), 0 4px 12px rgba(60, 97, 242, 0.35) !important; color: #fff !important; }
+.keycap-light-pressed { transform: translateY(2px) !important; box-shadow: 0 0 0 0 #15161a, inset 0 2px 4px rgba(0, 0, 0, 0.4) !important; background: #0d2140 !important; }

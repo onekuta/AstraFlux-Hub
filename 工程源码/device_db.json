@@ -1,0 +1,5795 @@
+{
+  "libVersion": "2026.10.15.2",
+  "exportedAt": "2026-10-15T03:50:00.000Z",
+  "generator": "SparkLink PlayJoy Community Keyboard Database Registry (高保真全量硬件库)",
+  "description": "统一采用星闪探针硬件规范 (Probe Hardware Schema v1.4.1)，包含各品牌物理矩阵 physicalKeys、灯珠拓扑、5灯空格、上下双灯、高精校准与性能规格，集成 637 款全量星闪硬件目录",
+  "totalDevices": 8,
+  "profiles": [
+    {
+      "meta": {
+        "probeVersion": "v1.4.1",
+        "collectedAt": "2026-10-14T16:41:01.476Z",
+        "generator": "SparkLink PlayJoy Community Keyboard Database Registry",
+        "isSparklinkDevice": true,
+        "verificationStatus": "VERIFIED_SPARKLINK_PLAYJOY",
+        "brandName": "iMK 工作室"
+      },
+      "hardwareFingerprint": {
+        "vendorIdHex": "0x1CA6",
+        "productIdHex": "0x1B07",
+        "vendorIdDec": 7334,
+        "productIdDec": 6919,
+        "brand": "iMK 工作室",
+        "brandName": "iMK 工作室",
+        "manufacturerName": "iMK 工作室",
+        "productName": "iMK 逐日 Chase 61 星闪客制化磁轴",
+        "rawUsbProductName": "Chase 61 逐日",
+        "serialNumber": "[未导出/隐私保护脱敏]",
+        "hidInterfaces": [
+          {
+            "usagePage": 65456,
+            "usage": 1,
+            "usagePageHex": "0xFFB0",
+            "usageHex": "0x0001",
+            "isSparklinkVendorPort": true,
+            "isStandardKeyboardPort": false
+          }
+        ]
+      },
+      "deviceProfile": {
+        "id": "pcb_0x1ca6_0x1b07",
+        "brand": "iMK 工作室",
+        "brandName": "iMK 工作室",
+        "model": "Chase 61 逐日",
+        "name": "iMK 逐日 Chase 61 星闪客制化磁轴",
+        "shortName": "Chase 61 逐日",
+        "type": "keyboard",
+        "layout": "60keys",
+        "layoutName": "标准61配列",
+        "totalKeyCount": 61,
+        "vendorId": 7334,
+        "productId": 6919,
+        "vendorIdHex": "0x1CA6",
+        "productIdHex": "0x1B07",
+        "connectionType": "wired",
+        "connectionLabel": "USB 极速有线",
+        "isWired": true,
+        "hasBattery": false,
+        "maxPollingRate": 8000,
+        "hardRateCeiling": 8000,
+        "supportedPollingRates": [
+          1000,
+          2000,
+          4000,
+          8000
+        ],
+        "defaultPollingRate": 8000,
+        "minActuationPoint": 0.005,
+        "defaultAxis": "佳达隆磁玉 Pro",
+        "features": {
+          "magneticAxis": true,
+          "rtSupport": true,
+          "socdSupport": true,
+          "furyMode": true,
+          "rgbLighting": true,
+          "hallCalibration": true,
+          "continuousRt": true,
+          "doubleLighting": false,
+          "stripLighting": true,
+          "shakeOptimization": true,
+          "spaceMultiLamp": true,
+          "dksSupport": true,
+          "mptSupport": true
+        }
+      },
+      "matrixLayout": {
+        "totalKeys": 61,
+        "matrixRows": 5,
+        "matrixCols": 14,
+        "layoutCategory": "60keys",
+        "layoutName": "标准61配列",
+        "physicalKeys": [
+          {
+            "row": 1,
+            "col": 0,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "Esc"
+          },
+          {
+            "row": 1,
+            "col": 1,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "1"
+          },
+          {
+            "row": 1,
+            "col": 2,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "2"
+          },
+          {
+            "row": 1,
+            "col": 3,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "3"
+          },
+          {
+            "row": 1,
+            "col": 4,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "4"
+          },
+          {
+            "row": 1,
+            "col": 5,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "5"
+          },
+          {
+            "row": 1,
+            "col": 6,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "6"
+          },
+          {
+            "row": 1,
+            "col": 7,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "7"
+          },
+          {
+            "row": 1,
+            "col": 8,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "8"
+          },
+          {
+            "row": 1,
+            "col": 9,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "9"
+          },
+          {
+            "row": 1,
+            "col": 10,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "0"
+          },
+          {
+            "row": 1,
+            "col": 11,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "-"
+          },
+          {
+            "row": 1,
+            "col": 12,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "="
+          },
+          {
+            "row": 1,
+            "col": 13,
+            "ratio": 2,
+            "defaultKeycode": 0,
+            "label": "Backspace"
+          },
+          {
+            "row": 2,
+            "col": 0,
+            "ratio": 1.5,
+            "defaultKeycode": 0,
+            "label": "Tab"
+          },
+          {
+            "row": 2,
+            "col": 1,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "Q"
+          },
+          {
+            "row": 2,
+            "col": 2,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "W"
+          },
+          {
+            "row": 2,
+            "col": 3,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "E"
+          },
+          {
+            "row": 2,
+            "col": 4,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "R"
+          },
+          {
+            "row": 2,
+            "col": 5,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "T"
+          },
+          {
+            "row": 2,
+            "col": 6,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "Y"
+          },
+          {
+            "row": 2,
+            "col": 7,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "U"
+          },
+          {
+            "row": 2,
+            "col": 8,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "I"
+          },
+          {
+            "row": 2,
+            "col": 9,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "O"
+          },
+          {
+            "row": 2,
+            "col": 10,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "P"
+          },
+          {
+            "row": 2,
+            "col": 11,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "["
+          },
+          {
+            "row": 2,
+            "col": 12,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "]"
+          },
+          {
+            "row": 2,
+            "col": 13,
+            "ratio": 1.5,
+            "defaultKeycode": 0,
+            "label": "\\"
+          },
+          {
+            "row": 3,
+            "col": 0,
+            "ratio": 1.75,
+            "defaultKeycode": 0,
+            "label": "Caps"
+          },
+          {
+            "row": 3,
+            "col": 1,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "A"
+          },
+          {
+            "row": 3,
+            "col": 2,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "S"
+          },
+          {
+            "row": 3,
+            "col": 3,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "D"
+          },
+          {
+            "row": 3,
+            "col": 4,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "F"
+          },
+          {
+            "row": 3,
+            "col": 5,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "G"
+          },
+          {
+            "row": 3,
+            "col": 6,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "H"
+          },
+          {
+            "row": 3,
+            "col": 7,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "J"
+          },
+          {
+            "row": 3,
+            "col": 8,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "K"
+          },
+          {
+            "row": 3,
+            "col": 9,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "L"
+          },
+          {
+            "row": 3,
+            "col": 10,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": ";"
+          },
+          {
+            "row": 3,
+            "col": 11,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "'"
+          },
+          {
+            "row": 3,
+            "col": 13,
+            "ratio": 2.25,
+            "defaultKeycode": 0,
+            "label": "Enter"
+          },
+          {
+            "row": 4,
+            "col": 0,
+            "ratio": 2.25,
+            "defaultKeycode": 0,
+            "label": "Shift"
+          },
+          {
+            "row": 4,
+            "col": 2,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "Z"
+          },
+          {
+            "row": 4,
+            "col": 3,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "X"
+          },
+          {
+            "row": 4,
+            "col": 4,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "C"
+          },
+          {
+            "row": 4,
+            "col": 5,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "V"
+          },
+          {
+            "row": 4,
+            "col": 6,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "B"
+          },
+          {
+            "row": 4,
+            "col": 7,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "N"
+          },
+          {
+            "row": 4,
+            "col": 8,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "M"
+          },
+          {
+            "row": 4,
+            "col": 9,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": ","
+          },
+          {
+            "row": 4,
+            "col": 10,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "."
+          },
+          {
+            "row": 4,
+            "col": 11,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "/"
+          },
+          {
+            "row": 4,
+            "col": 12,
+            "ratio": 2.75,
+            "defaultKeycode": 0,
+            "label": "Shift"
+          },
+          {
+            "row": 5,
+            "col": 0,
+            "ratio": 1.25,
+            "defaultKeycode": 0,
+            "label": "Ctrl"
+          },
+          {
+            "row": 5,
+            "col": 1,
+            "ratio": 1.25,
+            "defaultKeycode": 0,
+            "label": "Win"
+          },
+          {
+            "row": 5,
+            "col": 2,
+            "ratio": 1.25,
+            "defaultKeycode": 0,
+            "label": "Alt"
+          },
+          {
+            "row": 5,
+            "col": 6,
+            "ratio": 6.25,
+            "defaultKeycode": 0,
+            "label": "Space"
+          },
+          {
+            "row": 5,
+            "col": 9,
+            "ratio": 1.25,
+            "defaultKeycode": 0,
+            "label": "Alt"
+          },
+          {
+            "row": 5,
+            "col": 10,
+            "ratio": 1.25,
+            "defaultKeycode": 0,
+            "label": "Win"
+          },
+          {
+            "row": 5,
+            "col": 11,
+            "ratio": 1.25,
+            "defaultKeycode": 0,
+            "label": "App"
+          },
+          {
+            "row": 5,
+            "col": 12,
+            "ratio": 1.25,
+            "defaultKeycode": 0,
+            "label": "Ctrl"
+          }
+        ]
+      },
+      "lightingTopology": {
+        "totalLeds": 61,
+        "mainMatrixLeds": 61,
+        "isDoubleLighting": false,
+        "doubleLightingRaw": 0,
+        "lampStructure": "常规单灯位",
+        "spaceLamps": {
+          "hasIndependentSpaceLamps": true,
+          "count": 5
+        },
+        "stripLighting": {
+          "hasStrip": true,
+          "count": 24,
+          "rows": 1,
+          "label": "24颗电竞氛围底灯"
+        },
+        "decorateLighting": {
+          "count": 24,
+          "rows": 1,
+          "label": "24颗电竞氛围底灯"
+        },
+        "supportedEffects": [
+          "Static",
+          "Breathing",
+          "Neon",
+          "Wave",
+          "Ripple",
+          "SingleLight",
+          "Flash",
+          "Raindrop"
+        ]
+      },
+      "performanceSpec": {
+        "supportedPollingRates": [
+          1000,
+          2000,
+          4000,
+          8000
+        ],
+        "currentPollingRate": 8000,
+        "maxPollingRate": 8000,
+        "hardwareRateCeiling": 8000,
+        "rtPrecisionMm": 0.005,
+        "higherKeyCapabilities": {
+          "rs": true,
+          "socd": true,
+          "dks": true,
+          "mt": true,
+          "tgl": true,
+          "mpt": true,
+          "end": true
+        }
+      },
+      "axisAndCalibration": {
+        "boardAxisList": [
+          {
+            "id": 1,
+            "name": "佳达隆磁玉 Pro",
+            "stroke": 3.5,
+            "minAp": 0.005,
+            "maxAp": 3.4
+          },
+          {
+            "id": 2,
+            "name": "凯华知夏磁轴",
+            "stroke": 3.8,
+            "minAp": 0.005,
+            "maxAp": 3.7
+          },
+          {
+            "id": 3,
+            "name": "悟空磁轴",
+            "stroke": 3.6,
+            "minAp": 0.005,
+            "maxAp": 3.5
+          }
+        ],
+        "defaultAxis": "佳达隆磁玉 Pro",
+        "travelRangeMm": 4,
+        "deadzoneMm": 0.005,
+        "minActuationMm": 0.005,
+        "currentCalibration": {
+          "minAdc": 90,
+          "maxAdc": 4020,
+          "precisionMm": 0.005
+        }
+      }
+    },
+    {
+      "meta": {
+        "probeVersion": "v1.4.1",
+        "collectedAt": "2026-10-14T16:41:01.476Z",
+        "generator": "SparkLink PlayJoy Community Keyboard Database Registry",
+        "isSparklinkDevice": true,
+        "verificationStatus": "VERIFIED_SPARKLINK_PLAYJOY",
+        "brandName": "VICTKONG"
+      },
+      "hardwareFingerprint": {
+        "vendorIdHex": "0x1CA6",
+        "productIdHex": "0x7A02",
+        "vendorIdDec": 7334,
+        "productIdDec": 31234,
+        "brand": "VICTKONG",
+        "brandName": "VICTKONG",
+        "manufacturerName": "VICTKONG",
+        "productName": "VICTKONG DV63 磁轴键盘",
+        "rawUsbProductName": "DV63",
+        "serialNumber": "[未导出/隐私保护脱敏]",
+        "hidInterfaces": [
+          {
+            "usagePage": 65456,
+            "usage": 1,
+            "usagePageHex": "0xFFB0",
+            "usageHex": "0x0001",
+            "isSparklinkVendorPort": true,
+            "isStandardKeyboardPort": false
+          }
+        ]
+      },
+      "deviceProfile": {
+        "id": "pcb_0x1ca6_0x7a02",
+        "brand": "VICTKONG",
+        "brandName": "VICTKONG",
+        "model": "DV63",
+        "name": "VICTKONG DV63 磁轴键盘",
+        "shortName": "DV63",
+        "type": "keyboard",
+        "layout": "64keys",
+        "layoutName": "左移64配列",
+        "totalKeyCount": 64,
+        "vendorId": 7334,
+        "productId": 31234,
+        "vendorIdHex": "0x1CA6",
+        "productIdHex": "0x7A02",
+        "connectionType": "wired",
+        "connectionLabel": "USB 极速有线",
+        "isWired": true,
+        "hasBattery": false,
+        "maxPollingRate": 8000,
+        "hardRateCeiling": 8000,
+        "supportedPollingRates": [
+          1000,
+          2000,
+          4000,
+          8000
+        ],
+        "defaultPollingRate": 8000,
+        "minActuationPoint": 0.01,
+        "defaultAxis": "双子星自研马轴",
+        "features": {
+          "magneticAxis": true,
+          "rtSupport": true,
+          "socdSupport": true,
+          "furyMode": true,
+          "rgbLighting": true,
+          "hallCalibration": true,
+          "continuousRt": false,
+          "doubleLighting": false,
+          "stripLighting": false,
+          "shakeOptimization": true,
+          "spaceMultiLamp": false,
+          "dksSupport": true,
+          "mptSupport": true
+        }
+      },
+      "matrixLayout": {
+        "totalKeys": 64,
+        "matrixRows": 5,
+        "matrixCols": 14,
+        "layoutCategory": "64keys",
+        "layoutName": "左移64配列",
+        "physicalKeys": [
+          {
+            "row": 1,
+            "col": 0,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "Esc"
+          },
+          {
+            "row": 1,
+            "col": 1,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "1"
+          },
+          {
+            "row": 1,
+            "col": 2,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "2"
+          },
+          {
+            "row": 1,
+            "col": 3,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "3"
+          },
+          {
+            "row": 1,
+            "col": 4,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "4"
+          },
+          {
+            "row": 1,
+            "col": 5,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "5"
+          },
+          {
+            "row": 1,
+            "col": 6,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "6"
+          },
+          {
+            "row": 1,
+            "col": 7,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "7"
+          },
+          {
+            "row": 1,
+            "col": 8,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "8"
+          },
+          {
+            "row": 1,
+            "col": 9,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "9"
+          },
+          {
+            "row": 1,
+            "col": 10,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "0"
+          },
+          {
+            "row": 1,
+            "col": 11,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "-"
+          },
+          {
+            "row": 1,
+            "col": 12,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "="
+          },
+          {
+            "row": 1,
+            "col": 13,
+            "ratio": 2,
+            "defaultKeycode": 0,
+            "label": "Backspace"
+          },
+          {
+            "row": 2,
+            "col": 0,
+            "ratio": 1.5,
+            "defaultKeycode": 0,
+            "label": "Tab"
+          },
+          {
+            "row": 2,
+            "col": 1,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "Q"
+          },
+          {
+            "row": 2,
+            "col": 2,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "W"
+          },
+          {
+            "row": 2,
+            "col": 3,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "E"
+          },
+          {
+            "row": 2,
+            "col": 4,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "R"
+          },
+          {
+            "row": 2,
+            "col": 5,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "T"
+          },
+          {
+            "row": 2,
+            "col": 6,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "Y"
+          },
+          {
+            "row": 2,
+            "col": 7,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "U"
+          },
+          {
+            "row": 2,
+            "col": 8,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "I"
+          },
+          {
+            "row": 2,
+            "col": 9,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "O"
+          },
+          {
+            "row": 2,
+            "col": 10,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "P"
+          },
+          {
+            "row": 2,
+            "col": 11,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "["
+          },
+          {
+            "row": 2,
+            "col": 12,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "]"
+          },
+          {
+            "row": 2,
+            "col": 13,
+            "ratio": 1.5,
+            "defaultKeycode": 0,
+            "label": "\\"
+          },
+          {
+            "row": 3,
+            "col": 0,
+            "ratio": 1.75,
+            "defaultKeycode": 0,
+            "label": "Caps"
+          },
+          {
+            "row": 3,
+            "col": 1,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "A"
+          },
+          {
+            "row": 3,
+            "col": 2,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "S"
+          },
+          {
+            "row": 3,
+            "col": 3,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "D"
+          },
+          {
+            "row": 3,
+            "col": 4,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "F"
+          },
+          {
+            "row": 3,
+            "col": 5,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "G"
+          },
+          {
+            "row": 3,
+            "col": 6,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "H"
+          },
+          {
+            "row": 3,
+            "col": 7,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "J"
+          },
+          {
+            "row": 3,
+            "col": 8,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "K"
+          },
+          {
+            "row": 3,
+            "col": 9,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "L"
+          },
+          {
+            "row": 3,
+            "col": 10,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": ";"
+          },
+          {
+            "row": 3,
+            "col": 11,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "'"
+          },
+          {
+            "row": 3,
+            "col": 13,
+            "ratio": 2.25,
+            "defaultKeycode": 0,
+            "label": "Enter"
+          },
+          {
+            "row": 4,
+            "col": 0,
+            "ratio": 2,
+            "defaultKeycode": 0,
+            "label": "Shift"
+          },
+          {
+            "row": 4,
+            "col": 2,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "Z"
+          },
+          {
+            "row": 4,
+            "col": 3,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "X"
+          },
+          {
+            "row": 4,
+            "col": 4,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "C"
+          },
+          {
+            "row": 4,
+            "col": 5,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "V"
+          },
+          {
+            "row": 4,
+            "col": 6,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "B"
+          },
+          {
+            "row": 4,
+            "col": 7,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "N"
+          },
+          {
+            "row": 4,
+            "col": 8,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "M"
+          },
+          {
+            "row": 4,
+            "col": 9,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": ","
+          },
+          {
+            "row": 4,
+            "col": 10,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "."
+          },
+          {
+            "row": 4,
+            "col": 11,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "/"
+          },
+          {
+            "row": 4,
+            "col": 12,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "Shift"
+          },
+          {
+            "row": 4,
+            "col": 13,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "↑"
+          },
+          {
+            "row": 4,
+            "col": 14,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "Del"
+          },
+          {
+            "row": 5,
+            "col": 0,
+            "ratio": 1.25,
+            "defaultKeycode": 0,
+            "label": "Ctrl"
+          },
+          {
+            "row": 5,
+            "col": 1,
+            "ratio": 1.25,
+            "defaultKeycode": 0,
+            "label": "Win"
+          },
+          {
+            "row": 5,
+            "col": 2,
+            "ratio": 1.25,
+            "defaultKeycode": 0,
+            "label": "Alt"
+          },
+          {
+            "row": 5,
+            "col": 6,
+            "ratio": 6.25,
+            "defaultKeycode": 0,
+            "label": "Space"
+          },
+          {
+            "row": 5,
+            "col": 9,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "Alt"
+          },
+          {
+            "row": 5,
+            "col": 10,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "Fn"
+          },
+          {
+            "row": 5,
+            "col": 11,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "←"
+          },
+          {
+            "row": 5,
+            "col": 12,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "↓"
+          },
+          {
+            "row": 5,
+            "col": 13,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "→"
+          }
+        ]
+      },
+      "lightingTopology": {
+        "totalLeds": 64,
+        "mainMatrixLeds": 64,
+        "isDoubleLighting": false,
+        "doubleLightingRaw": 0,
+        "lampStructure": "常规单灯位",
+        "spaceLamps": {
+          "hasIndependentSpaceLamps": false,
+          "count": 1
+        },
+        "stripLighting": {
+          "hasStrip": false
+        },
+        "supportedEffects": [
+          "Static",
+          "Breathing",
+          "Neon",
+          "Wave",
+          "Ripple",
+          "SingleLight",
+          "Flash",
+          "Raindrop"
+        ]
+      },
+      "performanceSpec": {
+        "supportedPollingRates": [
+          1000,
+          2000,
+          4000,
+          8000
+        ],
+        "currentPollingRate": 8000,
+        "maxPollingRate": 8000,
+        "hardwareRateCeiling": 8000,
+        "rtPrecisionMm": 0.01,
+        "shakeOptimizationSwitch": 1,
+        "higherKeyCapabilities": {
+          "rs": true,
+          "socd": true,
+          "dks": true,
+          "mt": true,
+          "tgl": true,
+          "mpt": true,
+          "end": true
+        },
+        "boardConfigSlots": {
+          "total": 4,
+          "current": "Config1",
+          "list": [
+            "Config1",
+            "Config2",
+            "Config3",
+            "Config4"
+          ]
+        }
+      },
+      "axisAndCalibration": {
+        "boardAxisList": [
+          {
+            "id": 1,
+            "name": "双子星自研马轴",
+            "stroke": 4,
+            "minAp": 0.01,
+            "maxAp": 3.9
+          },
+          {
+            "id": 2,
+            "name": "佳达隆磁玉 Pro",
+            "stroke": 3.5,
+            "minAp": 0.01,
+            "maxAp": 3.4
+          },
+          {
+            "id": 3,
+            "name": "凯华知夏磁轴",
+            "stroke": 3.8,
+            "minAp": 0.01,
+            "maxAp": 3.7
+          }
+        ],
+        "defaultAxis": "双子星自研马轴",
+        "travelRangeMm": 4,
+        "deadzoneMm": 0.02,
+        "minActuationMm": 0.01,
+        "currentCalibration": {
+          "minAdc": 150,
+          "maxAdc": 3900,
+          "precisionMm": 0.01
+        }
+      }
+    },
+    {
+      "meta": {
+        "probeVersion": "v1.4.1",
+        "collectedAt": "2026-10-14T16:41:01.476Z",
+        "generator": "SparkLink PlayJoy Community Keyboard Database Registry",
+        "isSparklinkDevice": true,
+        "verificationStatus": "VERIFIED_SPARKLINK_PLAYJOY",
+        "brandName": "前行者 EWEADN"
+      },
+      "hardwareFingerprint": {
+        "vendorIdHex": "0x1CA6",
+        "productIdHex": "0x1C24",
+        "vendorIdDec": 7334,
+        "productIdDec": 7204,
+        "brand": "前行者 EWEADN",
+        "brandName": "前行者 EWEADN",
+        "manufacturerName": "前行者 EWEADN",
+        "productName": "前行者 ES68 破晓 磁轴键盘",
+        "rawUsbProductName": "EWEADN ES68 Dawn",
+        "serialNumber": "[未导出/隐私保护脱敏]",
+        "hidInterfaces": [
+          {
+            "usagePage": 65456,
+            "usage": 1,
+            "usagePageHex": "0xFFB0",
+            "usageHex": "0x0001",
+            "isSparklinkVendorPort": true,
+            "isStandardKeyboardPort": false
+          }
+        ]
+      },
+      "deviceProfile": {
+        "id": "pcb_0x1ca6_0x1c24",
+        "brand": "前行者 EWEADN",
+        "brandName": "前行者 EWEADN",
+        "model": "ES68 破晓",
+        "name": "前行者 ES68 破晓 磁轴键盘",
+        "shortName": "ES68 破晓",
+        "type": "keyboard",
+        "layout": "68keys",
+        "layoutName": "紧凑68配列",
+        "totalKeyCount": 68,
+        "vendorId": 7334,
+        "productId": 7204,
+        "vendorIdHex": "0x1CA6",
+        "productIdHex": "0x1C24",
+        "connectionType": "wired",
+        "connectionLabel": "USB 极速有线",
+        "isWired": true,
+        "hasBattery": false,
+        "maxPollingRate": 8000,
+        "hardRateCeiling": 32000,
+        "supportedPollingRates": [
+          1000,
+          2000,
+          4000,
+          8000
+        ],
+        "defaultPollingRate": 8000,
+        "minActuationPoint": 0.001,
+        "defaultAxis": "前行者定制磁白轴",
+        "features": {
+          "magneticAxis": true,
+          "rtSupport": true,
+          "socdSupport": true,
+          "furyMode": true,
+          "rgbLighting": true,
+          "hallCalibration": true,
+          "continuousRt": false,
+          "doubleLighting": false,
+          "stripLighting": true,
+          "shakeOptimization": true,
+          "spaceMultiLamp": false,
+          "dksSupport": true,
+          "mptSupport": true
+        }
+      },
+      "matrixLayout": {
+        "totalKeys": 68,
+        "matrixRows": 5,
+        "matrixCols": 16,
+        "layoutCategory": "68keys",
+        "layoutName": "紧凑68配列",
+        "physicalKeys": [
+          {
+            "row": 1,
+            "col": 0,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "Esc"
+          },
+          {
+            "row": 1,
+            "col": 1,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "1"
+          },
+          {
+            "row": 1,
+            "col": 2,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "2"
+          },
+          {
+            "row": 1,
+            "col": 3,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "3"
+          },
+          {
+            "row": 1,
+            "col": 4,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "4"
+          },
+          {
+            "row": 1,
+            "col": 5,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "5"
+          },
+          {
+            "row": 1,
+            "col": 6,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "6"
+          },
+          {
+            "row": 1,
+            "col": 7,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "7"
+          },
+          {
+            "row": 1,
+            "col": 8,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "8"
+          },
+          {
+            "row": 1,
+            "col": 9,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "9"
+          },
+          {
+            "row": 1,
+            "col": 10,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "0"
+          },
+          {
+            "row": 1,
+            "col": 11,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "-"
+          },
+          {
+            "row": 1,
+            "col": 12,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "="
+          },
+          {
+            "row": 1,
+            "col": 13,
+            "ratio": 2,
+            "defaultKeycode": 0,
+            "label": "Backspace"
+          },
+          {
+            "row": 1,
+            "col": 14,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "Del"
+          },
+          {
+            "row": 2,
+            "col": 0,
+            "ratio": 1.5,
+            "defaultKeycode": 0,
+            "label": "Tab"
+          },
+          {
+            "row": 2,
+            "col": 1,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "Q"
+          },
+          {
+            "row": 2,
+            "col": 2,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "W"
+          },
+          {
+            "row": 2,
+            "col": 3,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "E"
+          },
+          {
+            "row": 2,
+            "col": 4,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "R"
+          },
+          {
+            "row": 2,
+            "col": 5,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "T"
+          },
+          {
+            "row": 2,
+            "col": 6,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "Y"
+          },
+          {
+            "row": 2,
+            "col": 7,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "U"
+          },
+          {
+            "row": 2,
+            "col": 8,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "I"
+          },
+          {
+            "row": 2,
+            "col": 9,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "O"
+          },
+          {
+            "row": 2,
+            "col": 10,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "P"
+          },
+          {
+            "row": 2,
+            "col": 11,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "["
+          },
+          {
+            "row": 2,
+            "col": 12,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "]"
+          },
+          {
+            "row": 2,
+            "col": 13,
+            "ratio": 1.5,
+            "defaultKeycode": 0,
+            "label": "\\"
+          },
+          {
+            "row": 2,
+            "col": 14,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "Home"
+          },
+          {
+            "row": 3,
+            "col": 0,
+            "ratio": 1.75,
+            "defaultKeycode": 0,
+            "label": "Caps"
+          },
+          {
+            "row": 3,
+            "col": 1,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "A"
+          },
+          {
+            "row": 3,
+            "col": 2,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "S"
+          },
+          {
+            "row": 3,
+            "col": 3,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "D"
+          },
+          {
+            "row": 3,
+            "col": 4,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "F"
+          },
+          {
+            "row": 3,
+            "col": 5,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "G"
+          },
+          {
+            "row": 3,
+            "col": 6,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "H"
+          },
+          {
+            "row": 3,
+            "col": 7,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "J"
+          },
+          {
+            "row": 3,
+            "col": 8,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "K"
+          },
+          {
+            "row": 3,
+            "col": 9,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "L"
+          },
+          {
+            "row": 3,
+            "col": 10,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": ";"
+          },
+          {
+            "row": 3,
+            "col": 11,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "'"
+          },
+          {
+            "row": 3,
+            "col": 13,
+            "ratio": 2.25,
+            "defaultKeycode": 0,
+            "label": "Enter"
+          },
+          {
+            "row": 3,
+            "col": 14,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "PgUp"
+          },
+          {
+            "row": 4,
+            "col": 0,
+            "ratio": 2.25,
+            "defaultKeycode": 0,
+            "label": "Shift"
+          },
+          {
+            "row": 4,
+            "col": 2,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "Z"
+          },
+          {
+            "row": 4,
+            "col": 3,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "X"
+          },
+          {
+            "row": 4,
+            "col": 4,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "C"
+          },
+          {
+            "row": 4,
+            "col": 5,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "V"
+          },
+          {
+            "row": 4,
+            "col": 6,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "B"
+          },
+          {
+            "row": 4,
+            "col": 7,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "N"
+          },
+          {
+            "row": 4,
+            "col": 8,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "M"
+          },
+          {
+            "row": 4,
+            "col": 9,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": ","
+          },
+          {
+            "row": 4,
+            "col": 10,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "."
+          },
+          {
+            "row": 4,
+            "col": 11,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "/"
+          },
+          {
+            "row": 4,
+            "col": 12,
+            "ratio": 1.75,
+            "defaultKeycode": 0,
+            "label": "Shift"
+          },
+          {
+            "row": 4,
+            "col": 13,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "↑"
+          },
+          {
+            "row": 4,
+            "col": 14,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "PgDn"
+          },
+          {
+            "row": 5,
+            "col": 0,
+            "ratio": 1.25,
+            "defaultKeycode": 0,
+            "label": "Ctrl"
+          },
+          {
+            "row": 5,
+            "col": 1,
+            "ratio": 1.25,
+            "defaultKeycode": 0,
+            "label": "Win"
+          },
+          {
+            "row": 5,
+            "col": 2,
+            "ratio": 1.25,
+            "defaultKeycode": 0,
+            "label": "Alt"
+          },
+          {
+            "row": 5,
+            "col": 6,
+            "ratio": 5.5,
+            "defaultKeycode": 0,
+            "label": "Space"
+          },
+          {
+            "row": 5,
+            "col": 9,
+            "ratio": 1.25,
+            "defaultKeycode": 0,
+            "label": "Alt"
+          },
+          {
+            "row": 5,
+            "col": 10,
+            "ratio": 1.25,
+            "defaultKeycode": 0,
+            "label": "Fn"
+          },
+          {
+            "row": 5,
+            "col": 11,
+            "ratio": 1.25,
+            "defaultKeycode": 0,
+            "label": "Ctrl"
+          },
+          {
+            "row": 5,
+            "col": 12,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "←"
+          },
+          {
+            "row": 5,
+            "col": 13,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "↓"
+          },
+          {
+            "row": 5,
+            "col": 14,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "→"
+          }
+        ]
+      },
+      "lightingTopology": {
+        "totalLeds": 94,
+        "mainMatrixLeds": 68,
+        "isDoubleLighting": false,
+        "doubleLightingRaw": 0,
+        "lampStructure": "常规单灯位",
+        "spaceLamps": {
+          "hasIndependentSpaceLamps": false,
+          "count": 1
+        },
+        "stripLighting": {
+          "hasStrip": true,
+          "position": "front_through",
+          "cols": 26,
+          "ledHeight": 10,
+          "label": "贯穿式正面灯带 (26列)"
+        },
+        "decorateLighting": {
+          "hasDecorate": true,
+          "label": "氛围侧翼灯"
+        },
+        "supportedEffects": [
+          "Static",
+          "Breathing",
+          "Neon",
+          "Wave",
+          "Ripple",
+          "SingleLight",
+          "Flash",
+          "Raindrop",
+          "CustomMatrix"
+        ]
+      },
+      "performanceSpec": {
+        "supportedPollingRates": [
+          1000,
+          2000,
+          4000,
+          8000
+        ],
+        "currentPollingRate": 8000,
+        "maxPollingRate": 8000,
+        "hardwareRateCeiling": 32000,
+        "rtPrecisionMm": 0.001,
+        "shakeOptimizationSwitch": 1,
+        "higherKeyCapabilities": {
+          "rs": true,
+          "socd": true,
+          "dks": true,
+          "mt": true,
+          "tgl": true,
+          "mpt": true,
+          "end": true
+        },
+        "boardConfigSlots": {
+          "total": 4,
+          "current": "Config1",
+          "list": [
+            "Config1",
+            "Config2",
+            "Config3",
+            "Config4"
+          ]
+        }
+      },
+      "axisAndCalibration": {
+        "boardAxisList": [
+          {
+            "id": 1,
+            "name": "前行者定制磁白轴",
+            "stroke": 3.5,
+            "minAp": 0.001,
+            "maxAp": 3.4
+          },
+          {
+            "id": 2,
+            "name": "佳达隆磁玉 Pro",
+            "stroke": 3.5,
+            "minAp": 0.001,
+            "maxAp": 3.4
+          },
+          {
+            "id": 3,
+            "name": "凯华知夏磁轴",
+            "stroke": 3.8,
+            "minAp": 0.001,
+            "maxAp": 3.7
+          },
+          {
+            "id": 4,
+            "name": "双子星自研马轴",
+            "stroke": 4,
+            "minAp": 0.001,
+            "maxAp": 3.9
+          }
+        ],
+        "defaultAxis": "前行者定制磁白轴",
+        "travelRangeMm": 4,
+        "deadzoneMm": 0.02,
+        "minActuationMm": 0.001,
+        "currentCalibration": {
+          "minAdc": 120,
+          "maxAdc": 3950,
+          "precisionMm": 0.001
+        }
+      }
+    },
+    {
+      "meta": {
+        "probeVersion": "v1.4.1",
+        "collectedAt": "2026-10-14T16:41:01.476Z",
+        "generator": "SparkLink PlayJoy Community Keyboard Database Registry",
+        "isSparklinkDevice": true,
+        "verificationStatus": "VERIFIED_SPARKLINK_PLAYJOY",
+        "brandName": "星闪公版方案"
+      },
+      "hardwareFingerprint": {
+        "vendorIdHex": "0x1CA6",
+        "productIdHex": "0x1C33",
+        "vendorIdDec": 7334,
+        "productIdDec": 7219,
+        "brand": "星闪公版方案",
+        "brandName": "星闪公版方案",
+        "manufacturerName": "星闪公版方案",
+        "productName": "星闪 104 键全尺寸磁轴键盘",
+        "rawUsbProductName": "NearLink 104",
+        "serialNumber": "[未导出/隐私保护脱敏]",
+        "hidInterfaces": [
+          {
+            "usagePage": 65456,
+            "usage": 1,
+            "usagePageHex": "0xFFB0",
+            "usageHex": "0x0001",
+            "isSparklinkVendorPort": true,
+            "isStandardKeyboardPort": false
+          }
+        ]
+      },
+      "deviceProfile": {
+        "id": "pcb_0x1ca6_0x1c33",
+        "brand": "星闪公版方案",
+        "brandName": "星闪公版方案",
+        "model": "NearLink 104",
+        "name": "星闪 104 键全尺寸磁轴键盘",
+        "shortName": "NearLink 104",
+        "type": "keyboard",
+        "layout": "104keys",
+        "layoutName": "104全尺寸办公与电竞配列",
+        "totalKeyCount": 104,
+        "vendorId": 7334,
+        "productId": 7219,
+        "vendorIdHex": "0x1CA6",
+        "productIdHex": "0x1C33",
+        "connectionType": "wired",
+        "connectionLabel": "USB 极速有线",
+        "isWired": true,
+        "hasBattery": false,
+        "maxPollingRate": 8000,
+        "hardRateCeiling": 8000,
+        "supportedPollingRates": [
+          1000,
+          2000,
+          4000,
+          8000
+        ],
+        "defaultPollingRate": 8000,
+        "minActuationPoint": 0.01,
+        "defaultAxis": "佳达隆磁玉 Pro",
+        "features": {
+          "magneticAxis": true,
+          "rtSupport": true,
+          "socdSupport": true,
+          "furyMode": true,
+          "rgbLighting": true,
+          "hallCalibration": true,
+          "continuousRt": false,
+          "doubleLighting": false,
+          "stripLighting": false,
+          "shakeOptimization": true,
+          "spaceMultiLamp": false
+        }
+      },
+      "matrixLayout": {
+        "totalKeys": 104,
+        "matrixRows": 6,
+        "matrixCols": 21,
+        "layoutCategory": "104keys",
+        "layoutName": "104全尺寸办公与电竞配列",
+        "physicalKeys": [
+          {
+            "row": 0,
+            "col": 0,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "Esc"
+          },
+          {
+            "row": 0,
+            "col": 1,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "F1"
+          },
+          {
+            "row": 0,
+            "col": 2,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "F2"
+          },
+          {
+            "row": 0,
+            "col": 3,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "F3"
+          },
+          {
+            "row": 0,
+            "col": 4,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "F4"
+          },
+          {
+            "row": 0,
+            "col": 5,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "F5"
+          },
+          {
+            "row": 0,
+            "col": 6,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "F6"
+          },
+          {
+            "row": 0,
+            "col": 7,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "F7"
+          },
+          {
+            "row": 0,
+            "col": 8,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "F8"
+          },
+          {
+            "row": 0,
+            "col": 9,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "F9"
+          },
+          {
+            "row": 0,
+            "col": 10,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "F10"
+          },
+          {
+            "row": 0,
+            "col": 11,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "F11"
+          },
+          {
+            "row": 0,
+            "col": 12,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "F12"
+          },
+          {
+            "row": 0,
+            "col": 13,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "PrSc"
+          },
+          {
+            "row": 0,
+            "col": 14,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "ScLk"
+          },
+          {
+            "row": 0,
+            "col": 15,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "Paus"
+          },
+          {
+            "row": 1,
+            "col": 0,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "`"
+          },
+          {
+            "row": 1,
+            "col": 1,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "1"
+          },
+          {
+            "row": 1,
+            "col": 2,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "2"
+          },
+          {
+            "row": 1,
+            "col": 3,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "3"
+          },
+          {
+            "row": 1,
+            "col": 4,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "4"
+          },
+          {
+            "row": 1,
+            "col": 5,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "5"
+          },
+          {
+            "row": 1,
+            "col": 6,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "6"
+          },
+          {
+            "row": 1,
+            "col": 7,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "7"
+          },
+          {
+            "row": 1,
+            "col": 8,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "8"
+          },
+          {
+            "row": 1,
+            "col": 9,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "9"
+          },
+          {
+            "row": 1,
+            "col": 10,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "0"
+          },
+          {
+            "row": 1,
+            "col": 11,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "-"
+          },
+          {
+            "row": 1,
+            "col": 12,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "="
+          },
+          {
+            "row": 1,
+            "col": 13,
+            "ratio": 2,
+            "defaultKeycode": 0,
+            "label": "Backspace"
+          },
+          {
+            "row": 1,
+            "col": 14,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "Ins"
+          },
+          {
+            "row": 1,
+            "col": 15,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "Home"
+          },
+          {
+            "row": 1,
+            "col": 16,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "PgUp"
+          },
+          {
+            "row": 1,
+            "col": 17,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "Num"
+          },
+          {
+            "row": 1,
+            "col": 18,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "/"
+          },
+          {
+            "row": 1,
+            "col": 19,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "*"
+          },
+          {
+            "row": 1,
+            "col": 20,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "-"
+          },
+          {
+            "row": 2,
+            "col": 0,
+            "ratio": 1.5,
+            "defaultKeycode": 0,
+            "label": "Tab"
+          },
+          {
+            "row": 2,
+            "col": 1,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "Q"
+          },
+          {
+            "row": 2,
+            "col": 2,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "W"
+          },
+          {
+            "row": 2,
+            "col": 3,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "E"
+          },
+          {
+            "row": 2,
+            "col": 4,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "R"
+          },
+          {
+            "row": 2,
+            "col": 5,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "T"
+          },
+          {
+            "row": 2,
+            "col": 6,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "Y"
+          },
+          {
+            "row": 2,
+            "col": 7,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "U"
+          },
+          {
+            "row": 2,
+            "col": 8,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "I"
+          },
+          {
+            "row": 2,
+            "col": 9,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "O"
+          },
+          {
+            "row": 2,
+            "col": 10,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "P"
+          },
+          {
+            "row": 2,
+            "col": 11,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "["
+          },
+          {
+            "row": 2,
+            "col": 12,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "]"
+          },
+          {
+            "row": 2,
+            "col": 13,
+            "ratio": 1.5,
+            "defaultKeycode": 0,
+            "label": "\\"
+          },
+          {
+            "row": 2,
+            "col": 14,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "Del"
+          },
+          {
+            "row": 2,
+            "col": 15,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "End"
+          },
+          {
+            "row": 2,
+            "col": 16,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "PgDn"
+          },
+          {
+            "row": 2,
+            "col": 17,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "7"
+          },
+          {
+            "row": 2,
+            "col": 18,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "8"
+          },
+          {
+            "row": 2,
+            "col": 19,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "9"
+          },
+          {
+            "row": 2,
+            "col": 20,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "+"
+          },
+          {
+            "row": 3,
+            "col": 0,
+            "ratio": 1.75,
+            "defaultKeycode": 0,
+            "label": "Caps"
+          },
+          {
+            "row": 3,
+            "col": 1,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "A"
+          },
+          {
+            "row": 3,
+            "col": 2,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "S"
+          },
+          {
+            "row": 3,
+            "col": 3,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "D"
+          },
+          {
+            "row": 3,
+            "col": 4,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "F"
+          },
+          {
+            "row": 3,
+            "col": 5,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "G"
+          },
+          {
+            "row": 3,
+            "col": 6,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "H"
+          },
+          {
+            "row": 3,
+            "col": 7,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "J"
+          },
+          {
+            "row": 3,
+            "col": 8,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "K"
+          },
+          {
+            "row": 3,
+            "col": 9,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "L"
+          },
+          {
+            "row": 3,
+            "col": 10,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": ";"
+          },
+          {
+            "row": 3,
+            "col": 11,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "'"
+          },
+          {
+            "row": 3,
+            "col": 13,
+            "ratio": 2.25,
+            "defaultKeycode": 0,
+            "label": "Enter"
+          },
+          {
+            "row": 3,
+            "col": 14,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "4"
+          },
+          {
+            "row": 3,
+            "col": 15,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "5"
+          },
+          {
+            "row": 3,
+            "col": 16,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "6"
+          },
+          {
+            "row": 4,
+            "col": 0,
+            "ratio": 2.25,
+            "defaultKeycode": 0,
+            "label": "Shift"
+          },
+          {
+            "row": 4,
+            "col": 2,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "Z"
+          },
+          {
+            "row": 4,
+            "col": 3,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "X"
+          },
+          {
+            "row": 4,
+            "col": 4,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "C"
+          },
+          {
+            "row": 4,
+            "col": 5,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "V"
+          },
+          {
+            "row": 4,
+            "col": 6,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "B"
+          },
+          {
+            "row": 4,
+            "col": 7,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "N"
+          },
+          {
+            "row": 4,
+            "col": 8,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "M"
+          },
+          {
+            "row": 4,
+            "col": 9,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": ","
+          },
+          {
+            "row": 4,
+            "col": 10,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "."
+          },
+          {
+            "row": 4,
+            "col": 11,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "/"
+          },
+          {
+            "row": 4,
+            "col": 12,
+            "ratio": 2.75,
+            "defaultKeycode": 0,
+            "label": "Shift"
+          },
+          {
+            "row": 4,
+            "col": 14,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "↑"
+          },
+          {
+            "row": 4,
+            "col": 15,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "1"
+          },
+          {
+            "row": 4,
+            "col": 16,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "2"
+          },
+          {
+            "row": 4,
+            "col": 17,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "3"
+          },
+          {
+            "row": 4,
+            "col": 18,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "Ent"
+          },
+          {
+            "row": 5,
+            "col": 0,
+            "ratio": 1.25,
+            "defaultKeycode": 0,
+            "label": "Ctrl"
+          },
+          {
+            "row": 5,
+            "col": 1,
+            "ratio": 1.25,
+            "defaultKeycode": 0,
+            "label": "Win"
+          },
+          {
+            "row": 5,
+            "col": 2,
+            "ratio": 1.25,
+            "defaultKeycode": 0,
+            "label": "Alt"
+          },
+          {
+            "row": 5,
+            "col": 6,
+            "ratio": 6.25,
+            "defaultKeycode": 0,
+            "label": "Space"
+          },
+          {
+            "row": 5,
+            "col": 9,
+            "ratio": 1.25,
+            "defaultKeycode": 0,
+            "label": "Alt"
+          },
+          {
+            "row": 5,
+            "col": 10,
+            "ratio": 1.25,
+            "defaultKeycode": 0,
+            "label": "Win"
+          },
+          {
+            "row": 5,
+            "col": 11,
+            "ratio": 1.25,
+            "defaultKeycode": 0,
+            "label": "App"
+          },
+          {
+            "row": 5,
+            "col": 12,
+            "ratio": 1.25,
+            "defaultKeycode": 0,
+            "label": "Ctrl"
+          },
+          {
+            "row": 5,
+            "col": 13,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "←"
+          },
+          {
+            "row": 5,
+            "col": 14,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "↓"
+          },
+          {
+            "row": 5,
+            "col": 15,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "→"
+          },
+          {
+            "row": 5,
+            "col": 16,
+            "ratio": 2,
+            "defaultKeycode": 0,
+            "label": "0"
+          },
+          {
+            "row": 5,
+            "col": 17,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "."
+          }
+        ]
+      },
+      "lightingTopology": {
+        "totalLeds": 104,
+        "mainMatrixLeds": 104,
+        "isDoubleLighting": false,
+        "doubleLightingRaw": 0,
+        "lampStructure": "常规单灯位",
+        "spaceLamps": {
+          "hasIndependentSpaceLamps": false,
+          "count": 1
+        },
+        "stripLighting": {
+          "hasStrip": false
+        },
+        "supportedEffects": [
+          "Static",
+          "Breathing",
+          "Neon",
+          "Wave",
+          "Ripple",
+          "SingleLight",
+          "Flash",
+          "Raindrop"
+        ]
+      },
+      "performanceSpec": {
+        "supportedPollingRates": [
+          1000,
+          2000,
+          4000,
+          8000
+        ],
+        "currentPollingRate": 8000,
+        "maxPollingRate": 8000,
+        "hardwareRateCeiling": 8000,
+        "rtPrecisionMm": 0.01,
+        "higherKeyCapabilities": {
+          "rs": true,
+          "socd": true,
+          "dks": true,
+          "mt": true,
+          "tgl": true,
+          "mpt": true,
+          "end": true
+        }
+      },
+      "axisAndCalibration": {
+        "boardAxisList": [
+          {
+            "id": 1,
+            "name": "佳达隆磁玉 Pro",
+            "stroke": 3.5,
+            "minAp": 0.01,
+            "maxAp": 3.4
+          },
+          {
+            "id": 2,
+            "name": "双子星自研马轴",
+            "stroke": 4,
+            "minAp": 0.01,
+            "maxAp": 3.9
+          }
+        ],
+        "defaultAxis": "佳达隆磁玉 Pro",
+        "travelRangeMm": 4,
+        "deadzoneMm": 0.02,
+        "minActuationMm": 0.01,
+        "currentCalibration": {
+          "minAdc": 140,
+          "maxAdc": 3920,
+          "precisionMm": 0.01
+        }
+      }
+    },
+    {
+      "meta": {
+        "probeVersion": "v1.4.1",
+        "collectedAt": "2026-10-14T16:41:01.476Z",
+        "generator": "SparkLink PlayJoy Community Keyboard Database Registry",
+        "isSparklinkDevice": true,
+        "verificationStatus": "VERIFIED_SPARKLINK_PLAYJOY",
+        "brandName": "星闪公版方案"
+      },
+      "hardwareFingerprint": {
+        "vendorIdHex": "0x1CA6",
+        "productIdHex": "0x1C30",
+        "vendorIdDec": 7334,
+        "productIdDec": 7216,
+        "brand": "星闪公版方案",
+        "brandName": "星闪公版方案",
+        "manufacturerName": "星闪公版 / 维咖合作款",
+        "productName": "星闪 75% 竞技磁轴键盘",
+        "rawUsbProductName": "NearLink 75",
+        "serialNumber": "[未导出/隐私保护脱敏]",
+        "hidInterfaces": [
+          {
+            "usagePage": 65456,
+            "usage": 1,
+            "usagePageHex": "0xFFB0",
+            "usageHex": "0x0001",
+            "isSparklinkVendorPort": true,
+            "isStandardKeyboardPort": false
+          }
+        ]
+      },
+      "deviceProfile": {
+        "id": "pcb_0x1ca6_0x1c30",
+        "brand": "星闪公版方案",
+        "brandName": "星闪公版方案",
+        "model": "NearLink 75",
+        "name": "星闪 75% 竞技磁轴键盘",
+        "shortName": "NearLink 75",
+        "type": "keyboard",
+        "layout": "75keys",
+        "layoutName": "75%电竞配列",
+        "totalKeyCount": 82,
+        "vendorId": 7334,
+        "productId": 7216,
+        "vendorIdHex": "0x1CA6",
+        "productIdHex": "0x1C30",
+        "connectionType": "wired",
+        "connectionLabel": "USB 极速有线",
+        "isWired": true,
+        "hasBattery": false,
+        "maxPollingRate": 8000,
+        "hardRateCeiling": 8000,
+        "supportedPollingRates": [
+          1000,
+          2000,
+          4000,
+          8000
+        ],
+        "defaultPollingRate": 8000,
+        "minActuationPoint": 0.001,
+        "defaultAxis": "佳达隆磁玉 Pro",
+        "features": {
+          "magneticAxis": true,
+          "rtSupport": true,
+          "socdSupport": true,
+          "furyMode": true,
+          "rgbLighting": true,
+          "hallCalibration": true,
+          "continuousRt": false,
+          "doubleLighting": false,
+          "stripLighting": false,
+          "shakeOptimization": true,
+          "spaceMultiLamp": true,
+          "dksSupport": true,
+          "mptSupport": true
+        }
+      },
+      "matrixLayout": {
+        "totalKeys": 82,
+        "matrixRows": 6,
+        "matrixCols": 16,
+        "layoutCategory": "75keys",
+        "layoutName": "75%电竞配列",
+        "physicalKeys": [
+          {
+            "row": 0,
+            "col": 0,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "Esc"
+          },
+          {
+            "row": 0,
+            "col": 1,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "F1"
+          },
+          {
+            "row": 0,
+            "col": 2,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "F2"
+          },
+          {
+            "row": 0,
+            "col": 3,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "F3"
+          },
+          {
+            "row": 0,
+            "col": 4,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "F4"
+          },
+          {
+            "row": 0,
+            "col": 5,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "F5"
+          },
+          {
+            "row": 0,
+            "col": 6,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "F6"
+          },
+          {
+            "row": 0,
+            "col": 7,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "F7"
+          },
+          {
+            "row": 0,
+            "col": 8,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "F8"
+          },
+          {
+            "row": 0,
+            "col": 9,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "F9"
+          },
+          {
+            "row": 0,
+            "col": 10,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "F10"
+          },
+          {
+            "row": 0,
+            "col": 11,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "F11"
+          },
+          {
+            "row": 0,
+            "col": 12,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "F12"
+          },
+          {
+            "row": 0,
+            "col": 13,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "Del"
+          },
+          {
+            "row": 1,
+            "col": 0,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "`"
+          },
+          {
+            "row": 1,
+            "col": 1,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "1"
+          },
+          {
+            "row": 1,
+            "col": 2,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "2"
+          },
+          {
+            "row": 1,
+            "col": 3,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "3"
+          },
+          {
+            "row": 1,
+            "col": 4,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "4"
+          },
+          {
+            "row": 1,
+            "col": 5,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "5"
+          },
+          {
+            "row": 1,
+            "col": 6,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "6"
+          },
+          {
+            "row": 1,
+            "col": 7,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "7"
+          },
+          {
+            "row": 1,
+            "col": 8,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "8"
+          },
+          {
+            "row": 1,
+            "col": 9,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "9"
+          },
+          {
+            "row": 1,
+            "col": 10,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "0"
+          },
+          {
+            "row": 1,
+            "col": 11,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "-"
+          },
+          {
+            "row": 1,
+            "col": 12,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "="
+          },
+          {
+            "row": 1,
+            "col": 13,
+            "ratio": 2,
+            "defaultKeycode": 0,
+            "label": "Backspace"
+          },
+          {
+            "row": 1,
+            "col": 14,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "Home"
+          },
+          {
+            "row": 2,
+            "col": 0,
+            "ratio": 1.5,
+            "defaultKeycode": 0,
+            "label": "Tab"
+          },
+          {
+            "row": 2,
+            "col": 1,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "Q"
+          },
+          {
+            "row": 2,
+            "col": 2,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "W"
+          },
+          {
+            "row": 2,
+            "col": 3,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "E"
+          },
+          {
+            "row": 2,
+            "col": 4,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "R"
+          },
+          {
+            "row": 2,
+            "col": 5,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "T"
+          },
+          {
+            "row": 2,
+            "col": 6,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "Y"
+          },
+          {
+            "row": 2,
+            "col": 7,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "U"
+          },
+          {
+            "row": 2,
+            "col": 8,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "I"
+          },
+          {
+            "row": 2,
+            "col": 9,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "O"
+          },
+          {
+            "row": 2,
+            "col": 10,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "P"
+          },
+          {
+            "row": 2,
+            "col": 11,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "["
+          },
+          {
+            "row": 2,
+            "col": 12,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "]"
+          },
+          {
+            "row": 2,
+            "col": 13,
+            "ratio": 1.5,
+            "defaultKeycode": 0,
+            "label": "\\"
+          },
+          {
+            "row": 2,
+            "col": 14,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "PgUp"
+          },
+          {
+            "row": 3,
+            "col": 0,
+            "ratio": 1.75,
+            "defaultKeycode": 0,
+            "label": "Caps"
+          },
+          {
+            "row": 3,
+            "col": 1,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "A"
+          },
+          {
+            "row": 3,
+            "col": 2,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "S"
+          },
+          {
+            "row": 3,
+            "col": 3,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "D"
+          },
+          {
+            "row": 3,
+            "col": 4,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "F"
+          },
+          {
+            "row": 3,
+            "col": 5,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "G"
+          },
+          {
+            "row": 3,
+            "col": 6,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "H"
+          },
+          {
+            "row": 3,
+            "col": 7,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "J"
+          },
+          {
+            "row": 3,
+            "col": 8,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "K"
+          },
+          {
+            "row": 3,
+            "col": 9,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "L"
+          },
+          {
+            "row": 3,
+            "col": 10,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": ";"
+          },
+          {
+            "row": 3,
+            "col": 11,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "'"
+          },
+          {
+            "row": 3,
+            "col": 13,
+            "ratio": 2.25,
+            "defaultKeycode": 0,
+            "label": "Enter"
+          },
+          {
+            "row": 3,
+            "col": 14,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "PgDn"
+          },
+          {
+            "row": 4,
+            "col": 0,
+            "ratio": 2.25,
+            "defaultKeycode": 0,
+            "label": "Shift"
+          },
+          {
+            "row": 4,
+            "col": 2,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "Z"
+          },
+          {
+            "row": 4,
+            "col": 3,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "X"
+          },
+          {
+            "row": 4,
+            "col": 4,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "C"
+          },
+          {
+            "row": 4,
+            "col": 5,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "V"
+          },
+          {
+            "row": 4,
+            "col": 6,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "B"
+          },
+          {
+            "row": 4,
+            "col": 7,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "N"
+          },
+          {
+            "row": 4,
+            "col": 8,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "M"
+          },
+          {
+            "row": 4,
+            "col": 9,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": ","
+          },
+          {
+            "row": 4,
+            "col": 10,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "."
+          },
+          {
+            "row": 4,
+            "col": 11,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "/"
+          },
+          {
+            "row": 4,
+            "col": 12,
+            "ratio": 1.75,
+            "defaultKeycode": 0,
+            "label": "Shift"
+          },
+          {
+            "row": 4,
+            "col": 13,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "↑"
+          },
+          {
+            "row": 4,
+            "col": 14,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "End"
+          },
+          {
+            "row": 5,
+            "col": 0,
+            "ratio": 1.25,
+            "defaultKeycode": 0,
+            "label": "Ctrl"
+          },
+          {
+            "row": 5,
+            "col": 1,
+            "ratio": 1.25,
+            "defaultKeycode": 0,
+            "label": "Win"
+          },
+          {
+            "row": 5,
+            "col": 2,
+            "ratio": 1.25,
+            "defaultKeycode": 0,
+            "label": "Alt"
+          },
+          {
+            "row": 5,
+            "col": 6,
+            "ratio": 6.25,
+            "defaultKeycode": 0,
+            "label": "Space"
+          },
+          {
+            "row": 5,
+            "col": 9,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "Alt"
+          },
+          {
+            "row": 5,
+            "col": 10,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "Fn"
+          },
+          {
+            "row": 5,
+            "col": 11,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "Ctrl"
+          },
+          {
+            "row": 5,
+            "col": 12,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "←"
+          },
+          {
+            "row": 5,
+            "col": 13,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "↓"
+          },
+          {
+            "row": 5,
+            "col": 14,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "→"
+          }
+        ]
+      },
+      "lightingTopology": {
+        "totalLeds": 82,
+        "mainMatrixLeds": 82,
+        "isDoubleLighting": false,
+        "doubleLightingRaw": 0,
+        "lampStructure": "常规单灯位",
+        "spaceLamps": {
+          "hasIndependentSpaceLamps": true,
+          "count": 5
+        },
+        "stripLighting": {
+          "hasStrip": false
+        },
+        "supportedEffects": [
+          "Static",
+          "Breathing",
+          "Neon",
+          "Wave",
+          "Ripple",
+          "SingleLight",
+          "Flash",
+          "Raindrop"
+        ]
+      },
+      "performanceSpec": {
+        "supportedPollingRates": [
+          1000,
+          2000,
+          4000,
+          8000
+        ],
+        "currentPollingRate": 8000,
+        "maxPollingRate": 8000,
+        "hardwareRateCeiling": 8000,
+        "rtPrecisionMm": 0.001,
+        "shakeOptimizationSwitch": 1,
+        "higherKeyCapabilities": {
+          "rs": true,
+          "socd": true,
+          "dks": true,
+          "mt": true,
+          "tgl": true,
+          "mpt": true,
+          "end": true
+        }
+      },
+      "axisAndCalibration": {
+        "boardAxisList": [
+          {
+            "id": 1,
+            "name": "佳达隆磁玉 Pro",
+            "stroke": 3.5,
+            "minAp": 0.001,
+            "maxAp": 3.4
+          },
+          {
+            "id": 2,
+            "name": "双子星自研马轴",
+            "stroke": 4,
+            "minAp": 0.001,
+            "maxAp": 3.9
+          },
+          {
+            "id": 3,
+            "name": "凯华知夏磁轴",
+            "stroke": 3.8,
+            "minAp": 0.001,
+            "maxAp": 3.7
+          }
+        ],
+        "defaultAxis": "佳达隆磁玉 Pro",
+        "travelRangeMm": 4,
+        "deadzoneMm": 0.02,
+        "minActuationMm": 0.001,
+        "currentCalibration": {
+          "minAdc": 120,
+          "maxAdc": 3950,
+          "precisionMm": 0.001
+        }
+      }
+    },
+    {
+      "meta": {
+        "probeVersion": "v1.4.1",
+        "collectedAt": "2026-10-14T16:41:01.476Z",
+        "generator": "SparkLink PlayJoy Community Keyboard Database Registry",
+        "isSparklinkDevice": true,
+        "verificationStatus": "VERIFIED_SPARKLINK_PLAYJOY",
+        "brandName": "星闪公版方案"
+      },
+      "hardwareFingerprint": {
+        "vendorIdHex": "0x1CA6",
+        "productIdHex": "0x1C31",
+        "vendorIdDec": 7334,
+        "productIdDec": 7217,
+        "brand": "星闪公版方案",
+        "brandName": "星闪公版方案",
+        "manufacturerName": "星闪公版方案",
+        "productName": "星闪 87 键 TKL 磁轴键盘",
+        "rawUsbProductName": "NearLink 87",
+        "serialNumber": "[未导出/隐私保护脱敏]",
+        "hidInterfaces": [
+          {
+            "usagePage": 65456,
+            "usage": 1,
+            "usagePageHex": "0xFFB0",
+            "usageHex": "0x0001",
+            "isSparklinkVendorPort": true,
+            "isStandardKeyboardPort": false
+          }
+        ]
+      },
+      "deviceProfile": {
+        "id": "pcb_0x1ca6_0x1c31",
+        "brand": "星闪公版方案",
+        "brandName": "星闪公版方案",
+        "model": "NearLink 87",
+        "name": "星闪 87 键 TKL 磁轴键盘",
+        "shortName": "NearLink 87",
+        "type": "keyboard",
+        "layout": "87keys",
+        "layoutName": "87键TKL电竞配列",
+        "totalKeyCount": 87,
+        "vendorId": 7334,
+        "productId": 7217,
+        "vendorIdHex": "0x1CA6",
+        "productIdHex": "0x1C31",
+        "connectionType": "wired",
+        "connectionLabel": "USB 极速有线",
+        "isWired": true,
+        "hasBattery": false,
+        "maxPollingRate": 8000,
+        "hardRateCeiling": 8000,
+        "supportedPollingRates": [
+          1000,
+          2000,
+          4000,
+          8000
+        ],
+        "defaultPollingRate": 8000,
+        "minActuationPoint": 0.001,
+        "defaultAxis": "佳达隆磁玉 Pro",
+        "features": {
+          "magneticAxis": true,
+          "rtSupport": true,
+          "socdSupport": true,
+          "furyMode": true,
+          "rgbLighting": true,
+          "hallCalibration": true,
+          "continuousRt": false,
+          "doubleLighting": false,
+          "stripLighting": false,
+          "shakeOptimization": true,
+          "spaceMultiLamp": false
+        }
+      },
+      "matrixLayout": {
+        "totalKeys": 87,
+        "matrixRows": 6,
+        "matrixCols": 17,
+        "layoutCategory": "87keys",
+        "layoutName": "87键TKL电竞配列",
+        "physicalKeys": [
+          {
+            "row": 0,
+            "col": 0,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "Esc"
+          },
+          {
+            "row": 0,
+            "col": 1,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "F1"
+          },
+          {
+            "row": 0,
+            "col": 2,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "F2"
+          },
+          {
+            "row": 0,
+            "col": 3,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "F3"
+          },
+          {
+            "row": 0,
+            "col": 4,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "F4"
+          },
+          {
+            "row": 0,
+            "col": 5,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "F5"
+          },
+          {
+            "row": 0,
+            "col": 6,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "F6"
+          },
+          {
+            "row": 0,
+            "col": 7,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "F7"
+          },
+          {
+            "row": 0,
+            "col": 8,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "F8"
+          },
+          {
+            "row": 0,
+            "col": 9,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "F9"
+          },
+          {
+            "row": 0,
+            "col": 10,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "F10"
+          },
+          {
+            "row": 0,
+            "col": 11,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "F11"
+          },
+          {
+            "row": 0,
+            "col": 12,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "F12"
+          },
+          {
+            "row": 0,
+            "col": 13,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "PrSc"
+          },
+          {
+            "row": 0,
+            "col": 14,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "ScLk"
+          },
+          {
+            "row": 0,
+            "col": 15,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "Paus"
+          },
+          {
+            "row": 1,
+            "col": 0,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "`"
+          },
+          {
+            "row": 1,
+            "col": 1,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "1"
+          },
+          {
+            "row": 1,
+            "col": 2,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "2"
+          },
+          {
+            "row": 1,
+            "col": 3,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "3"
+          },
+          {
+            "row": 1,
+            "col": 4,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "4"
+          },
+          {
+            "row": 1,
+            "col": 5,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "5"
+          },
+          {
+            "row": 1,
+            "col": 6,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "6"
+          },
+          {
+            "row": 1,
+            "col": 7,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "7"
+          },
+          {
+            "row": 1,
+            "col": 8,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "8"
+          },
+          {
+            "row": 1,
+            "col": 9,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "9"
+          },
+          {
+            "row": 1,
+            "col": 10,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "0"
+          },
+          {
+            "row": 1,
+            "col": 11,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "-"
+          },
+          {
+            "row": 1,
+            "col": 12,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "="
+          },
+          {
+            "row": 1,
+            "col": 13,
+            "ratio": 2,
+            "defaultKeycode": 0,
+            "label": "Backspace"
+          },
+          {
+            "row": 1,
+            "col": 14,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "Ins"
+          },
+          {
+            "row": 1,
+            "col": 15,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "Home"
+          },
+          {
+            "row": 1,
+            "col": 16,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "PgUp"
+          },
+          {
+            "row": 2,
+            "col": 0,
+            "ratio": 1.5,
+            "defaultKeycode": 0,
+            "label": "Tab"
+          },
+          {
+            "row": 2,
+            "col": 1,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "Q"
+          },
+          {
+            "row": 2,
+            "col": 2,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "W"
+          },
+          {
+            "row": 2,
+            "col": 3,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "E"
+          },
+          {
+            "row": 2,
+            "col": 4,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "R"
+          },
+          {
+            "row": 2,
+            "col": 5,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "T"
+          },
+          {
+            "row": 2,
+            "col": 6,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "Y"
+          },
+          {
+            "row": 2,
+            "col": 7,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "U"
+          },
+          {
+            "row": 2,
+            "col": 8,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "I"
+          },
+          {
+            "row": 2,
+            "col": 9,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "O"
+          },
+          {
+            "row": 2,
+            "col": 10,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "P"
+          },
+          {
+            "row": 2,
+            "col": 11,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "["
+          },
+          {
+            "row": 2,
+            "col": 12,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "]"
+          },
+          {
+            "row": 2,
+            "col": 13,
+            "ratio": 1.5,
+            "defaultKeycode": 0,
+            "label": "\\"
+          },
+          {
+            "row": 2,
+            "col": 14,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "Del"
+          },
+          {
+            "row": 2,
+            "col": 15,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "End"
+          },
+          {
+            "row": 2,
+            "col": 16,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "PgDn"
+          },
+          {
+            "row": 3,
+            "col": 0,
+            "ratio": 1.75,
+            "defaultKeycode": 0,
+            "label": "Caps"
+          },
+          {
+            "row": 3,
+            "col": 1,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "A"
+          },
+          {
+            "row": 3,
+            "col": 2,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "S"
+          },
+          {
+            "row": 3,
+            "col": 3,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "D"
+          },
+          {
+            "row": 3,
+            "col": 4,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "F"
+          },
+          {
+            "row": 3,
+            "col": 5,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "G"
+          },
+          {
+            "row": 3,
+            "col": 6,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "H"
+          },
+          {
+            "row": 3,
+            "col": 7,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "J"
+          },
+          {
+            "row": 3,
+            "col": 8,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "K"
+          },
+          {
+            "row": 3,
+            "col": 9,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "L"
+          },
+          {
+            "row": 3,
+            "col": 10,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": ";"
+          },
+          {
+            "row": 3,
+            "col": 11,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "'"
+          },
+          {
+            "row": 3,
+            "col": 13,
+            "ratio": 2.25,
+            "defaultKeycode": 0,
+            "label": "Enter"
+          },
+          {
+            "row": 4,
+            "col": 0,
+            "ratio": 2.25,
+            "defaultKeycode": 0,
+            "label": "Shift"
+          },
+          {
+            "row": 4,
+            "col": 2,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "Z"
+          },
+          {
+            "row": 4,
+            "col": 3,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "X"
+          },
+          {
+            "row": 4,
+            "col": 4,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "C"
+          },
+          {
+            "row": 4,
+            "col": 5,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "V"
+          },
+          {
+            "row": 4,
+            "col": 6,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "B"
+          },
+          {
+            "row": 4,
+            "col": 7,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "N"
+          },
+          {
+            "row": 4,
+            "col": 8,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "M"
+          },
+          {
+            "row": 4,
+            "col": 9,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": ","
+          },
+          {
+            "row": 4,
+            "col": 10,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "."
+          },
+          {
+            "row": 4,
+            "col": 11,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "/"
+          },
+          {
+            "row": 4,
+            "col": 12,
+            "ratio": 2.75,
+            "defaultKeycode": 0,
+            "label": "Shift"
+          },
+          {
+            "row": 4,
+            "col": 14,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "↑"
+          },
+          {
+            "row": 5,
+            "col": 0,
+            "ratio": 1.25,
+            "defaultKeycode": 0,
+            "label": "Ctrl"
+          },
+          {
+            "row": 5,
+            "col": 1,
+            "ratio": 1.25,
+            "defaultKeycode": 0,
+            "label": "Win"
+          },
+          {
+            "row": 5,
+            "col": 2,
+            "ratio": 1.25,
+            "defaultKeycode": 0,
+            "label": "Alt"
+          },
+          {
+            "row": 5,
+            "col": 6,
+            "ratio": 6.25,
+            "defaultKeycode": 0,
+            "label": "Space"
+          },
+          {
+            "row": 5,
+            "col": 9,
+            "ratio": 1.25,
+            "defaultKeycode": 0,
+            "label": "Alt"
+          },
+          {
+            "row": 5,
+            "col": 10,
+            "ratio": 1.25,
+            "defaultKeycode": 0,
+            "label": "Win"
+          },
+          {
+            "row": 5,
+            "col": 11,
+            "ratio": 1.25,
+            "defaultKeycode": 0,
+            "label": "App"
+          },
+          {
+            "row": 5,
+            "col": 12,
+            "ratio": 1.25,
+            "defaultKeycode": 0,
+            "label": "Ctrl"
+          },
+          {
+            "row": 5,
+            "col": 13,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "←"
+          },
+          {
+            "row": 5,
+            "col": 14,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "↓"
+          },
+          {
+            "row": 5,
+            "col": 15,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "→"
+          }
+        ]
+      },
+      "lightingTopology": {
+        "totalLeds": 87,
+        "mainMatrixLeds": 87,
+        "isDoubleLighting": false,
+        "doubleLightingRaw": 0,
+        "lampStructure": "常规单灯位",
+        "spaceLamps": {
+          "hasIndependentSpaceLamps": false,
+          "count": 1
+        },
+        "stripLighting": {
+          "hasStrip": false
+        },
+        "supportedEffects": [
+          "Static",
+          "Breathing",
+          "Neon",
+          "Wave",
+          "Ripple",
+          "SingleLight",
+          "Flash",
+          "Raindrop"
+        ]
+      },
+      "performanceSpec": {
+        "supportedPollingRates": [
+          1000,
+          2000,
+          4000,
+          8000
+        ],
+        "currentPollingRate": 8000,
+        "maxPollingRate": 8000,
+        "hardwareRateCeiling": 8000,
+        "rtPrecisionMm": 0.001,
+        "higherKeyCapabilities": {
+          "rs": true,
+          "socd": true,
+          "dks": true,
+          "mt": true,
+          "tgl": true,
+          "mpt": true,
+          "end": true
+        }
+      },
+      "axisAndCalibration": {
+        "boardAxisList": [
+          {
+            "id": 1,
+            "name": "佳达隆磁玉 Pro",
+            "stroke": 3.5,
+            "minAp": 0.001,
+            "maxAp": 3.4
+          },
+          {
+            "id": 2,
+            "name": "双子星自研马轴",
+            "stroke": 4,
+            "minAp": 0.001,
+            "maxAp": 3.9
+          }
+        ],
+        "defaultAxis": "佳达隆磁玉 Pro",
+        "travelRangeMm": 4,
+        "deadzoneMm": 0.02,
+        "minActuationMm": 0.001,
+        "currentCalibration": {
+          "minAdc": 120,
+          "maxAdc": 3950,
+          "precisionMm": 0.001
+        }
+      }
+    },
+    {
+      "meta": {
+        "probeVersion": "v1.4.1",
+        "collectedAt": "2026-10-14T16:41:01.476Z",
+        "generator": "SparkLink PlayJoy Community Keyboard Database Registry",
+        "isSparklinkDevice": true,
+        "verificationStatus": "VERIFIED_SPARKLINK_PLAYJOY",
+        "brandName": "星闪公版方案"
+      },
+      "hardwareFingerprint": {
+        "vendorIdHex": "0x1CA6",
+        "productIdHex": "0x1C32",
+        "vendorIdDec": 7334,
+        "productIdDec": 7218,
+        "brand": "星闪公版方案",
+        "brandName": "星闪公版方案",
+        "manufacturerName": "星闪公版方案",
+        "productName": "星闪 98 键紧凑磁轴键盘",
+        "rawUsbProductName": "NearLink 98",
+        "serialNumber": "[未导出/隐私保护脱敏]",
+        "hidInterfaces": [
+          {
+            "usagePage": 65456,
+            "usage": 1,
+            "usagePageHex": "0xFFB0",
+            "usageHex": "0x0001",
+            "isSparklinkVendorPort": true,
+            "isStandardKeyboardPort": false
+          }
+        ]
+      },
+      "deviceProfile": {
+        "id": "pcb_0x1ca6_0x1c32",
+        "brand": "星闪公版方案",
+        "brandName": "星闪公版方案",
+        "model": "NearLink 98",
+        "name": "星闪 98 键紧凑磁轴键盘",
+        "shortName": "NearLink 98",
+        "type": "keyboard",
+        "layout": "98keys",
+        "layoutName": "98紧凑全功能配列",
+        "totalKeyCount": 98,
+        "vendorId": 7334,
+        "productId": 7218,
+        "vendorIdHex": "0x1CA6",
+        "productIdHex": "0x1C32",
+        "connectionType": "wired",
+        "connectionLabel": "USB 极速有线",
+        "isWired": true,
+        "hasBattery": false,
+        "maxPollingRate": 8000,
+        "hardRateCeiling": 8000,
+        "supportedPollingRates": [
+          1000,
+          2000,
+          4000,
+          8000
+        ],
+        "defaultPollingRate": 8000,
+        "minActuationPoint": 0.01,
+        "defaultAxis": "佳达隆磁玉 Pro",
+        "features": {
+          "magneticAxis": true,
+          "rtSupport": true,
+          "socdSupport": true,
+          "furyMode": true,
+          "rgbLighting": true,
+          "hallCalibration": true,
+          "continuousRt": false,
+          "doubleLighting": false,
+          "stripLighting": false,
+          "shakeOptimization": true,
+          "spaceMultiLamp": false
+        }
+      },
+      "matrixLayout": {
+        "totalKeys": 98,
+        "matrixRows": 6,
+        "matrixCols": 19,
+        "layoutCategory": "98keys",
+        "layoutName": "98紧凑全功能配列",
+        "physicalKeys": [
+          {
+            "row": 0,
+            "col": 0,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "Esc"
+          },
+          {
+            "row": 0,
+            "col": 1,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "F1"
+          },
+          {
+            "row": 0,
+            "col": 2,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "F2"
+          },
+          {
+            "row": 0,
+            "col": 3,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "F3"
+          },
+          {
+            "row": 0,
+            "col": 4,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "F4"
+          },
+          {
+            "row": 0,
+            "col": 5,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "F5"
+          },
+          {
+            "row": 0,
+            "col": 6,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "F6"
+          },
+          {
+            "row": 0,
+            "col": 7,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "F7"
+          },
+          {
+            "row": 0,
+            "col": 8,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "F8"
+          },
+          {
+            "row": 0,
+            "col": 9,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "F9"
+          },
+          {
+            "row": 0,
+            "col": 10,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "F10"
+          },
+          {
+            "row": 0,
+            "col": 11,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "F11"
+          },
+          {
+            "row": 0,
+            "col": 12,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "F12"
+          },
+          {
+            "row": 0,
+            "col": 13,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "Del"
+          },
+          {
+            "row": 0,
+            "col": 14,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "Num"
+          },
+          {
+            "row": 0,
+            "col": 15,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "/"
+          },
+          {
+            "row": 0,
+            "col": 16,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "*"
+          },
+          {
+            "row": 0,
+            "col": 17,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "-"
+          },
+          {
+            "row": 1,
+            "col": 0,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "`"
+          },
+          {
+            "row": 1,
+            "col": 1,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "1"
+          },
+          {
+            "row": 1,
+            "col": 2,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "2"
+          },
+          {
+            "row": 1,
+            "col": 3,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "3"
+          },
+          {
+            "row": 1,
+            "col": 4,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "4"
+          },
+          {
+            "row": 1,
+            "col": 5,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "5"
+          },
+          {
+            "row": 1,
+            "col": 6,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "6"
+          },
+          {
+            "row": 1,
+            "col": 7,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "7"
+          },
+          {
+            "row": 1,
+            "col": 8,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "8"
+          },
+          {
+            "row": 1,
+            "col": 9,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "9"
+          },
+          {
+            "row": 1,
+            "col": 10,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "0"
+          },
+          {
+            "row": 1,
+            "col": 11,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "-"
+          },
+          {
+            "row": 1,
+            "col": 12,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "="
+          },
+          {
+            "row": 1,
+            "col": 13,
+            "ratio": 2,
+            "defaultKeycode": 0,
+            "label": "Backspace"
+          },
+          {
+            "row": 1,
+            "col": 14,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "7"
+          },
+          {
+            "row": 1,
+            "col": 15,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "8"
+          },
+          {
+            "row": 1,
+            "col": 16,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "9"
+          },
+          {
+            "row": 1,
+            "col": 17,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "+"
+          },
+          {
+            "row": 2,
+            "col": 0,
+            "ratio": 1.5,
+            "defaultKeycode": 0,
+            "label": "Tab"
+          },
+          {
+            "row": 2,
+            "col": 1,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "Q"
+          },
+          {
+            "row": 2,
+            "col": 2,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "W"
+          },
+          {
+            "row": 2,
+            "col": 3,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "E"
+          },
+          {
+            "row": 2,
+            "col": 4,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "R"
+          },
+          {
+            "row": 2,
+            "col": 5,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "T"
+          },
+          {
+            "row": 2,
+            "col": 6,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "Y"
+          },
+          {
+            "row": 2,
+            "col": 7,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "U"
+          },
+          {
+            "row": 2,
+            "col": 8,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "I"
+          },
+          {
+            "row": 2,
+            "col": 9,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "O"
+          },
+          {
+            "row": 2,
+            "col": 10,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "P"
+          },
+          {
+            "row": 2,
+            "col": 11,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "["
+          },
+          {
+            "row": 2,
+            "col": 12,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "]"
+          },
+          {
+            "row": 2,
+            "col": 13,
+            "ratio": 1.5,
+            "defaultKeycode": 0,
+            "label": "\\"
+          },
+          {
+            "row": 2,
+            "col": 14,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "4"
+          },
+          {
+            "row": 2,
+            "col": 15,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "5"
+          },
+          {
+            "row": 2,
+            "col": 16,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "6"
+          },
+          {
+            "row": 3,
+            "col": 0,
+            "ratio": 1.75,
+            "defaultKeycode": 0,
+            "label": "Caps"
+          },
+          {
+            "row": 3,
+            "col": 1,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "A"
+          },
+          {
+            "row": 3,
+            "col": 2,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "S"
+          },
+          {
+            "row": 3,
+            "col": 3,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "D"
+          },
+          {
+            "row": 3,
+            "col": 4,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "F"
+          },
+          {
+            "row": 3,
+            "col": 5,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "G"
+          },
+          {
+            "row": 3,
+            "col": 6,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "H"
+          },
+          {
+            "row": 3,
+            "col": 7,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "J"
+          },
+          {
+            "row": 3,
+            "col": 8,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "K"
+          },
+          {
+            "row": 3,
+            "col": 9,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "L"
+          },
+          {
+            "row": 3,
+            "col": 10,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": ";"
+          },
+          {
+            "row": 3,
+            "col": 11,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "'"
+          },
+          {
+            "row": 3,
+            "col": 13,
+            "ratio": 2.25,
+            "defaultKeycode": 0,
+            "label": "Enter"
+          },
+          {
+            "row": 3,
+            "col": 14,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "1"
+          },
+          {
+            "row": 3,
+            "col": 15,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "2"
+          },
+          {
+            "row": 3,
+            "col": 16,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "3"
+          },
+          {
+            "row": 3,
+            "col": 17,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "Ent"
+          },
+          {
+            "row": 4,
+            "col": 0,
+            "ratio": 2.25,
+            "defaultKeycode": 0,
+            "label": "Shift"
+          },
+          {
+            "row": 4,
+            "col": 2,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "Z"
+          },
+          {
+            "row": 4,
+            "col": 3,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "X"
+          },
+          {
+            "row": 4,
+            "col": 4,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "C"
+          },
+          {
+            "row": 4,
+            "col": 5,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "V"
+          },
+          {
+            "row": 4,
+            "col": 6,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "B"
+          },
+          {
+            "row": 4,
+            "col": 7,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "N"
+          },
+          {
+            "row": 4,
+            "col": 8,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "M"
+          },
+          {
+            "row": 4,
+            "col": 9,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": ","
+          },
+          {
+            "row": 4,
+            "col": 10,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "."
+          },
+          {
+            "row": 4,
+            "col": 11,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "/"
+          },
+          {
+            "row": 4,
+            "col": 12,
+            "ratio": 1.75,
+            "defaultKeycode": 0,
+            "label": "Shift"
+          },
+          {
+            "row": 4,
+            "col": 13,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "↑"
+          },
+          {
+            "row": 4,
+            "col": 14,
+            "ratio": 2,
+            "defaultKeycode": 0,
+            "label": "0"
+          },
+          {
+            "row": 4,
+            "col": 15,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "."
+          },
+          {
+            "row": 5,
+            "col": 0,
+            "ratio": 1.25,
+            "defaultKeycode": 0,
+            "label": "Ctrl"
+          },
+          {
+            "row": 5,
+            "col": 1,
+            "ratio": 1.25,
+            "defaultKeycode": 0,
+            "label": "Win"
+          },
+          {
+            "row": 5,
+            "col": 2,
+            "ratio": 1.25,
+            "defaultKeycode": 0,
+            "label": "Alt"
+          },
+          {
+            "row": 5,
+            "col": 6,
+            "ratio": 6.25,
+            "defaultKeycode": 0,
+            "label": "Space"
+          },
+          {
+            "row": 5,
+            "col": 9,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "Alt"
+          },
+          {
+            "row": 5,
+            "col": 10,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "Fn"
+          },
+          {
+            "row": 5,
+            "col": 11,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "Ctrl"
+          },
+          {
+            "row": 5,
+            "col": 12,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "←"
+          },
+          {
+            "row": 5,
+            "col": 13,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "↓"
+          },
+          {
+            "row": 5,
+            "col": 14,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "→"
+          }
+        ]
+      },
+      "lightingTopology": {
+        "totalLeds": 98,
+        "mainMatrixLeds": 98,
+        "isDoubleLighting": false,
+        "doubleLightingRaw": 0,
+        "lampStructure": "常规单灯位",
+        "spaceLamps": {
+          "hasIndependentSpaceLamps": false,
+          "count": 1
+        },
+        "stripLighting": {
+          "hasStrip": false
+        },
+        "supportedEffects": [
+          "Static",
+          "Breathing",
+          "Neon",
+          "Wave",
+          "Ripple",
+          "SingleLight",
+          "Flash",
+          "Raindrop"
+        ]
+      },
+      "performanceSpec": {
+        "supportedPollingRates": [
+          1000,
+          2000,
+          4000,
+          8000
+        ],
+        "currentPollingRate": 8000,
+        "maxPollingRate": 8000,
+        "hardwareRateCeiling": 8000,
+        "rtPrecisionMm": 0.01,
+        "higherKeyCapabilities": {
+          "rs": true,
+          "socd": true,
+          "dks": true,
+          "mt": true,
+          "tgl": true,
+          "mpt": true,
+          "end": true
+        }
+      },
+      "axisAndCalibration": {
+        "boardAxisList": [
+          {
+            "id": 1,
+            "name": "佳达隆磁玉 Pro",
+            "stroke": 3.5,
+            "minAp": 0.01,
+            "maxAp": 3.4
+          },
+          {
+            "id": 2,
+            "name": "双子星自研马轴",
+            "stroke": 4,
+            "minAp": 0.01,
+            "maxAp": 3.9
+          }
+        ],
+        "defaultAxis": "佳达隆磁玉 Pro",
+        "travelRangeMm": 4,
+        "deadzoneMm": 0.02,
+        "minActuationMm": 0.01,
+        "currentCalibration": {
+          "minAdc": 140,
+          "maxAdc": 3920,
+          "precisionMm": 0.01
+        }
+      }
+    },
+    {
+      "meta": {
+        "probeVersion": "v1.4.1",
+        "collectedAt": "2026-10-14T16:41:01.476Z",
+        "generator": "SparkLink PlayJoy Community Keyboard Database Registry",
+        "isSparklinkDevice": true,
+        "verificationStatus": "VERIFIED_SPARKLINK_PLAYJOY",
+        "brandName": "江湾 Everglide"
+      },
+      "hardwareFingerprint": {
+        "vendorIdHex": "0x1CA6",
+        "productIdHex": "0x300D",
+        "vendorIdDec": 7334,
+        "productIdDec": 12301,
+        "brand": "江湾 Everglide",
+        "brandName": "江湾 Everglide",
+        "manufacturerName": "江湾 Everglide",
+        "productName": "江湾 AE64-MAX 磁轴键盘",
+        "rawUsbProductName": "AE64-MAX",
+        "serialNumber": "[未导出/隐私保护脱敏]",
+        "hidInterfaces": [
+          {
+            "usagePage": 65456,
+            "usage": 1,
+            "usagePageHex": "0xFFB0",
+            "usageHex": "0x0001",
+            "isSparklinkVendorPort": true,
+            "isStandardKeyboardPort": false
+          }
+        ]
+      },
+      "deviceProfile": {
+        "id": "pcb_0x1ca6_0x300d",
+        "brand": "江湾 Everglide",
+        "brandName": "江湾 Everglide",
+        "model": "AE64-MAX",
+        "name": "江湾 AE64-MAX 磁轴键盘",
+        "shortName": "AE64-MAX",
+        "type": "keyboard",
+        "layout": "64keys",
+        "layoutName": "左移64配列",
+        "totalKeyCount": 64,
+        "vendorId": 7334,
+        "productId": 12301,
+        "vendorIdHex": "0x1CA6",
+        "productIdHex": "0x300D",
+        "connectionType": "wired",
+        "connectionLabel": "USB 极速有线",
+        "isWired": true,
+        "hasBattery": false,
+        "maxPollingRate": 8000,
+        "hardRateCeiling": 8000,
+        "supportedPollingRates": [
+          1000,
+          2000,
+          4000,
+          8000
+        ],
+        "defaultPollingRate": 8000,
+        "minActuationPoint": 0.001,
+        "defaultAxis": "佳达隆磁玉 Pro",
+        "features": {
+          "magneticAxis": true,
+          "rtSupport": true,
+          "socdSupport": true,
+          "furyMode": true,
+          "rgbLighting": true,
+          "hallCalibration": true,
+          "continuousRt": true,
+          "doubleLighting": true,
+          "stripLighting": true,
+          "shakeOptimization": true,
+          "spaceMultiLamp": true,
+          "dksSupport": true,
+          "mptSupport": true
+        }
+      },
+      "matrixLayout": {
+        "totalKeys": 64,
+        "matrixRows": 5,
+        "matrixCols": 14,
+        "layoutCategory": "64keys",
+        "layoutName": "左移64配列",
+        "physicalKeys": [
+          {
+            "row": 1,
+            "col": 0,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "Esc"
+          },
+          {
+            "row": 1,
+            "col": 1,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "1"
+          },
+          {
+            "row": 1,
+            "col": 2,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "2"
+          },
+          {
+            "row": 1,
+            "col": 3,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "3"
+          },
+          {
+            "row": 1,
+            "col": 4,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "4"
+          },
+          {
+            "row": 1,
+            "col": 5,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "5"
+          },
+          {
+            "row": 1,
+            "col": 6,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "6"
+          },
+          {
+            "row": 1,
+            "col": 7,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "7"
+          },
+          {
+            "row": 1,
+            "col": 8,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "8"
+          },
+          {
+            "row": 1,
+            "col": 9,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "9"
+          },
+          {
+            "row": 1,
+            "col": 10,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "0"
+          },
+          {
+            "row": 1,
+            "col": 11,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "-"
+          },
+          {
+            "row": 1,
+            "col": 12,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "="
+          },
+          {
+            "row": 1,
+            "col": 13,
+            "ratio": 2,
+            "defaultKeycode": 0,
+            "label": "Backspace"
+          },
+          {
+            "row": 2,
+            "col": 0,
+            "ratio": 1.5,
+            "defaultKeycode": 0,
+            "label": "Tab"
+          },
+          {
+            "row": 2,
+            "col": 1,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "Q"
+          },
+          {
+            "row": 2,
+            "col": 2,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "W"
+          },
+          {
+            "row": 2,
+            "col": 3,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "E"
+          },
+          {
+            "row": 2,
+            "col": 4,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "R"
+          },
+          {
+            "row": 2,
+            "col": 5,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "T"
+          },
+          {
+            "row": 2,
+            "col": 6,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "Y"
+          },
+          {
+            "row": 2,
+            "col": 7,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "U"
+          },
+          {
+            "row": 2,
+            "col": 8,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "I"
+          },
+          {
+            "row": 2,
+            "col": 9,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "O"
+          },
+          {
+            "row": 2,
+            "col": 10,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "P"
+          },
+          {
+            "row": 2,
+            "col": 11,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "["
+          },
+          {
+            "row": 2,
+            "col": 12,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "]"
+          },
+          {
+            "row": 2,
+            "col": 13,
+            "ratio": 1.5,
+            "defaultKeycode": 0,
+            "label": "\\"
+          },
+          {
+            "row": 3,
+            "col": 0,
+            "ratio": 1.75,
+            "defaultKeycode": 0,
+            "label": "Caps"
+          },
+          {
+            "row": 3,
+            "col": 1,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "A"
+          },
+          {
+            "row": 3,
+            "col": 2,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "S"
+          },
+          {
+            "row": 3,
+            "col": 3,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "D"
+          },
+          {
+            "row": 3,
+            "col": 4,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "F"
+          },
+          {
+            "row": 3,
+            "col": 5,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "G"
+          },
+          {
+            "row": 3,
+            "col": 6,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "H"
+          },
+          {
+            "row": 3,
+            "col": 7,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "J"
+          },
+          {
+            "row": 3,
+            "col": 8,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "K"
+          },
+          {
+            "row": 3,
+            "col": 9,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "L"
+          },
+          {
+            "row": 3,
+            "col": 10,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": ";"
+          },
+          {
+            "row": 3,
+            "col": 11,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "'"
+          },
+          {
+            "row": 3,
+            "col": 13,
+            "ratio": 2.25,
+            "defaultKeycode": 0,
+            "label": "Enter"
+          },
+          {
+            "row": 4,
+            "col": 0,
+            "ratio": 2,
+            "defaultKeycode": 0,
+            "label": "Shift"
+          },
+          {
+            "row": 4,
+            "col": 2,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "Z"
+          },
+          {
+            "row": 4,
+            "col": 3,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "X"
+          },
+          {
+            "row": 4,
+            "col": 4,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "C"
+          },
+          {
+            "row": 4,
+            "col": 5,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "V"
+          },
+          {
+            "row": 4,
+            "col": 6,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "B"
+          },
+          {
+            "row": 4,
+            "col": 7,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "N"
+          },
+          {
+            "row": 4,
+            "col": 8,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "M"
+          },
+          {
+            "row": 4,
+            "col": 9,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": ","
+          },
+          {
+            "row": 4,
+            "col": 10,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "."
+          },
+          {
+            "row": 4,
+            "col": 11,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "/"
+          },
+          {
+            "row": 4,
+            "col": 12,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "Shift"
+          },
+          {
+            "row": 4,
+            "col": 13,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "↑"
+          },
+          {
+            "row": 4,
+            "col": 14,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "Del"
+          },
+          {
+            "row": 5,
+            "col": 0,
+            "ratio": 1.25,
+            "defaultKeycode": 0,
+            "label": "Ctrl"
+          },
+          {
+            "row": 5,
+            "col": 1,
+            "ratio": 1.25,
+            "defaultKeycode": 0,
+            "label": "Win"
+          },
+          {
+            "row": 5,
+            "col": 2,
+            "ratio": 1.25,
+            "defaultKeycode": 0,
+            "label": "Alt"
+          },
+          {
+            "row": 5,
+            "col": 6,
+            "ratio": 6.25,
+            "defaultKeycode": 0,
+            "label": "Space"
+          },
+          {
+            "row": 5,
+            "col": 9,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "Alt"
+          },
+          {
+            "row": 5,
+            "col": 10,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "Fn"
+          },
+          {
+            "row": 5,
+            "col": 11,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "←"
+          },
+          {
+            "row": 5,
+            "col": 12,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "↓"
+          },
+          {
+            "row": 5,
+            "col": 13,
+            "ratio": 1,
+            "defaultKeycode": 0,
+            "label": "→"
+          }
+        ]
+      },
+      "lightingTopology": {
+        "totalLeds": 170,
+        "mainMatrixLeds": 128,
+        "isDoubleLighting": true,
+        "doubleLightingRaw": 1,
+        "lampStructure": "上下双灯位 (上灯+下灯)",
+        "lightingAreas": [
+          {
+            "areaId": 0,
+            "name": "轴体RGB主灯区 (上下双灯位)",
+            "count": 128
+          },
+          {
+            "areaId": 1,
+            "name": "氛围灯区 (31颗环形底灯)",
+            "count": 42
+          }
+        ],
+        "spaceLamps": {
+          "hasIndependentSpaceLamps": true,
+          "count": 5,
+          "coordinates": [
+            {
+              "index": 1,
+              "row": 5,
+              "col": 4
+            },
+            {
+              "index": 2,
+              "row": 5,
+              "col": 5
+            },
+            {
+              "index": 3,
+              "row": 5,
+              "col": 6
+            },
+            {
+              "index": 4,
+              "row": 5,
+              "col": 7
+            },
+            {
+              "index": 5,
+              "row": 5,
+              "col": 8
+            }
+          ]
+        },
+        "stripLighting": {
+          "hasStrip": true,
+          "count": 31,
+          "rows": 2,
+          "cols": 17,
+          "label": "31颗环形氛围底灯 (首行17颗+次行14颗)"
+        },
+        "supportedEffects": [
+          "Static",
+          "Breathing",
+          "Neon",
+          "Wave",
+          "Ripple",
+          "SingleLight",
+          "Flash",
+          "Raindrop",
+          "CustomMatrix",
+          "DualLampLayer"
+        ]
+      },
+      "performanceSpec": {
+        "supportedPollingRates": [
+          1000,
+          2000,
+          4000,
+          8000
+        ],
+        "currentPollingRate": 8000,
+        "maxPollingRate": 8000,
+        "hardwareRateCeiling": 8000,
+        "rtPrecisionMm": 0.001,
+        "shakeOptimizationSwitch": 1,
+        "higherKeyCapabilities": {
+          "rs": true,
+          "socd": true,
+          "dks": true,
+          "mt": true,
+          "tgl": true,
+          "mpt": true,
+          "end": true
+        },
+        "boardConfigSlots": {
+          "total": 4,
+          "current": "Config1",
+          "list": [
+            "Config1",
+            "Config2",
+            "Config3",
+            "Config4"
+          ]
+        }
+      },
+      "axisAndCalibration": {
+        "boardAxisList": [
+          {
+            "id": 1,
+            "name": "佳达隆磁玉 Pro",
+            "stroke": 3.5,
+            "minAp": 0.001,
+            "maxAp": 3.4
+          },
+          {
+            "id": 2,
+            "name": "悟空磁轴",
+            "stroke": 3.6,
+            "minAp": 0.001,
+            "maxAp": 3.5
+          },
+          {
+            "id": 3,
+            "name": "凯华知夏磁轴",
+            "stroke": 3.8,
+            "minAp": 0.001,
+            "maxAp": 3.7
+          },
+          {
+            "id": 4,
+            "name": "双子星自研马轴",
+            "stroke": 4,
+            "minAp": 0.001,
+            "maxAp": 3.9
+          }
+        ],
+        "defaultAxis": "佳达隆磁玉 Pro",
+        "travelRangeMm": 4,
+        "deadzoneMm": 0.02,
+        "minActuationMm": 0.001,
+        "currentCalibration": {
+          "minAdc": 100,
+          "maxAdc": 4000,
+          "precisionMm": 0.001
+        }
+      }
+    }
+  ]
+}

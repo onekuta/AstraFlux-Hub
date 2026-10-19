@@ -1,0 +1,174 @@
+{
+  "meta": {
+    "probeVersion": "v1.0.0",
+    "collectedAt": "2026-10-14T08:12:05.336Z",
+    "generator": "SparkLink PlayJoy PCB Probe Tool",
+    "probeMode": "WebHID",
+    "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) sparklink-pcb-probe-standalone/1.0.0 Chrome/126.0.6478.234 Electron/31.7.7 Safari/537.36"
+  },
+  "hardwareFingerprint": {
+    "vendorIdHex": "0xFF",
+    "productIdHex": "0xBACC",
+    "vendorIdDec": 255,
+    "productIdDec": 47820,
+    "productName": "Virtual Multitouch Device쳌쳌쳌쳌쳌123123123",
+    "manufacturerName": "",
+    "serialNumber": "",
+    "hidInterfaces": [
+      {
+        "usagePage": 1,
+        "usage": 2,
+        "usagePageHex": "0x1",
+        "usageHex": "0x2",
+        "isSparklinkVendorPort": false,
+        "isStandardKeyboardPort": false
+      },
+      {
+        "usagePage": 1,
+        "usage": 2,
+        "usagePageHex": "0x1",
+        "usageHex": "0x2",
+        "isSparklinkVendorPort": false,
+        "isStandardKeyboardPort": false
+      },
+      {
+        "usagePage": 65518,
+        "usage": 204,
+        "usagePageHex": "0xFFEE",
+        "usageHex": "0xCC",
+        "isSparklinkVendorPort": false,
+        "isStandardKeyboardPort": false
+      },
+      {
+        "usagePage": 65450,
+        "usage": 187,
+        "usagePageHex": "0xFFAA",
+        "usageHex": "0xBB",
+        "isSparklinkVendorPort": false,
+        "isStandardKeyboardPort": false
+      },
+      {
+        "usagePage": 1,
+        "usage": 6,
+        "usagePageHex": "0x1",
+        "usageHex": "0x6",
+        "isSparklinkVendorPort": false,
+        "isStandardKeyboardPort": true
+      }
+    ]
+  },
+  "deviceProfile": {
+    "id": "pcb_0xff_0xbacc",
+    "brand": "客制化",
+    "model": "Virtual Multitouch Device쳌쳌쳌쳌쳌123123123",
+    "name": "Virtual Multitouch Device쳌쳌쳌쳌쳌123123123",
+    "shortName": "Virtual",
+    "type": "keyboard",
+    "layout": "generic",
+    "layoutName": "未知客制化配列",
+    "totalKeyCount": 0,
+    "vendorId": 255,
+    "productId": 47820,
+    "vendorIdHex": "0xFF",
+    "productIdHex": "0xBACC",
+    "connectionType": "wired",
+    "connectionLabel": "USB 极速有线",
+    "isWired": true,
+    "hasBattery": false,
+    "maxPollingRate": 8000,
+    "hardRateCeiling": 8000,
+    "supportedPollingRates": [
+      1000,
+      2000,
+      4000,
+      8000
+    ],
+    "defaultPollingRate": 8000,
+    "minActuationPoint": 0.001,
+    "defaultAxis": "自适应磁轴",
+    "features": {
+      "magneticAxis": true,
+      "rtSupport": true,
+      "socdSupport": true,
+      "dksSupport": true,
+      "mptSupport": true,
+      "furyMode": true,
+      "rgbLighting": true,
+      "hallCalibration": true,
+      "continuousRt": false,
+      "doubleLighting": false,
+      "stripLighting": false,
+      "shakeOptimization": true
+    }
+  },
+  "matrixLayout": {
+    "totalKeys": 0,
+    "matrixRows": 1,
+    "matrixCols": 1,
+    "layoutCategory": "generic",
+    "layoutName": "未知客制化配列",
+    "physicalKeys": [],
+    "rawRowScanDump": []
+  },
+  "lightingTopology": {
+    "isDoubleLighting": false,
+    "doubleLightingRaw": 0,
+    "lightingAreas": [],
+    "boardLightingSnapshot": null,
+    "spaceLamps": {
+      "hasIndependentSpaceLamps": false,
+      "count": 1,
+      "coordinates": [
+        {
+          "index": 1,
+          "row": 5,
+          "col": 6
+        }
+      ]
+    },
+    "stripLighting": {
+      "hasStrip": false,
+      "stripCols": 0,
+      "stripRows": 0
+    }
+  },
+  "performanceSpec": {
+    "supportedPollingRates": [
+      1000,
+      2000,
+      4000,
+      8000
+    ],
+    "maxPollingRate": 8000,
+    "hardwareRateCeiling": 8000,
+    "defaultPollingRate": 8000,
+    "rtPrecisionMm": 0.001,
+    "usbModeStatus": null,
+    "boardConfigSlots": {
+      "total": 4,
+      "current": "Config1",
+      "list": [
+        "Config1",
+        "Config2",
+        "Config3",
+        "Config4"
+      ]
+    },
+    "shakeOptimizationSwitch": 1,
+    "higherKeyCapabilities": {
+      "rs": true,
+      "socd": true,
+      "dks": true,
+      "mt": true,
+      "tgl": true,
+      "mpt": true,
+      "end": true
+    }
+  },
+  "axisAndCalibration": {
+    "boardAxisList": [],
+    "defaultAxis": "自适应磁轴",
+    "hallCalibrationSupported": true
+  },
+  "rawSnapshot": {}
+}

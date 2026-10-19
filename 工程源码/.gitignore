@@ -1,0 +1,10 @@
+node_modules/
+dist/
+dist-electron/
+.asar-tmp/
+scratch/
+scratch_official/
+scratch_v2/
+tools/electron-bin/
+*.log
+*.bin

@@ -1,0 +1,282 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "SparkLinkPcbAdapterProfile",
+  "description": "星闪及客制化键盘 PCB 硬件真机枚举与适配数据模型",
+  "type": "object",
+  "required": [
+    "meta",
+    "hardwareFingerprint",
+    "deviceProfile",
+    "matrixLayout",
+    "lightingTopology",
+    "performanceSpec"
+  ],
+  "properties": {
+    "meta": {
+      "type": "object",
+      "description": "探针元信息与时间戳",
+      "required": ["probeVersion", "collectedAt", "generator"],
+      "properties": {
+        "probeVersion": { "type": "string", "example": "v1.0.0" },
+        "collectedAt": { "type": "string", "format": "date-time" },
+        "generator": { "type": "string", "example": "SparkLink PCB Probe Engine" },
+        "probeMode": { "type": "string", "enum": ["WebHID", "NodeNative", "ElectronHID"] },
+        "brandName": { "type": "string", "example": "江湾 Everglide" },
+        "userAgent": { "type": "string" },
+        "operatorNote": { "type": "string" }
+      }
+    },
+    "hardwareFingerprint": {
+      "type": "object",
+      "description": "USB / HID 基础物理指纹与主控芯片信息",
+      "required": ["vendorIdHex", "productIdHex", "vendorIdDec", "productIdDec", "productName"],
+      "properties": {
+        "vendorIdHex": { "type": "string", "example": "0x1CA6" },
+        "productIdHex": { "type": "string", "example": "0x300D" },
+        "vendorIdDec": { "type": "integer", "example": 7334 },
+        "productIdDec": { "type": "integer", "example": 12301 },
+        "brandName": { "type": "string", "example": "江湾 Everglide" },
+        "brand": { "type": "string", "example": "江湾 Everglide" },
+        "productName": { "type": "string", "example": "AE64-MAX Gaming Keyboard" },
+        "manufacturerName": { "type": "string" },
+        "serialNumber": { "type": "string" },
+        "deviceInfo": {
+          "type": "object",
+          "description": "星闪底层芯片硬件参数 (getDevicesInfo)",
+          "properties": {
+            "type": { "type": "integer" },
+            "subType": { "type": "integer" },
+            "boardId": { "type": "integer", "example": 3145729 },
+            "appVersion": { "type": "string", "example": "1.0.4.0" },
+            "pcbVersion": { "type": "string", "example": "1-0-0-0" },
+            "runModeVersion": { "type": "integer" },
+            "sn": { "type": "string" },
+            "timestamp": { "type": "string" }
+          }
+        },
+        "protocolVersion": {
+          "type": "object",
+          "description": "星闪协议版本号 (getProtocolVersion)",
+          "properties": {
+            "mainVersion": { "type": "integer" },
+            "subVersion": { "type": "integer" },
+            "hardwareVersion": { "type": "integer" },
+            "softwareVersion": { "type": "integer" }
+          }
+        },
+        "hidInterfaces": {
+          "type": "array",
+          "description": "全部暴露的 HID 集合描述符",
+          "items": {
+            "type": "object",
+            "properties": {
+              "usagePage": { "type": "integer" },
+              "usage": { "type": "integer" },
+              "usagePageHex": { "type": "string" },
+              "usageHex": { "type": "string" },
+              "isSparklinkVendorPort": { "type": "boolean" },
+              "isStandardKeyboardPort": { "type": "boolean" }
+            }
+          }
+        }
+      }
+    },
+    "deviceProfile": {
+      "type": "object",
+      "description": "可直接映射入库到 deviceProfiles.js 的标准化能力档案",
+      "required": ["id", "brand", "model", "name", "layout", "maxPollingRate", "isWired", "hasBattery", "features"],
+      "properties": {
+        "id": { "type": "string", "example": "custom_ae64_max" },
+        "brand": { "type": "string", "example": "江湾" },
+        "model": { "type": "string", "example": "AE64-MAX" },
+        "name": { "type": "string", "example": "江湾 AE64-MAX 磁轴键盘" },
+        "shortName": { "type": "string", "example": "AE64-MAX" },
+        "type": { "type": "string", "enum": ["keyboard", "mouse", "pad"] },
+        "layout": { "type": "string", "example": "64keys" },
+        "layoutName": { "type": "string", "example": "左移64配列" },
+        "totalKeyCount": { "type": "integer", "example": 64 },
+        "connectionType": { "type": "string", "enum": ["wired", "wireless", "tri-mode"] },
+        "connectionLabel": { "type": "string", "example": "USB 极速有线" },
+        "isWired": { "type": "boolean" },
+        "hasBattery": { "type": "boolean" },
+        "maxPollingRate": { "type": "integer", "example": 8000 },
+        "hardRateCeiling": { "type": "integer", "example": 32000 },
+        "defaultPollingRate": { "type": "integer", "example": 8000 },
+        "minActuationPoint": { "type": "number", "example": 0.001 },
+        "defaultAxis": { "type": ["string", "null"] },
+        "features": {
+          "type": "object",
+          "properties": {
+            "magneticAxis": { "type": "boolean" },
+            "rtSupport": { "type": "boolean" },
+            "socdSupport": { "type": "boolean" },
+            "dksSupport": { "type": "boolean" },
+            "mptSupport": { "type": "boolean" },
+            "furyMode": { "type": "boolean" },
+            "rgbLighting": { "type": "boolean" },
+            "hallCalibration": { "type": "boolean" },
+            "continuousRt": { "type": "boolean" },
+            "doubleLighting": { "type": "boolean" },
+            "stripLighting": { "type": "boolean" },
+            "shakeOptimization": { "type": "boolean" }
+          }
+        }
+      }
+    },
+    "matrixLayout": {
+      "type": "object",
+      "description": "真机物理按键矩阵与坐标映射 (从 getKeyLayoutStyle 逐行抓取)",
+      "required": ["totalKeys", "matrixRows", "matrixCols", "physicalKeys"],
+      "properties": {
+        "totalKeys": { "type": "integer", "example": 64 },
+        "matrixRows": { "type": "integer", "example": 5 },
+        "matrixCols": { "type": "integer", "example": 21 },
+        "layoutCategory": { "type": "string", "example": "64keys" },
+        "physicalKeys": {
+          "type": "array",
+          "description": "有效物理焊盘按键列表 (按 row-major 排序)",
+          "items": {
+            "type": "object",
+            "required": ["row", "col"],
+            "properties": {
+              "row": { "type": "integer" },
+              "col": { "type": "integer" },
+              "ratio": { "type": "number" },
+              "defaultKeycode": { "type": "integer" },
+              "label": { "type": "string" }
+            }
+          }
+        },
+        "rawRowScanDump": {
+          "type": "array",
+          "description": "0~20 行硬件原始扫描快照"
+        }
+      }
+    },
+    "lightingTopology": {
+      "type": "object",
+      "description": "键盘灯光区域、灯珠数量、单双灯及特殊灯位架构",
+      "required": ["isDoubleLighting", "lightingAreas"],
+      "properties": {
+        "isDoubleLighting": { "type": "boolean", "description": "是否为上下单键双灯珠架构" },
+        "doubleLightingRaw": { "type": "integer", "example": 0 },
+        "lightingAreas": {
+          "type": "array",
+          "description": "getLightingArea 返回的全部灯光分区 (主键盘/底灯/侧灯带)",
+          "items": {
+            "type": "object",
+            "properties": {
+              "index": { "type": "integer" },
+              "areaName": { "type": "string", "example": "Keyboard" },
+              "count": { "type": "integer" },
+              "rows": { "type": "integer" },
+              "cols": { "type": "integer" }
+            }
+          }
+        },
+        "spaceLamps": {
+          "type": "object",
+          "description": "空格键多物理灯珠拓扑",
+          "properties": {
+            "hasIndependentSpaceLamps": { "type": "boolean" },
+            "count": { "type": "integer", "example": 5 },
+            "coordinates": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "index": { "type": "integer" },
+                  "row": { "type": "integer" },
+                  "col": { "type": "integer" }
+                }
+              }
+            }
+          }
+        },
+        "stripLighting": {
+          "type": "object",
+          "description": "贯穿式或边缘装饰灯带",
+          "properties": {
+            "hasStrip": { "type": "boolean" },
+            "stripCols": { "type": "integer", "example": 26 },
+            "stripRows": { "type": "integer", "example": 1 }
+          }
+        },
+        "boardLightingSnapshot": {
+          "type": "object",
+          "description": "板载存储的当前基础灯效模式与颜色快照"
+        }
+      }
+    },
+    "performanceSpec": {
+      "type": "object",
+      "description": "回报率、USB模式、RT精度与高级算法能力",
+      "required": ["supportedPollingRates", "maxPollingRate", "rtPrecisionMm"],
+      "properties": {
+        "supportedPollingRates": {
+          "type": "array",
+          "items": { "type": "integer" },
+          "example": [1000, 2000, 4000, 8000]
+        },
+        "currentPollingRate": { "type": "integer", "example": 8000 },
+        "maxPollingRate": { "type": "integer", "example": 8000 },
+        "hardwareRateCeiling": { "type": "integer", "example": 32000 },
+        "rtPrecisionMm": { "type": "number", "example": 0.001 },
+        "usbModeStatus": {
+          "type": "object",
+          "properties": {
+            "mode": { "type": "integer" },
+            "driverStatus": { "type": "integer" },
+            "isEnhanceDriverRequired": { "type": "boolean" }
+          }
+        },
+        "shakeOptimizationSwitch": { "type": "integer" },
+        "higherKeyCapabilities": {
+          "type": "object",
+          "description": "高级键支持矩阵 (RS/SOCD/DKS/MT/TGL/MPT/END)",
+          "properties": {
+            "rs": { "type": "boolean" },
+            "socd": { "type": "boolean" },
+            "dks": { "type": "boolean" },
+            "mt": { "type": "boolean" },
+            "tgl": { "type": "boolean" },
+            "mpt": { "type": "boolean" },
+            "end": { "type": "boolean" }
+          }
+        },
+        "boardConfigSlots": {
+          "type": "object",
+          "properties": {
+            "total": { "type": "integer", "example": 4 },
+            "current": { "type": "string", "example": "Config1" },
+            "list": { "type": "array", "items": { "type": "string" } }
+          }
+        }
+      }
+    },
+    "axisAndCalibration": {
+      "type": "object",
+      "description": "轴体硬件适配库与传感器基准",
+      "properties": {
+        "boardAxisList": {
+          "type": "array",
+          "description": "板载固件支持的轴体清单 (getAxisList)",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": { "type": "integer" },
+              "name": { "type": "string" },
+              "stroke": { "type": "number" },
+              "minAp": { "type": "number" },
+              "maxAp": { "type": "number" }
+            }
+          }
+        },
+        "defaultAxis": { "type": "string" },
+        "hallCalibrationSupported": { "type": "boolean" },
+        "calibrationStatusSnapshot": { "type": "object" },
+        "adcSamplePreview": { "type": "object" }
+      }
+    }
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "name": "sparklink-cloud-publisher",
+  "version": "1.0.0",
+  "description": "星闪外设适配库云端发布助手 (独立开发者版)",
+  "main": "main.js",
+  "author": "SparkLink PlayJoy Dev Team",
+  "license": "MIT",
+  "dependencies": {
+    "jszip": "^3.10.2"
+  }
+}

@@ -1,0 +1,6 @@
+# 开发者本地私密配置（包含 Gitee Token，切勿上传公开仓库）
+config.json
+
+# 临时生成物
+dist_cloud/
+*.log
