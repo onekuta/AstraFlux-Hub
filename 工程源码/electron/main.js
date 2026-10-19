@@ -17,6 +17,11 @@ if (!gotTheLock) {
   process.exit(0);
 }
 
+// 设置 Windows 任务栏应用专属标识符，确保任务栏图标与分组正确绑定
+if (process.platform === 'win32') {
+  app.setAppUserModelId('com.astraflux.hub');
+}
+
 let mainWindow = null;
 let tray = null;
 let isQuitting = false;
@@ -101,8 +106,15 @@ function createTray() {
   if (tray) return;
 
   try {
-    const iconPath = path.join(__dirname, 'icon.png');
-    let trayIcon = nativeImage.createFromPath(iconPath);
+    const icoPath = path.join(__dirname, 'icon.ico');
+    const pngPath = path.join(__dirname, 'icon.png');
+    let trayIcon;
+    if (process.platform === 'win32' && fs.existsSync(icoPath)) {
+      trayIcon = nativeImage.createFromPath(icoPath);
+    } else {
+      trayIcon = nativeImage.createFromPath(pngPath);
+    }
+
     if (trayIcon.isEmpty()) {
       const fallbackPath = path.join(__dirname, '../dist/icon.png');
       if (fs.existsSync(fallbackPath)) {
@@ -110,7 +122,7 @@ function createTray() {
       }
     }
     if (!trayIcon.isEmpty() && process.platform === 'win32') {
-      trayIcon = trayIcon.resize({ width: 16, height: 16 });
+      trayIcon = trayIcon.resize({ width: 16, height: 16, quality: 'high' });
     }
 
     if (trayIcon.isEmpty()) {
@@ -190,6 +202,10 @@ function createTray() {
 }
 
 function createWindow() {
+  const icoPath = path.join(__dirname, 'icon.ico');
+  const pngPath = path.join(__dirname, 'icon.png');
+  const windowIcon = (process.platform === 'win32' && fs.existsSync(icoPath)) ? icoPath : pngPath;
+
   mainWindow = new BrowserWindow({
     width: 1380,
     height: 880,
@@ -198,13 +214,17 @@ function createWindow() {
     frame: false, // 现代无边框自绘标题栏
     titleBarStyle: 'hidden',
     backgroundColor: '#f8fafc',
-    icon: path.join(__dirname, 'icon.png'),
+    icon: windowIcon,
     webPreferences: {
       nodeIntegration: false,
       contextIsolation: true,
       preload: path.join(__dirname, 'preload.js'),
     },
   });
+
+  if (process.platform === 'win32') {
+    mainWindow.setIcon(windowIcon);
+  }
 
   // 关键：自动授权 WebHID 供应商设备（星闪 0x1CA6 及其它键盘设备），免弹窗
   mainWindow.webContents.session.setPermissionCheckHandler((webContents, permission) => {
