@@ -58,6 +58,7 @@ app.whenReady().then(async () => {
   fs.writeFileSync(path.join(outDir, 'verified_about_page_light.png'), imgLightTop.toPNG());
   console.log('Saved verified_about_page_light.png');
 
+  await scrollToAndCapture(480, 'verified_about_page_light_scrolled.png');
   await scrollToAndCapture(1200, 'verified_about_page_light_bottom.png');
 
   app.quit();

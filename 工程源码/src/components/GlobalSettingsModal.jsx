@@ -64,7 +64,7 @@ const FAQ_ITEMS = [
   },
   {
     q: '当前驱动客户端支持哪些星闪设备与键盘？',
-    a: '已全面支持星闪 (NearLink) SLE 8KHz 极速电竞生态键盘、BS2 系列主控、前行者/迈从/渴创等品牌星闪方案设备，以及 60% / 64 / 68 / 75% / 87 / 98 / 104 等常见客制化与量产配列。'
+    a: '本驱动主要支持采用星闪 (NearLink) 方案的键盘与外设生态设备，涵盖搭载星闪协议的各类客制化与量产键盘（支持 60% / 64 / 68 / 75% / 87 / 98 / 104 等常见配列）。需要特别说明的是，本驱动专为星闪方案深度适配，非星闪方案的传统普通键盘基本上不支持接入与配置。'
   },
   {
     q: '星闪无线扫描不到设备时应如何处理？',
@@ -470,7 +470,7 @@ export default function GlobalSettingsModal({
     }
   };
 
-  const [expandedFaq, setExpandedFaq] = useState(0); // 默认展开第1项常见问题 (对齐截图)
+  const [expandedFaq, setExpandedFaq] = useState(1); // 默认展开第2项常见问题「支持哪些星闪设备与键盘」
   const [expandedLicenseGroups, setExpandedLicenseGroups] = useState({ 0: true }); // 默认展开第1类开源组件 (对齐截图)
 
   const openExternal = (url, label) => {
