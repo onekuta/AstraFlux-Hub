@@ -4340,7 +4340,7 @@ export default function App() {
               keyCount={KEY_COUNT}
               allAxes={axisList}
               primaryAxisKeyword={deviceProfile?.defaultAxis || '磁玉'}
-              primaryAxisBadge={deviceProfile?.id === 'dv63' ? 'DV63默认' : (deviceProfile?.id === 'es68' ? 'ES68默认' : '常用轴体')}
+              primaryAxisBadge='出厂标配'
               onSelectAxis={(sw) => {
                 setCurrentAxis(sw);
                 axisService.applyAxisToKeyboard(sw);

@@ -8,21 +8,20 @@ export const SPARK_SWITCH_BRANDS = [
   { id: 'jiangwan', label: '江湾 (Everglide)' },
   { id: 'gateron', label: '佳达隆 (Gateron)' },
   { id: 'ttc', label: '正牌科电 (TTC)' },
-  { id: 'jyt', label: '极岳泰 (JYT)' },
   { id: 'all', label: '全部校准库 (220+款)' },
 ];
 
 export const BRANDED_SWITCHES = {
   custom: [
-    { id: 788, name: '天际线轴', travel: 3.55, brand: '江湾 (Everglide)', color: '#4dd1f9', badge: 'AE64默认', desc: '江湾天际线磁轴，高导光柱，极速回弹，AE64-MAX 原厂出厂标配' },
+    { id: 788, name: '天际线轴', travel: 3.55, brand: '江湾 (Everglide)', color: '#4dd1f9', badge: '高导光柱', desc: '江湾天际线磁轴，高导光柱，极速回弹，线性顺滑手感' },
     { id: 1, name: '磁玉 Pro', travel: 3.50, brand: '佳达隆 (Gateron)', color: '#70cb9a', badge: '佳达隆标配', desc: '佳达隆磁玉 Pro 磁轴，双轨结构，高透光上盖，3.5mm 顺滑低抖' },
-    { id: 1003, name: '磁玉 Pro 超竞版', travel: 3.50, brand: '前行者 × 佳达隆', color: '#3b82f6', badge: 'ES68定制', desc: '前行者 ES68 破晓联合佳达隆特调定制超竞版，高频电竞调校，极速响应' },
-    { id: 1002, name: '神马轴', travel: 3.45, brand: '默认推荐', color: '#2563eb', badge: 'DV63默认', desc: 'VICTKONG DV63 磁轴，初始磁通量高，RT响应极速' },
+    { id: 1003, name: '磁玉 Pro 超竞版', travel: 3.50, brand: '佳达隆 (Gateron)', color: '#3b82f6', badge: '超竞特调', desc: '佳达隆特调超竞版磁轴，双轨结构，高频电竞调校，极速响应' },
+    { id: 1002, name: '神马轴', travel: 3.45, brand: '神马 (Shenma)', color: '#2563eb', badge: '初始高磁通', desc: '神马磁轴，初始磁通量高，RT响应极速' },
     { id: 1219, name: '库里南轴', travel: 3.60, brand: '江湾 (Everglide)', color: '#eaeaea', badge: '江湾原厂', desc: '江湾库里南磁轴，双轨超顺滑，HiFi 敲击音' },
     { id: 20, name: '默认磁轴', travel: 3.50, brand: '常用轴体', color: '#64748b', badge: '通用标准', desc: '标准通用霍尔电压标定曲线' },
   ],
   jiangwan: [
-    { id: 788, name: '天际线轴', travel: 3.55, brand: '江湾 (Everglide)', color: '#4dd1f9', badge: 'AE64默认', desc: '江湾天际线磁轴，高导光柱，极速回弹，AE64-MAX 出厂标配' },
+    { id: 788, name: '天际线轴', travel: 3.55, brand: '江湾 (Everglide)', color: '#4dd1f9', badge: '高导光柱', desc: '江湾天际线磁轴，高导光柱，极速回弹，线性顺滑手感' },
     { id: 1219, name: '库里南轴', travel: 3.60, brand: '江湾 (Everglide)', color: '#eaeaea', badge: '江湾旗舰', desc: '江湾库里南磁轴，双轨超顺滑，HiFi 敲击音' },
     { id: 791, name: '磁神轴', travel: 3.47, brand: '江湾 (Everglide)', color: '#d3e4ff', badge: '电竞调校', desc: '江湾磁神轴，低死区高线性，瞬态响应' },
   ],
@@ -38,10 +37,6 @@ export const BRANDED_SWITCHES = {
     { id: 5, name: '天王轴', travel: 3.50, brand: 'TTC', color: '#2bc2bd', badge: '强劲回弹', desc: '双段长弹簧，段落感与线性兼顾' },
     { id: 7, name: 'POM万磁王', travel: 3.40, brand: 'TTC', color: '#ddcde6', badge: '自润滑', desc: '高硬度全POM外壳，越用越顺' },
     { id: 30, name: '爱心万磁王', travel: 3.30, brand: 'TTC', color: '#74d1e0', badge: '轻柔触感', desc: '粉色透光上盖，敲击轻盈省力' },
-  ],
-  jyt: [
-    { id: 1001, name: '极岳泰定制磁轴', travel: 3.60, brand: '极岳泰', color: '#0284c7', badge: '深度调校', desc: '合作深度调校，3.6mm 黄金行程' },
-    { id: 1005, name: '极岳泰极速磁轴', travel: 3.40, brand: '极岳泰', color: '#0ea5e9', badge: '快触发', desc: '触底紧凑，专为 FPS 射击游戏优化' },
   ]
 };
 

@@ -484,10 +484,10 @@ export default function CalibrationModal({
                     <span className="text-[9.5px] text-[var(--info-color)] font-mono">官方 V3 映射</span>
                   </div>
                   {(axisList && axisList.length > 0 ? axisList : [
-                    { id: 788, name: '天际线轴', maxTravel: 3.55, badge: 'AE64-MAX标配' },
+                    { id: 788, name: '天际线轴', maxTravel: 3.55, badge: '高导光柱' },
                     { id: 1219, name: '库里南轴', maxTravel: 3.60, badge: '江湾原厂' },
                     { id: 1, name: '磁玉 Pro', maxTravel: 3.50, badge: '佳达隆标配' },
-                    { id: 1002, name: '神马轴', maxTravel: 3.45, badge: 'DV63出厂标配' },
+                    { id: 1002, name: '神马轴', maxTravel: 3.45, badge: '初始高磁通' },
                   ]).slice(0, 16).map((ax) => {
                     const isAxSelected = (effectiveCurrentAxis?.name === ax.name) || (effectiveCurrentAxis?.id === ax.id);
                     return (
