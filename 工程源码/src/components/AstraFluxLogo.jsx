@@ -15,8 +15,8 @@ export default function AstraFluxLogo({ className = "w-7 h-7", rounded = "rounde
   return (
     <div 
       className={`relative overflow-hidden flex items-center justify-center shrink-0 ${rounded} ${className} 
-        bg-white/95 border border-slate-200/90 shadow-2xs
-        dark:bg-[#0c101c] dark:border-cyan-500/35 dark:shadow-[0_0_16px_rgba(0,242,254,0.2)]
+        bg-white/95 border border-slate-200/90
+        dark:bg-[#0c101c] dark:border-cyan-500/35
         transition-colors duration-200`}
     >
       <svg 
@@ -38,15 +38,10 @@ export default function AstraFluxLogo({ className = "w-7 h-7", rounded = "rounde
             <stop offset="50%" stopColor="#A855F7" />
             <stop offset="100%" stopColor="#E11D48" />
           </linearGradient>
-
-          {/* 柔和流线微阴影 (确保浅色底板上层次分明) */}
-          <filter id="af_vg_shadow_light" x="-20%" y="-20%" width="140%" height="140%">
-            <feDropShadow dx="0" dy="2.5" stdDeviation="2.5" floodColor="#0f172a" floodOpacity="0.18" />
-          </filter>
         </defs>
 
-        <g filter="url(#af_vg_shadow_light)">
-          {/* 上流线：平滑圆角流体胶囊带 (左前探) */}
+        <g>
+          {/* 上流线：平滑圆角流体胶囊带 (左前探) - 零阴影纯净风格 */}
           <rect x="14" y="28" width="60" height="18" rx="9" fill="url(#af_vg_top_light)" />
           {/* 上流线纯白立体高光导槽 */}
           <path 
@@ -57,7 +52,7 @@ export default function AstraFluxLogo({ className = "w-7 h-7", rounded = "rounde
             opacity="0.85" 
           />
 
-          {/* 下流线：向右错位并排流线 (右后随) */}
+          {/* 下流线：向右错位并排流线 (右后随) - 零阴影纯净风格 */}
           <rect x="26" y="54" width="60" height="18" rx="9" fill="url(#af_vg_bot_light)" />
           {/* 下流线纯白立体高光导槽 */}
           <path 
