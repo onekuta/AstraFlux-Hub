@@ -503,8 +503,24 @@ class KeyboardService {
         this.device = rawDev;
         this.connected = true;
 
+        const chipUsbName = (targetDevice.productName || '').replace(/\0/g, '').trim();
+        this.deviceInfo = {
+          name: chipUsbName || '',
+          model: chipUsbName || '',
+          productName: chipUsbName || '',
+          sn: targetDevice.serialNumber || '',
+        };
+        this.deviceProfile = analyzeDeviceCapabilities({
+          vendorId: targetDevice.vendorId,
+          productId: targetDevice.productId,
+          productName: targetDevice.productName || '',
+        });
+
+        // 关键性能优化：握手成功后立即广播已连接状态，实现 0 毫秒感知即刻点亮 UI
+        this.emitChange();
+
         // 安全超时包装器，防止个别硬件只读指令响应延迟阻塞连接流程
-        const safeQuery = async (fn, timeoutMs = 1500) => {
+        const safeQuery = async (fn, timeoutMs = 1200) => {
           try {
             return await Promise.race([
               fn(),
@@ -515,89 +531,90 @@ class KeyboardService {
           }
         };
 
-        // 1. 获取硬件参数与出厂 SN 码 (调用 SDK 官方 getDevicesInfo，适用于所有星闪键盘)
-        const info = await safeQuery(async () => {
-          if (typeof this.sdk.getDevicesInfo === 'function') {
-            return await this.sdk.getDevicesInfo();
-          } else if (typeof this.sdk.getDeviceInfo === 'function') {
-            return await this.sdk.getDeviceInfo();
+        // 异步后台静默回读芯片参数、功能特性与协议，不阻塞前台连接状态
+        (async () => {
+          try {
+            // 1. 获取硬件参数与出厂 SN 码 (调用 SDK 官方 getDevicesInfo，适用于所有星闪键盘)
+            const info = await safeQuery(async () => {
+              if (typeof this.sdk.getDevicesInfo === 'function') {
+                return await this.sdk.getDevicesInfo();
+              } else if (typeof this.sdk.getDeviceInfo === 'function') {
+                return await this.sdk.getDeviceInfo();
+              }
+              return null;
+            }, 1200);
+
+            if (info) {
+              this.deviceInfo = {
+                ...this.deviceInfo,
+                ...info,
+                name: info.name || info.model || info.deviceName || chipUsbName || '',
+                model: info.model || chipUsbName || '',
+                productName: chipUsbName || info.name || '',
+                sn: info.sn || targetDevice.serialNumber || '',
+              };
+              console.log('[SparkLink HID] 成功读取键盘硬件芯片参数与出厂 SN 码:', this.deviceInfo);
+            }
+
+            // 2. 读取硬件功能特性 (轴体/磁轴/连接方式/灯光等)
+            const features = await safeQuery(async () => {
+              if (typeof this.sdk.getDeviceFeature === 'function') {
+                return await this.sdk.getDeviceFeature();
+              }
+              return null;
+            }, 800);
+            if (features) {
+              this.deviceFeatures = features;
+              console.log('[SparkLink HID] 成功读取键盘硬件特性:', this.deviceFeatures);
+            }
+
+            // 3. 读取设备协议版本
+            const protocol = await safeQuery(async () => {
+              if (typeof this.sdk.getDeviceProtocol === 'function') {
+                return await this.sdk.getDeviceProtocol();
+              }
+              return null;
+            }, 800);
+            if (protocol) {
+              this.deviceProtocol = protocol;
+            }
+
+            // 4. 动态分析设备能力：读取硬件支持的回报率列表
+            const rateRes = await safeQuery(async () => {
+              if (typeof this.sdk.getRateOfReturnList === 'function') {
+                return await this.sdk.getRateOfReturnList();
+              }
+              return null;
+            }, 800);
+            let sdkRates = null;
+            if (rateRes && Array.isArray(rateRes.list)) {
+              sdkRates = rateRes.list;
+            }
+
+            // 5. 读取硬件 USB 模式与 3.0 驱动状态
+            const usbRes = await safeQuery(async () => {
+              if (typeof this.sdk.getUSBModeStatus === 'function') {
+                return await this.sdk.getUSBModeStatus();
+              }
+              return null;
+            }, 800);
+            if (usbRes && typeof usbRes === 'object') {
+              this.usbModeStatus = usbRes;
+            }
+
+            this.deviceProfile = analyzeDeviceCapabilities({
+              vendorId: targetDevice.vendorId,
+              productId: targetDevice.productId,
+              productName: targetDevice.productName || '',
+              sdkRates,
+            });
+
+            this.emitChange();
+          } catch (bgErr) {
+            console.warn('[SparkLink HID] 异步回读硬件高级特性提示:', bgErr);
           }
-          return null;
-        }, 1500);
+        })();
 
-        const chipUsbName = (targetDevice.productName || '').replace(/\0/g, '').trim();
-        if (info) {
-          this.deviceInfo = {
-            ...info,
-            name: info.name || info.model || info.deviceName || chipUsbName || '',
-            model: info.model || chipUsbName || '',
-            productName: chipUsbName || info.name || '',
-            sn: info.sn || targetDevice.serialNumber || '',
-          };
-          console.log('[SparkLink HID] 成功读取键盘硬件芯片参数与出厂 SN 码:', this.deviceInfo);
-        } else {
-          this.deviceInfo = {
-            name: chipUsbName || '',
-            model: chipUsbName || '',
-            productName: chipUsbName || '',
-            sn: targetDevice.serialNumber || '',
-          };
-        }
-
-        // 2. 读取硬件功能特性 (轴体/磁轴/连接方式/灯光等)
-        const features = await safeQuery(async () => {
-          if (typeof this.sdk.getDeviceFeature === 'function') {
-            return await this.sdk.getDeviceFeature();
-          }
-          return null;
-        }, 1200);
-        if (features) {
-          this.deviceFeatures = features;
-          console.log('[SparkLink HID] 成功读取键盘硬件特性:', this.deviceFeatures);
-        }
-
-        // 3. 读取设备协议版本
-        const protocol = await safeQuery(async () => {
-          if (typeof this.sdk.getDeviceProtocol === 'function') {
-            return await this.sdk.getDeviceProtocol();
-          }
-          return null;
-        }, 1200);
-        if (protocol) {
-          this.deviceProtocol = protocol;
-        }
-
-        // 4. 动态分析设备能力：读取硬件支持的回报率列表
-        const rateRes = await safeQuery(async () => {
-          if (typeof this.sdk.getRateOfReturnList === 'function') {
-            return await this.sdk.getRateOfReturnList();
-          }
-          return null;
-        }, 1200);
-        let sdkRates = null;
-        if (rateRes && Array.isArray(rateRes.list)) {
-          sdkRates = rateRes.list;
-        }
-
-        // 5. 读取硬件 USB 模式与 3.0 驱动状态
-        const usbRes = await safeQuery(async () => {
-          if (typeof this.sdk.getUSBModeStatus === 'function') {
-            return await this.sdk.getUSBModeStatus();
-          }
-          return null;
-        }, 1200);
-        if (usbRes && typeof usbRes === 'object') {
-          this.usbModeStatus = usbRes;
-        }
-
-        this.deviceProfile = analyzeDeviceCapabilities({
-          vendorId: targetDevice.vendorId,
-          productId: targetDevice.productId,
-          productName: targetDevice.productName || '',
-          sdkRates,
-        });
-
-        this.emitChange();
         return true;
       }
     } catch (error) {

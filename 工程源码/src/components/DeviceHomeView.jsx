@@ -29,10 +29,11 @@ export default function DeviceHomeView({
   const { addToast } = useToast();
 
   const isActive = (dev) =>
-    isConnected &&
-    ((activeDevice && dev.vendorId === activeDevice.vendorId && dev.productId === activeDevice.productId) ||
-     (activeDevice && dev.id && activeDevice.id && dev.id === activeDevice.id) ||
-     (devices.length === 1 && isConnected));
+    (isConnected &&
+      ((activeDevice && dev.vendorId === activeDevice.vendorId && dev.productId === activeDevice.productId) ||
+       (activeDevice && dev.id && activeDevice.id && dev.id === activeDevice.id) ||
+       (devices.length === 1 && isConnected))) ||
+    dev.connected;
 
   return (
     <div className="flex flex-col flex-1 h-full w-full bg-[var(--bg-primary)] text-[var(--text-primary)] select-none overflow-y-auto">
@@ -250,7 +251,10 @@ export default function DeviceHomeView({
                     </span>
                   </div>
 
-                  <div className="flex items-center space-x-1 text-[var(--text-tertiary)] font-bold group-hover:translate-x-1 transition-transform shrink-0 ml-auto pl-2">
+                  <div className={`flex items-center space-x-1.5 font-bold group-hover:translate-x-1 transition-transform shrink-0 ml-auto pl-2 ${
+                    active ? 'text-emerald-500 dark:text-emerald-400' : 'text-[var(--text-tertiary)]'
+                  }`}>
+                    {active && <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse inline-block" />}
                     <span>{active ? '已连接' : '未激活'}</span>
                     <ChevronRight className="w-4 h-4" />
                   </div>

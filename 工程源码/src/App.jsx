@@ -263,7 +263,9 @@ export default function App() {
             console.log('[SparkLink AutoScan] 正在回报率自愈重连序列中，跳过此轮外部自动连接');
           } else {
             console.log('[SparkLink AutoScan] 主页自主检索到已建库设备，正在自动握手默认方案:', preferred.displayName);
-            keyboardService.autoConnect(preferred.hidDevice || preferred).catch(() => {});
+            keyboardService.autoConnect(preferred.hidDevice || preferred).then((ok) => {
+              if (ok) refreshAuthorizedDevices(false);
+            }).catch(() => {});
           }
         }
       }
@@ -2742,15 +2744,12 @@ export default function App() {
                 keyboardService._clearAllSdkQueues();
               }
               // 优先尝试直接连接已识别的设备，避免不必要的系统授权弹窗
-              const ok = await keyboardService.autoConnect(dev.hidDevice || dev);
+              let ok = await keyboardService.autoConnect(dev.hidDevice || dev);
               if (!ok && typeof keyboardService.requestPermission === 'function') {
-                await keyboardService.requestPermission(true);
+                ok = await keyboardService.requestPermission(true);
               }
             } catch (err) {
               console.warn('onConnectSpecific fallback to autoConnect:', err);
-              if (typeof keyboardService._clearAllSdkQueues === 'function') {
-                keyboardService._clearAllSdkQueues();
-              }
               await keyboardService.autoConnect(dev.hidDevice || dev).catch(() => {});
             }
             await refreshAuthorizedDevices(false);
