@@ -4984,7 +4984,7 @@ export default function App() {
               )}
             </span>
             <span className="text-[var(--text-quaternary)]">•</span>
-            <span className="text-[var(--info-color)] font-semibold">星闪悦动驱动</span>
+            <span className="text-[var(--info-color)] font-semibold">AstraFlux-HUB (星流驱动)</span>
           </div>
         </footer>
       )}

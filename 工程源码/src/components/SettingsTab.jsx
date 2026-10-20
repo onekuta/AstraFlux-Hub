@@ -187,6 +187,9 @@ export default function SettingsTab({
               <p className="text-xs text-[var(--text-secondary)] leading-relaxed">
                 硬件底层固件由<strong className="text-[var(--text-primary)] font-bold">品牌原厂及星闪官方团队</strong>维护并数字签名。本开源驱动仅提供官方云端通道 (<code className="text-[var(--info-color)] font-mono font-bold">api.sparklinkplayjoy.com</code>) 校验与下载，严禁刷入非原厂未知二进制文件以防设备变砖。
               </p>
+              <div className="pt-2 border-t border-[var(--border-color)]/60 text-xs text-amber-600 dark:text-amber-400 font-medium flex items-center gap-1.5">
+                <span>💡 温馨建议：固件更新建议优先前往键盘品牌原厂官网或官方技术支持中心获取并更新，以确保获得针对该型号的最佳稳定性与专属调校特性。</span>
+              </div>
             </div>
 
             {/* 当前硬件参数信息 */}

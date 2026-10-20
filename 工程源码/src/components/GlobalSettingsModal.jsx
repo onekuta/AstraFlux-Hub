@@ -1184,10 +1184,10 @@ export default function GlobalSettingsModal({
                               className="text-xl font-black font-title tracking-wider text-[var(--text-primary)] cursor-pointer select-none"
                               title="连续点击 7 次进入开发者模式"
                             >
-                              SPARKLINK HUB
+                              AstraFlux-HUB
                             </h3>
                             <p className="text-[11px] font-semibold text-cyan-500 dark:text-cyan-400 tracking-wide mt-0.5">
-                              星闪悦动驱动 · 超低延迟外设管理中心
+                              星流驱动 · 通用磁轴与电竞外设开源管理中心
                             </p>
                           </div>
                         </div>
@@ -1198,7 +1198,7 @@ export default function GlobalSettingsModal({
                       </div>
 
                       <p className="text-xs text-[var(--text-secondary)] mt-3 leading-relaxed">
-                        SPARKLINK HUB 是一款面向星闪技术 (NearLink) 低延迟高刷新外设生态的第三方开源驱动与配置工具。专注于超高回报率电竞级磁轴、RT 极速触发与极简纯净的交互体验。
+                        AstraFlux-HUB (星流驱动) 是一款面向星闪技术 (NearLink) 与客制化外设生态的第三方开源驱动与配置工具。专注于超高回报率电竞级磁轴、RT 极速触发与极简纯净的交互体验。
                       </p>
                     </div>
 
@@ -1226,7 +1226,7 @@ export default function GlobalSettingsModal({
                         type="button"
                         onClick={() => {
                           addToast({
-                            message: '感谢您对星闪开源外设驱动的支持！欢迎在 GitHub 为项目点 Star 关注 ⭐️',
+                            message: '感谢您对 AstraFlux-HUB 星流驱动的支持！欢迎在 GitHub 为项目点 Star 关注 ⭐️',
                             type: 'success',
                             duration: 3000
                           });
@@ -1530,7 +1530,7 @@ export default function GlobalSettingsModal({
                             <h5 className="text-sm font-bold text-[var(--text-primary)] truncate">乐禾泽</h5>
                             <span className="text-[10px] font-mono font-semibold text-[var(--text-secondary)]">@Kutaze</span>
                           </div>
-                          <p className="text-[10px] text-blue-500 font-medium">SparkLink Hub 独立核心作者</p>
+                          <p className="text-[10px] text-blue-500 font-medium">AstraFlux-HUB 独立核心作者</p>
                           <p className="text-[10px] text-[var(--text-tertiary)] italic truncate mt-0.5">
                             🛠️ Indie maker & digital tinkerer.
                           </p>
@@ -1604,7 +1604,7 @@ export default function GlobalSettingsModal({
                     {/* 最底部规格摘要 (1:1 对齐 THRM 图五右下角) */}
                     <div className="p-2.5 rounded-xl bg-[var(--bg-secondary)]/50 border border-[var(--border-color)]/70 text-[10px] text-[var(--text-tertiary)] space-y-1 font-mono">
                       <div className="flex items-center justify-between">
-                        <span className="text-blue-500 font-bold">&lt;/&gt; SPARKLINK-HUB</span>
+                        <span className="text-blue-500 font-bold">&lt;/&gt; AstraFlux-HUB</span>
                         <span>MIT License</span>
                       </div>
                       <div className="flex items-center justify-between">
@@ -1668,7 +1668,7 @@ export default function GlobalSettingsModal({
 
                     <div className="flex items-center space-x-2">
                       <span className="text-[10px] font-bold px-2.5 py-0.5 rounded-full bg-blue-500/15 text-blue-600 dark:text-blue-400 border border-blue-500/20">
-                        SPARKLINK HUB 自身以 MIT 协议授权
+                        AstraFlux-HUB 自身以 MIT 协议授权
                       </span>
                       <span className="text-[11px] font-mono text-[var(--text-tertiary)]">
                         共 48 个组件
@@ -1677,7 +1677,7 @@ export default function GlobalSettingsModal({
                   </div>
 
                   <p className="text-xs text-[var(--text-secondary)] leading-relaxed">
-                    SPARKLINK HUB 以 MIT 协议开源。本软件的发行版本包含下列开源组件，各自按其原始许可证条款分发；完整许可证正文与版权声明见对应项目仓库。
+                    AstraFlux-HUB 以 MIT 协议开源。本软件的发行版本包含下列开源组件，各自按其原始许可证条款分发；完整许可证正文与版权声明见对应项目仓库。
                   </p>
 
                   {/* 分类折叠组件列表 */}

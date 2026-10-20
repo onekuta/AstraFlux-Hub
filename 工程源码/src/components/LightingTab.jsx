@@ -700,10 +700,16 @@ export default function LightingTab({
 
   // 清除自定义灯效 (保留当前选中的动态灯效，无缝恢复背景流光)
   const handleClearCustom = () => {
-    if (onClearCustomKeyColors) {
-      onClearCustomKeyColors();
+    if (isDecorateArea) {
+      if (onDecorateColorsChange) onDecorateColorsChange([]);
+      if (onClearAllStrip) onClearAllStrip();
+      addToast({ message: '已清空底灯自定义涂色，恢复动态灯效！', type: 'success' });
+    } else {
+      if (onClearCustomKeyColors) {
+        onClearCustomKeyColors();
+      }
+      addToast({ message: '已清除按键自定义单键涂色，恢复当前动态动效！', type: 'success' });
     }
-    addToast({ message: '已清除自定义单键涂色，恢复当前动态动效！', type: 'success' });
   };
 
   return (
@@ -810,13 +816,6 @@ export default function LightingTab({
               </button>
               <button
                 type="button"
-                onClick={() => onRainbowStrip && onRainbowStrip()}
-                className="px-3 py-1 rounded-lg bg-[var(--primary-04)] hover:bg-[var(--primary-09)] text-[var(--info-color)] border border-[var(--primary-15)] text-xs font-bold transition cursor-pointer"
-              >
-                彩虹渐变
-              </button>
-              <button
-                type="button"
                 onClick={() => onClearAllStrip && onClearAllStrip()}
                 className="px-3 py-1 rounded-lg bg-[var(--bg-secondary)] hover:bg-rose-50 text-[var(--text-secondary)] hover:text-rose-600 border border-[var(--border-color)] text-xs font-bold transition cursor-pointer"
               >
@@ -824,16 +823,6 @@ export default function LightingTab({
               </button>
             </>
           )}
-        </div>
-
-        <div className="text-[11.5px] text-[var(--text-disabled)] font-medium flex items-center bg-[var(--bg-secondary)] px-3 py-1 rounded-full border border-[var(--border-color)]">
-          <span className={`w-1.5 h-1.5 rounded-full mr-1.5 ${isLiveHwLightingSync && isConnected ? 'bg-emerald-500 animate-pulse shadow-[0_0_6px_rgba(16,185,129,0.7)]' : 'bg-[var(--info-color)] animate-pulse'}`}></span>
-          <span>
-            {isLiveHwLightingSync 
-              ? (isConnected ? '物理直读已就绪：以 ~12 FPS 实时同步物理单片机输出矩阵 (1:1 还原真机发光)' : '物理直读待命：设备离线，当前运行 30FPS 算法动画；连接物理键盘后将无缝直读')
-              : (isDecorateArea ? '点击或滑动底灯灯珠独立设色' : '左键点击或涂抹按键设色，右键擦除 (当前运行 30FPS 超平滑算法动效)')
-            }
-          </span>
         </div>
       </div>
 
@@ -993,7 +982,7 @@ export default function LightingTab({
             className="w-full mt-1.5 py-1 rounded-lg bg-[var(--primary-04)] hover:bg-[var(--primary-09)] text-[var(--info-color)] text-xs font-bold flex items-center justify-center space-x-1.5 border border-[var(--primary-15)] transition shadow-xs cursor-pointer active:scale-98"
           >
             <RotateCcw className="w-3.5 h-3.5" />
-            <span>清除自定义灯效</span>
+            <span>{isDecorateArea ? '清空底灯自定义涂色' : '清除自定义灯效'}</span>
           </button>
         </div>
 

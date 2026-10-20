@@ -249,7 +249,7 @@ export default function HidDevicePickerModal({
                 </span>
               </div>
               <p className="text-xs text-[var(--text-tertiary)] mt-0.5">
-                星闪悦动驱动想要连接到你的 HID 设备，请勾选硬件并授权
+                AstraFlux-HUB (星流驱动) 想要连接到你的 HID 设备，请勾选硬件并授权
               </p>
             </div>
           </div>
