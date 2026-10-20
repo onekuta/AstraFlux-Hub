@@ -697,6 +697,7 @@ echo          🎉 星闪悦动驱动 - 键盘适配数据库一键升级与覆�
 echo ======================================================================
 echo.
 echo [1/3] 正在检测运行中的星闪驱动进程...
+taskkill /F /IM "AstraFlux-HUB.exe" >nul 2>&1
 taskkill /F /IM "星闪悦动HUB.exe" >nul 2>&1
 taskkill /F /IM "sparklink-hub.exe" >nul 2>&1
 ping 127.0.0.1 -n 2 >nul

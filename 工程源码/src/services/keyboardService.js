@@ -37,7 +37,7 @@ const MODEL_KEYWORDS = [
  * ③ 补档：挂上 analyzeDeviceCapabilities 解出的档案（型号名 / 配列 / 回报率）
  * ④ 排序：已知型号（ES68 → AE64-MAX → DV63）优先，其余按名称稳定排列
  */
-export function normalizeDeviceList(rawList = [], allowAll = false) {
+export function normalizeDeviceList(rawList = [], allowAll = false, activeDevice = null) {
   const supported = (rawList || []).filter((d) => {
     if (!d) return false;
     // 1. 若是官方或主星闪方案设备，确认为键盘并放行
@@ -85,7 +85,7 @@ export function normalizeDeviceList(rawList = [], allowAll = false) {
     return false;
   });
 
-  // ② 按 VID:PID 去重：绝对优先保留具有 0xffb0 (或 0xff00~0xffff) 官方配置通信协议集合的实例！
+  // ② 按 VID:PID 去重：绝对优先保留具有 0xffb0 (或 0xff00~0xffff) 官方配置通信协议集合且已打开的实例！
   const merged = new Map();
   supported.forEach((d) => {
     const key = `${d.vendorId}:${d.productId}`;
@@ -94,6 +94,8 @@ export function normalizeDeviceList(rawList = [], allowAll = false) {
     const prevHasVendor = prev?.collections?.some((c) => c.usagePage === SPARKLINK_USAGE_PAGE || (c.usagePage >= 0xff00 && c.usagePage <= 0xffff));
 
     if (!prev) {
+      merged.set(key, d);
+    } else if (d.opened && !prev.opened) {
       merged.set(key, d);
     } else if (hasVendor && !prevHasVendor) {
       merged.set(key, d);
@@ -119,6 +121,8 @@ export function normalizeDeviceList(rawList = [], allowAll = false) {
       const hexVid = '0x' + (d.vendorId || 0).toString(16).toUpperCase();
       const hexPid = '0x' + (d.productId || 0).toString(16).toUpperCase();
 
+      const isConnected = !!(d.opened || (activeDevice && d.vendorId === activeDevice.vendorId && d.productId === activeDevice.productId));
+
       return {
         // 供 React key / 选中比对使用的稳定标识
         id: `${d.vendorId}:${d.productId}`,
@@ -136,6 +140,7 @@ export function normalizeDeviceList(rawList = [], allowAll = false) {
         connectionLabel: profile.connectionLabel || 'USB 极速有线',
         interfaceCount: d.collections?.length || 0,
         opened: !!d.opened,
+        connected: isConnected,
         _sortWeight: priority < 0 ? MODEL_KEYWORDS.length : priority,
       };
     })
@@ -210,8 +215,7 @@ class KeyboardService {
         this.sdk.on('usbChange', (data) => {
           console.log('[SparkLink HID] USB 插拔事件:', data);
           if (data.type === 'disconnect') {
-            this.connected = false;
-            this.device = null;
+            this._resetDeviceHandle();
             this.emitChange();
           } else if (data.type === 'connect') {
             // 若正在回报率重置序列中，由重连序列接管，避免并发冲突
@@ -220,6 +224,26 @@ class KeyboardService {
             }
           }
         });
+
+        // 双层保底：直接监听原生 navigator.hid 设备插拔事件
+        if (typeof navigator !== 'undefined' && navigator.hid && !this._hasRegisteredHidListeners) {
+          this._hasRegisteredHidListeners = true;
+          navigator.hid.addEventListener('connect', (e) => {
+            console.log('[SparkLink HID] 侦听到原生 WebHID connect 事件:', e.device?.productName);
+            if (!this.isResettingRate) {
+              setTimeout(() => {
+                this.autoConnect(e.device).catch(() => {});
+              }, 150);
+            }
+          });
+          navigator.hid.addEventListener('disconnect', (e) => {
+            console.log('[SparkLink HID] 侦听到原生 WebHID disconnect 事件:', e.device?.productName);
+            if (this.device && (this.device === e.device || (this.device.vendorId === e.device?.vendorId && this.device.productId === e.device?.productId))) {
+              this._resetDeviceHandle();
+              this.emitChange();
+            }
+          });
+        }
       } catch (err) {
         console.warn('SDK 初始化提示 (可能在非 WebHID 环境):', err);
       }
@@ -252,7 +276,7 @@ class KeyboardService {
     try {
       if (!navigator.hid) return [];
       const all = await navigator.hid.getDevices();
-      const list = normalizeDeviceList(all, allowAll);
+      const list = normalizeDeviceList(all, allowAll, this.connected ? this.device : null);
       console.log(
         `[SparkLink HID] 授权设备枚举 (allowAll=${allowAll}): 原始 ${all.length} 条 → 归一化 ${list.length} 台`,
         list.map((d) => `${d.displayName} (0x${d.vendorId.toString(16)}:0x${d.productId.toString(16)})`)
@@ -264,7 +288,8 @@ class KeyboardService {
     }
   }
 
-  // 彻底排空与重置 SDK 内部指令队列与设备单例句柄，防止硬件掉电/重启时产生死锁毒包
+  // 彻底排空与重置 SDK 内部指令队列，防止硬件掉电/重启时产生死锁毒包
+  // 严禁在此处清除 hs.device 或 hs.hidDevices，否则将彻底摧毁握手与通信会话
   _clearAllSdkQueues() {
     try {
       if (this.sdk?.deviceBase) {
@@ -282,16 +307,31 @@ class KeyboardService {
       if (this.sdk?.deviceBase?.hidService) {
         const hs = this.sdk.deviceBase.hidService;
         hs.isReconnecting = false;
-        hs.isInputReportListenerSetup = false;
-        if (hs.inputReportManager) {
+        if (hs.inputReportManager?.clear) {
           try { hs.inputReportManager.clear(); } catch (e) {}
-          hs.inputReportManager = null;
         }
-        hs.device = null;
-        hs.hidDevices = {};
       }
     } catch (e) {
-      console.warn('[SparkLink HID] 清理 SDK 队列与单例异常:', e);
+      console.warn('[SparkLink HID] 清理 SDK 队列异常:', e);
+    }
+  }
+
+  // 物理拔出或主动断开时的重置流程
+  _resetDeviceHandle() {
+    this.connected = false;
+    this.device = null;
+    this.deviceInfo = null;
+    this._clearAllSdkQueues();
+    if (this.sdk?.deviceBase?.hidService) {
+      const hs = this.sdk.deviceBase.hidService;
+      hs.isReconnecting = false;
+      hs.isInputReportListenerSetup = false;
+      if (hs.inputReportManager) {
+        try { hs.inputReportManager.clear(); } catch (e) {}
+        hs.inputReportManager = null;
+      }
+      hs.device = null;
+      hs.hidDevices = {};
     }
   }
 
@@ -300,8 +340,8 @@ class KeyboardService {
     // 互斥锁：如果正在回报率重置中 (且非自愈序列显式调用) 或正在握手连接中，直接跳过
     if (this.isConnecting || (this.isResettingRate && !allowDuringReset)) return false;
 
-    // 若已经处于连接状态，且没有指定连接其它硬件，直接复用当前连接
-    if (this.connected && this.device && !preferredDevice) {
+    // 若已经处于连接状态且物理句柄有效，且没有指定切换到其它硬件，直接复用当前连接
+    if (this.connected && this.device?.opened && !preferredDevice) {
       return true;
     }
 
@@ -310,84 +350,139 @@ class KeyboardService {
       this.initSDK();
       if (!this.sdk) return false;
 
-      // 1. 获取授权设备列表 (先尝试 SDK，若为空则直接穿透读取 navigator.hid.getDevices())
+      // 握手前排空残留队列，保证当前指令通道处于最纯净状态
+      this._clearAllSdkQueues();
+
+      // 1. 获取授权设备列表 (直接穿透读取 navigator.hid.getDevices())
       let devices = [];
-      try {
-        devices = await this.sdk.getDevices();
-      } catch (err) {
-        console.warn('[SparkLink HID] sdk.getDevices 异常，降级直取 navigator.hid:', err);
+      if (navigator.hid) {
+        try {
+          devices = await navigator.hid.getDevices();
+        } catch (e) {
+          console.warn('[SparkLink HID] navigator.hid.getDevices 异常:', e);
+        }
       }
       if (!devices || devices.length === 0) {
-        if (navigator.hid) {
-          try {
-            const raw = await navigator.hid.getDevices();
-            devices = raw;
-          } catch (e) {}
+        try {
+          devices = await this.sdk.getDevices();
+        } catch (err) {
+          console.warn('[SparkLink HID] sdk.getDevices 异常，降级直取 navigator.hid:', err);
         }
       }
       this.discoveredDevices = devices || [];
       console.log('[SparkLink HID] 扫描到的设备列表:', devices);
 
-      let targetDevice = null;
-      if (devices && devices.length > 0) {
-        // 优先筛选具备 0xffb0 / 官方通信协议集合的设备
-        const vendorFirst = (list) => {
-          const withVendor = list.filter((d) =>
-            d.collections?.some((c) => c.usagePage === SPARKLINK_USAGE_PAGE || (c.usagePage >= 0xff00 && c.usagePage <= 0xffff))
-          );
-          return withVendor.length > 0 ? withVendor : list;
-        };
-        const candidates = vendorFirst(devices);
+      if (!devices || devices.length === 0) {
+        console.log('[SparkLink HID] 当前未检测到已授权的 WebHID 外设');
+        return false;
+      }
 
-        // 0) 用户在主页指定点击的设备 → 1) 型号关键词 → 2) 官方库精确 VID:PID → 3) 官方 VID → 4) 首个
-        const matchPreferred = (d) =>
-          preferredDevice &&
-          d.vendorId === preferredDevice.vendorId &&
-          d.productId === preferredDevice.productId;
+      const isVendorCollection = (c) =>
+        c.usagePage === SPARKLINK_USAGE_PAGE || (c.usagePage >= 0xff00 && c.usagePage <= 0xffff);
+      const hasVendorCollection = (d) =>
+        d.collections?.some(isVendorCollection);
+
+      // 优先从具有 0xffb0 / 0xff00~0xffff 厂商通信集合的设备列表中筛选
+      const vendorCandidates = devices.filter(hasVendorCollection);
+      const candidates = vendorCandidates.length > 0 ? vendorCandidates : devices;
+
+      let targetDevice = null;
+      // 0) 用户指定或主页点击的设备
+      if (preferredDevice) {
+        const pVid = preferredDevice.vendorId;
+        const pPid = preferredDevice.productId;
         targetDevice =
-          (preferredDevice &&
-            candidates.find(
-              (d) =>
-                matchPreferred(d) ||
-                (preferredDevice.productName &&
-                  d.productName === preferredDevice.productName &&
-                  d.vendorId === preferredDevice.vendorId) ||
-                (preferredDevice.id && d.id === preferredDevice.id)
-            )) ||
+          candidates.find((d) => pVid && pPid && d.vendorId === pVid && d.productId === pPid) ||
+          devices.find((d) => pVid && pPid && d.vendorId === pVid && d.productId === pPid) ||
+          candidates.find((d) => preferredDevice.id && d.id === preferredDevice.id) ||
+          candidates.find(
+            (d) =>
+              preferredDevice.productName &&
+              d.productName === preferredDevice.productName &&
+              d.vendorId === preferredDevice.vendorId
+          );
+      }
+
+      // 1) 优先匹配知名型号关键词 (ES68, AE64, DV63 等)
+      if (!targetDevice) {
+        targetDevice =
           candidates.find((d) =>
-            MODEL_KEYWORDS.some(({ keyword }) =>
-              (d.productName || '').toUpperCase().includes(keyword)
-            )
+            MODEL_KEYWORDS.some(({ keyword }) => (d.productName || '').toUpperCase().includes(keyword))
           ) ||
+          devices.find((d) =>
+            MODEL_KEYWORDS.some(({ keyword }) => (d.productName || '').toUpperCase().includes(keyword))
+          );
+      }
+
+      // 2) 官方星闪数据库精确 VID:PID 匹配
+      if (!targetDevice) {
+        targetDevice =
           candidates.find((d) => isOfficialSparklinkDevice(d.vendorId, d.productId)) ||
+          devices.find((d) => isOfficialSparklinkDevice(d.vendorId, d.productId));
+      }
+
+      // 3) 官方 VID 匹配
+      if (!targetDevice) {
+        targetDevice =
           candidates.find((d) => SPARKLINK_VIDS.includes(d.vendorId)) ||
-          candidates[0];
+          devices.find((d) => SPARKLINK_VIDS.includes(d.vendorId));
+      }
+
+      // 4) 兜底首个可用设备
+      if (!targetDevice) {
+        targetDevice = candidates[0] || devices[0];
       }
 
       if (targetDevice) {
-        const rawDev = targetDevice.data || targetDevice;
+        const vid = targetDevice.vendorId;
+        const pid = targetDevice.productId;
+        // 提取该物理外设暴露出的所有 HID 接口集合
+        const matchingInterfaces = devices.filter((d) => d.vendorId === vid && d.productId === pid);
+
+        // 关键排序：将 0xffb0 / 0xff00~0xffff 厂商通信集合排在最前，避免误选 Windows 独占锁定的标准键盘集合 (UsagePage 1 / Usage 6)
+        const sortedInterfaces = [...matchingInterfaces].sort((a, b) => {
+          const aV = hasVendorCollection(a) ? 1 : 0;
+          const bV = hasVendorCollection(b) ? 1 : 0;
+          return bV - aV;
+        });
+
+        // 逐个尝试打开底层句柄，直至找到 Windows 允许通信的 WebHID 物理接口
+        let rawDev = sortedInterfaces[0] || targetDevice.data || targetDevice;
+        for (const cand of sortedInterfaces) {
+          try {
+            if (!cand.opened) {
+              await cand.open();
+            }
+            rawDev = cand;
+            console.log('[SparkLink HID] 成功打开目标设备 WebHID 物理句柄:', cand.productName, cand.collections);
+            break;
+          } catch (openErr) {
+            console.warn('[SparkLink HID] 当前接口句柄打开受限 (系统独占)，尝试下一集合:', openErr);
+          }
+        }
+
+        // 同步注册至 SDK 内部 hidService，保持句柄单例与映射完整
         if (this.sdk?.deviceBase?.hidService) {
           const hs = this.sdk.deviceBase.hidService;
-          if (!targetDevice.id) {
-            targetDevice.id = hs.tagDevice ? hs.tagDevice(rawDev, false)?.id : (`dev_${rawDev.vendorId}_${rawDev.productId}`);
-          }
-          hs.hidDevices[targetDevice.id] = {
+          const devId = targetDevice.id || rawDev.id || `dev_${rawDev.vendorId}_${rawDev.productId}`;
+          targetDevice.id = devId;
+          rawDev.id = devId;
+
+          const vendorCol = rawDev.collections?.find(isVendorCollection);
+          hs.hidDevices[devId] = {
             data: rawDev,
-            id: targetDevice.id,
+            id: devId,
             usage: hs.usage?.[0] || SPARKLINK_USAGE,
-            usagePage: rawDev.collections?.[0]?.usagePage || SPARKLINK_USAGE_PAGE,
+            usagePage: vendorCol?.usagePage || rawDev.collections?.[0]?.usagePage || SPARKLINK_USAGE_PAGE,
             vendorId: rawDev.vendorId,
             productId: rawDev.productId,
             productName: rawDev.productName || '',
-            collections: rawDev.collections
+            collections: rawDev.collections,
           };
           hs.device = rawDev;
         }
 
-        console.log('[SparkLink HID] 正在初始化设备 ID:', targetDevice.id, rawDev.productName);
-
-        // 清空 commandQueue 避免上次异常或物理断开残留的指令死锁
-        this._clearAllSdkQueues();
+        console.log('[SparkLink HID] 正在初始化与握手设备 ID:', targetDevice.id, rawDev.productName);
 
         try {
           await this.sdk.init(targetDevice.id);
@@ -400,7 +495,6 @@ class KeyboardService {
         const isOpened = !!(rawDev.opened || hsDev?.opened);
         if (!isOpened) {
           console.warn('[SparkLink HID] 设备物理句柄打开失败 (opened=false)，取消连接状态，等待重试');
-          this._clearAllSdkQueues();
           this.connected = false;
           this.device = null;
           return false;
@@ -409,83 +503,91 @@ class KeyboardService {
         this.device = rawDev;
         this.connected = true;
 
+        // 安全超时包装器，防止个别硬件只读指令响应延迟阻塞连接流程
+        const safeQuery = async (fn, timeoutMs = 1500) => {
+          try {
+            return await Promise.race([
+              fn(),
+              new Promise((_, reject) => setTimeout(() => reject(new Error('timeout')), timeoutMs)),
+            ]);
+          } catch (e) {
+            return null;
+          }
+        };
+
         // 1. 获取硬件参数与出厂 SN 码 (调用 SDK 官方 getDevicesInfo，适用于所有星闪键盘)
-        try {
-          let info = null;
+        const info = await safeQuery(async () => {
           if (typeof this.sdk.getDevicesInfo === 'function') {
-            info = await this.sdk.getDevicesInfo();
+            return await this.sdk.getDevicesInfo();
           } else if (typeof this.sdk.getDeviceInfo === 'function') {
-            info = await this.sdk.getDeviceInfo();
+            return await this.sdk.getDeviceInfo();
           }
-          const chipUsbName = (targetDevice.productName || '').replace(/\0/g, '').trim();
-          if (info) {
-            this.deviceInfo = {
-              ...info,
-              name: info.name || info.model || info.deviceName || chipUsbName || '',
-              model: info.model || chipUsbName || '',
-              productName: chipUsbName || info.name || '',
-              sn: info.sn || targetDevice.serialNumber || '',
-            };
-            console.log('[SparkLink HID] 成功读取键盘硬件芯片参数与出厂 SN 码:', this.deviceInfo);
-          } else {
-            this.deviceInfo = {
-              name: chipUsbName || '',
-              model: chipUsbName || '',
-              productName: chipUsbName || '',
-              sn: targetDevice.serialNumber || '',
-            };
-          }
-        } catch (e) {
-          console.warn('读取键盘硬件参数/SN跳过:', e);
-          this._clearAllSdkQueues();
+          return null;
+        }, 1500);
+
+        const chipUsbName = (targetDevice.productName || '').replace(/\0/g, '').trim();
+        if (info) {
+          this.deviceInfo = {
+            ...info,
+            name: info.name || info.model || info.deviceName || chipUsbName || '',
+            model: info.model || chipUsbName || '',
+            productName: chipUsbName || info.name || '',
+            sn: info.sn || targetDevice.serialNumber || '',
+          };
+          console.log('[SparkLink HID] 成功读取键盘硬件芯片参数与出厂 SN 码:', this.deviceInfo);
+        } else {
+          this.deviceInfo = {
+            name: chipUsbName || '',
+            model: chipUsbName || '',
+            productName: chipUsbName || '',
+            sn: targetDevice.serialNumber || '',
+          };
         }
 
         // 2. 读取硬件功能特性 (轴体/磁轴/连接方式/灯光等)
-        try {
+        const features = await safeQuery(async () => {
           if (typeof this.sdk.getDeviceFeature === 'function') {
-            this.deviceFeatures = await this.sdk.getDeviceFeature();
-            console.log('[SparkLink HID] 成功读取键盘硬件特性:', this.deviceFeatures);
+            return await this.sdk.getDeviceFeature();
           }
-        } catch (e) {
-          console.warn('读取硬件特性跳过:', e);
-          this._clearAllSdkQueues();
+          return null;
+        }, 1200);
+        if (features) {
+          this.deviceFeatures = features;
+          console.log('[SparkLink HID] 成功读取键盘硬件特性:', this.deviceFeatures);
         }
 
         // 3. 读取设备协议版本
-        try {
+        const protocol = await safeQuery(async () => {
           if (typeof this.sdk.getDeviceProtocol === 'function') {
-            this.deviceProtocol = await this.sdk.getDeviceProtocol();
+            return await this.sdk.getDeviceProtocol();
           }
-        } catch (e) {
-          console.warn('读取设备协议跳过:', e);
-          this._clearAllSdkQueues();
+          return null;
+        }, 1200);
+        if (protocol) {
+          this.deviceProtocol = protocol;
         }
 
-        // 动态分析设备能力：读取硬件支持的回报率列表
-        let sdkRates = null;
-        try {
+        // 4. 动态分析设备能力：读取硬件支持的回报率列表
+        const rateRes = await safeQuery(async () => {
           if (typeof this.sdk.getRateOfReturnList === 'function') {
-            const listRes = await this.sdk.getRateOfReturnList();
-            if (listRes && Array.isArray(listRes.list)) {
-              sdkRates = listRes.list;
-            }
+            return await this.sdk.getRateOfReturnList();
           }
-        } catch (e) {
-          console.log('读取硬件回报率列表跳过', e);
-          this._clearAllSdkQueues();
+          return null;
+        }, 1200);
+        let sdkRates = null;
+        if (rateRes && Array.isArray(rateRes.list)) {
+          sdkRates = rateRes.list;
         }
 
-        // 读取硬件 USB 模式与 3.0 驱动状态
-        try {
+        // 5. 读取硬件 USB 模式与 3.0 驱动状态
+        const usbRes = await safeQuery(async () => {
           if (typeof this.sdk.getUSBModeStatus === 'function') {
-            const usbRes = await this.sdk.getUSBModeStatus();
-            if (usbRes && typeof usbRes === 'object') {
-              this.usbModeStatus = usbRes;
-            }
+            return await this.sdk.getUSBModeStatus();
           }
-        } catch (e) {
-          console.log('读取 USBModeStatus 跳过', e);
-          this._clearAllSdkQueues();
+          return null;
+        }, 1200);
+        if (usbRes && typeof usbRes === 'object') {
+          this.usbModeStatus = usbRes;
         }
 
         this.deviceProfile = analyzeDeviceCapabilities({
