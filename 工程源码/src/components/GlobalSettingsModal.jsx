@@ -946,8 +946,16 @@ export default function GlobalSettingsModal({
                             <span>云端驱动更新地址未设置</span>
                           </div>
                           <p className="text-[11px] leading-relaxed text-[var(--text-secondary)]">
-                            暂未配置驱动更新云端直链。可点击下方「打开发布页」手动获取最新 Release 安装包。
+                            暂未配置驱动更新云端直链。可点击下方「打开发行版下载页」获取最新 Release 安装包。
                           </p>
+                        </div>
+                      )}
+
+                      {/* 待检测就绪状态展示 */}
+                      {!appCheckResult && isAppConfigured && (
+                        <div className="p-2.5 rounded-lg border border-dashed border-[var(--border-color)] bg-[var(--bg-secondary)]/40 text-[11px] text-[var(--text-secondary)] flex items-center justify-between">
+                          <span>已连接 Gitee software/ 发行通道，点击下方按钮实时比对</span>
+                          <span className="font-mono text-sky-500 font-bold">就绪</span>
                         </div>
                       )}
 
@@ -1031,11 +1039,11 @@ export default function GlobalSettingsModal({
 
                       <button
                         type="button"
-                        onClick={() => openExternal('https://github.com/Kutaze/AstraFlux-Hub/releases', 'GitHub Releases')}
+                        onClick={() => openExternal('https://gitee.com/Kutaze/astra-flux-hub/releases', 'Gitee Releases 发行版')}
                         className="w-full py-2 bg-[var(--bg-secondary)] hover:bg-[var(--bg-tertiary)] border border-[var(--border-color)] text-[var(--text-primary)] font-bold text-xs rounded-xl transition cursor-pointer flex items-center justify-center space-x-1.5 shadow-xs"
                       >
                         <ExternalLink className="w-3.5 h-3.5 text-[var(--text-tertiary)]" />
-                        <span>打开发布页 (Releases)</span>
+                        <span>打开发行版下载页 (Gitee Releases)</span>
                       </button>
                     </div>
                   </div>
