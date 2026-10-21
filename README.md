@@ -15,7 +15,7 @@
   <a href="https://github.com/Kutaze/AstraFlux-Hub"><img src="https://img.shields.io/badge/Platform-Windows_10_%7C_11-00f0ff?style=flat-square&logo=windows&logoColor=black" alt="Platform" /></a>
   <a href="https://github.com/Kutaze/AstraFlux-Hub"><img src="https://img.shields.io/badge/Polling_Rate-Up_to_8000Hz-8b5cf6?style=flat-square" alt="8000Hz" /></a>
   <a href="https://github.com/Kutaze/AstraFlux-Hub"><img src="https://img.shields.io/badge/Rapid_Trigger-0.01mm_Precision-f59e0b?style=flat-square" alt="0.01mm" /></a>
-  <a href="https://qm.qq.com/cgi-bin/qm/qr?k=7RG3IDSoQvmEPAic1ZzNYVLRObp4GZOK&jump_from=webapi&authKey=XIf2ahwjHImCM02F6DctGvq6spka6sqGE3qLl/msv6ZsqKgaiOh5ol1IHVI0LmBI" target="_blank" rel="noopener noreferrer"><img src="https://img.shields.io/badge/QQ群-1131310645-12b7f5?style=flat-square&logo=tencent-qq&logoColor=white" alt="QQ群: 1131310645" /></a>
+  <a href="https://qm.qq.com/cgi-bin/qm/qr?k=7RG3iDSoQvmEPAic1ZzNYVLRObp4GZOK&jump_from=webapi&authKey=Xlf2ahwjHImCM02F6DctGvq6spka6sqGE3qLI/msv6ZsqKgaiOh5ol1IHVI0LmBI" target="_blank" rel="noopener noreferrer"><img src="https://img.shields.io/badge/QQ群-1131310645-12b7f5?style=flat-square&logo=tencent-qq&logoColor=white" alt="QQ群: 1131310645" /></a>
 </p>
 
 <p align="center">
@@ -27,7 +27,7 @@
     <img src="https://img.shields.io/badge/📥_Gitee_Releases-国内极速秒下-c71d23?style=for-the-badge&logo=gitee" alt="Gitee Releases" height="36" />
   </a>
   &nbsp;&nbsp;
-  <a href="https://qm.qq.com/cgi-bin/qm/qr?k=7RG3IDSoQvmEPAic1ZzNYVLRObp4GZOK&jump_from=webapi&authKey=XIf2ahwjHImCM02F6DctGvq6spka6sqGE3qLl/msv6ZsqKgaiOh5ol1IHVI0LmBI" target="_blank" rel="noopener noreferrer">
+  <a href="https://qm.qq.com/cgi-bin/qm/qr?k=7RG3iDSoQvmEPAic1ZzNYVLRObp4GZOK&jump_from=webapi&authKey=Xlf2ahwjHImCM02F6DctGvq6spka6sqGE3qLI/msv6ZsqKgaiOh5ol1IHVI0LmBI" target="_blank" rel="noopener noreferrer">
     <img src="https://img.shields.io/badge/💬_QQ交流群-1131310645-12b7f5?style=for-the-badge&logo=tencent-qq&logoColor=white" alt="QQ交流群" height="36" />
   </a>
   &nbsp;&nbsp;
@@ -190,7 +190,7 @@ flowchart LR
 
 | 社区交流群 | 群号 | 一键跳转与加群组件 |
 | :---: | :---: | :---: |
-| 🐧 **AstraFlux-HUB 反馈交流** | **`1131310645`** | <a target="_blank" href="https://qm.qq.com/cgi-bin/qm/qr?k=7RG3IDSoQvmEPAic1ZzNYVLRObp4GZOK&jump_from=webapi&authKey=XIf2ahwjHImCM02F6DctGvq6spka6sqGE3qLl/msv6ZsqKgaiOh5ol1IHVI0LmBI"><img border="0" src="https://pub.idqqimg.com/wpa/images/group.png" alt="AstraFlux-HUB反馈交流" title="点击一键唤起 QQ 加群"></a><br/><br/>[👉 点击直接唤起 QQ 加群 (1131310645)](https://qm.qq.com/cgi-bin/qm/qr?k=7RG3IDSoQvmEPAic1ZzNYVLRObp4GZOK&jump_from=webapi&authKey=XIf2ahwjHImCM02F6DctGvq6spka6sqGE3qLl/msv6ZsqKgaiOh5ol1IHVI0LmBI) |
+| 🐧 **AstraFlux-HUB 反馈交流** | **`1131310645`** | <a target="_blank" href="https://qm.qq.com/cgi-bin/qm/qr?k=7RG3iDSoQvmEPAic1ZzNYVLRObp4GZOK&jump_from=webapi&authKey=Xlf2ahwjHImCM02F6DctGvq6spka6sqGE3qLI/msv6ZsqKgaiOh5ol1IHVI0LmBI"><img border="0" src="https://pub.idqqimg.com/wpa/images/group.png" alt="AstraFlux-HUB反馈交流" title="点击一键唤起 QQ 加群"></a><br/><br/>[👉 点击直接唤起 QQ 加群 (1131310645)](https://qm.qq.com/cgi-bin/qm/qr?k=7RG3iDSoQvmEPAic1ZzNYVLRObp4GZOK&jump_from=webapi&authKey=Xlf2ahwjHImCM02F6DctGvq6spka6sqGE3qLI/msv6ZsqKgaiOh5ol1IHVI0LmBI) |
 
 </div>
 

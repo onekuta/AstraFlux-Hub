@@ -217,7 +217,7 @@ export default function App() {
       type: 'success',
       duration: 3500,
     });
-    const qqUrl = `https://qm.qq.com/cgi-bin/qm/qr?k=join&authKey=&noverify=0&group_code=${groupNum}`;
+    const qqUrl = 'https://qm.qq.com/cgi-bin/qm/qr?k=7RG3iDSoQvmEPAic1ZzNYVLRObp4GZOK&jump_from=webapi&authKey=Xlf2ahwjHImCM02F6DctGvq6spka6sqGE3qLI/msv6ZsqKgaiOh5ol1IHVI0LmBI';
     if (window.electronAPI && typeof window.electronAPI.openExternalUrl === 'function') {
       window.electronAPI.openExternalUrl(qqUrl);
     } else {

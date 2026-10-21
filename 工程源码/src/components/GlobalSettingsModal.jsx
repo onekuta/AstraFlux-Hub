@@ -1184,7 +1184,7 @@ export default function GlobalSettingsModal({
                       type="button"
                       onClick={() => {
                         const qqGroupNum = '1131310645';
-                        const qqUrl = 'https://qm.qq.com/q/qA42Z5PZSZ';
+                        const qqUrl = 'https://qm.qq.com/cgi-bin/qm/qr?k=7RG3iDSoQvmEPAic1ZzNYVLRObp4GZOK&jump_from=webapi&authKey=Xlf2ahwjHImCM02F6DctGvq6spka6sqGE3qLI/msv6ZsqKgaiOh5ol1IHVI0LmBI';
                         try {
                           if (navigator.clipboard?.writeText) {
                             navigator.clipboard.writeText(qqGroupNum);
