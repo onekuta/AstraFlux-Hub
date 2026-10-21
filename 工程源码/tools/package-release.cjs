@@ -189,7 +189,8 @@ async function main() {
     const manifestData = {
       manifestVersion: '1.4.1',
       appVersion: version,
-      appDownloadUrl: `https://github.com/Kutaze/AstraFlux-Hub/releases/download/v${version}/${setupExeName}`,
+      appDownloadUrl: `https://gitee.com/Kutaze/astra-flux-hub/releases/download/v${version}/${setupExeName}`,
+      githubDownloadUrl: `https://github.com/Kutaze/AstraFlux-Hub/releases/download/v${version}/${setupExeName}`,
       appGiteeUrl: `https://gitee.com/Kutaze/astra-flux-hub/releases`,
       appChangelog: changelogText,
       appForceUpdate: false,
@@ -249,7 +250,8 @@ async function main() {
       fs.writeFileSync(v110Manifest, JSON.stringify({
         manifestVersion: '1.4.1',
         appVersion: '1.1.0',
-        appDownloadUrl: 'https://github.com/Kutaze/AstraFlux-Hub/releases/download/v1.1.0/AstraFlux-HUB_Setup_v1.1.0.exe',
+        appDownloadUrl: 'https://gitee.com/Kutaze/astra-flux-hub/releases/download/v1.1.0/AstraFlux-HUB_Setup_v1.1.0.exe',
+        githubDownloadUrl: 'https://github.com/Kutaze/AstraFlux-Hub/releases/download/v1.1.0/AstraFlux-HUB_Setup_v1.1.0.exe',
         appGiteeUrl: 'https://gitee.com/Kutaze/astra-flux-hub/releases',
         appChangelog: 'AstraFlux-HUB V1.1.0 正式版发布',
         appForceUpdate: false,

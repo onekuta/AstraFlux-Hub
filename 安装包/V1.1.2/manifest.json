@@ -1,7 +1,8 @@
 {
   "manifestVersion": "1.4.1",
   "appVersion": "1.1.2",
-  "appDownloadUrl": "https://github.com/Kutaze/AstraFlux-Hub/releases/download/v1.1.2/AstraFlux-HUB_Setup_v1.1.2.exe",
+  "appDownloadUrl": "https://gitee.com/Kutaze/astra-flux-hub/releases/download/v1.1.2/AstraFlux-HUB_Setup_v1.1.2.exe",
+  "githubDownloadUrl": "https://github.com/Kutaze/AstraFlux-Hub/releases/download/v1.1.2/AstraFlux-HUB_Setup_v1.1.2.exe",
   "appGiteeUrl": "https://gitee.com/Kutaze/astra-flux-hub/releases",
   "appChangelog": "1. 修复官方交流群 (1131310645) 唤起跳转参数，精准对齐腾讯加群组件协议\n2. 软件本体更新与外设数据库更新实现 100% 物理目录隔离 (software/ 与 database/)\n3. 开发者发布工具支持一键导入 SOP 安装包清单 (版本号/更新日志/文件大小/哈希自动装填)\n4. 优化驱动更新检测体验，修复云端返链就绪状态与 Gitee 发行版直连下载",
   "appForceUpdate": false,
