@@ -182,7 +182,12 @@ class UpdaterService {
           const resp = await fetch(`${targetDbUrl}?_t=${Date.now()}`, { cache: 'no-store' });
           if (resp.ok) {
             const json = await resp.json();
-            result.rawDbData = json;
+            if (Array.isArray(json.profiles)) {
+              result.rawDbData = json;
+            } else {
+              result.rawManifest = json;
+              result.rawDbData = null;
+            }
             if (json.libVersion) {
               result.cloudLibVersion = json.libVersion;
               result.cloudLibTotalDevices = json.totalDevices || json.profiles?.length || 0;

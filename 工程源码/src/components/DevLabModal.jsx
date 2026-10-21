@@ -160,7 +160,8 @@ export default function DevLabModal({
     setIsUpdatingDb(true);
     try {
       addToast({ message: '正在从预设链接拉取最新键盘硬件特征数据库...', type: 'info' });
-      const res = await updaterService.performOnlineDbUpdate(dbUpdateUrl.trim(), versionCheckResult?.rawDbData);
+      const prefetched = (versionCheckResult?.rawDbData && Array.isArray(versionCheckResult.rawDbData.profiles)) ? versionCheckResult.rawDbData : null;
+      const res = await updaterService.performOnlineDbUpdate(dbUpdateUrl.trim(), prefetched);
       setAllProfiles(customDeviceRegistry.getAllProfiles());
       setCurrentLibVersion(updaterService.getCurrentLibVersion());
       // 更新检测状态

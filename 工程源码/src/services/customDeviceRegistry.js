@@ -171,6 +171,10 @@ class CustomDeviceRegistry {
       };
     }
 
+    if (databaseObj.libDownloadUrl && !Array.isArray(databaseObj.profiles)) {
+      throw new Error('所导入的文件是版本更新清单 (manifest.json)，不是设备数据库本体文件 (.spkdb)！');
+    }
+
     if (!Array.isArray(databaseObj.profiles)) {
       throw new Error('未识别的文件格式：既不是星闪探针硬件采集包，也不是全量设备数据库！');
     }

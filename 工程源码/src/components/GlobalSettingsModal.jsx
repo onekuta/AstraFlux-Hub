@@ -325,7 +325,8 @@ export default function GlobalSettingsModal({
     setIsUpdatingDb(true);
     try {
       const downloadUrl = dbCheckResult?.libDownloadUrl || updaterService.getDbUpdateUrl();
-      const res = await updaterService.performOnlineDbUpdate(downloadUrl, dbCheckResult?.rawDbData);
+      const prefetched = (dbCheckResult?.rawDbData && Array.isArray(dbCheckResult.rawDbData.profiles)) ? dbCheckResult.rawDbData : null;
+      const res = await updaterService.performOnlineDbUpdate(downloadUrl, prefetched);
       setLibVersion(updaterService.getCurrentLibVersion());
       setDbCheckResult(prev => prev ? { ...prev, hasLibUpdate: false } : null);
       addToast({
