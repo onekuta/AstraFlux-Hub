@@ -1,15 +1,16 @@
 {
   "manifestVersion": "1.4.1",
   "appVersion": "1.1.2",
-  "appDownloadUrl": "https://ghfast.top/https://github.com/Kutaze/AstraFlux-Hub/releases/download/v1.1.2/AstraFlux-HUB_Setup_v1.1.2.exe",
-  "githubDownloadUrl": "https://github.com/Kutaze/AstraFlux-Hub/raw/main/database/device_database.spkdb",
-  "appReleaseUrl": "https://github.com/Kutaze/AstraFlux-Hub/releases",
-  "appChangelog": "1. 修复官方交流群 (1131310645) 唤起跳转参数，精准对齐腾讯加群组件协议\n2. 软件本体更新与外设数据库更新实现 100% 物理目录隔离 (software/ 与 database/)\n3. 开发者发布工具支持一键导入 SOP 安装包清单 (版本号/更新日志/文件大小/哈希自动装填)\n4. 优化驱动更新检测体验，修复云端返链就绪状态与 Gitee 发行版直连下载",
+  "appDownloadUrl": "https://gitee.com/Kutaze/astra-flux-hub/releases/download/v1.1.2/AstraFlux-HUB_Setup_v1.1.2.exe",
+  "cdnDownloadUrl": "https://ghfast.top/https://github.com/Kutaze/AstraFlux-Hub/releases/download/v1.1.2/AstraFlux-HUB_Setup_v1.1.2.exe",
+  "githubDownloadUrl": "https://github.com/Kutaze/AstraFlux-Hub/releases/download/v1.1.2/AstraFlux-HUB_Setup_v1.1.2.exe",
+  "appReleaseUrl": "https://gitee.com/Kutaze/astra-flux-hub/releases",
+  "appChangelog": "1. 全新升级为官方原生 Inno Setup 主流安装向导，完美支持附加任务（桌面/开始菜单快捷方式）与平滑安装体验\n2. 修复官方技术交流群 (1131310645) 唤起跳转参数，精准对齐腾讯加群组件协议\n3. 软件更新与数据库隔离 (software/ 与 database/)\n4. 采用极致 LZMA2 压缩率，安装包轻量化至 93.5MB，直挂 Gitee 官方发行版",
   "appForceUpdate": false,
-  "appFileSize": "143.79 MB",
-  "setupSha256": "f081118829ce28c95f949976182a23c97f1d2b540bca0fb43fca3b07329ac44a",
+  "appFileSize": "93.49 MB",
+  "setupSha256": "b62fea864d81fee05d4c30fe0240735026a8d4c9f3019fbaf79af1dc08dc3cfb",
   "libVersion": "2026.10.20.1",
   "libDownloadUrl": "https://gitee.com/Kutaze/astra-flux-hub/raw/main/database/device_database.spkdb",
   "totalDevices": 638,
-  "updatedAt": "2026-10-21T07:23:57.338Z"
+  "updatedAt": "2026-10-21T17:33:00.000Z"
 }
