@@ -19,7 +19,7 @@ const DEFAULT_MANIFEST_URL = 'https://gitee.com/Kutaze/astra-flux-hub/raw/main/m
 const GITEE_RELEASES_PAGE = 'https://gitee.com/Kutaze/astra-flux-hub/releases';
 const GITHUB_RELEASES_PAGE = 'https://github.com/Kutaze/AstraFlux-Hub/releases';
 
-const CURRENT_APP_VERSION = '1.1.1';
+const CURRENT_APP_VERSION = '1.1.2';
 const DEFAULT_LIB_VERSION = '2026.10.20.1';
 
 // 语义化版本号比对工具 (v1.1.1 > v1.1.0)

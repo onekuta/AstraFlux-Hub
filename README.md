@@ -9,7 +9,7 @@
 
 <p align="center">
   <a href="https://github.com/Kutaze/AstraFlux-Hub"><img src="https://img.shields.io/badge/WebHID-Direct_Link-0284c7?style=flat-square&logo=google-chrome&logoColor=white" alt="WebHID" /></a>
-  <a href="https://github.com/Kutaze/AstraFlux-Hub/releases"><img src="https://img.shields.io/badge/Release-V1.1.1-6366f1?style=flat-square" alt="Release" /></a>
+  <a href="https://github.com/Kutaze/AstraFlux-Hub/releases"><img src="https://img.shields.io/badge/Release-V1.1.2-6366f1?style=flat-square" alt="Release" /></a>
   <a href="https://gitee.com/Kutaze/astra-flux-hub"><img src="https://img.shields.io/badge/Gitee-国内更新镜像-c71d23?style=flat-square&logo=gitee&logoColor=white" alt="Gitee" /></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-10b981?style=flat-square" alt="License" /></a>
   <a href="https://github.com/Kutaze/AstraFlux-Hub"><img src="https://img.shields.io/badge/Platform-Windows_10_%7C_11-00f0ff?style=flat-square&logo=windows&logoColor=black" alt="Platform" /></a>
@@ -108,13 +108,14 @@
 | 🚀 **GitHub Releases** | 国际 / 全球网络 (代码主干) | [👉 点击跳转 GitHub Releases 页面](https://github.com/Kutaze/AstraFlux-Hub/releases) | 完整发布包、便携包与源码历史归档 |
 | ⚡ **Gitee Releases** | 国内网络 (极速免代理直连) | [👉 点击跳转 Gitee Releases 页面](https://gitee.com/Kutaze/astra-flux-hub/releases) | 国内高速下载通道，自动双向同步 |
 
-### 2. 最新版本发布包资产 (V1.1.1)
+### 2. 最新版本发布包资产 (V1.1.2)
 
 > 📦 **标准三文件封包规范**：发布包存放于 `安装包/V<Version>/` 独立目录中，包含更新日志、独立安装包及可直接上传至云端发布工具的 `manifest.json` 更新清单。
 
 | 文件名 | 分发类型 | 文件大小 | SHA-256 校验哈希 |
 | :--- | :--- | :--- | :--- |
-| **`AstraFlux-HUB_Setup_v1.1.1.exe`** | 推荐安装向导 (最新 V1.1.1) | ~142 MB | `b22b2eee0acff8006e548ad3e62095898e561bd34b445bda017935038f9785b0` |
+| **`AstraFlux-HUB_Setup_v1.1.2.exe`** | 推荐安装向导 (最新 V1.1.2) | ~143 MB | `5a6614d75c109d96d654a8d80986d10d6afad2b55f4678052a8def49b1fd571e` |
+| **`AstraFlux-HUB_Setup_v1.1.1.exe`** | 历史版本向导 (V1.1.1) | ~142 MB | `fb25d73678a3c87fadd0d57a44f7abb236411efd1b03842b81002362fc763ea6` |
 | **`AstraFlux-HUB_Setup_v1.1.0.exe`** | 历史版本向导 (V1.1.0) | ~142 MB | `0c6d93ae99af667557fb625c50231fa9fcf2c31ff332d2b82cfa8ca21c2f29eb` |
 
 * 💻 **便携版与绿色免安装**：安装向导内嵌完整免安装环境，亦可直接使用仓库中的 `软件本体/` 目录运行，纯绿色免安装。
@@ -136,9 +137,9 @@ flowchart LR
 ```
 
 - **客户端绝无写入权限**：客户端仅发起公开只读 HTTP GET，绝不存储任何写入 Token，杜绝安全隐患。
-- **配置直链**：
-  - 外设适配库直链：`https://gitee.com/Kutaze/astra-flux-hub/raw/main/database/device_database.spkdb`
-  - 版本更新清单直链：`https://gitee.com/Kutaze/astra-flux-hub/raw/main/manifest.json`
+- **配置直链 (物理隔离体系)**：
+  - 外设适配库直链：`https://gitee.com/Kutaze/astra-flux-hub/raw/main/database/manifest.json`
+  - 驱动软件更新直链：`https://gitee.com/Kutaze/astra-flux-hub/raw/main/software/manifest.json`
 
 ---
 
@@ -161,6 +162,13 @@ flowchart LR
 <details open>
 <summary><b>📋 点击展开 / 折叠版本更新日志 (Changelog Archive)</b></summary>
 <br/>
+
+### [V1.1.2] - 2026-10-21
+* 🐛 `[问题修复]`：精确对齐腾讯官方加群组件协议（群号：`1131310645`），修复参数大小写识别问题，全端支持一键唤起 QQ 加群。
+* 🐛 `[问题修复]`：外设数据库更新与软件本体更新实现 100% 物理目录隔离（`database/` 与 `software/`），彻底杜绝仓库主分支清单混杂。
+* 🐛 `[问题修复]`：优化客户端更新页检测逻辑，纠偏默认 OTA 地址，支持从 Gitee Releases 直接下载最新安装包执行覆盖更新。
+* ✨ `[新特性]`：开发者云端发布工具新增「一键导入 SOP 安装包更新清单」功能，秒级自动装填版本号、直链、更新日志与哈希校验。
+* 🚀 `[体验与性能]`：精简并加固客户端 OTA 与数据库加载链路，更新状态徽标常驻就绪。
 
 ### [V1.1.1] - 2026-10-21
 * 🐛 `[问题修复]`：问题反馈直达 GitHub Issues 官方页面，标题与故障草稿自动复制并带参预填，无障碍跨端反馈。
