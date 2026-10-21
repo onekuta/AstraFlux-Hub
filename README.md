@@ -9,12 +9,13 @@
 
 <p align="center">
   <a href="https://github.com/Kutaze/AstraFlux-Hub"><img src="https://img.shields.io/badge/WebHID-Direct_Link-0284c7?style=flat-square&logo=google-chrome&logoColor=white" alt="WebHID" /></a>
-  <a href="https://github.com/Kutaze/AstraFlux-Hub/releases"><img src="https://img.shields.io/badge/Release-V1.1.0-6366f1?style=flat-square" alt="Release" /></a>
+  <a href="https://github.com/Kutaze/AstraFlux-Hub/releases"><img src="https://img.shields.io/badge/Release-V1.1.1-6366f1?style=flat-square" alt="Release" /></a>
   <a href="https://gitee.com/Kutaze/astra-flux-hub"><img src="https://img.shields.io/badge/Gitee-国内更新镜像-c71d23?style=flat-square&logo=gitee&logoColor=white" alt="Gitee" /></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-10b981?style=flat-square" alt="License" /></a>
   <a href="https://github.com/Kutaze/AstraFlux-Hub"><img src="https://img.shields.io/badge/Platform-Windows_10_%7C_11-00f0ff?style=flat-square&logo=windows&logoColor=black" alt="Platform" /></a>
   <a href="https://github.com/Kutaze/AstraFlux-Hub"><img src="https://img.shields.io/badge/Polling_Rate-Up_to_8000Hz-8b5cf6?style=flat-square" alt="8000Hz" /></a>
   <a href="https://github.com/Kutaze/AstraFlux-Hub"><img src="https://img.shields.io/badge/Rapid_Trigger-0.01mm_Precision-f59e0b?style=flat-square" alt="0.01mm" /></a>
+  <a href="https://qm.qq.com/cgi-bin/qm/qr?k=7RG3IDSoQvmEPAic1ZzNYVLRObp4GZOK&jump_from=webapi&authKey=XIf2ahwjHImCM02F6DctGvq6spka6sqGE3qLl/msv6ZsqKgaiOh5ol1IHVI0LmBI" target="_blank" rel="noopener noreferrer"><img src="https://img.shields.io/badge/QQ群-1131310645-12b7f5?style=flat-square&logo=tencent-qq&logoColor=white" alt="QQ群: 1131310645" /></a>
 </p>
 
 <p align="center">
@@ -24,6 +25,10 @@
   &nbsp;&nbsp;
   <a href="https://gitee.com/Kutaze/astra-flux-hub/releases" target="_blank" rel="noopener noreferrer">
     <img src="https://img.shields.io/badge/📥_Gitee_Releases-国内极速秒下-c71d23?style=for-the-badge&logo=gitee" alt="Gitee Releases" height="36" />
+  </a>
+  &nbsp;&nbsp;
+  <a href="https://qm.qq.com/cgi-bin/qm/qr?k=7RG3IDSoQvmEPAic1ZzNYVLRObp4GZOK&jump_from=webapi&authKey=XIf2ahwjHImCM02F6DctGvq6spka6sqGE3qLl/msv6ZsqKgaiOh5ol1IHVI0LmBI" target="_blank" rel="noopener noreferrer">
+    <img src="https://img.shields.io/badge/💬_QQ交流群-1131310645-12b7f5?style=for-the-badge&logo=tencent-qq&logoColor=white" alt="QQ交流群" height="36" />
   </a>
   &nbsp;&nbsp;
   <a href="#-赞赏与支持-sponsorship">
@@ -44,6 +49,7 @@
   <a href="#-云端-ota-热更新架构">☁️ 云端 OTA</a> • 
   <a href="#-安全与硬件真实性铁律">🛡️ 硬件铁律</a> • 
   <a href="#-更新日志-changelog">📝 更新日志</a> • 
+  <a href="#-社区交流与反馈-community--support">💬 交流反馈</a> • 
   <a href="#-赞赏与支持-sponsorship">💖 赞赏支持</a> • 
   <a href="#-star-history">📈 Star History</a> • 
   <a href="#-开发与构建指南">🚀 开发者指南</a> • 
@@ -102,14 +108,16 @@
 | 🚀 **GitHub Releases** | 国际 / 全球网络 (代码主干) | [👉 点击跳转 GitHub Releases 页面](https://github.com/Kutaze/AstraFlux-Hub/releases) | 完整发布包、便携包与源码历史归档 |
 | ⚡ **Gitee Releases** | 国内网络 (极速免代理直连) | [👉 点击跳转 Gitee Releases 页面](https://gitee.com/Kutaze/astra-flux-hub/releases) | 国内高速下载通道，自动双向同步 |
 
-### 2. 最新版本发布包资产 (V1.1.0)
+### 2. 最新版本发布包资产 (V1.1.1)
+
+> 📦 **标准三文件封包规范**：发布包存放于 `安装包/V<Version>/` 独立目录中，包含更新日志、独立安装包及可直接上传至云端发布工具的 `manifest.json` 更新清单。
 
 | 文件名 | 分发类型 | 文件大小 | SHA-256 校验哈希 |
 | :--- | :--- | :--- | :--- |
-| **`AstraFlux-HUB_Setup_v1.1.0.exe`** | 推荐安装向导 | ~141 MB | `0c6d93ae99af667557fb625c50231fa9fcf2c31ff332d2b82cfa8ca21c2f29eb` |
-| **`AstraFlux-HUB_v1.1.0_Portable.zip`** | 便携免安装版 | ~140 MB | `af6b8469f9b5b236fe941551ff87541d5c381cc92e1ff76cab9749fbc7400a76` |
+| **`AstraFlux-HUB_Setup_v1.1.1.exe`** | 推荐安装向导 (最新 V1.1.1) | ~142 MB | `b22b2eee0acff8006e548ad3e62095898e561bd34b445bda017935038f9785b0` |
+| **`AstraFlux-HUB_Setup_v1.1.0.exe`** | 历史版本向导 (V1.1.0) | ~142 MB | `0c6d93ae99af667557fb625c50231fa9fcf2c31ff332d2b82cfa8ca21c2f29eb` |
 
-* 💻 **便携版即开即用**：下载 `AstraFlux-HUB_v1.1.0_Portable.zip` 解压后，双击内部 `软件本体/AstraFlux-HUB.exe` 即可直接运行，纯绿色免安装。
+* 💻 **便携版与绿色免安装**：安装向导内嵌完整免安装环境，亦可直接使用仓库中的 `软件本体/` 目录运行，纯绿色免安装。
 
 ---
 
@@ -119,7 +127,7 @@ AstraFlux-HUB 采用现代化的**双端分离 OTA 架构**，既保证了客户
 
 ```mermaid
 flowchart LR
-    A["开发者 DevLab / 探针"] -->|"导出适配库"| B["星闪云端发布助手"]
+    A["开发者 DevLab / 探针"] -->|"导出 .spkdb"| B["星闪云端发布助手"]
     B -->|"自动化打包"| C["dist_cloud 产物"]
     C -->|"Git Push / API"| D[("GitHub 开源主干")]
     D -->|"自动双向同步"| E[("Gitee 国内更新渠道")]
@@ -129,8 +137,8 @@ flowchart LR
 
 - **客户端绝无写入权限**：客户端仅发起公开只读 HTTP GET，绝不存储任何写入 Token，杜绝安全隐患。
 - **配置直链**：
-  - 适配库直链：`https://gitee.com/Kutaze/astra-flux-hub/raw/master/device_db.json`
-  - 版本清单直链：`https://gitee.com/Kutaze/astra-flux-hub/raw/master/manifest.json`
+  - 外设适配库直链：`https://gitee.com/Kutaze/astra-flux-hub/raw/main/database/device_database.spkdb`
+  - 版本更新清单直链：`https://gitee.com/Kutaze/astra-flux-hub/raw/main/manifest.json`
 
 ---
 
@@ -154,14 +162,41 @@ flowchart LR
 <summary><b>📋 点击展开 / 折叠版本更新日志 (Changelog Archive)</b></summary>
 <br/>
 
+### [V1.1.1] - 2026-10-21
+* 🐛 `[问题修复]`：问题反馈直达 GitHub Issues 官方页面，标题与故障草稿自动复制并带参预填，无障碍跨端反馈。
+* 🐛 `[问题修复]`：Gitee 分支对齐与自动纠偏机制，全面对齐 main 分支，保障国内节点 OTA 检测通畅。
+* 🐛 `[问题修复]`：彻底解耦 `database/` (外设数据库) 与 `software/` (客户端软件更新) 目录，避免 OTA 检测路径冲突。
+* ✨ `[新特性]`：软件顶栏右上角新增 QQ 官方技术交流群快捷入口（群号：`1131310645`），一键复制群号。
+* ✨ `[新特性]`：首启动静默后台检查更新机制，并在更新按钮上根据云端版本动态展示醒目红点徽标。
+* 🚀 `[体验与性能]`：统一外设数据库为 `.spkdb` 格式，支持开发者后台一键导出与更新页面一键导入/云端更新。
+* 🛡️ `[安全与生态]`：确立版本发布 SOP 规范，规范版本递增、安装包「标准三文件」归档结构，并由 AI Agent 负责执行全流程发布。
+
 ### [V1.1.0] - 2026-10-21
 * ✨ `[新特性]`：升级并固化 `V1.1.0` 统一版本号体系，确立大版本递增中间位、小版本递增末位规则。
-* ✨ `[新特性]`：新增自动化发布打包流水线 (`npm run release:pack`)，支持一键在根目录输出 `安装包_V1.1.0/` 包含图形 Setup 安装程序与 Portable 绿色便携包。
+* ✨ `[新特性]`：新增自动化发布打包流水线 (`npm run release:pack`)，支持一键在根目录输出安装包目录包含图形 Setup 安装程序。
 * 🚀 `[体验与性能]`：仓库双端全面绑定：GitHub 负责开源存储与代码主干，Gitee 负责国内高速 OTA 渠道。
 * 🛡️ `[安全与生态]`：确立版本发布「用户确认门禁」，每次发版在打包完成并经开发者测试确认前严禁擅自推送到远端仓库。
 * 🛡️ `[安全与生态]`：全软件本地纯净运行，绝不搜集或上传任何击键与隐私数据，支持纯本地离线使用。
 
 </details>
+
+---
+
+## 💬 社区交流与反馈 (Community & Support)
+
+欢迎广大星闪外设玩家、电竞极客与客制化键盘创作者加入社区交流群！无论是日常使用疑问、磁轴手感与 RT 调校参数分享，还是新硬件 PCB 适配探针抓包，均可入群深入探讨。
+
+<div align="center">
+
+| 社区交流群 | 群号 | 一键跳转与加群组件 |
+| :---: | :---: | :---: |
+| 🐧 **AstraFlux-HUB 反馈交流** | **`1131310645`** | <a target="_blank" href="https://qm.qq.com/cgi-bin/qm/qr?k=7RG3IDSoQvmEPAic1ZzNYVLRObp4GZOK&jump_from=webapi&authKey=XIf2ahwjHImCM02F6DctGvq6spka6sqGE3qLl/msv6ZsqKgaiOh5ol1IHVI0LmBI"><img border="0" src="https://pub.idqqimg.com/wpa/images/group.png" alt="AstraFlux-HUB反馈交流" title="点击一键唤起 QQ 加群"></a><br/><br/>[👉 点击直接唤起 QQ 加群 (1131310645)](https://qm.qq.com/cgi-bin/qm/qr?k=7RG3IDSoQvmEPAic1ZzNYVLRObp4GZOK&jump_from=webapi&authKey=XIf2ahwjHImCM02F6DctGvq6spka6sqGE3qLl/msv6ZsqKgaiOh5ol1IHVI0LmBI) |
+
+</div>
+
+> 📌 **进群交流须知**：  
+> 1. 如遇到未识别的星闪键盘，可使用根目录下 `PCB信息枚举探针/星闪PCB适配探针.exe` 抓取设备指纹后在群内发送给开发者；  
+> 2. 请遵守社区文明公约，文明交流，严禁发布商业广告与不良虚假内容。
 
 ---
 
@@ -178,7 +213,7 @@ flowchart LR
 
 </div>
 
-> 💡 **特别说明**：本项目为纯粹的开源非盈利社区项目，无需购买任何激活码。本项目**未设立 Discord 社区**，请注意甄别，谨防任何冒充官方人员索要费用的虚假信息。
+> 💡 **特别说明**：本项目为纯粹的开源非盈利社区项目，无需购买任何激活码。官方交流渠道仅为上述 **QQ 交流群 (1131310645)** 与 GitHub Issues，未设立 Discord 社区，请注意甄别，谨防任何冒充官方人员索要费用的虚假信息。
 
 ---
 

@@ -1,2 +1,0 @@
-ea8a4bdaed65ff9c4d2a98051a9d5f53481332e6739ecb6ad709447a983bf9cf *AstraFlux-HUB_v1.1.0_Portable.zip
-8af6db4883a631eb8e223c5a59228b62b460e222e4866bc9edc17a4d6bfb08a4 *AstraFlux-HUB_Setup_v1.1.0.exe

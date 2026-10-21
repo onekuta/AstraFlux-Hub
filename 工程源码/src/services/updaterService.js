@@ -14,7 +14,7 @@ const UPDATER_SETTINGS_KEY = 'SPARKLINK_OTA_UPDATER_SETTINGS_V2';
 const DEFAULT_MANIFEST_URL = 'https://gitee.com/Kutaze/astra-flux-hub/raw/main/manifest.json';
 const DEFAULT_DB_URL = 'https://gitee.com/Kutaze/astra-flux-hub/raw/main/database/manifest.json';
 const DEFAULT_APP_URL = 'https://gitee.com/Kutaze/astra-flux-hub/raw/main/software/manifest.json';
-const CURRENT_APP_VERSION = '1.1.0';
+const CURRENT_APP_VERSION = '1.1.1';
 const DEFAULT_LIB_VERSION = '2026.10.20.1';
 
 class UpdaterService {

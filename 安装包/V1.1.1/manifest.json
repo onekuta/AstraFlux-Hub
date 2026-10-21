@@ -1,0 +1,15 @@
+{
+  "manifestVersion": "1.4.1",
+  "appVersion": "1.1.1",
+  "appDownloadUrl": "https://github.com/Kutaze/AstraFlux-Hub/releases/download/v1.1.1/AstraFlux-HUB_Setup_v1.1.1.exe",
+  "appGiteeUrl": "https://gitee.com/Kutaze/astra-flux-hub/releases",
+  "appChangelog": "1. 问题反馈直达 GitHub Issues 官方页面，草稿自动复制并带参预填\n2. 云端发布工具与仓库目录隔离 (database/ 与 software/)\n3. 修复 Gitee 分支对齐与自动纠偏机制\n4. 支持 Gitee + GitHub 双仓一键秒级同步",
+  "appForceUpdate": false,
+  "appFileSize": "142.16 MB",
+  "setupSha256": "b22b2eee0acff8006e548ad3e62095898e561bd34b445bda017935038f9785b0",
+  "libVersion": "2026.10.20.1",
+  "libDownloadUrl": "https://gitee.com/Kutaze/astra-flux-hub/raw/main/database/device_database.spkdb",
+  "githubDownloadUrl": "https://github.com/Kutaze/AstraFlux-Hub/raw/main/database/device_database.spkdb",
+  "totalDevices": 638,
+  "updatedAt": "2026-10-21T05:09:23.816Z"
+}

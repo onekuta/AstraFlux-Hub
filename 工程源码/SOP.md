@@ -1,19 +1,18 @@
 # 星闪悦动 HUB · 项目 SOP（标准作业流程）
 
-> 本文件是 **星闪悦动 HUB 桌面端驱动** 的唯一作业手册：接手 → 改代码 → 构建 → **交付成品** → 验收 → 归档。  
+> 本文件是 **星闪悦动 HUB 桌面端驱动** 的作业手册：接手 → 改代码 → 构建 → **交付成品** → 验收 → 归档。  
+> 🚀 **全局版本发版与自动化更新最高规范** 详见根目录：**[`UPDATE_WORKFLOW_RULES.md`](../UPDATE_WORKFLOW_RULES.md)**。
 > 配套文档见 [`PROJECT_AI_SPEC.md`](./PROJECT_AI_SPEC.md)（架构规约）、[`SDK标准.md`](./SDK标准.md)（协议铁律）、[`SKU清单.md`](./SKU清单.md)（机型矩阵）。
->
-> **本文档已按项目真实状态重写**，修正了旧版 SOP 中「`docs/` 路径不存在」「交付走 electron-builder」「机型只有 DV63/AE64-MAX」等错误。
 
 ---
 
-## 〇、三条最高铁律（先看这个）
+## 〇、四条最高铁律（先看这个）
 
 | #     | 铁律                           | 说明                                                                               |
 | :---- | :--------------------------- | :------------------------------------------------------------------------------- |
-| **1** | **交付物 = `软件本体/`，不是 exe 安装包** | 用户是靠双击 `软件本体/星闪悦动HUB.exe` 验收的。**改完前端必须同步更新 `软件本体/resources/app.asar`**，只改源码他打不开。 |
-| **2** | **不产出界面截图**                  | 用户明确要求「只需要成品软件」。验收一律用**纯数据探针**（CDP 回显 DOM 文本 / 元素计数 / console），不写 PNG。           |
-| **3** | **交付话术只讲三件事**                | 成品在哪 + 这次改了什么 + 数据验收结果。不要长篇解释过程。                                                 |
+| **1** | **交付物 = `软件本体/` + `安装包/V<Version>/`** | 用户日常测试靠双击 `软件本体/AstraFlux-HUB.exe` 验收（必须同步热覆盖 `resources/app.asar`）；正式版本封包统一存放在 `安装包/V<Version>/` 中。 |
+| **2** | **版本子文件夹标准三文件规范** | `安装包/` 目录下按版本建子文件夹（如 `安装包/V1.1.1/`），每个子文件夹内**严格包含三个文件**：`更新日志.md`、`AstraFlux-HUB_Setup_v<Version>.exe`（安装包本体）、`manifest.json`（可直接上传至云端发布工具）。 |
+| **3** | **AI Agent 负责云端发布与官网更新** | 云端版本更新（GitHub Releases 页面、Gitee 页面同步）以及后续宣发官网（`docs/`）的更新全部由 AI Agent 负责执行。**严守人类确认门禁：在开发者确认无误前，严禁推送远端！** |
 | **4** | **标题与型号必须强制使用「庞门正道标题体」** | 全局所有大标题（首页「我的设备」、各窗口标题）、设备卡型号（AE64-MAX等）、顶栏品牌标题必须严格生效庞门正道标题体（`font-title` / `--font-title` 首位为 `"PangMenZhengDao"`），严禁被无衬线黑体（Noto Sans）覆盖，构建前必须通过字体门禁！ |
 
 ---
@@ -33,30 +32,27 @@
 
 ```
 星闪悦动驱动/
-├── 星闪悦动HUB (最新版).lnk      # 手写 MS-SHLLINK，指向 软件本体/星闪悦动HUB.exe
+├── AstraFlux-HUB.exe - 快捷方式.lnk
 ├── README.md
+├── UPDATE_WORKFLOW_RULES.md       # ★ 全局版本更新与自动化发版规范 (SOP)
+├── 安装包/                         # ★ 官方发版归档目录 (子文件夹 V<Version>/)
+│   ├── V1.1.0/                    #   标准三文件：更新日志.md、Setup安装包、manifest.json
+│   └── V1.1.1/                    #   标准三文件：更新日志.md、Setup安装包、manifest.json
 ├── 软件本体/                      # ★ 免安装绿色版，只放可直接打开的程序文件
-│   ├── 星闪悦动HUB.exe            #   双击即用
+│   ├── AstraFlux-HUB.exe          #   双击即用
 │   └── resources/
-│       ├── app.asar               #   ★ 应用代码包（dist 前端 + electron 主进程）—— 每次都改这里
-│       └── app.asar.unpacked/     #   仅 2 个构建工具 .node（rolldown / lightningcss），运行时不加载
+│       ├── app.asar               #   ★ 应用代码包（dist 前端 + electron 主进程）—— 每次改源码都热覆盖这里
+│       └── app.asar.unpacked/     #   构建工具 .node
 ├── 工程源码/                      # ★ 工程本体，所有构建命令必须先 cd 进来
 │   ├── src/                       #   React 源码
-│   │   └── assets/fonts/          #   ★ 随包内置字体（11 个 woff2，约 7.0MB，禁引在线 CDN）
+│   │   └── assets/fonts/          #   随包内置字体（11 个 woff2，约 7.0MB，禁引在线 CDN）
 │   ├── electron/                  #   main.js / preload.js / 图标
-│   ├── tools/                     #   探针与构建辅助脚本（12 个探针见 §5.2；vision.cjs 视觉外援见第十章）
+│   ├── tools/                     #   package-release.cjs (标准三文件自动封包)、update-asar.cjs 等
 │   └── dist/                      #   Vite 构建产物（asar 里装的就是它）
-├── 项目文档/                      # ← 就是本文件所在目录（没有 docs/ 这个目录！）
-│   ├── SOP.md                     #   本文件
-│   ├── PROJECT_AI_SPEC.md         #   架构与开发规约
-│   ├── SDK标准.md                 #   协议写入铁律
-│   ├── SKU清单.md                 #   机型 / VID:PID 矩阵
-│   ├── 软件本体更新说明.md         #   ★ app.asar 原地覆盖全流程
-│   ├── 更新迭代.md / 开发日志.md
-│   ├── cleanup-legacy-folders.bat
-│   └── 界面预览/                  #   历史截图归档（**不再新增**）
-├── 旧版本存档/                    #   历史安装包 + 原 app.asar 备份
-└── 参考内容包/                    #   官方 SDK 文档 + 迈从 HUB 解包（只读参考）
+├── 开发者云端发布工具/              # ★ 开发者专属本地发布工具 (config.json, publish.cjs, 星闪云端发布工具.exe)
+├── docs/                          # ★ 官方宣发静态页面 (由 AI Agent 自动维护更新)
+├── 项目文档/                      # 架构规约、协议标准、SKU清单
+└── PCB信息枚举探针/                # 硬件探针工具
 ```
 
 > 根目录只应保留「一个快捷方式 + 中文分类文件夹」。
@@ -364,6 +360,35 @@ print('MATCH' if hashlib.md5(open(dst,'rb').read()).hexdigest() == hashlib.md5(d
 - 中间产物放 `.asar-tmp/`，**别放项目根目录**（放根目录会被句柄锁住，删不掉）。
 - 字节数变化（如 `45056270 → 45057756`）是正常的，只要 MD5 写入前后一致即可。
 - 版本流水记在 [`软件本体更新说明.md`](./软件本体更新说明.md)。
+
+### 4.5 官方版本发布与安装包封包规范 (Standard Packaging)
+
+> 详细规范与执行流水线见根目录：[`UPDATE_WORKFLOW_RULES.md`](../UPDATE_WORKFLOW_RULES.md)。
+
+当收到用户“更新”、“发版”指令时，必须按以下标准闭环流程执行：
+1. **先做版本迭代，确认版本号**：
+   - 递增版本号：小版本修复递增末位（如 `V1.1.0` ➔ `V1.1.1`），大版本更新递增中间位（如 `V1.1.x` ➔ `V1.2.0`）。
+   - 在对话中明确向开发者告知确认本次目标版本号。
+2. **全量配置与源码同步**：
+   - 同步 `package.json`、`updaterService.js`、`GlobalSettingsModal.jsx`、`开发者云端发布工具/config.json` 等。
+3. **前端构建与 asar 热覆盖**：
+   ```bash
+   cd 工程源码
+   npm run build
+   npm run repack
+   ```
+4. **运行标准三文件封包工具**：
+   ```bash
+   npm run release:pack
+   ```
+   自动在根目录 `安装包/` 下按版本创建子文件夹 `安装包/V<Version>/`，并**严格产出且仅包含标准三文件**：
+   - 📄 **`更新日志.md`**：记录版本详细改动、发布日期与文件哈希。
+   - 💿 **`AstraFlux-HUB_Setup_v<Version>.exe`**：软件安装包本体（独立安装向导）。
+   - 🌐 **`manifest.json`**：更新清单，能直接上传/导入到开发者云端发布工具。
+5. **AI Agent 执行宣发官网与云端发版**：
+   - AI Agent 自动更新宣发官网（`docs/index.html`）与项目根目录 `README.md` 中的版本号、文件体积与哈希。
+   - AI Agent 负责 GitHub Releases 页面、Gitee 页面同步与云端发布工具执行。
+   - 🛑 **人类确认门禁绝对红线**：封包完成后必须向开发者汇报并等待本地测试验收，在开发者确认无误前，严禁执行 `git push` 或推送网络发版！
 
 ---
 

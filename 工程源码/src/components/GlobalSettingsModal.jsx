@@ -1385,11 +1385,11 @@ export default function GlobalSettingsModal({
                       <div className="grid grid-cols-2 gap-3 mt-4">
                         <div className="p-3 rounded-xl bg-[var(--bg-secondary)]/80 border border-[var(--border-color)] text-center">
                           <span className="text-[10px] text-[var(--text-tertiary)] block">当前运行版本</span>
-                          <span className="text-base font-extrabold text-[var(--text-primary)] font-mono mt-0.5 block">v1.1.0</span>
+                          <span className="text-base font-extrabold text-[var(--text-primary)] font-mono mt-0.5 block">v{updaterService.getCurrentAppVersion()}</span>
                         </div>
                         <div className="p-3 rounded-xl bg-[var(--bg-secondary)]/80 border border-[var(--border-color)] text-center">
                           <span className="text-[10px] text-[var(--text-tertiary)] block">云端最新版本</span>
-                          <span className="text-base font-extrabold text-emerald-500 font-mono mt-0.5 block">v1.1.0</span>
+                          <span className="text-base font-extrabold text-emerald-500 font-mono mt-0.5 block">v{updaterService.getCurrentAppVersion()}</span>
                         </div>
                       </div>
 
@@ -1419,7 +1419,7 @@ export default function GlobalSettingsModal({
                           type="button"
                           onClick={() => {
                             addToast({
-                              message: '【V1.1.0 更新日志】支持回报率自恢复热插拔、常规设置系统托盘联动、高自由度轴体行程搜索、全新关于面板。',
+                              message: '【V1.1.1 更新日志】1. 问题反馈直达 GitHub Issues；2. 云端目录 database/ 与 software/ 分离；3. 修复 Gitee 分支对齐；4. 支持 Gitee+GitHub 双仓一键秒级同步。',
                               type: 'info',
                               duration: 4000
                             });

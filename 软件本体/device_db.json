@@ -1,7 +1,8 @@
 {
-  "libVersion": "2026.10.21.1",
-  "exportedAt": "2026-10-21T05:00:04.248Z",
-  "generator": "SparkLink PlayJoy HUB Device Database",
+  "libVersion": "2026.10.20.1",
+  "exportedAt": "2026-10-20T17:31:17.083Z",
+  "generator": "SparkLink PlayJoy Community Keyboard Database Registry (高保真全量硬件库)",
+  "description": "统一采用星闪探针硬件规范 (Probe Hardware Schema v1.4.1)，包含各品牌物理矩阵 physicalKeys、灯珠拓扑、5灯空格、上下双灯、高精校准与性能规格",
   "totalDevices": 638,
   "profiles": [
     {
@@ -5807,7 +5808,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "联想 Lenovo / 拯救者",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "联想 Lenovo / 拯救者"
       },
       "deviceProfile": {
         "id": "catalog_0x17ef_0x6301",
@@ -5873,7 +5875,8 @@
         "productModel": "XS152 鼠标",
         "manufacturerString": "星闪无线 NearLink",
         "targetId": 3,
-        "chipModel": "XS152"
+        "chipModel": "XS152",
+        "brand": "星闪无线 NearLink"
       },
       "deviceProfile": {
         "id": "catalog_0x195d_0x1038",
@@ -5936,7 +5939,8 @@
         "productModel": "XS152 鼠标",
         "manufacturerString": "星闪无线 NearLink",
         "targetId": 5,
-        "chipModel": "XS152"
+        "chipModel": "XS152",
+        "brand": "星闪无线 NearLink"
       },
       "deviceProfile": {
         "id": "catalog_0x195d_0x1039",
@@ -5999,7 +6003,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x0103",
@@ -6065,7 +6070,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x0104",
@@ -6131,7 +6137,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x0105",
@@ -6197,7 +6204,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x030b",
@@ -6263,7 +6271,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x030d",
@@ -6329,7 +6338,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x030e",
@@ -6395,7 +6405,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x030f",
@@ -6461,7 +6472,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x0310",
@@ -6527,7 +6539,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x0311",
@@ -6593,7 +6606,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x0408",
@@ -6659,7 +6673,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x0409",
@@ -6725,7 +6740,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x0511",
@@ -6791,7 +6807,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x0527",
@@ -6857,7 +6874,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x0529",
@@ -6923,7 +6941,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x052c",
@@ -6989,7 +7008,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x0531",
@@ -7055,7 +7075,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x0532",
@@ -7121,7 +7142,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x0535",
@@ -7187,7 +7209,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x0537",
@@ -7253,7 +7276,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x053a",
@@ -7319,7 +7343,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x053b",
@@ -7385,7 +7410,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x053d",
@@ -7451,7 +7477,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x053e",
@@ -7517,7 +7544,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x0540",
@@ -7583,7 +7611,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x0541",
@@ -7649,7 +7678,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x0542",
@@ -7715,7 +7745,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x0543",
@@ -7781,7 +7812,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x0544",
@@ -7847,7 +7879,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x0545",
@@ -7913,7 +7946,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x054a",
@@ -7979,7 +8013,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x054b",
@@ -8045,7 +8080,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x054c",
@@ -8111,7 +8147,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x054d",
@@ -8177,7 +8214,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x054e",
@@ -8243,7 +8281,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x054f",
@@ -8309,7 +8348,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x0550",
@@ -8375,7 +8415,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x0551",
@@ -8441,7 +8482,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x0552",
@@ -8507,7 +8549,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x0554",
@@ -8573,7 +8616,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x0607",
@@ -8639,7 +8683,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x0814",
@@ -8705,7 +8750,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x0834",
@@ -8771,7 +8817,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x0838",
@@ -8837,7 +8884,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x0849",
@@ -8903,7 +8951,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x085c",
@@ -8969,7 +9018,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x085f",
@@ -9035,7 +9085,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x0863",
@@ -9101,7 +9152,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x0867",
@@ -9167,7 +9219,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x0868",
@@ -9233,7 +9286,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x086b",
@@ -9299,7 +9353,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x086c",
@@ -9365,7 +9420,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x086e",
@@ -9431,7 +9487,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x0905",
@@ -9497,7 +9554,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x0906",
@@ -9563,7 +9621,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x0907",
@@ -9629,7 +9688,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x090c",
@@ -9695,7 +9755,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x090d",
@@ -9761,7 +9822,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x090e",
@@ -9827,7 +9889,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x090f",
@@ -9893,7 +9956,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x0910",
@@ -9959,7 +10023,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x0911",
@@ -10025,7 +10090,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x0912",
@@ -10091,7 +10157,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x0913",
@@ -10157,7 +10224,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x0914",
@@ -10223,7 +10291,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x0916",
@@ -10289,7 +10358,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x0917",
@@ -10355,7 +10425,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x0918",
@@ -10421,7 +10492,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x0919",
@@ -10487,7 +10559,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x091a",
@@ -10553,7 +10626,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x091c",
@@ -10619,7 +10693,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x091d",
@@ -10685,7 +10760,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x0a0a",
@@ -10751,7 +10827,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x0a23",
@@ -10817,7 +10894,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x0a24",
@@ -10883,7 +10961,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x0e04",
@@ -10949,7 +11028,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x0e05",
@@ -11015,7 +11095,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x0f0b",
@@ -11081,7 +11162,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x0f0c",
@@ -11147,7 +11229,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x0f0d",
@@ -11213,7 +11296,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x0f0e",
@@ -11279,7 +11363,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x0f0f",
@@ -11345,7 +11430,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x0f10",
@@ -11411,7 +11497,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x0f11",
@@ -11477,7 +11564,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x1107",
@@ -11543,7 +11631,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x1108",
@@ -11609,7 +11698,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x1109",
@@ -11675,7 +11765,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x1305",
@@ -11741,7 +11832,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x1306",
@@ -11807,7 +11899,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x1504",
@@ -11873,7 +11966,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x1506",
@@ -11939,7 +12033,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x1507",
@@ -12005,7 +12100,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x1508",
@@ -12071,7 +12167,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x150c",
@@ -12137,7 +12234,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x150d",
@@ -12203,7 +12301,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x1608",
@@ -12269,7 +12368,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x1905",
@@ -12335,7 +12435,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x1a08",
@@ -12401,7 +12502,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x1a0a",
@@ -12467,7 +12569,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x1a0b",
@@ -12533,7 +12636,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x1a0c",
@@ -12599,7 +12703,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x1a0d",
@@ -12665,7 +12770,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x1a0e",
@@ -12731,7 +12837,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x1a0f",
@@ -12797,7 +12904,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x1a10",
@@ -12863,7 +12971,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x1a11",
@@ -12929,7 +13038,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x1a13",
@@ -12995,7 +13105,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x1b05",
@@ -13061,7 +13172,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x1b08",
@@ -13127,7 +13239,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x1b09",
@@ -13193,7 +13306,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x1b0a",
@@ -13259,7 +13373,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x1b0b",
@@ -13325,7 +13440,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x1b0c",
@@ -13391,7 +13507,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x1b0d",
@@ -13457,7 +13574,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x1b0f",
@@ -13523,7 +13641,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x1b10",
@@ -13589,7 +13708,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x1b11",
@@ -13655,7 +13775,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x1b13",
@@ -13721,7 +13842,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x1b14",
@@ -13787,7 +13909,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x1b15",
@@ -13853,7 +13976,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x1b19",
@@ -13919,7 +14043,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x1c04",
@@ -13985,7 +14110,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x1c0a",
@@ -14051,7 +14177,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x1c0c",
@@ -14117,7 +14244,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x1c0f",
@@ -14183,7 +14311,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x1c10",
@@ -14249,7 +14378,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x1c11",
@@ -14315,7 +14445,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x1c12",
@@ -14381,7 +14512,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x1c13",
@@ -14447,7 +14579,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x1c14",
@@ -14513,7 +14646,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x1c15",
@@ -14579,7 +14713,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x1c18",
@@ -14645,7 +14780,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x1c19",
@@ -14711,7 +14847,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x1c1a",
@@ -14777,7 +14914,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x1c1f",
@@ -14843,7 +14981,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x1c20",
@@ -14909,7 +15048,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x1c23",
@@ -14975,7 +15115,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x1c2a",
@@ -15041,7 +15182,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x1c2b",
@@ -15107,7 +15249,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x1c2c",
@@ -15173,7 +15316,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x1c2d",
@@ -15239,7 +15383,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x1c2e",
@@ -15305,7 +15450,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x1c2f",
@@ -15371,7 +15517,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x1c34",
@@ -15437,7 +15584,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x1c35",
@@ -15503,7 +15651,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x1c37",
@@ -15569,7 +15718,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x1c38",
@@ -15635,7 +15785,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x1c3a",
@@ -15701,7 +15852,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x1c3b",
@@ -15767,7 +15919,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x1c3c",
@@ -15833,7 +15986,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x1c3d",
@@ -15899,7 +16053,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x1c3e",
@@ -15965,7 +16120,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x1c3f",
@@ -16031,7 +16187,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x1c40",
@@ -16097,7 +16254,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x1c42",
@@ -16163,7 +16321,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x1c43",
@@ -16229,7 +16388,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x1c45",
@@ -16295,7 +16455,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x1c47",
@@ -16361,7 +16522,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x1c48",
@@ -16427,7 +16589,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x1c49",
@@ -16493,7 +16656,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x1c4a",
@@ -16559,7 +16723,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x1c4b",
@@ -16625,7 +16790,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x1c4c",
@@ -16691,7 +16857,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x1c4d",
@@ -16757,7 +16924,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x1c4e",
@@ -16823,7 +16991,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x1c50",
@@ -16889,7 +17058,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x1e03",
@@ -16955,7 +17125,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x1e04",
@@ -17021,7 +17192,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x1e05",
@@ -17087,7 +17259,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x1f03",
@@ -17153,7 +17326,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x1f06",
@@ -17219,7 +17393,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x2204",
@@ -17285,7 +17460,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x2403",
@@ -17351,7 +17527,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x2404",
@@ -17417,7 +17594,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x2405",
@@ -17483,7 +17661,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x2406",
@@ -17549,7 +17728,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x2407",
@@ -17615,7 +17795,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x2501",
@@ -17681,7 +17862,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x2503",
@@ -17747,7 +17929,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x2602",
@@ -17813,7 +17996,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x2706",
@@ -17879,7 +18063,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x2707",
@@ -17945,7 +18130,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x2708",
@@ -18011,7 +18197,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x2709",
@@ -18077,7 +18264,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x270a",
@@ -18143,7 +18331,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x2802",
@@ -18209,7 +18398,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x2b02",
@@ -18275,7 +18465,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x2c01",
@@ -18341,7 +18532,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x2c03",
@@ -18407,7 +18599,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x2c08",
@@ -18473,7 +18666,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x2c09",
@@ -18539,7 +18733,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x2c0a",
@@ -18605,7 +18800,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x2c0b",
@@ -18671,7 +18867,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x2c0c",
@@ -18737,7 +18934,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x2c0d",
@@ -18803,7 +19001,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x2c0e",
@@ -18869,7 +19068,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x2c0f",
@@ -18935,7 +19135,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x2c12",
@@ -19001,7 +19202,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x2c13",
@@ -19067,7 +19269,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x2c14",
@@ -19133,7 +19336,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x2c18",
@@ -19199,7 +19403,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x2c19",
@@ -19265,7 +19470,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x2c1a",
@@ -19331,7 +19537,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x2c1b",
@@ -19397,7 +19604,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x2c1c",
@@ -19463,7 +19671,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x2c1d",
@@ -19529,7 +19738,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x2c20",
@@ -19595,7 +19805,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x2c21",
@@ -19661,7 +19872,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x2c22",
@@ -19727,7 +19939,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x2c24",
@@ -19793,7 +20006,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x2c25",
@@ -19859,7 +20073,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x2c26",
@@ -19925,7 +20140,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x2c27",
@@ -19991,7 +20207,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x2c28",
@@ -20057,7 +20274,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x2c29",
@@ -20123,7 +20341,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x2c2a",
@@ -20189,7 +20408,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x2c2b",
@@ -20255,7 +20475,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x2f02",
@@ -20321,7 +20542,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x2f03",
@@ -20387,7 +20609,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x2f04",
@@ -20453,7 +20676,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x2f05",
@@ -20519,7 +20743,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x3001",
@@ -20585,7 +20810,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x3002",
@@ -20651,7 +20877,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x3003",
@@ -20717,7 +20944,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x3006",
@@ -20783,7 +21011,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x3007",
@@ -20849,7 +21078,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x3008",
@@ -20915,7 +21145,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x3009",
@@ -20981,7 +21212,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x300a",
@@ -21047,7 +21279,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x300b",
@@ -21113,7 +21346,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x300e",
@@ -21179,7 +21413,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x300f",
@@ -21245,7 +21480,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x3503",
@@ -21311,7 +21547,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x3504",
@@ -21377,7 +21614,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x3505",
@@ -21443,7 +21681,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x3506",
@@ -21509,7 +21748,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x3507",
@@ -21575,7 +21815,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x3508",
@@ -21641,7 +21882,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x3509",
@@ -21707,7 +21949,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x350a",
@@ -21773,7 +22016,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x350b",
@@ -21839,7 +22083,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x350c",
@@ -21905,7 +22150,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x350d",
@@ -21971,7 +22217,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x3701",
@@ -22037,7 +22284,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x3702",
@@ -22103,7 +22351,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x3801",
@@ -22169,7 +22418,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x3803",
@@ -22235,7 +22485,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x3804",
@@ -22301,7 +22552,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x3904",
@@ -22367,7 +22619,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x3906",
@@ -22433,7 +22686,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x390a",
@@ -22499,7 +22753,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x390b",
@@ -22565,7 +22820,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x390c",
@@ -22631,7 +22887,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x3912",
@@ -22697,7 +22954,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x3914",
@@ -22763,7 +23021,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x3916",
@@ -22829,7 +23088,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x3919",
@@ -22895,7 +23155,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x391f",
@@ -22961,7 +23222,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x3920",
@@ -23027,7 +23289,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x3925",
@@ -23093,7 +23356,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x3926",
@@ -23159,7 +23423,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x3927",
@@ -23225,7 +23490,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x3928",
@@ -23291,7 +23557,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x3929",
@@ -23357,7 +23624,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x392a",
@@ -23423,7 +23691,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x392b",
@@ -23489,7 +23758,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x392c",
@@ -23555,7 +23825,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x392f",
@@ -23621,7 +23892,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x3a03",
@@ -23687,7 +23959,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x3a04",
@@ -23753,7 +24026,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x3a05",
@@ -23819,7 +24093,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x3a06",
@@ -23885,7 +24160,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x3a09",
@@ -23951,7 +24227,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x3a0b",
@@ -24017,7 +24294,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x3c01",
@@ -24083,7 +24361,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x3d06",
@@ -24149,7 +24428,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x3d08",
@@ -24215,7 +24495,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x3d09",
@@ -24281,7 +24562,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x3d0a",
@@ -24347,7 +24629,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x3d0b",
@@ -24413,7 +24696,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x3d0c",
@@ -24479,7 +24763,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x3d0d",
@@ -24545,7 +24830,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x3d0f",
@@ -24611,7 +24897,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x3d10",
@@ -24677,7 +24964,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x3d11",
@@ -24743,7 +25031,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x3d13",
@@ -24809,7 +25098,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x3d14",
@@ -24875,7 +25165,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x3e01",
@@ -24941,7 +25232,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x4001",
@@ -25007,7 +25299,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x4102",
@@ -25073,7 +25366,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x4201",
@@ -25139,7 +25433,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x4302",
@@ -25205,7 +25500,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x4303",
@@ -25271,7 +25567,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x4401",
@@ -25337,7 +25634,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x4402",
@@ -25403,7 +25701,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x4405",
@@ -25469,7 +25768,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x4507",
@@ -25535,7 +25835,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x4508",
@@ -25601,7 +25902,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x4509",
@@ -25667,7 +25969,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x450b",
@@ -25733,7 +26036,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x450f",
@@ -25799,7 +26103,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x4510",
@@ -25865,7 +26170,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x4512",
@@ -25931,7 +26237,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x4519",
@@ -25997,7 +26304,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x451a",
@@ -26063,7 +26371,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x451c",
@@ -26129,7 +26438,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x4520",
@@ -26195,7 +26505,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x4525",
@@ -26261,7 +26572,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x4526",
@@ -26327,7 +26639,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x4527",
@@ -26393,7 +26706,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x4528",
@@ -26459,7 +26773,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x4529",
@@ -26525,7 +26840,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x452a",
@@ -26591,7 +26907,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x452c",
@@ -26657,7 +26974,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x4703",
@@ -26723,7 +27041,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x4802",
@@ -26789,7 +27108,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x4b04",
@@ -26855,7 +27175,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x4b05",
@@ -26921,7 +27242,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x4b07",
@@ -26987,7 +27309,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x4c03",
@@ -27053,7 +27376,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x4c08",
@@ -27119,7 +27443,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x4c09",
@@ -27185,7 +27510,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x4c0a",
@@ -27251,7 +27577,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x4c0d",
@@ -27317,7 +27644,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x4c0e",
@@ -27383,7 +27711,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x4e01",
@@ -27449,7 +27778,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x5001",
@@ -27515,7 +27845,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x5003",
@@ -27581,7 +27912,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x5004",
@@ -27647,7 +27979,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x5201",
@@ -27713,7 +28046,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x5301",
@@ -27779,7 +28113,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x5303",
@@ -27845,7 +28180,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x5401",
@@ -27911,7 +28247,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x5405",
@@ -27977,7 +28314,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x5406",
@@ -28043,7 +28381,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x5407",
@@ -28109,7 +28448,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x5409",
@@ -28175,7 +28515,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x540b",
@@ -28241,7 +28582,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x540c",
@@ -28307,7 +28649,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x540d",
@@ -28373,7 +28716,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x540e",
@@ -28439,7 +28783,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x540f",
@@ -28505,7 +28850,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x5411",
@@ -28571,7 +28917,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x5412",
@@ -28637,7 +28984,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x5414",
@@ -28703,7 +29051,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x5415",
@@ -28769,7 +29118,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x5418",
@@ -28835,7 +29185,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x5419",
@@ -28901,7 +29252,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x541a",
@@ -28967,7 +29319,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x541b",
@@ -29033,7 +29386,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x541c",
@@ -29099,7 +29453,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x541d",
@@ -29165,7 +29520,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x541e",
@@ -29231,7 +29587,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x541f",
@@ -29297,7 +29654,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x5420",
@@ -29363,7 +29721,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x5421",
@@ -29429,7 +29788,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x5422",
@@ -29495,7 +29855,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x5423",
@@ -29561,7 +29922,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x5501",
@@ -29627,7 +29989,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x5601",
@@ -29693,7 +30056,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x5701",
@@ -29759,7 +30123,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x5801",
@@ -29825,7 +30190,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x5802",
@@ -29891,7 +30257,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x5803",
@@ -29957,7 +30324,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x5804",
@@ -30023,7 +30391,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x5806",
@@ -30089,7 +30458,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x5807",
@@ -30155,7 +30525,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x5808",
@@ -30221,7 +30592,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x5901",
@@ -30287,7 +30659,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x5902",
@@ -30353,7 +30726,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x5904",
@@ -30419,7 +30793,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x5905",
@@ -30485,7 +30860,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x5906",
@@ -30551,7 +30927,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x5907",
@@ -30617,7 +30994,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x5908",
@@ -30683,7 +31061,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x5909",
@@ -30749,7 +31128,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x590a",
@@ -30815,7 +31195,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x590b",
@@ -30881,7 +31262,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x5a01",
@@ -30947,7 +31329,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x5a02",
@@ -31013,7 +31396,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x5e01",
@@ -31079,7 +31463,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x5e03",
@@ -31145,7 +31530,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x5e04",
@@ -31211,7 +31597,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x5e07",
@@ -31277,7 +31664,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x5e08",
@@ -31343,7 +31731,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x5e0a",
@@ -31409,7 +31798,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x5e0b",
@@ -31475,7 +31865,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x5e0e",
@@ -31541,7 +31932,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x6001",
@@ -31607,7 +31999,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x6002",
@@ -31673,7 +32066,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x6101",
@@ -31739,7 +32133,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x6301",
@@ -31805,7 +32200,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x6302",
@@ -31871,7 +32267,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x6303",
@@ -31937,7 +32334,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x6401",
@@ -32003,7 +32401,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x6402",
@@ -32069,7 +32468,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x6501",
@@ -32135,7 +32535,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x6502",
@@ -32201,7 +32602,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x6503",
@@ -32267,7 +32669,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x6504",
@@ -32333,7 +32736,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x6506",
@@ -32399,7 +32803,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x6507",
@@ -32465,7 +32870,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x6601",
@@ -32531,7 +32937,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x6701",
@@ -32597,7 +33004,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x6703",
@@ -32663,7 +33071,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x6705",
@@ -32729,7 +33138,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x6801",
@@ -32795,7 +33205,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x6803",
@@ -32861,7 +33272,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x6804",
@@ -32927,7 +33339,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x6805",
@@ -32993,7 +33406,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x6808",
@@ -33059,7 +33473,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x6901",
@@ -33125,7 +33540,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x6a03",
@@ -33191,7 +33607,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x6a04",
@@ -33257,7 +33674,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x6a05",
@@ -33323,7 +33741,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x6a06",
@@ -33389,7 +33808,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x6a08",
@@ -33455,7 +33875,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x6b01",
@@ -33521,7 +33942,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x6b02",
@@ -33587,7 +34009,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x6b03",
@@ -33653,7 +34076,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x6c01",
@@ -33719,7 +34143,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x6c03",
@@ -33785,7 +34210,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x6c04",
@@ -33851,7 +34277,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x6c05",
@@ -33917,7 +34344,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x6d01",
@@ -33983,7 +34411,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x6d02",
@@ -34049,7 +34478,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x6e01",
@@ -34115,7 +34545,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x6e02",
@@ -34181,7 +34612,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x6e03",
@@ -34247,7 +34679,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x6e04",
@@ -34313,7 +34746,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x6e05",
@@ -34379,7 +34813,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x6e06",
@@ -34445,7 +34880,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x6e07",
@@ -34511,7 +34947,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x6f01",
@@ -34577,7 +35014,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x6f02",
@@ -34643,7 +35081,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x6f03",
@@ -34709,7 +35148,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x6f05",
@@ -34775,7 +35215,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x6f06",
@@ -34841,7 +35282,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x6f07",
@@ -34907,7 +35349,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x7002",
@@ -34973,7 +35416,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x7102",
@@ -35039,7 +35483,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x7201",
@@ -35105,7 +35550,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x7202",
@@ -35171,7 +35617,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x7203",
@@ -35237,7 +35684,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x7204",
@@ -35303,7 +35751,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x7207",
@@ -35369,7 +35818,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x7302",
@@ -35435,7 +35885,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x7401",
@@ -35501,7 +35952,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x7501",
@@ -35567,7 +36019,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x7502",
@@ -35633,7 +36086,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x7604",
@@ -35699,7 +36153,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x7701",
@@ -35765,7 +36220,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x7802",
@@ -35831,7 +36287,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x7803",
@@ -35897,7 +36354,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x7902",
@@ -35963,7 +36421,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x7903",
@@ -36029,7 +36488,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x7a01",
@@ -36095,7 +36555,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x7a03",
@@ -36161,7 +36622,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x7b01",
@@ -36227,7 +36689,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x7b02",
@@ -36293,7 +36756,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x7b04",
@@ -36359,7 +36823,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x7b05",
@@ -36425,7 +36890,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x7d01",
@@ -36491,7 +36957,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x7e01",
@@ -36557,7 +37024,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x7f01",
@@ -36623,7 +37091,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x7f02",
@@ -36689,7 +37158,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x7f03",
@@ -36755,7 +37225,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x7f04",
@@ -36821,7 +37292,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x8101",
@@ -36887,7 +37359,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x8202",
@@ -36953,7 +37426,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x8501",
@@ -37019,7 +37493,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x8601",
@@ -37085,7 +37560,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x8701",
@@ -37151,7 +37627,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x8801",
@@ -37217,7 +37694,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x8901",
@@ -37283,7 +37761,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "八位堂 8BitDo",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "八位堂 8BitDo"
       },
       "deviceProfile": {
         "id": "catalog_0x2dc8_0x206f",
@@ -37349,7 +37828,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "迈从 MCHOSE",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "迈从 MCHOSE"
       },
       "deviceProfile": {
         "id": "catalog_0x3151_0x4010",
@@ -37415,7 +37895,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "维咖 VGN",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "维咖 VGN"
       },
       "deviceProfile": {
         "id": "catalog_0x3233_0x2601",
@@ -37481,7 +37962,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "维咖 VGN",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "维咖 VGN"
       },
       "deviceProfile": {
         "id": "catalog_0x3233_0x2602",
@@ -37547,7 +38029,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "维咖 VGN",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "维咖 VGN"
       },
       "deviceProfile": {
         "id": "catalog_0x3233_0x2603",
@@ -37613,7 +38096,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "维咖 VGN",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "维咖 VGN"
       },
       "deviceProfile": {
         "id": "catalog_0x3233_0x2604",
@@ -37679,7 +38163,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "维咖 VGN",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "维咖 VGN"
       },
       "deviceProfile": {
         "id": "catalog_0x3233_0x2605",
@@ -37745,7 +38230,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "维咖 VGN",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "维咖 VGN"
       },
       "deviceProfile": {
         "id": "catalog_0x3233_0x2606",
@@ -37811,7 +38297,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "狼蛛 AULA",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "狼蛛 AULA"
       },
       "deviceProfile": {
         "id": "catalog_0x32ca_0x28e9",
@@ -37877,7 +38364,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "达尔优 DAREU",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "达尔优 DAREU"
       },
       "deviceProfile": {
         "id": "catalog_0x36b5_0x75d2",
@@ -37943,7 +38431,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "达尔优 DAREU",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "达尔优 DAREU"
       },
       "deviceProfile": {
         "id": "catalog_0x36b5_0x75d4",
@@ -38009,7 +38498,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "瓦尔基里 Valkyrie",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "瓦尔基里 Valkyrie"
       },
       "deviceProfile": {
         "id": "catalog_0x371c_0xc001",
@@ -38075,7 +38565,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "瓦尔基里 Valkyrie",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "瓦尔基里 Valkyrie"
       },
       "deviceProfile": {
         "id": "catalog_0x371c_0xd001",
@@ -38141,7 +38632,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "瓦尔基里 Valkyrie",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "瓦尔基里 Valkyrie"
       },
       "deviceProfile": {
         "id": "catalog_0x371c_0xd002",
@@ -38207,7 +38699,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "瓦尔基里 Valkyrie",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "瓦尔基里 Valkyrie"
       },
       "deviceProfile": {
         "id": "catalog_0x371c_0xd003",
@@ -38273,7 +38766,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "瓦尔基里 Valkyrie",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "瓦尔基里 Valkyrie"
       },
       "deviceProfile": {
         "id": "catalog_0x371c_0xd004",
@@ -38339,7 +38833,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "瓦尔基里 Valkyrie",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "瓦尔基里 Valkyrie"
       },
       "deviceProfile": {
         "id": "catalog_0x371c_0xe001",
@@ -38405,7 +38900,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "瓦尔基里 Valkyrie",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "瓦尔基里 Valkyrie"
       },
       "deviceProfile": {
         "id": "catalog_0x371c_0xf001",
@@ -38471,7 +38967,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "艾石头 IROK",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "艾石头 IROK"
       },
       "deviceProfile": {
         "id": "catalog_0x38a6_0x271c",
@@ -38537,7 +39034,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "艾石头 IROK",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "艾石头 IROK"
       },
       "deviceProfile": {
         "id": "catalog_0x38a6_0x272c",
@@ -38603,7 +39101,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "艾石头 IROK",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "艾石头 IROK"
       },
       "deviceProfile": {
         "id": "catalog_0x38a6_0x272d",
@@ -38669,7 +39168,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "艾石头 IROK",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "艾石头 IROK"
       },
       "deviceProfile": {
         "id": "catalog_0x38a6_0x272e",
@@ -38735,7 +39235,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "艾石头 IROK",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "艾石头 IROK"
       },
       "deviceProfile": {
         "id": "catalog_0x38a6_0x272f",
@@ -38801,7 +39302,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "艾石头 IROK",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "艾石头 IROK"
       },
       "deviceProfile": {
         "id": "catalog_0x38a6_0x2730",
@@ -38867,7 +39369,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "艾石头 IROK",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "艾石头 IROK"
       },
       "deviceProfile": {
         "id": "catalog_0x38a6_0x2731",
@@ -38933,7 +39436,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "艾石头 IROK",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "艾石头 IROK"
       },
       "deviceProfile": {
         "id": "catalog_0x38a6_0x2743",
@@ -38999,7 +39503,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "艾石头 IROK",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "艾石头 IROK"
       },
       "deviceProfile": {
         "id": "catalog_0x38a6_0x2745",
@@ -39065,7 +39570,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "艾石头 IROK",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "艾石头 IROK"
       },
       "deviceProfile": {
         "id": "catalog_0x38a6_0x2754",
@@ -39131,7 +39637,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "艾石头 IROK",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "艾石头 IROK"
       },
       "deviceProfile": {
         "id": "catalog_0x38a6_0x2763",
@@ -39197,7 +39704,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "艾石头 IROK",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "艾石头 IROK"
       },
       "deviceProfile": {
         "id": "catalog_0x38a6_0x28d0",
@@ -39263,7 +39771,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "艾石头 IROK",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "艾石头 IROK"
       },
       "deviceProfile": {
         "id": "catalog_0x38a6_0x28d1",
@@ -39329,7 +39838,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "艾石头 IROK",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "艾石头 IROK"
       },
       "deviceProfile": {
         "id": "catalog_0x38a6_0x28d2",
@@ -39395,7 +39905,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "艾石头 IROK",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "艾石头 IROK"
       },
       "deviceProfile": {
         "id": "catalog_0x38a6_0x28db",
@@ -39461,7 +39972,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "艾石头 IROK",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "艾石头 IROK"
       },
       "deviceProfile": {
         "id": "catalog_0x38a6_0x28dd",
@@ -39527,7 +40039,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "艾石头 IROK",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "艾石头 IROK"
       },
       "deviceProfile": {
         "id": "catalog_0x38a6_0x28de",
@@ -39593,7 +40106,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "艾石头 IROK",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "艾石头 IROK"
       },
       "deviceProfile": {
         "id": "catalog_0x38a6_0x28df",
@@ -39659,7 +40173,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "艾石头 IROK",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "艾石头 IROK"
       },
       "deviceProfile": {
         "id": "catalog_0x38a6_0x28e0",
@@ -39725,7 +40240,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "艾石头 IROK",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "艾石头 IROK"
       },
       "deviceProfile": {
         "id": "catalog_0x38a6_0x28e1",
@@ -39791,7 +40307,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "艾石头 IROK",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "艾石头 IROK"
       },
       "deviceProfile": {
         "id": "catalog_0x38a6_0x28ef",
@@ -39857,7 +40374,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "艾石头 IROK",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "艾石头 IROK"
       },
       "deviceProfile": {
         "id": "catalog_0x38a6_0x28f0",
@@ -39923,7 +40441,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "艾石头 IROK",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "艾石头 IROK"
       },
       "deviceProfile": {
         "id": "catalog_0x38a6_0x28f1",
@@ -39989,7 +40508,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "艾石头 IROK",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "艾石头 IROK"
       },
       "deviceProfile": {
         "id": "catalog_0x38a6_0x28f2",
@@ -40055,7 +40575,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "艾石头 IROK",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "艾石头 IROK"
       },
       "deviceProfile": {
         "id": "catalog_0x38a6_0x28f5",
@@ -40121,7 +40642,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "艾石头 IROK",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "艾石头 IROK"
       },
       "deviceProfile": {
         "id": "catalog_0x38a6_0x28f6",
@@ -40187,7 +40709,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "艾石头 IROK",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "艾石头 IROK"
       },
       "deviceProfile": {
         "id": "catalog_0x38a6_0x2902",
@@ -40253,7 +40776,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "艾石头 IROK",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "艾石头 IROK"
       },
       "deviceProfile": {
         "id": "catalog_0x38a6_0x2903",
@@ -40319,7 +40843,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "艾石头 IROK",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "艾石头 IROK"
       },
       "deviceProfile": {
         "id": "catalog_0x38a6_0x2904",
@@ -40385,7 +40910,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "艾石头 IROK",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "艾石头 IROK"
       },
       "deviceProfile": {
         "id": "catalog_0x38a6_0x2905",
@@ -40451,7 +40977,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "艾石头 IROK",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "艾石头 IROK"
       },
       "deviceProfile": {
         "id": "catalog_0x38a6_0x2906",
@@ -40517,7 +41044,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "艾石头 IROK",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "艾石头 IROK"
       },
       "deviceProfile": {
         "id": "catalog_0x38a6_0x2907",
@@ -40583,7 +41111,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "艾石头 IROK",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "艾石头 IROK"
       },
       "deviceProfile": {
         "id": "catalog_0x38a6_0x2909",
@@ -40649,7 +41178,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "艾石头 IROK",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "艾石头 IROK"
       },
       "deviceProfile": {
         "id": "catalog_0x38a6_0x290a",
@@ -40715,7 +41245,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "艾石头 IROK",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "艾石头 IROK"
       },
       "deviceProfile": {
         "id": "catalog_0x38a6_0x2912",
@@ -40781,7 +41312,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "魔咖 MOKEY",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "魔咖 MOKEY"
       },
       "deviceProfile": {
         "id": "catalog_0x38ee_0x0036",
@@ -40847,7 +41379,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "魔咖 MOKEY",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "魔咖 MOKEY"
       },
       "deviceProfile": {
         "id": "catalog_0x38ee_0x0037",
@@ -40913,7 +41446,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "蜻蜓 Dragonfly",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "蜻蜓 Dragonfly"
       },
       "deviceProfile": {
         "id": "catalog_0x391d_0x2002",
@@ -40979,7 +41513,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "机械师 MACHENIKE",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "机械师 MACHENIKE"
       },
       "deviceProfile": {
         "id": "catalog_0x3973_0x0105",
@@ -41045,7 +41580,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "机械师 MACHENIKE",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "机械师 MACHENIKE"
       },
       "deviceProfile": {
         "id": "catalog_0x3973_0x0106",
@@ -41111,7 +41647,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "机械师 MACHENIKE",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "机械师 MACHENIKE"
       },
       "deviceProfile": {
         "id": "catalog_0x3973_0x0108",
@@ -41177,7 +41714,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "机械师 MACHENIKE",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "机械师 MACHENIKE"
       },
       "deviceProfile": {
         "id": "catalog_0x3973_0x0109",
@@ -41243,7 +41781,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "腹灵 FL·ESPORTS",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "腹灵 FL·ESPORTS"
       },
       "deviceProfile": {
         "id": "catalog_0x39a5_0x5e11",
@@ -41309,7 +41848,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "腹灵 FL·ESPORTS",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "腹灵 FL·ESPORTS"
       },
       "deviceProfile": {
         "id": "catalog_0x39a5_0x5e12",
@@ -41375,7 +41915,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪微码 (Keyboard V3)",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪微码 (Keyboard V3)"
       },
       "deviceProfile": {
         "id": "catalog_0x3ca2_0x0a2c",
@@ -41441,7 +41982,8 @@
         "productModel": "星闪 V3 键盘",
         "manufacturerString": "星闪微码 (Keyboard V3)",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪微码 (Keyboard V3)"
       },
       "deviceProfile": {
         "id": "catalog_0x3ca2_0x0a2e",
@@ -41507,7 +42049,8 @@
         "productModel": "星闪 V3 键盘",
         "manufacturerString": "星闪微码 (Keyboard V3)",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪微码 (Keyboard V3)"
       },
       "deviceProfile": {
         "id": "catalog_0x3ca2_0x0a2f",
@@ -41573,7 +42116,8 @@
         "productModel": "星闪 V3 键盘",
         "manufacturerString": "星闪微码 (Keyboard V3)",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪微码 (Keyboard V3)"
       },
       "deviceProfile": {
         "id": "catalog_0x3ca2_0x7205",
@@ -41639,7 +42183,8 @@
         "productModel": "XS147 鼠标",
         "manufacturerString": "星闪无线 (Mouse)",
         "targetId": 5,
-        "chipModel": "XS147"
+        "chipModel": "XS147",
+        "brand": "星闪无线 (Mouse)"
       },
       "deviceProfile": {
         "id": "catalog_0x3ca3_0x0202",
@@ -41702,7 +42247,8 @@
         "productModel": "XS215 鼠标",
         "manufacturerString": "星闪无线 (Mouse)",
         "targetId": 3,
-        "chipModel": "XS215"
+        "chipModel": "XS215",
+        "brand": "星闪无线 (Mouse)"
       },
       "deviceProfile": {
         "id": "catalog_0x3ca3_0x0402",
@@ -41765,7 +42311,8 @@
         "productModel": "XS215 鼠标",
         "manufacturerString": "星闪无线 (Mouse)",
         "targetId": 3,
-        "chipModel": "XS215"
+        "chipModel": "XS215",
+        "brand": "星闪无线 (Mouse)"
       },
       "deviceProfile": {
         "id": "catalog_0x3ca3_0x0802",
@@ -41828,7 +42375,8 @@
         "productModel": "XS215 鼠标",
         "manufacturerString": "星闪无线 (Mouse)",
         "targetId": 3,
-        "chipModel": "XS215"
+        "chipModel": "XS215",
+        "brand": "星闪无线 (Mouse)"
       },
       "deviceProfile": {
         "id": "catalog_0x3ca3_0x0a01",
@@ -41891,7 +42439,8 @@
         "productModel": "XS215 鼠标",
         "manufacturerString": "星闪无线 (Mouse)",
         "targetId": 3,
-        "chipModel": "XS215"
+        "chipModel": "XS215",
+        "brand": "星闪无线 (Mouse)"
       },
       "deviceProfile": {
         "id": "catalog_0x3ca3_0x0a02",
@@ -41954,7 +42503,8 @@
         "productModel": "XS147 鼠标",
         "manufacturerString": "星闪无线 (Mouse)",
         "targetId": 5,
-        "chipModel": "XS147"
+        "chipModel": "XS147",
+        "brand": "星闪无线 (Mouse)"
       },
       "deviceProfile": {
         "id": "catalog_0x3ca3_0x0b01",
@@ -42017,7 +42567,8 @@
         "productModel": "XS213 鼠标",
         "manufacturerString": "星闪无线 (Mouse)",
         "targetId": 5,
-        "chipModel": "XS213"
+        "chipModel": "XS213",
+        "brand": "星闪无线 (Mouse)"
       },
       "deviceProfile": {
         "id": "catalog_0x3ca3_0x0d01",
@@ -42080,7 +42631,8 @@
         "productModel": "XS215 鼠标",
         "manufacturerString": "星闪无线 (Mouse)",
         "targetId": 3,
-        "chipModel": "XS215"
+        "chipModel": "XS215",
+        "brand": "星闪无线 (Mouse)"
       },
       "deviceProfile": {
         "id": "catalog_0x3ca3_0x0d03",
@@ -42143,7 +42695,8 @@
         "productModel": "XS215 鼠标",
         "manufacturerString": "星闪无线 (Mouse)",
         "targetId": 3,
-        "chipModel": "XS215"
+        "chipModel": "XS215",
+        "brand": "星闪无线 (Mouse)"
       },
       "deviceProfile": {
         "id": "catalog_0x3ca3_0x0e01",
@@ -42206,7 +42759,8 @@
         "productModel": "XS215 鼠标",
         "manufacturerString": "星闪无线 (Mouse)",
         "targetId": 3,
-        "chipModel": "XS215"
+        "chipModel": "XS215",
+        "brand": "星闪无线 (Mouse)"
       },
       "deviceProfile": {
         "id": "catalog_0x3ca3_0x0f01",
@@ -42269,7 +42823,8 @@
         "productModel": "XS215 鼠标",
         "manufacturerString": "星闪无线 (Mouse)",
         "targetId": 3,
-        "chipModel": "XS215"
+        "chipModel": "XS215",
+        "brand": "星闪无线 (Mouse)"
       },
       "deviceProfile": {
         "id": "catalog_0x3ca3_0x0f03",
@@ -42332,7 +42887,8 @@
         "productModel": "XS215 鼠标",
         "manufacturerString": "星闪无线 (Mouse)",
         "targetId": 3,
-        "chipModel": "XS215"
+        "chipModel": "XS215",
+        "brand": "星闪无线 (Mouse)"
       },
       "deviceProfile": {
         "id": "catalog_0x3ca3_0x1001",
@@ -42395,7 +42951,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "客制化客供 / NearLink Custom",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "客制化客供 / NearLink Custom"
       },
       "deviceProfile": {
         "id": "catalog_0x7968_0x7000",
@@ -42461,7 +43018,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x4523",
@@ -42527,7 +43085,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x3703",
@@ -42593,7 +43152,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x4304",
@@ -42659,7 +43219,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x406",
@@ -42725,7 +43286,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "沁恒微电子 CH340/开发板",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "沁恒微电子 CH340/开发板"
       },
       "deviceProfile": {
         "id": "catalog_0x1a86_0xfe81",
@@ -42791,7 +43353,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x3913",
@@ -42857,7 +43420,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x1b12",
@@ -42923,7 +43487,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x5c02",
@@ -42989,7 +43554,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x1c21",
@@ -43055,7 +43621,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x4b03",
@@ -43121,7 +43688,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "艾石头 IROK",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "艾石头 IROK"
       },
       "deviceProfile": {
         "id": "catalog_0x38a6_0x2721",
@@ -43187,7 +43755,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x4c06",
@@ -43253,7 +43822,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x5c01",
@@ -43319,7 +43889,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x120c",
@@ -43385,7 +43956,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x5903",
@@ -43451,7 +44023,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x909",
@@ -43517,7 +44090,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "狼派 / 维咖客制化",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "狼派 / 维咖客制化"
       },
       "deviceProfile": {
         "id": "catalog_0x3806_0x2721",
@@ -43583,7 +44157,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x84a",
@@ -43649,7 +44224,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0xe701",
@@ -43715,7 +44291,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x2a02",
@@ -43781,7 +44358,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x150a",
@@ -43847,7 +44425,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x1c1b",
@@ -43913,7 +44492,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x4521",
@@ -43979,7 +44559,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x84b",
@@ -44045,7 +44626,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x84c",
@@ -44111,7 +44693,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x908",
@@ -44177,7 +44760,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x3901",
@@ -44243,7 +44827,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x3905",
@@ -44309,7 +44894,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x83b",
@@ -44375,7 +44961,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x848",
@@ -44441,7 +45028,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x4c04",
@@ -44507,7 +45095,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x4511",
@@ -44573,7 +45162,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x4513",
@@ -44639,7 +45229,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x4514",
@@ -44705,7 +45296,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x4515",
@@ -44771,7 +45363,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x4516",
@@ -44837,7 +45430,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x4517",
@@ -44903,7 +45497,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x4518",
@@ -44969,7 +45564,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x451b",
@@ -45035,7 +45631,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x451d",
@@ -45101,7 +45698,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x451e",
@@ -45167,7 +45765,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x4c02",
@@ -45233,7 +45832,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x52d",
@@ -45299,7 +45899,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x390d",
@@ -45365,7 +45966,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x534",
@@ -45431,7 +46033,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x4d01",
@@ -45497,7 +46100,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x5002",
@@ -45563,7 +46167,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0xd002",
@@ -45629,7 +46234,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x28db",
@@ -45695,7 +46301,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0xd001",
@@ -45761,7 +46368,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x28d2",
@@ -45827,7 +46435,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x28d1",
@@ -45893,7 +46502,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x28d0",
@@ -45959,7 +46569,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x83e",
@@ -46025,7 +46636,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x5101",
@@ -46091,7 +46703,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x4c01",
@@ -46157,7 +46770,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x3907",
@@ -46223,7 +46837,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x1d01",
@@ -46289,7 +46904,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x52b",
@@ -46355,7 +46971,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x52f",
@@ -46421,7 +47038,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x52a",
@@ -46487,7 +47105,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "艾石头 IROK",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "艾石头 IROK"
       },
       "deviceProfile": {
         "id": "catalog_0x38a6_0x271e",
@@ -46553,7 +47172,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x3f02",
@@ -46619,7 +47239,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x4f01",
@@ -46685,7 +47306,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x5402",
@@ -46751,7 +47373,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "沁恒微电子 CH340/开发板",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "沁恒微电子 CH340/开发板"
       },
       "deviceProfile": {
         "id": "catalog_0x1a86_0x8300",
@@ -46817,7 +47440,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x4506",
@@ -46883,7 +47507,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x450a",
@@ -46949,7 +47574,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x450c",
@@ -47015,7 +47641,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x450d",
@@ -47081,7 +47708,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x450e",
@@ -47147,7 +47775,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "星闪外设",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "星闪外设"
       },
       "deviceProfile": {
         "id": "catalog_0x1ca6_0x451f",
@@ -47213,7 +47842,8 @@
         "productModel": "星闪键盘",
         "manufacturerString": "新贵 Newmen",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "新贵 Newmen"
       },
       "deviceProfile": {
         "id": "catalog_0x31e3_0x1320",
@@ -47279,7 +47909,8 @@
         "productModel": "AE64-MAX (出厂形态)",
         "manufacturerString": "江湾 Everglide",
         "targetId": null,
-        "chipModel": "NearLink Wireless"
+        "chipModel": "NearLink Wireless",
+        "brand": "江湾 Everglide"
       },
       "deviceProfile": {
         "id": "ae64_max_alt",
