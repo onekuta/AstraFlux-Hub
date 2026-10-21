@@ -18,22 +18,22 @@
 </p>
 
 <p align="center">
+  <a href="https://github.com/Kutaze/AstraFlux-Hub/releases" target="_blank" rel="noopener noreferrer">
+    <img src="https://img.shields.io/badge/📥_GitHub_Releases-获取最新发布包-24292e?style=for-the-badge&logo=github" alt="GitHub Releases" height="36" />
+  </a>
+  &nbsp;&nbsp;
   <a href="https://gitee.com/Kutaze/astra-flux-hub/releases" target="_blank" rel="noopener noreferrer">
-    <img src="https://img.shields.io/badge/📥_Gitee_极速下载-国内直连秒下-c71d23?style=for-the-badge" alt="Gitee 极速下载" height="36" />
+    <img src="https://img.shields.io/badge/📥_Gitee_Releases-国内极速秒下-c71d23?style=for-the-badge&logo=gitee" alt="Gitee Releases" height="36" />
   </a>
   &nbsp;&nbsp;
-  <a href="https://github.com/Kutaze/AstraFlux-Hub" target="_blank" rel="noopener noreferrer">
-    <img src="https://img.shields.io/badge/💻_GitHub_源码仓库-开源存储与归档-24292e?style=for-the-badge&logo=github" alt="GitHub 仓库" height="36" />
-  </a>
-  &nbsp;&nbsp;
-  <a href="https://afdian.com/a/Kutaze" target="_blank" rel="noopener noreferrer">
-    <img src="https://img.shields.io/badge/💖_爱发电赞助-支持项目持续迭代-946ce6?style=for-the-badge" alt="爱发电赞助" height="36" />
+  <a href="#-赞赏与支持-sponsorship">
+    <img src="https://img.shields.io/badge/💖_赞赏支持-一分钱也是爱-ff69b4?style=for-the-badge" alt="赞赏支持" height="36" />
   </a>
 </p>
 
 <p align="center">
   <b>简体中文</b> • 
-  <a href="#-multilingual-overview">English</a>
+  <a href="#-多语言简介--multilingual-overview">English</a>
 </p>
 
 <p align="center">
@@ -44,8 +44,11 @@
   <a href="#-云端-ota-热更新架构">☁️ 云端 OTA</a> • 
   <a href="#-安全与硬件真实性铁律">🛡️ 硬件铁律</a> • 
   <a href="#-更新日志-changelog">📝 更新日志</a> • 
+  <a href="#-赞赏与支持-sponsorship">💖 赞赏支持</a> • 
+  <a href="#-star-history">📈 Star History</a> • 
   <a href="#-开发与构建指南">🚀 开发者指南</a> • 
-  <a href="#-开源协议与社区声明">💖 免责声明</a>
+  <a href="#-鸣谢与生态致敬-special-thanks">🤝 鸣谢致敬</a> • 
+  <a href="#-免责声明与开源协议-license--disclaimer">📜 免责协议</a>
 </p>
 
 </div>
@@ -89,19 +92,24 @@
 
 ## 📦 安装与下载 (Download)
 
-软件提供「图形安装向导」与「绿色便携免安装」两种分发形式：
+> 💡 **版本发布管理声明**：  
+> 所有正式版本发布均统一托管发布至 **Releases** 页面。为确保软件的绝对稳定与硬件安全性，每一次版本更新必须经由**开发者进行真实硬件联调测试并由用户确认项目无误**后，方可发布至 Releases 页面；或由维护者通过本地发布工具安全推送。请广大玩家与开发者优先前往 Releases 页面下载经过完整校验的正式软件包。
 
-### 1. 最新发布包目录 (`安装包_V1.1.0/`)
+### 1. 下载通道快速跳转
+
+| 分发通道 | 适用网络环境 | 下载链接 | 说明 |
+| :--- | :--- | :--- | :--- |
+| 🚀 **GitHub Releases** | 国际 / 全球网络 (代码主干) | [👉 点击跳转 GitHub Releases 页面](https://github.com/Kutaze/AstraFlux-Hub/releases) | 完整发布包、便携包与源码历史归档 |
+| ⚡ **Gitee Releases** | 国内网络 (极速免代理直连) | [👉 点击跳转 Gitee Releases 页面](https://gitee.com/Kutaze/astra-flux-hub/releases) | 国内高速下载通道，自动双向同步 |
+
+### 2. 最新版本发布包资产 (V1.1.0)
 
 | 文件名 | 分发类型 | 文件大小 | SHA-256 校验哈希 |
 | :--- | :--- | :--- | :--- |
-| **`AstraFlux-HUB_Setup_v1.1.0.exe`** | 推荐安装包 | ~141 MB | `0c6d93ae99af667557fb625c50231fa9fcf2c31ff332d2b82cfa8ca21c2f29eb` |
+| **`AstraFlux-HUB_Setup_v1.1.0.exe`** | 推荐安装向导 | ~141 MB | `0c6d93ae99af667557fb625c50231fa9fcf2c31ff332d2b82cfa8ca21c2f29eb` |
 | **`AstraFlux-HUB_v1.1.0_Portable.zip`** | 便携免安装版 | ~140 MB | `af6b8469f9b5b236fe941551ff87541d5c381cc92e1ff76cab9749fbc7400a76` |
 
-### 2. 下载通道导航
-- 🚀 **国内首选 (极速秒下)**：[Gitee Releases 发布页](https://gitee.com/Kutaze/astra-flux-hub/releases)
-- 🌐 **国际节点 (全量归档)**：[GitHub Releases 发布页](https://github.com/Kutaze/AstraFlux-Hub/releases)
-- 💻 **本地运行**：如果使用便携版，解压后双击 `软件本体/AstraFlux-HUB.exe` 即可直接运行。
+* 💻 **便携版即开即用**：下载 `AstraFlux-HUB_v1.1.0_Portable.zip` 解压后，双击内部 `软件本体/AstraFlux-HUB.exe` 即可直接运行，纯绿色免安装。
 
 ---
 
@@ -111,12 +119,12 @@ AstraFlux-HUB 采用现代化的**双端分离 OTA 架构**，既保证了客户
 
 ```mermaid
 flowchart LR
-    A[开发者 DevLab / 探针] -->|导出适配库| B[星闪云端发布助手]
-    B -->|自动化打包| C[dist_cloud 产物]
-    C -->|Git Push / API| D[(GitHub 开源主干)]
-    D -->|自动双向同步| E[(Gitee 国内更新渠道)]
-    E -->|只读 HTTP GET| F[客户端 OTA 检查]
-    F -->|无感热加载| G[即时支持新客制化键盘]
+    A["开发者 DevLab / 探针"] -->|"导出适配库"| B["星闪云端发布助手"]
+    B -->|"自动化打包"| C["dist_cloud 产物"]
+    C -->|"Git Push / API"| D[("GitHub 开源主干")]
+    D -->|"自动双向同步"| E[("Gitee 国内更新渠道")]
+    E -->|"只读 HTTP GET"| F["客户端 OTA 检查"]
+    F -->|"无感热加载"| G["即时支持新客制化键盘"]
 ```
 
 - **客户端绝无写入权限**：客户端仅发起公开只读 HTTP GET，绝不存储任何写入 Token，杜绝安全隐患。
@@ -135,6 +143,52 @@ flowchart LR
 3. **高级按键允许全部清空**：支持用户逐条删除或一键清空至 0 组，**严禁**弹出拦截弹窗强制保留。
 4. **弹窗防御规约**：禁绝原生浏览器 `alert()` / `confirm()` 阻塞式弹窗，全软件统一采用自研 `useToast()` 顶部平滑微光通知。
 5. **硬件真实坐标隔离**：硬件底层的矩阵引脚与视觉显示坐标严格隔离，写入硬件后必须遵循 `GFSParamSave` 固化协议。
+
+---
+
+## 📝 更新日志 (Changelog)
+
+> 💡 **同步说明**：主页更新日志同步跟随 [GitHub Releases](https://github.com/Kutaze/AstraFlux-Hub/releases) / [Gitee Releases](https://gitee.com/Kutaze/astra-flux-hub/releases) 进行维护与归档。
+
+<details open>
+<summary><b>📋 点击展开 / 折叠版本更新日志 (Changelog Archive)</b></summary>
+<br/>
+
+### [V1.1.0] - 2026-10-21
+* ✨ `[新特性]`：升级并固化 `V1.1.0` 统一版本号体系，确立大版本递增中间位、小版本递增末位规则。
+* ✨ `[新特性]`：新增自动化发布打包流水线 (`npm run release:pack`)，支持一键在根目录输出 `安装包_V1.1.0/` 包含图形 Setup 安装程序与 Portable 绿色便携包。
+* 🚀 `[体验与性能]`：仓库双端全面绑定：GitHub 负责开源存储与代码主干，Gitee 负责国内高速 OTA 渠道。
+* 🛡️ `[安全与生态]`：确立版本发布「用户确认门禁」，每次发版在打包完成并经开发者测试确认前严禁擅自推送到远端仓库。
+* 🛡️ `[安全与生态]`：全软件本地纯净运行，绝不搜集或上传任何击键与隐私数据，支持纯本地离线使用。
+
+</details>
+
+---
+
+## 💖 赞赏与支持 (Sponsorship)
+
+如果 **AstraFlux-HUB** 为你的星闪磁轴键盘和电竞体验带来了便利与极致性能提升，欢迎通过以下渠道为作者提供支持与赞赏！你的每一份心意都是驱动项目持续演进与适配更多客制化 PCB 的源动力。
+
+<div align="center">
+
+| 微信赞赏 (WeChat Pay) | 爱发电 (Afdian) |
+| :---: | :---: |
+| <img src="logo/wechat_sponsor.png" alt="微信赞赏码" width="220" /> | <br/><br/>⚡ **爱发电平台维护中**<br/><br/><i>（主页正在维护升级中，暂未开放跳转，敬请期待）</i><br/><br/> |
+| **一分钱也是爱 ❤️❤️ · 乐禾泽** | 感谢您的理解与耐心等待 |
+
+</div>
+
+> 💡 **特别说明**：本项目为纯粹的开源非盈利社区项目，无需购买任何激活码。本项目**未设立 Discord 社区**，请注意甄别，谨防任何冒充官方人员索要费用的虚假信息。
+
+---
+
+## 📈 Star History
+
+<div align="center">
+  <a href="https://star-history.com/#Kutaze/AstraFlux-Hub&Date" target="_blank" rel="noopener noreferrer">
+    <img src="https://api.star-history.com/svg?repos=Kutaze/AstraFlux-Hub&type=Date" alt="Star History Chart" />
+  </a>
+</div>
 
 ---
 
@@ -168,21 +222,29 @@ npm run release:pack
 
 ---
 
-## 📝 更新日志 (Changelog)
+## 🤝 鸣谢与生态致敬 (Special Thanks)
 
-### [V1.1.0] - 2026-10-21
-* ✨ `[新特性]`：升级并固化 `V1.1.0` 统一版本号体系，确立大版本递增中间位、小版本递增末位规则。
-* ✨ `[新特性]`：新增自动化发布打包流水线 (`npm run release:pack`)，支持一键在根目录输出 `安装包_V1.1.0/` 包含图形 Setup 安装程序与 Portable 绿色便携包。
-* 🚀 `[体验与性能]`：仓库双端全面绑定：GitHub 负责开源存储与代码主干，Gitee 负责国内高速 OTA 渠道。
-* 🛡️ `[安全与生态]`：确立版本发布「用户确认门禁」，每次发版在打包完成并经开发者测试确认前严禁擅自推送到远端仓库。
-* 🛡️ `[安全与生态]`：全软件本地纯净运行，绝不搜集或上传任何击键与隐私数据，支持纯本地离线使用。
+AstraFlux-HUB 的诞生离不开开源社区与星闪技术生态先锋者的无私分享。在此特别感谢以下项目与团队提供的协议探索与技术支撑：
+
+* **[sparklinkplayjoy / keyboard-docs](https://github.com/sparklinkplayjoy/keyboard-docs)**：
+  星闪外设 SDK 键盘标准协议文档与 API 规范参考，极大加速了本项目在底层 WebHID / 标准 HID 键值矩阵解析与指令下发方面的工程化实现。
+  * 官方在线文档：[键盘 SDK 文档 \| 星闪悦动 (keyboardv2)](https://sparklinkplayjoy.github.io/keyboard-docs/keyboardv2/)
+* **前端与桌面底层技术底座**：
+  * [React 19](https://react.dev/) & [Vite](https://vitejs.dev/) - 现代化极致流畅的电竞响应式界面渲染
+  * [Electron](https://www.electronjs.org/) - 跨平台硬件直连与原生能力桥接
+  * [Tailwind CSS](https://tailwindcss.com/) & [Lucide Icons](https://lucide.dev/) - 高清暗色系极客视觉与交互图标系统
 
 ---
 
-## 💖 免责声明与开源协议
+## 📜 免责声明与开源协议 (License & Disclaimer)
 
-1. **开源协议**：本项目基于 [MIT License](./LICENSE) 协议完全开源。
-2. **免责与商标声明**：本项目为第三方开源社区软件，与华为技术有限公司、星闪联盟 (NearLink / SparkLink Alliance) 或外设硬件品牌方无商业附属关系。相关硬件协议、固件与品牌商标归原权利人所有。
+### 1. 开源协议
+本项目源码完全基于 [MIT License](./LICENSE) 协议开源，允许自由使用、修改与衍生分发。
+
+### 2. 免责与商标声明
+1. **第三方属性**：本项目为第三方开源驱动控制中心，由开源社区爱好者独立研发与维护，与华为技术有限公司、星闪联盟 (NearLink / SparkLink Alliance) 或任何商业键盘品牌方均无官方隶属、合作雇佣或商业授权关系。
+2. **商标权属**："NearLink"、"星闪"、各外设品牌名称及相关图形标识为各自所有者的注册商标或专属权利，文内引用仅用于硬件型号识别与客观兼容性陈述。
+3. **硬件安全性**：软件已实施严格的参数边界保护（如回报率真实封顶 8000Hz、死区安全防撞红线等），但对于用户自行刷写第三方非官方固件、超频改装、或极端电压扰动引发的物理损坏，作者及社区贡献者概不承担任何法律连带责任。请始终在官方额定规格内合理调校设备。
 
 <div align="center">
   <p>Made with ⚡ by <a href="https://github.com/Kutaze">Kutaze</a> and the Open Source Gaming Community.</p>

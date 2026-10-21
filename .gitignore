@@ -19,6 +19,7 @@ node_modules/
 工程源码/scratch_official/
 工程源码/scratch_v2/
 工程源码/tools/electron-bin/
+工程源码/device_database/
 
 # Temporary & system shortcuts / stray root files
 *.lnk
