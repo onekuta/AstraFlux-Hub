@@ -1,8 +1,8 @@
 {
   "manifestVersion": "1.4.1",
-  "libVersion": "2026.10.21.2",
+  "libVersion": "2026.10.21.1",
   "libDownloadUrl": "https://gitee.com/kutaze/astra-flux-hub/raw/main/database/device_database.spkdb",
   "totalDevices": 638,
-  "libChangelog": "新增适配 638 款星闪方案外设 PCB，支持高频回报率与磁轴快速触发",
+  "libChangelog": "新增适配ae64pro，支持高频回报率与磁轴快速触发",
   "updatedAt": "2026-10-21T06:46:48.346Z"
 }
