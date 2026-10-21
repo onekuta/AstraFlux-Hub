@@ -1,0 +1,66 @@
+{
+  "meta": {
+    "isSparklinkDevice": true,
+    "specVersion": "1.4.1",
+    "protocolVersion": "v2",
+    "extractedAt": "2026-10-20T17:31:17.083Z",
+    "probeCoreVersion": "v1.4.2"
+  },
+  "hardwareFingerprint": {
+    "vendorIdHex": "0X7968",
+    "productIdHex": "0X7000",
+    "vendorIdDec": 31080,
+    "productIdDec": 28672,
+    "brandName": "客制化客供 / NearLink Custom",
+    "productModel": "星闪键盘",
+    "manufacturerString": "客制化客供 / NearLink Custom",
+    "targetId": null,
+    "chipModel": "NearLink Wireless"
+  },
+  "deviceProfile": {
+    "id": "catalog_0x7968_0x7000",
+    "brand": "客制化客供 / NearLink Custom",
+    "brandName": "客制化客供 / NearLink Custom",
+    "model": "星闪键盘",
+    "name": "客制化客供 / NearLink Custom 极速星闪键盘",
+    "type": "keyboard",
+    "layout": "标准配列",
+    "layoutName": "标准配列",
+    "totalKeyCount": 64,
+    "vendorId": 31080,
+    "productId": 28672,
+    "vendorIdHex": "0X7968",
+    "productIdHex": "0X7000",
+    "maxPollingRate": 8000,
+    "features": {
+      "magneticAxis": true,
+      "rtSupport": true,
+      "socdSupport": true,
+      "furyMode": true,
+      "rgbLighting": true,
+      "hallCalibration": true,
+      "continuousRt": false
+    }
+  },
+  "matrixLayout": {
+    "layoutName": "标准配列",
+    "totalKeys": 64,
+    "physicalKeys": []
+  },
+  "lightingTopology": {
+    "totalLeds": 64,
+    "spaceLamps": {
+      "count": 1
+    },
+    "isDoubleLighting": false
+  },
+  "performanceSpec": {
+    "maxPollingRate": 8000,
+    "magneticAxis": true,
+    "rtSupport": true
+  },
+  "axisAndCalibration": {
+    "minTravelMm": 0.1,
+    "maxTravelMm": 4
+  }
+}

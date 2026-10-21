@@ -946,7 +946,7 @@ export default function LightingTab({
                   <Sparkles className="w-3.5 h-3.5 text-cyan-400 mr-1.5" />
                   灯带/底灯 快捷批量涂色
                 </span>
-                <div className="grid grid-cols-3 gap-1.5 text-[10px] font-bold">
+                <div className="grid grid-cols-2 gap-1.5 text-[10px] font-bold">
                   <button
                     type="button"
                     onClick={() => onSetAllStrip && onSetAllStrip(hexColor)}
@@ -954,14 +954,6 @@ export default function LightingTab({
                     title="将当前选中的颜色应用到全部灯带 LED"
                   >
                     整条同色
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => onRainbowStrip && onRainbowStrip()}
-                    className="py-1.5 px-1 rounded-lg bg-gradient-to-r from-red-500/10 via-emerald-500/10 to-blue-500/10 hover:from-red-500/20 hover:to-blue-500/20 text-[var(--text-primary)] border border-[var(--border-color)] transition text-center truncate cursor-pointer"
-                    title="为整条灯带一键配置绚丽彩虹流光渐变"
-                  >
-                    彩虹渐变
                   </button>
                   <button
                     type="button"

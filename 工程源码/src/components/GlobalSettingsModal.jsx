@@ -34,6 +34,7 @@ import {
   ShieldAlert,
   Save,
   Link as LinkIcon,
+  BookOpen,
 } from 'lucide-react';
 import AstraFluxLogo from './AstraFluxLogo';
 import { useToast } from './ToastProvider';
@@ -67,8 +68,8 @@ const FAQ_ITEMS = [
     a: '本驱动主要支持采用星闪 (NearLink) 方案的键盘与外设生态设备，涵盖搭载星闪协议的各类客制化与量产键盘（支持 60% / 64 / 68 / 75% / 87 / 98 / 104 等常见配列）。需要特别说明的是，本驱动专为星闪方案深度适配，非星闪方案的传统普通键盘基本上不支持接入与配置。'
   },
   {
-    q: '星闪无线扫描不到设备时应如何处理？',
-    a: '请确保星闪专用无线接收器已插入电脑 USB 3.0/2.0 接口，键盘机身拨档已切换至星闪无线档位且电量充足。首次配对可在设备管理页点击「添加设备」进行免驱授权识别。'
+    q: '如果软件扫描/检测不到键盘应如何处理？',
+    a: '① 基础物理连接排查：请确认键盘已通过原装线缆稳固连接电脑，或星闪专用无线接收器已插入 USB 接口；机身物理拨档已切换至对应档位（有线/星闪无线）且设备电量充足。若遇 Windows 系统偶发休眠唤醒挂起，可尝试重新插拔一次 USB 连接或在主页点击「重新识别」。\n\n② 设备方案甄别：本驱动专注于星闪 (NearLink) 低延迟电竞生态深度定制，非星闪方案的传统普通键盘暂不支持识别与配置。\n\n③ 新设备技术同步状态：若您的键盘确实属于星闪方案但驱动未能检测到，通常是因为该型号为新上市或新批次硬件，驱动数据库与底层协议尚未完成技术同步。\n\n④ 极速适配通道（硬件探针）：建议加入驱动官方交流社群，在群文件中获取专用的「硬件探针工具」，一键读取您当前键盘的 HID 通信描述符与 VID/PID 硬件指纹提供给开发者，开发团队将在第一时间为您跟进数据库适配与差量热更新！'
   },
   {
     q: '全键消磁校准与 RT (快速触发) 参数是否常驻生效？',
@@ -124,6 +125,8 @@ export default function GlobalSettingsModal({
   onClose,
   initialSection = 'general',
   onOpenDevLab = () => {},
+  isConnected = false,
+  hardwareInfo = null,
 }) {
   const { addToast } = useToast();
   const [devClicks, setDevClicks] = useState(0);
@@ -233,6 +236,9 @@ export default function GlobalSettingsModal({
   const [notifyAutoProfile, setNotifyAutoProfile] = useState(true);
   const [notifyLockKeys, setNotifyLockKeys] = useState(false);
   const [notifyLowBattery, setNotifyLowBattery] = useState(true);
+
+  // 反馈内容草稿状态
+  const [feedbackText, setFeedbackText] = useState('');
 
   // 同步外部 initialSection
   React.useEffect(() => {
@@ -488,6 +494,29 @@ export default function GlobalSettingsModal({
     }
   };
 
+  const handleOpenGitHubIssue = (customText = '') => {
+    const text = (customText || feedbackText || '').trim();
+    let targetUrl = 'https://github.com/Kutaze/AstraFlux-Hub/issues/new';
+    if (text) {
+      const title = encodeURIComponent(text.length > 25 ? text.slice(0, 25) + '...' : text);
+      const body = encodeURIComponent(`### 问题/建议描述\n${text}\n\n### 环境信息\n- 驱动版本: V${updaterService.getCurrentAppVersion()}\n- 适配库版本: ${updaterService.getCurrentLibVersion()}\n- 操作系统: Windows`);
+      targetUrl = `https://github.com/Kutaze/AstraFlux-Hub/issues/new?title=${title}&body=${body}`;
+      try {
+        if (navigator.clipboard?.writeText) {
+          navigator.clipboard.writeText(text);
+        }
+      } catch (e) {}
+      openExternal(targetUrl, 'GitHub New Issue');
+      addToast({
+        message: '已自动为您复制草稿并跳转至 GitHub Issues 页面！',
+        type: 'success',
+        duration: 3500,
+      });
+      return;
+    }
+    openExternal(targetUrl, 'GitHub New Issue');
+  };
+
   const handleCheckUpdate = () => {
     handleCheckBothUpdates();
   };
@@ -522,9 +551,9 @@ export default function GlobalSettingsModal({
           <aside className="w-56 p-5 border-r border-[var(--border-color)] bg-[var(--bg-tertiary)]/50 flex flex-col space-y-1.5">
             {[
               { id: 'general', label: '常规设置', icon: Settings2 },
-              { id: 'updates', label: '软件更新', icon: DownloadCloud },
               { id: 'notifications', label: '消息通知', icon: Bell },
               { id: 'feedback', label: '反馈', icon: MessageSquare },
+              { id: 'updates', label: '软件更新', icon: DownloadCloud },
               { id: 'about', label: '关于', icon: Info },
             ].map(tab => {
               const Icon = tab.icon;
@@ -721,18 +750,6 @@ export default function GlobalSettingsModal({
                       </p>
                     </div>
                   </div>
-
-                  <div className="flex items-center space-x-2">
-                    <button
-                      type="button"
-                      onClick={onOpenDevLab}
-                      className="px-3 py-1.5 rounded-xl bg-[var(--bg-secondary)] hover:bg-[var(--bg-tertiary)] border border-[var(--border-color)] text-xs font-bold text-[var(--text-primary)] flex items-center space-x-1.5 cursor-pointer transition shadow-xs"
-                      title="进入开发者后台配置云端更新返链"
-                    >
-                      <ShieldAlert className="w-3.5 h-3.5 text-amber-500" />
-                      <span>开发者后台 (配置云端返链)</span>
-                    </button>
-                  </div>
                 </div>
 
                 {/* 顶部概览大卡片 (承载原 SettingsTab 更新卡片头部与一键全量检测) */}
@@ -776,7 +793,7 @@ export default function GlobalSettingsModal({
                           <h3 className="text-sm font-bold text-[var(--text-primary)]">更新数据库</h3>
                         </div>
                         <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-sky-500/10 text-sky-600 dark:text-sky-400 border border-sky-500/20">
-                          对应后台: 返链 ①
+                          差量热更新通道
                         </span>
                       </div>
 
@@ -810,18 +827,8 @@ export default function GlobalSettingsModal({
                             <span>云端数据库更新地址未设置</span>
                           </div>
                           <p className="text-[11px] leading-relaxed text-[var(--text-secondary)]">
-                            暂未配置数据库 Manifest 直链。开发者可在后台配置 Gitee/云盘直链，普通用户亦可直接点击下方「导入离线适配包」使用社群分发的数据包。
+                            暂未配置数据库 Manifest 云端直链。可直接点击下方「导入离线适配包」使用社群分发的数据包。
                           </p>
-                          <div className="pt-0.5">
-                            <button
-                              type="button"
-                              onClick={onOpenDevLab}
-                              className="text-[11px] font-bold text-amber-600 dark:text-amber-400 hover:underline cursor-pointer flex items-center space-x-1"
-                            >
-                              <span>前往开发者后台配置返链 ①</span>
-                              <ExternalLink className="w-3 h-3" />
-                            </button>
-                          </div>
                         </div>
                       )}
 
@@ -879,9 +886,12 @@ export default function GlobalSettingsModal({
                         <span>{isCheckingDb ? '正在拉取数据库...' : '检查并更新数据库'}</span>
                       </button>
 
-                      <label className="w-full py-2 px-3 border border-amber-500/30 bg-amber-500/10 hover:bg-amber-500/20 text-amber-600 dark:text-amber-400 font-bold text-xs rounded-xl transition cursor-pointer flex items-center justify-center space-x-1.5 shadow-xs">
+                      <label 
+                        className="w-full py-2 px-3 border border-amber-500/30 bg-amber-500/10 hover:bg-amber-500/20 text-amber-600 dark:text-amber-400 font-bold text-xs rounded-xl transition cursor-pointer flex items-center justify-center space-x-1.5 shadow-xs"
+                        title="导入开发者后台导出的全量外设数据库集合包 (.spkdb)"
+                      >
                         <FolderOpen className="w-3.5 h-3.5 shrink-0" />
-                        <span>导入离线适配包 (.spkdb / .json)</span>
+                        <span>导入离线适配包 (.spkdb)</span>
                         <input
                           type="file"
                           accept=".spkdb,.zip,.json"
@@ -902,7 +912,7 @@ export default function GlobalSettingsModal({
                           <h3 className="text-sm font-bold text-[var(--text-primary)]">更新软件</h3>
                         </div>
                         <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 border border-indigo-500/20">
-                          对应后台: 返链 ②
+                          全量安装包通道
                         </span>
                       </div>
 
@@ -936,18 +946,8 @@ export default function GlobalSettingsModal({
                             <span>云端驱动更新地址未设置</span>
                           </div>
                           <p className="text-[11px] leading-relaxed text-[var(--text-secondary)]">
-                            暂未配置驱动更新直链。开发者可在后台配置 Setup.exe 安装包直链或 manifest.json 清单。普通用户亦可点击下方「打开发布页」手动获取。
+                            暂未配置驱动更新云端直链。可点击下方「打开发布页」手动获取最新 Release 安装包。
                           </p>
-                          <div className="pt-0.5">
-                            <button
-                              type="button"
-                              onClick={onOpenDevLab}
-                              className="text-[11px] font-bold text-amber-600 dark:text-amber-400 hover:underline cursor-pointer flex items-center space-x-1"
-                            >
-                              <span>前往开发者后台配置返链 ②</span>
-                              <ExternalLink className="w-3 h-3" />
-                            </button>
-                          </div>
                         </div>
                       )}
 
@@ -1031,7 +1031,7 @@ export default function GlobalSettingsModal({
 
                       <button
                         type="button"
-                        onClick={() => openExternal('https://github.com/Kutaze', 'GitHub Releases')}
+                        onClick={() => openExternal('https://github.com/Kutaze/AstraFlux-Hub/releases', 'GitHub Releases')}
                         className="w-full py-2 bg-[var(--bg-secondary)] hover:bg-[var(--bg-tertiary)] border border-[var(--border-color)] text-[var(--text-primary)] font-bold text-xs rounded-xl transition cursor-pointer flex items-center justify-center space-x-1.5 shadow-xs"
                       >
                         <ExternalLink className="w-3.5 h-3.5 text-[var(--text-tertiary)]" />
@@ -1100,11 +1100,59 @@ export default function GlobalSettingsModal({
             {/* 3. 反馈 */}
             {activeSection === 'feedback' && (
               <div className="space-y-4 max-w-2xl animate-in fade-in duration-150">
-                <h2 className="text-base font-black font-title text-[var(--text-primary)] pb-2 border-b border-[var(--border-color)]">
-                  驱动问题反馈与建议
-                </h2>
+                <div className="flex items-center justify-between pb-2 border-b border-[var(--border-color)]">
+                  <h2 className="text-base font-black font-title text-[var(--text-primary)]">
+                    驱动问题反馈与建议
+                  </h2>
+                  <span className="text-[11px] text-[var(--text-tertiary)] flex items-center space-x-1">
+                    <GithubIcon className="w-3.5 h-3.5" />
+                    <span>官方 GitHub Issues 托管</span>
+                  </span>
+                </div>
 
-                {/* 开发者直联联系信息 */}
+                {/* 1. 核心高光卡片：直接跳转 GitHub Issues 提交 */}
+                <div className="p-5 rounded-2xl bg-gradient-to-br from-blue-500/10 via-[var(--bg-primary)] to-[var(--bg-primary)] border border-blue-500/30 space-y-4 shadow-sm">
+                  <div className="flex items-start justify-between">
+                    <div className="flex items-center space-x-3">
+                      <div className="w-10 h-10 rounded-xl bg-blue-500/15 border border-blue-500/30 flex items-center justify-center text-blue-500 shrink-0">
+                        <GithubIcon className="w-5 h-5" />
+                      </div>
+                      <div>
+                        <div className="flex items-center space-x-2">
+                          <h3 className="text-sm font-bold text-[var(--text-primary)]">GitHub Issues 官方反馈中心</h3>
+                          <span className="text-[10px] px-1.5 py-0.5 rounded bg-blue-500/20 text-blue-400 font-semibold border border-blue-500/30">推荐渠道</span>
+                        </div>
+                        <p className="text-xs text-[var(--text-secondary)] mt-1 leading-relaxed">
+                          本驱动为开源客制化项目，所有 Bug 缺陷追踪、功能优化建议与键盘硬件适配需求统一在 GitHub Issues 上透明公开跟进。
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* 核心操作按钮组 */}
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 pt-1">
+                    <button
+                      type="button"
+                      onClick={() => handleOpenGitHubIssue()}
+                      className="px-4 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs flex items-center justify-center space-x-2 transition cursor-pointer shadow-sm active:scale-[0.99]"
+                    >
+                      <GithubIcon className="w-4 h-4" />
+                      <span>直接前往提交 Issue (New Issue)</span>
+                      <ExternalLink className="w-3.5 h-3.5 opacity-80" />
+                    </button>
+
+                    <button
+                      type="button"
+                      onClick={() => openExternal('https://github.com/Kutaze/AstraFlux-Hub/issues', 'GitHub Issues 列表')}
+                      className="px-4 py-2.5 rounded-xl bg-[var(--bg-secondary)] hover:bg-[var(--bg-tertiary)] border border-[var(--border-color)] text-[var(--text-primary)] font-bold text-xs flex items-center justify-center space-x-2 transition cursor-pointer active:scale-[0.99]"
+                    >
+                      <span>📋 查看已提交的所有 Issue 进度</span>
+                      <ExternalLink className="w-3 h-3 opacity-60" />
+                    </button>
+                  </div>
+                </div>
+
+                {/* 2. 开发者直联联系信息 */}
                 <div className="p-3.5 rounded-xl bg-[var(--bg-primary)]/80 border border-[var(--border-color)] flex items-center justify-between">
                   <div className="flex items-center space-x-3">
                     <img 
@@ -1119,38 +1167,69 @@ export default function GlobalSettingsModal({
                         <span className="text-[9px] px-1 py-0.2 rounded bg-blue-500 text-white font-bold">作者</span>
                       </div>
                       <p className="text-[11px] text-[var(--text-tertiary)] mt-0.5">
-                        开源驱动独立开发者 · 欢迎通过 GitHub Issues、邮箱或 B站 提交反馈
+                        开源驱动独立开发者 · 官方交流群: 1131310645
                       </p>
                     </div>
                   </div>
-                  <button
-                    type="button"
-                    onClick={() => openExternal('https://github.com/Kutaze', 'GitHub 主页')}
-                    className="px-3 py-1.5 rounded-lg bg-[var(--bg-secondary)] hover:bg-[var(--bg-tertiary)] border border-[var(--border-color)] text-xs font-semibold text-[var(--text-primary)] flex items-center space-x-1.5 cursor-pointer transition shrink-0"
-                  >
-                    <GithubIcon className="w-3.5 h-3.5" />
-                    <span>访问主页</span>
-                  </button>
+                  <div className="flex items-center space-x-2">
+                    <button
+                      type="button"
+                      onClick={() => {
+                        const qqGroupNum = '1131310645';
+                        const qqUrl = 'https://qm.qq.com/q/qA42Z5PZSZ';
+                        try {
+                          if (navigator.clipboard?.writeText) {
+                            navigator.clipboard.writeText(qqGroupNum);
+                          }
+                        } catch (e) {}
+                        openExternal(qqUrl, 'QQ 交流群');
+                        addToast({
+                          message: `群号 ${qqGroupNum} 已复制，正在打开 QQ 交流群...`,
+                          type: 'success',
+                          duration: 3500,
+                        });
+                      }}
+                      className="px-3 py-1.5 rounded-lg bg-[var(--bg-secondary)] hover:bg-[var(--bg-tertiary)] border border-[var(--border-color)] text-xs font-semibold text-[var(--text-primary)] flex items-center space-x-1.5 cursor-pointer transition shrink-0"
+                    >
+                      <span>加入交流群</span>
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => openExternal('https://github.com/Kutaze/AstraFlux-Hub', 'GitHub 仓库')}
+                      className="px-3 py-1.5 rounded-lg bg-[var(--bg-secondary)] hover:bg-[var(--bg-tertiary)] border border-[var(--border-color)] text-xs font-semibold text-[var(--text-primary)] flex items-center space-x-1.5 cursor-pointer transition shrink-0"
+                    >
+                      <GithubIcon className="w-3.5 h-3.5" />
+                      <span>开源仓库</span>
+                    </button>
+                  </div>
                 </div>
 
+                {/* 3. 本地草拟与一键预填携带区 */}
                 <div className="p-4 rounded-xl bg-[var(--bg-primary)]/80 border border-[var(--border-color)] space-y-3">
-                  <p className="text-xs text-[var(--text-secondary)] leading-relaxed">
-                    本驱动为个人独立开发者 乐禾泽 (Kutaze) 的开源客制化项目（注：键盘硬件固件由各品牌方官方自行维护，此处仅接收驱动客户端本身的问题）。如果您在使用此驱动程序时遇到任何界面排版、按键映射、配置保存或驱动兼容性问题，欢迎直接向开发者提交反馈：
-                  </p>
+                  <div className="flex items-center justify-between">
+                    <span className="text-xs font-bold text-[var(--text-primary)]">快速草拟反馈内容</span>
+                    <span className="text-[10px] text-[var(--text-tertiary)]">点击提交将自动携带内容前往 GitHub Issue 模板</span>
+                  </div>
                   <textarea 
                     rows={4}
-                    placeholder="请输入您对本驱动软件的反馈意见、优化建议或遇到的驱动异常描述..."
-                    className="w-full p-3 text-xs bg-[var(--bg-secondary)] border border-[var(--border-color)] text-[var(--text-primary)] rounded-xl focus:outline-none focus:ring-1 focus:ring-[var(--info-color)]"
+                    value={feedbackText}
+                    onChange={(e) => setFeedbackText(e.target.value)}
+                    placeholder="可在此预先输入您遇到的异常描述、驱动排版问题或新需求，点击下方按钮将自动携带至 GitHub 提交..."
+                    className="w-full p-3 text-xs bg-[var(--bg-secondary)] border border-[var(--border-color)] text-[var(--text-primary)] rounded-xl focus:outline-none focus:ring-1 focus:ring-[var(--info-color)] transition placeholder:text-[var(--text-tertiary)]"
                   ></textarea>
-                  <button 
-                    onClick={() => addToast({
-                      message: '感谢您的宝贵建议！反馈已记录，开发者将在后续驱动版本中持续跟进优化。',
-                      type: 'success'
-                    })}
-                    className="px-5 py-2 text-xs font-bold bg-[var(--text-primary)] text-[var(--bg-primary)] rounded-xl hover:opacity-90 transition cursor-pointer"
-                  >
-                    提交反馈给开发者
-                  </button>
+                  <div className="flex items-center justify-between">
+                    <span className="text-[11px] text-[var(--text-tertiary)]">
+                      {feedbackText.length > 0 ? `已输入 ${feedbackText.length} 字 (提交将自动复制防丢失)` : '注：键盘硬件固件由各品牌方官方自行维护，此处仅接收驱动客户端本身的问题'}
+                    </span>
+                    <button 
+                      type="button"
+                      onClick={() => handleOpenGitHubIssue(feedbackText)}
+                      className="px-4 py-2 text-xs font-bold bg-[var(--text-primary)] text-[var(--bg-primary)] rounded-xl hover:opacity-90 transition cursor-pointer flex items-center space-x-1.5 shadow-xs"
+                    >
+                      <span>前往 GitHub 提交 Issue</span>
+                      <ExternalLink className="w-3 h-3" />
+                    </button>
+                  </div>
                 </div>
               </div>
             )}
@@ -1206,11 +1285,20 @@ export default function GlobalSettingsModal({
                     <div className="flex flex-wrap items-center gap-2 pt-1">
                       <button
                         type="button"
-                        onClick={() => openExternal('https://github.com/Kutaze', 'GitHub 开源主页')}
+                        onClick={() => openExternal('https://github.com/Kutaze/AstraFlux-Hub', 'GitHub 开源项目')}
                         className="px-3.5 py-1.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold transition flex items-center space-x-1.5 cursor-pointer shadow-xs"
                       >
                         <GithubIcon className="w-3.5 h-3.5" />
                         <span>开源主页</span>
+                      </button>
+
+                      <button
+                        type="button"
+                        onClick={() => openExternal('https://sparklinkplayjoy.github.io/keyboard-docs/', '星闪 SDK 标准文档')}
+                        className="px-3.5 py-1.5 rounded-xl bg-[var(--bg-secondary)] hover:bg-[var(--bg-tertiary)] border border-[var(--border-color)] text-[var(--text-primary)] text-xs font-semibold transition flex items-center space-x-1.5 cursor-pointer"
+                      >
+                        <BookOpen className="w-3.5 h-3.5 text-emerald-500" />
+                        <span>星闪 SDK 规范</span>
                       </button>
 
                       <button
@@ -1244,7 +1332,12 @@ export default function GlobalSettingsModal({
                         <Cpu className="w-4 h-4 text-blue-500 shrink-0" />
                         <div className="min-w-0">
                           <p className="text-[10px] text-[var(--text-tertiary)]">当前设备固件</p>
-                          <p className="text-[11px] font-bold text-[var(--text-primary)] font-mono">0.0.3.5 <span className="text-[9px] text-blue-500 font-sans font-semibold">BS2 星闪</span></p>
+                          <p className="text-[11px] font-bold text-[var(--text-primary)] font-mono">
+                            {isConnected 
+                              ? (hardwareInfo?.firmwareVersion || hardwareInfo?.fwVersion || '已连接 (标准固件)') 
+                              : '未连接设备'
+                            }
+                          </p>
                         </div>
                       </div>
 
@@ -1267,8 +1360,8 @@ export default function GlobalSettingsModal({
                       <div className="p-2.5 rounded-xl bg-[var(--bg-secondary)]/70 border border-[var(--border-color)]/60 flex items-center space-x-2.5">
                         <Wifi className="w-4 h-4 text-cyan-500 shrink-0" />
                         <div className="min-w-0">
-                          <p className="text-[10px] text-[var(--text-tertiary)]">传输规范</p>
-                          <p className="text-[11px] font-bold text-[var(--text-primary)]">星闪 SLE 8KHz 极速电竞</p>
+                          <p className="text-[10px] text-[var(--text-tertiary)]">支持方案</p>
+                          <p className="text-[11px] font-bold text-[var(--text-primary)]">星闪 (NearLink) 生态</p>
                         </div>
                       </div>
                     </div>
@@ -1314,21 +1407,11 @@ export default function GlobalSettingsModal({
                     <div className="space-y-2 pt-2">
                       <button
                         type="button"
-                        onClick={handleCheckUpdate}
-                        disabled={isCheckingBoth}
-                        className="w-full py-2 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 disabled:opacity-70 text-white font-bold text-xs rounded-xl transition shadow-sm cursor-pointer flex items-center justify-center space-x-2"
-                      >
-                        <RefreshCw className={`w-3.5 h-3.5 ${isCheckingBoth ? 'animate-spin' : ''}`} />
-                        <span>{isCheckingBoth ? '正在检查版本...' : '立即检查更新'}</span>
-                      </button>
-
-                      <button
-                        type="button"
                         onClick={() => setActiveSection('updates')}
-                        className="w-full py-1.5 px-3 bg-[var(--bg-secondary)] hover:bg-[var(--bg-tertiary)] border border-[var(--border-color)] text-[var(--text-secondary)] hover:text-[var(--text-primary)] text-xs font-bold rounded-xl transition cursor-pointer flex items-center justify-center space-x-1.5"
+                        className="w-full py-2.5 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-bold text-xs rounded-xl transition shadow-sm cursor-pointer flex items-center justify-center space-x-2 active:scale-98"
                       >
-                        <DownloadCloud className="w-3.5 h-3.5 text-blue-500" />
-                        <span>进入软件与数据库更新中心</span>
+                        <DownloadCloud className="w-4 h-4" />
+                        <span>前往软件与适配库更新中心</span>
                       </button>
 
                       <div className="flex items-center justify-between text-xs pt-1 px-1">
@@ -1349,7 +1432,7 @@ export default function GlobalSettingsModal({
 
                         <button
                           type="button"
-                          onClick={() => openExternal('https://github.com/Kutaze', 'GitHub Releases')}
+                          onClick={() => openExternal('https://github.com/Kutaze/AstraFlux-Hub/releases', 'GitHub Releases')}
                           className="text-[var(--text-secondary)] hover:text-[var(--info-color)] transition flex items-center space-x-1 cursor-pointer text-[11px]"
                         >
                           <span>打开发布页</span>
@@ -1373,14 +1456,14 @@ export default function GlobalSettingsModal({
                         <h4 className="text-sm font-bold text-[var(--text-primary)]">鸣谢</h4>
                       </div>
                       <div className="flex items-center space-x-2 text-[11px] font-mono text-[var(--text-tertiary)]">
-                        <span>4 位生态贡献</span>
+                        <span>核心独立作者</span>
                         <span>·</span>
-                        <span>13+ 社区赞助</span>
+                        <span>星闪 SDK 技术支持</span>
                       </div>
                     </div>
 
                     <p className="text-[11px] text-[var(--text-secondary)] leading-relaxed">
-                      感谢每一位贡献代码的开发者，以及支持本项目的赞助者与星闪极客玩家。
+                      感谢开源社区与星闪技术生态，星闪 SDK 官方标准为本项目提供了底层通信与协议规范技术支持。
                     </p>
 
                     {/* 代码贡献者列表 */}
@@ -1395,116 +1478,64 @@ export default function GlobalSettingsModal({
                       <div className="grid grid-cols-2 gap-2">
                         {/* 贡献者 1: 作者 乐禾泽 */}
                         <div 
-                          onClick={() => openExternal('https://github.com/Kutaze', '乐禾泽 (Kutaze)')}
-                          className="p-2 rounded-xl bg-[var(--bg-secondary)]/70 hover:bg-[var(--bg-secondary)] border border-[var(--border-color)] flex items-center justify-between transition cursor-pointer group"
+                          onClick={() => openExternal('https://github.com/Kutaze/AstraFlux-Hub', '乐禾泽 (Kutaze)')}
+                          className="p-2.5 rounded-xl bg-[var(--bg-secondary)]/70 hover:bg-[var(--bg-secondary)] border border-[var(--border-color)] flex items-center justify-between transition cursor-pointer group"
                         >
-                          <div className="flex items-center space-x-2 min-w-0">
+                          <div className="flex items-center space-x-2.5 min-w-0">
                             <img 
                               src={kutazeAvatar} 
                               alt="乐禾泽" 
-                              className="w-7 h-7 rounded-full border border-blue-500/40 object-cover shrink-0" 
+                              className="w-8 h-8 rounded-full border border-blue-500/40 object-cover shrink-0" 
                             />
                             <div className="min-w-0">
                               <div className="flex items-center space-x-1">
                                 <span className="text-xs font-bold text-[var(--text-primary)] truncate">乐禾泽</span>
-                                <span className="text-[9px] px-1 py-0.2 rounded bg-blue-500 text-white font-bold shrink-0">作者</span>
+                                <span className="text-[9px] px-1.5 py-0.2 rounded bg-blue-500 text-white font-bold shrink-0">作者</span>
                               </div>
                               <p className="text-[10px] text-[var(--text-tertiary)] font-mono truncate">@Kutaze</p>
                             </div>
                           </div>
-                          <ExternalLink className="w-3 h-3 text-[var(--text-tertiary)] group-hover:text-blue-500 shrink-0 ml-1 transition" />
+                          <ExternalLink className="w-3.5 h-3.5 text-[var(--text-tertiary)] group-hover:text-blue-500 shrink-0 ml-1 transition" />
                         </div>
 
-                        {/* 贡献者 2: 星闪技术生态 */}
+                        {/* 贡献者 2: 星闪键盘 SDK */}
                         <div 
-                          onClick={() => openExternal('https://www.xsyd.top', '星闪悦动生态')}
-                          className="p-2 rounded-xl bg-[var(--bg-secondary)]/70 hover:bg-[var(--bg-secondary)] border border-[var(--border-color)] flex items-center justify-between transition cursor-pointer group"
+                          onClick={() => openExternal('https://sparklinkplayjoy.github.io/keyboard-docs/', '星闪 SDK 标准文档')}
+                          className="p-2.5 rounded-xl bg-[var(--bg-secondary)]/70 hover:bg-[var(--bg-secondary)] border border-[var(--border-color)] flex items-center justify-between transition cursor-pointer group"
                         >
-                          <div className="flex items-center space-x-2 min-w-0">
-                            <div className="w-7 h-7 rounded-full bg-emerald-500/15 text-emerald-500 border border-emerald-500/30 flex items-center justify-center font-black text-xs shrink-0">
+                          <div className="flex items-center space-x-2.5 min-w-0">
+                            <div className="w-8 h-8 rounded-full bg-emerald-500/15 text-emerald-500 border border-emerald-500/30 flex items-center justify-center font-black text-sm shrink-0">
                               ⚡
                             </div>
                             <div className="min-w-0">
                               <div className="flex items-center space-x-1">
-                                <span className="text-xs font-bold text-[var(--text-primary)] truncate">星闪技术生态</span>
-                                <span className="text-[9px] px-1 py-0.2 rounded bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 font-bold shrink-0">规范</span>
+                                <span className="text-xs font-bold text-[var(--text-primary)] truncate">星闪键盘 SDK</span>
+                                <span className="text-[9px] px-1.5 py-0.2 rounded bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 font-bold shrink-0">技术支持</span>
                               </div>
-                              <p className="text-[10px] text-[var(--text-tertiary)] font-mono truncate">@NearLink</p>
+                              <p className="text-[10px] text-[var(--text-tertiary)] font-mono truncate">sparklinkplayjoy.github.io</p>
                             </div>
                           </div>
-                          <ExternalLink className="w-3 h-3 text-[var(--text-tertiary)] group-hover:text-emerald-500 shrink-0 ml-1 transition" />
-                        </div>
-
-                        {/* 贡献者 3: 星闪极客内测组 */}
-                        <div className="p-2 rounded-xl bg-[var(--bg-secondary)]/70 border border-[var(--border-color)] flex items-center justify-between">
-                          <div className="flex items-center space-x-2 min-w-0">
-                            <div className="w-7 h-7 rounded-full bg-amber-500/15 text-amber-500 border border-amber-500/30 flex items-center justify-center font-bold text-xs shrink-0">
-                              🎮
-                            </div>
-                            <div className="min-w-0">
-                              <div className="flex items-center space-x-1">
-                                <span className="text-xs font-bold text-[var(--text-primary)] truncate">极客玩家测试组</span>
-                                <span className="text-[9px] px-1 py-0.2 rounded bg-amber-500/20 text-amber-600 dark:text-amber-400 font-bold shrink-0">测试</span>
-                              </div>
-                              <p className="text-[10px] text-[var(--text-tertiary)] font-mono truncate">@SparkGeek</p>
-                            </div>
-                          </div>
-                        </div>
-
-                        {/* 贡献者 4: 固件方案协同 */}
-                        <div className="p-2 rounded-xl bg-[var(--bg-secondary)]/70 border border-[var(--border-color)] flex items-center justify-between">
-                          <div className="flex items-center space-x-2 min-w-0">
-                            <div className="w-7 h-7 rounded-full bg-purple-500/15 text-purple-500 border border-purple-500/30 flex items-center justify-center font-bold text-xs shrink-0">
-                              ⚙️
-                            </div>
-                            <div className="min-w-0">
-                              <div className="flex items-center space-x-1">
-                                <span className="text-xs font-bold text-[var(--text-primary)] truncate">客制化固件组</span>
-                                <span className="text-[9px] px-1 py-0.2 rounded bg-purple-500/20 text-purple-600 dark:text-purple-400 font-bold shrink-0">固件</span>
-                              </div>
-                              <p className="text-[10px] text-[var(--text-tertiary)] font-mono truncate">@FirmwareLab</p>
-                            </div>
-                          </div>
+                          <ExternalLink className="w-3.5 h-3.5 text-[var(--text-tertiary)] group-hover:text-emerald-500 shrink-0 ml-1 transition" />
                         </div>
 
                       </div>
                     </div>
 
-                    {/* 赞助者药丸列表 (1:1 还原 THRM 图五) */}
+                    {/* 赞助者药丸列表 (爱发电渠道筹备中) */}
                     <div className="pt-2 border-t border-[var(--border-color)]/70">
                       <div className="flex items-center justify-between mb-2">
                         <span className="text-[11px] font-bold text-[var(--text-primary)] flex items-center space-x-1">
                           <Heart className="w-3 h-3 text-rose-500" />
                           <span>赞助者名录</span>
                         </span>
-                        <span className="text-[10px] text-[var(--text-tertiary)]">排名不分先后</span>
+                        <span className="text-[10px] text-[var(--text-tertiary)]">爱发电渠道筹备中</span>
                       </div>
 
-                      <div className="flex flex-wrap gap-1.5 max-h-24 overflow-y-auto custom-scrollbar p-1">
-                        {[
-                          { name: '麦克阿兰', amount: '¥50.00' },
-                          { name: '*雨', amount: '¥57.60' },
-                          { name: '这个冬天不太冷。', amount: '¥20.00' },
-                          { name: '精分的胡子', amount: '¥20.00' },
-                          { name: '极客玩家小宇', amount: '¥20.00' },
-                          { name: '键盘发烧友阿泽', amount: '¥18.88' },
-                          { name: '星闪探索者', amount: '¥19.90' },
-                          { name: 'P*g', amount: '¥18.88' },
-                          { name: '*强', amount: '¥18.88' },
-                          { name: '*秋', amount: '¥15.00' },
-                          { name: '*舟', amount: '¥13.98' },
-                          { name: '*昊', amount: '¥12.00' },
-                          { name: '*治', amount: '¥12.00' },
-                        ].map((s, idx) => (
-                          <div 
-                            key={idx}
-                            className="inline-flex items-center space-x-1 px-2 py-0.5 rounded-full bg-[var(--bg-secondary)] border border-[var(--border-color)] text-[10.5px]"
-                          >
-                            <Heart className="w-2.5 h-2.5 text-rose-500 shrink-0 fill-rose-500/20" />
-                            <span className="font-medium text-[var(--text-primary)]">{s.name}</span>
-                            <span className="text-rose-500 font-mono font-bold text-[10px]">{s.amount}</span>
-                          </div>
-                        ))}
+                      <div className="p-3.5 rounded-xl bg-[var(--bg-secondary)]/50 border border-dashed border-[var(--border-color)] flex items-center justify-center text-center">
+                        <p className="text-[11px] text-[var(--text-secondary)] leading-relaxed">
+                          ☕ 爱发电赞助渠道正在配置对接中，赞助者名录将在开通后同步上线展示。<br />
+                          衷心感谢每一位关注与支持 AstraFlux-HUB 开源项目的极客玩家！
+                        </p>
                       </div>
                     </div>
 
@@ -1556,17 +1587,32 @@ export default function GlobalSettingsModal({
 
                         <button
                           type="button"
-                          onClick={() => openExternal('https://github.com/Kutaze', 'GitHub 主页')}
+                          onClick={() => openExternal('https://github.com/Kutaze/AstraFlux-Hub', 'GitHub 仓库')}
                           className="w-full px-2.5 py-1.5 rounded-lg bg-[var(--bg-secondary)]/50 hover:bg-[var(--bg-secondary)] border border-[var(--border-color)]/70 flex items-center justify-between text-left transition cursor-pointer group"
                         >
                           <div className="flex items-center space-x-2 min-w-0">
                             <GithubIcon className="w-3.5 h-3.5 text-[var(--text-primary)] shrink-0" />
                             <div className="min-w-0">
-                              <span className="text-[10px] text-[var(--text-tertiary)] block">开源主页 (GitHub)</span>
-                              <span className="text-[11px] font-medium text-[var(--text-primary)] font-mono truncate block">github.com/Kutaze</span>
+                              <span className="text-[10px] text-[var(--text-tertiary)] block">开源仓库 (GitHub)</span>
+                              <span className="text-[11px] font-medium text-[var(--text-primary)] font-mono truncate block">github.com/Kutaze/AstraFlux-Hub</span>
                             </div>
                           </div>
                           <ExternalLink className="w-3 h-3 text-[var(--text-tertiary)] group-hover:text-blue-500 shrink-0 ml-1 transition" />
+                        </button>
+
+                        <button
+                          type="button"
+                          onClick={() => openExternal('https://sparklinkplayjoy.github.io/keyboard-docs/', '星闪 SDK 标准文档')}
+                          className="w-full px-2.5 py-1.5 rounded-lg bg-[var(--bg-secondary)]/50 hover:bg-[var(--bg-secondary)] border border-[var(--border-color)]/70 flex items-center justify-between text-left transition cursor-pointer group"
+                        >
+                          <div className="flex items-center space-x-2 min-w-0">
+                            <BookOpen className="w-3.5 h-3.5 text-emerald-500 shrink-0" />
+                            <div className="min-w-0">
+                              <span className="text-[10px] text-[var(--text-tertiary)] block">星闪标准 SDK 规范文档</span>
+                              <span className="text-[11px] font-medium text-[var(--text-primary)] font-mono truncate block">sparklinkplayjoy.github.io/keyboard-docs</span>
+                            </div>
+                          </div>
+                          <ExternalLink className="w-3 h-3 text-[var(--text-tertiary)] group-hover:text-emerald-500 shrink-0 ml-1 transition" />
                         </button>
 
                         <button
@@ -1648,7 +1694,7 @@ export default function GlobalSettingsModal({
                           </button>
 
                           {isExpanded && (
-                            <div className="px-4 pb-3.5 pt-1 text-[11.5px] text-[var(--text-secondary)] leading-relaxed border-t border-[var(--border-color)]/40 bg-[var(--bg-primary)]/40">
+                            <div className="px-4 pb-3.5 pt-1.5 text-[11.5px] text-[var(--text-secondary)] leading-relaxed border-t border-[var(--border-color)]/40 bg-[var(--bg-primary)]/40 whitespace-pre-line">
                               {faq.a}
                             </div>
                           )}
@@ -1750,7 +1796,7 @@ export default function GlobalSettingsModal({
                   <div className="flex justify-end pt-1">
                     <button
                       type="button"
-                      onClick={() => openExternal('https://github.com/Kutaze', 'GitHub 开源仓库')}
+                      onClick={() => openExternal('https://github.com/Kutaze/AstraFlux-Hub', 'GitHub 开源仓库')}
                       className="px-4 py-2 rounded-xl bg-[var(--bg-secondary)] hover:bg-[var(--bg-tertiary)] border border-[var(--border-color)] text-xs font-bold text-[var(--text-primary)] flex items-center space-x-1.5 cursor-pointer transition shadow-xs"
                     >
                       <GithubIcon className="w-3.5 h-3.5" />

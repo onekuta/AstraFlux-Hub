@@ -1,0 +1,69 @@
+{
+  "meta": {
+    "isSparklinkDevice": true,
+    "specVersion": "1.4.1",
+    "protocolVersion": "v2",
+    "extractedAt": "2026-10-20T17:31:17.083Z",
+    "probeCoreVersion": "v1.4.2"
+  },
+  "hardwareFingerprint": {
+    "vendorIdHex": "0X1CA6",
+    "productIdHex": "0X1C25",
+    "vendorIdDec": 7334,
+    "productIdDec": 7205,
+    "brandName": "江湾 Everglide",
+    "productModel": "AE64-MAX (出厂形态)",
+    "manufacturerString": "江湾 Everglide",
+    "targetId": null,
+    "chipModel": "NearLink Wireless"
+  },
+  "deviceProfile": {
+    "id": "ae64_max_alt",
+    "brand": "江湾 Everglide",
+    "brandName": "江湾 Everglide",
+    "model": "AE64-MAX (出厂形态)",
+    "name": "江湾 AE64-MAX 磁轴键盘 (0x1C25)",
+    "type": "keyboard",
+    "layout": "标准配列",
+    "layoutName": "标准配列",
+    "totalKeyCount": 64,
+    "vendorId": 7334,
+    "productId": 7205,
+    "vendorIdHex": "0X1CA6",
+    "productIdHex": "0X1C25",
+    "maxPollingRate": 8000,
+    "features": {
+      "magneticAxis": true,
+      "rtSupport": true,
+      "socdSupport": true,
+      "continuousRt": true,
+      "doubleLighting": true,
+      "furyMode": true,
+      "rgbLighting": true,
+      "hallCalibration": true,
+      "highPollingRate": true,
+      "spaceMultiLamp": true
+    }
+  },
+  "matrixLayout": {
+    "layoutName": "标准配列",
+    "totalKeys": 64,
+    "physicalKeys": []
+  },
+  "lightingTopology": {
+    "totalLeds": 64,
+    "spaceLamps": {
+      "count": 1
+    },
+    "isDoubleLighting": false
+  },
+  "performanceSpec": {
+    "maxPollingRate": 8000,
+    "magneticAxis": true,
+    "rtSupport": true
+  },
+  "axisAndCalibration": {
+    "minTravelMm": 0.1,
+    "maxTravelMm": 4
+  }
+}

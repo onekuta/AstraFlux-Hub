@@ -1,12 +1,14 @@
 {
   "name": "astraflux-hub",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "private": true,
   "description": "AstraFlux-HUB (星流驱动) — 通用磁轴与电竞外设开源控制中心",
   "main": "electron/main.js",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
+    "repack": "node repack.js",
+    "release:pack": "node tools/package-release.cjs",
     "preview": "vite preview"
   },
   "dependencies": {

@@ -30,6 +30,8 @@ import {
   Layers,
   Send,
   ArrowRight,
+  Users,
+  DownloadCloud,
   Info
 } from 'lucide-react';
 import { 
@@ -73,6 +75,7 @@ import { useToast } from './components/ToastProvider';
 import { DEVICE_PROFILES, supportsContinuousRt, CONTINUOUS_RT_MIN_FIRMWARE, getMinActuationPoint, SPARKLINK_HID_FILTERS, isSupportedSparklinkDevice, getDecorateLightingConfig } from './constants/deviceProfiles';
 import { findMatchedEcosystemProduct } from './constants/sparklinkEcosystem';
 import { customDeviceRegistry } from './services/customDeviceRegistry';
+import { updaterService } from './services/updaterService';
 import { HID_KEYCODES } from './constants/keycodes';
 import { resolveKeyForLayer, LAYER_DEFINITIONS } from './constants/layerLayouts';
 import { computeKeyLighting, computeStripLedColor } from './utils/lightingEffects';
@@ -160,9 +163,67 @@ export default function App() {
   const [device, setDevice] = useState(null);
   const [authorizedDevices, setAuthorizedDevices] = useState([]);
   const [showAddDeviceModal, setShowAddDeviceModal] = useState(qs.get('modal') === 'add');
-  const [showDevLabModal, setShowDevLabModal] = useState(false);
+  const [showDevLabModal, setShowDevLabModal] = useState(qs.get('modal') === 'devlab');
   const [showUsb3DriverModal, setShowUsb3DriverModal] = useState(false);
   const [isScanningDevices, setIsScanningDevices] = useState(false);
+  const [availableUpdate, setAvailableUpdate] = useState(() => {
+    if (qs.get('mock_update') === 'true') {
+      return {
+        hasUpdate: true,
+        version: '1.2.0',
+        type: 'app',
+        url: 'https://github.com/Kutaze/AstraFlux-Hub/releases'
+      };
+    }
+    return null;
+  });
+
+  // 首次启动软件时后台静默检查一遍更新 (不阻断用户交互)
+  useEffect(() => {
+    let isMounted = true;
+    const runSilentUpdateCheck = async () => {
+      try {
+        const res = await updaterService.checkBothVersions();
+        if (!isMounted) return;
+        if (res && (res.hasAppUpdate || res.hasLibUpdate)) {
+          setAvailableUpdate({
+            hasUpdate: true,
+            version: res.cloudAppVersion || res.cloudLibVersion || '最新版',
+            type: res.hasAppUpdate ? 'app' : 'db',
+            url: res.appDownloadUrl || res.libDownloadUrl,
+          });
+        }
+      } catch (e) {
+        // 静默探测，离线时不干扰
+      }
+    };
+    const timer = setTimeout(runSilentUpdateCheck, 1500);
+    return () => {
+      isMounted = false;
+      clearTimeout(timer);
+    };
+  }, []);
+
+  // 加入官方交流群 (1131310645)
+  const handleJoinQQGroup = () => {
+    const groupNum = '1131310645';
+    try {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(groupNum);
+      }
+    } catch (e) {}
+    addToast({
+      message: `官方交流群号已复制：${groupNum}，欢迎加入交流！`,
+      type: 'success',
+      duration: 3500,
+    });
+    const qqUrl = `https://qm.qq.com/cgi-bin/qm/qr?k=join&authKey=&noverify=0&group_code=${groupNum}`;
+    if (window.electronAPI && typeof window.electronAPI.openExternalUrl === 'function') {
+      window.electronAPI.openExternalUrl(qqUrl);
+    } else {
+      window.open(qqUrl, '_blank', 'noopener,noreferrer');
+    }
+  };
 
   // USB 3.0 专用驱动提示交互逻辑
   const handleNeverRemindUsb3Driver = () => {
@@ -2576,26 +2637,34 @@ export default function App() {
       {/* 顶部标题栏（前行者 EWEADN 简洁风格：白底、无边框、文字层级清晰） */}
       <header className="app-titlebar">
         {/* 左：品牌 + 当前设备 */}
-        <div className="flex items-center gap-3 min-w-0" style={{ WebkitAppRegion: 'no-drag' }}>
-          <div onClick={() => setCurrentView('home')} className="flex items-center gap-2 cursor-pointer shrink-0">
-            <AstraFluxLogo className="w-[22px] h-[22px]" rounded="rounded-md" />
-            <span className="text-[15px] font-bold tracking-tight text-brand-gradient whitespace-nowrap flex items-baseline gap-1.5">
-              <span>AstraFlux-HUB</span>
-              <span className="text-[11px] font-medium opacity-75 font-sans">星流驱动</span>
-            </span>
+        <div className="flex items-center gap-2.5 min-w-0" style={{ WebkitAppRegion: 'no-drag' }}>
+          <div 
+            onClick={() => setCurrentView('home')} 
+            className="flex items-center gap-2 cursor-pointer shrink-0 select-none group"
+            title="AstraFlux-HUB · 点击返回设备管理主页"
+          >
+            <AstraFluxLogo className="w-[22px] h-[22px] group-hover:scale-105 transition-transform" rounded="rounded-md" />
+            <div className="flex items-center gap-1.5">
+              <span className="text-[14.5px] font-black tracking-tight text-brand-gradient whitespace-nowrap font-title">
+                AstraFlux-HUB
+              </span>
+              <span className="text-[10px] font-bold px-1.5 py-0.5 rounded-full bg-blue-500/10 text-blue-600 dark:text-blue-400 border border-blue-500/20 font-mono tracking-wide">
+                星流驱动
+              </span>
+            </div>
           </div>
 
           {currentView === 'device' ? (
-            <div className="flex items-center gap-2.5 pl-3 shrink-0" style={{ borderLeft: '1px solid var(--border-color)' }}>
+            <div className="flex items-center gap-2.5 pl-2.5 shrink-0" style={{ borderLeft: '1px solid var(--border-color)' }}>
               {/* 产品型号清晰标题展示 */}
-              <span className="text-[15px] font-bold whitespace-nowrap tracking-tight text-[var(--text-primary)] font-title">
+              <span className="text-[14px] font-bold whitespace-nowrap tracking-tight text-[var(--text-primary)] font-title">
                 {chipDeviceName}
               </span>
               {/* 配列快速切换下拉菜单 */}
               <div className="relative group" style={{ WebkitAppRegion: 'no-drag' }}>
                 <button
                   type="button"
-                  className="flex items-center gap-1.5 text-[12.5px] px-3 py-1 rounded-full font-semibold whitespace-nowrap border border-[var(--border-color)] bg-[var(--bg-tertiary)] hover:border-[var(--info-color)] hover:text-[var(--info-color)] transition cursor-pointer text-[var(--text-secondary)]"
+                  className="flex items-center gap-1.5 text-[12px] px-2.5 py-1 rounded-full font-semibold whitespace-nowrap border border-[var(--border-color)] bg-[var(--bg-tertiary)] hover:border-[var(--info-color)] hover:text-[var(--info-color)] transition cursor-pointer text-[var(--text-secondary)]"
                   title="点击自由切换键盘物理视觉配列 (60% / 64 / 68 / 75% / 87 / 98 / 104)"
                 >
                   <span>{getLayoutDisplayName(ACTIVE_LAYOUT)} ({KEY_COUNT}K)</span>
@@ -2629,7 +2698,7 @@ export default function App() {
               </div>
               <button
                 onClick={() => setCurrentView('home')}
-                className="flex items-center gap-1 px-2 py-[3px] text-[12px] rounded-md font-semibold transition whitespace-nowrap"
+                className="flex items-center gap-1 px-2 py-[3px] text-[11.5px] rounded-md font-semibold transition whitespace-nowrap hover:bg-[var(--bg-tertiary)]"
                 style={{ color: 'var(--text-tertiary)', border: '1px solid var(--border-color)' }}
               >
                 <Home className="w-3 h-3" />
@@ -2637,14 +2706,51 @@ export default function App() {
               </button>
             </div>
           ) : (
-            <span className="text-[13px] whitespace-nowrap" style={{ color: 'var(--text-disabled)' }}>
-              NearLink 互联设备管理中心
-            </span>
+            <div className="flex items-center gap-2 pl-2.5 shrink-0" style={{ borderLeft: '1px solid var(--border-color)' }}>
+              <span className="text-[12px] font-medium text-[var(--text-tertiary)] whitespace-nowrap flex items-center gap-1.5 select-none">
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500/80 animate-pulse"></span>
+                <span>NearLink 互联设备管理中心</span>
+              </span>
+            </div>
           )}
         </div>
 
-        {/* 右：连接状态 / 主题 / 设置 / 窗口控制 */}
-        <div className="flex items-center gap-1 shrink-0" style={{ WebkitAppRegion: 'no-drag' }}>
+        {/* 右：更新通知 / 交流群 / 连接状态 / 主题 / 设置 / 窗口控制 */}
+        <div className="flex items-center gap-2 shrink-0" style={{ WebkitAppRegion: 'no-drag' }}>
+          {/* 条件渲染：发现新版本时显示下载更新按钮与小红标，无更新时不占空间 */}
+          {availableUpdate && availableUpdate.hasUpdate && (
+            <button
+              type="button"
+              onClick={() => {
+                setGlobalSettingsSection('updates');
+                setShowGlobalSettings(true);
+              }}
+              className="relative flex items-center gap-1.5 h-7 px-2.5 rounded-lg text-xs font-bold transition cursor-pointer bg-blue-500/10 hover:bg-blue-500/20 text-blue-600 dark:text-blue-400 border border-blue-500/30 shadow-2xs group"
+              title={`发现新版本 (v${availableUpdate.version})，点击前往更新中心下载`}
+            >
+              <DownloadCloud className="w-3.5 h-3.5 text-blue-500 group-hover:scale-110 transition-transform" />
+              <span className="whitespace-nowrap text-[11.5px]">更新可用</span>
+              <span className="absolute -top-1 -right-1 flex h-2.5 w-2.5">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-rose-400 opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-rose-500 border border-white dark:border-neutral-900"></span>
+              </span>
+            </button>
+          )}
+
+          {/* 加入官方交流群 (1131310645) */}
+          <button
+            type="button"
+            onClick={handleJoinQQGroup}
+            className="flex items-center gap-1.5 h-7 px-2.5 rounded-lg text-xs font-semibold bg-[var(--bg-secondary)] hover:bg-[var(--bg-tertiary)] border border-[var(--border-color)] text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition cursor-pointer shadow-2xs group"
+            title="官方交流群：1131310645 (点击复制群号并唤起加群)"
+          >
+            <Users className="w-3.5 h-3.5 text-blue-500 group-hover:scale-110 transition-transform" />
+            <span className="whitespace-nowrap text-[12px]">交流群</span>
+            <span className="text-[11px] font-mono text-[var(--text-tertiary)] group-hover:text-[var(--text-secondary)]">
+              1131310645
+            </span>
+          </button>
+
           <button
             onClick={() => setShowAddDeviceModal(true)}
             className="flex items-center gap-1.5 h-7 px-3 rounded-lg text-[13px] font-semibold transition cursor-pointer"
@@ -2673,7 +2779,7 @@ export default function App() {
             }}
             className="icon-button"
             style={{ width: 32, height: 32, color: 'var(--text-tertiary)' }}
-            title="常规设置 / 消息通知 / 关于"
+            title="常规设置 / 消息通知 / 软件更新 / 关于"
           >
             <Settings2 className="w-4 h-4" />
           </button>
@@ -5007,6 +5113,8 @@ export default function App() {
         isOpen={showGlobalSettings}
         onClose={() => setShowGlobalSettings(false)}
         initialSection={globalSettingsSection}
+        isConnected={isConnected}
+        hardwareInfo={hardwareInfo}
         onOpenDevLab={() => {
           setShowGlobalSettings(false);
           setShowDevLabModal(true);

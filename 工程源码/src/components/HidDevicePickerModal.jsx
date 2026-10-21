@@ -162,7 +162,7 @@ export default function HidDevicePickerModal({
             hidDevice: activeDevice,
             vendorId: vid,
             productId: pid,
-            name: activeDevice.productName || deviceProfile?.name || '星闪悦动磁轴键盘',
+            name: activeDevice.productName || deviceProfile?.name || '星闪通用磁轴键盘',
             productName: activeDevice.productName,
             serialNumber: activeDevice.serialNumber || '',
             interfaceCount: 3,

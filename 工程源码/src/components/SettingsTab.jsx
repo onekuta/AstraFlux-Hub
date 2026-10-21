@@ -401,13 +401,6 @@ export default function SettingsTab({
                 <DownloadCloud className="w-3.5 h-3.5" />
                 <span>软件与适配库更新</span>
               </button>
-              <button
-                onClick={onOpenDevLab}
-                className="text-xs px-2 py-0.5 rounded bg-[var(--bg-tertiary)] hover:bg-[var(--border-color)] text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition cursor-pointer font-mono font-semibold"
-                title="开发者硬件实验室 (快捷键 Ctrl+Alt+Shift+D)"
-              >
-                DevLab
-              </button>
             </div>
           </div>
 

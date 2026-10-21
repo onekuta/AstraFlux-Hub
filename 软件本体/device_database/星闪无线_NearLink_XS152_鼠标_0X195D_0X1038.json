@@ -1,0 +1,63 @@
+{
+  "meta": {
+    "isSparklinkDevice": true,
+    "specVersion": "1.4.1",
+    "protocolVersion": "v3",
+    "extractedAt": "2026-10-20T17:31:17.083Z",
+    "probeCoreVersion": "v1.4.2"
+  },
+  "hardwareFingerprint": {
+    "vendorIdHex": "0X195D",
+    "productIdHex": "0X1038",
+    "vendorIdDec": 6493,
+    "productIdDec": 4152,
+    "brandName": "星闪无线 NearLink",
+    "productModel": "XS152 鼠标",
+    "manufacturerString": "星闪无线 NearLink",
+    "targetId": 3,
+    "chipModel": "XS152"
+  },
+  "deviceProfile": {
+    "id": "catalog_0x195d_0x1038",
+    "brand": "星闪无线 NearLink",
+    "brandName": "星闪无线 NearLink",
+    "model": "XS152 鼠标",
+    "name": "星闪无线 NearLink 电竞无线鼠标 (XS152)",
+    "type": "mouse",
+    "layout": "标准电竞",
+    "layoutName": "电竞鼠标",
+    "totalKeyCount": 6,
+    "vendorId": 6493,
+    "productId": 4152,
+    "vendorIdHex": "0X195D",
+    "productIdHex": "0X1038",
+    "maxPollingRate": 8000,
+    "features": {
+      "dpiSetting": true,
+      "rgbLighting": true,
+      "batteryReport": true,
+      "nearlinkGaming": true
+    }
+  },
+  "matrixLayout": {
+    "layoutName": "电竞鼠标",
+    "totalKeys": 6,
+    "physicalKeys": []
+  },
+  "lightingTopology": {
+    "totalLeds": 1,
+    "spaceLamps": {
+      "count": 1
+    },
+    "isDoubleLighting": false
+  },
+  "performanceSpec": {
+    "maxPollingRate": 8000,
+    "magneticAxis": false,
+    "rtSupport": false
+  },
+  "axisAndCalibration": {
+    "minTravelMm": 0.1,
+    "maxTravelMm": 4
+  }
+}

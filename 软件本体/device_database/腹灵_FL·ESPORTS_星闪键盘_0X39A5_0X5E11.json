@@ -1,0 +1,66 @@
+{
+  "meta": {
+    "isSparklinkDevice": true,
+    "specVersion": "1.4.1",
+    "protocolVersion": "v2",
+    "extractedAt": "2026-10-20T17:31:17.083Z",
+    "probeCoreVersion": "v1.4.2"
+  },
+  "hardwareFingerprint": {
+    "vendorIdHex": "0X39A5",
+    "productIdHex": "0X5E11",
+    "vendorIdDec": 14757,
+    "productIdDec": 24081,
+    "brandName": "腹灵 FL·ESPORTS",
+    "productModel": "星闪键盘",
+    "manufacturerString": "腹灵 FL·ESPORTS",
+    "targetId": null,
+    "chipModel": "NearLink Wireless"
+  },
+  "deviceProfile": {
+    "id": "catalog_0x39a5_0x5e11",
+    "brand": "腹灵 FL·ESPORTS",
+    "brandName": "腹灵 FL·ESPORTS",
+    "model": "星闪键盘",
+    "name": "腹灵 FL·ESPORTS 极速星闪键盘",
+    "type": "keyboard",
+    "layout": "标准配列",
+    "layoutName": "标准配列",
+    "totalKeyCount": 64,
+    "vendorId": 14757,
+    "productId": 24081,
+    "vendorIdHex": "0X39A5",
+    "productIdHex": "0X5E11",
+    "maxPollingRate": 8000,
+    "features": {
+      "magneticAxis": true,
+      "rtSupport": true,
+      "socdSupport": true,
+      "furyMode": true,
+      "rgbLighting": true,
+      "hallCalibration": true,
+      "continuousRt": false
+    }
+  },
+  "matrixLayout": {
+    "layoutName": "标准配列",
+    "totalKeys": 64,
+    "physicalKeys": []
+  },
+  "lightingTopology": {
+    "totalLeds": 64,
+    "spaceLamps": {
+      "count": 1
+    },
+    "isDoubleLighting": false
+  },
+  "performanceSpec": {
+    "maxPollingRate": 8000,
+    "magneticAxis": true,
+    "rtSupport": true
+  },
+  "axisAndCalibration": {
+    "minTravelMm": 0.1,
+    "maxTravelMm": 4
+  }
+}

@@ -7,33 +7,34 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
-# Node dependencies
+# Node & Build caches
 node_modules/
-dist/
-dist-electron/
-release/
-release-v4/
-.asar-tmp/
-scratch/
-scratch_official/
-scratch_v2/
+工程源码/node_modules/
+工程源码/dist/
+工程源码/dist-electron/
+工程源码/release/
+工程源码/release-v4/
+工程源码/.asar-tmp/
+工程源码/scratch/
+工程源码/scratch_official/
+工程源码/scratch_v2/
+工程源码/tools/electron-bin/
 
-# Electron binary artifacts and large executables (>50MB/100MB Github limit)
-*.exe
+# Temporary & system shortcuts / stray root files
 *.lnk
-*.dll
-*.iso
-*.dmg
-*.asar
-*.bin
-*.mp4
+EnhanceHidUSB_V140.exe
+vulkan-1.dll
 
-# Specific large folders
-参考内容包/
+# Excluded folders & local development SOPs (never upload SOP to cloud)
+UPDATE_WORKFLOW_RULES.md
+*SOP*.md
+docs/
+开发者云端发布工具/
+项目文档/
 旧版本存档/
 reference_docs/
-tools/electron-bin/
-软件本体/
+参考内容包/
+.workbuddy/
 
 # OS / Editor files
 .DS_Store
