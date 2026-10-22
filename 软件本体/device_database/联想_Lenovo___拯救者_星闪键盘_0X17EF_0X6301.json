@@ -15,7 +15,8 @@
     "productModel": "星闪键盘",
     "manufacturerString": "联想 Lenovo / 拯救者",
     "targetId": null,
-    "chipModel": "NearLink Wireless"
+    "chipModel": "NearLink Wireless",
+    "brand": "联想 Lenovo / 拯救者"
   },
   "deviceProfile": {
     "id": "catalog_0x17ef_0x6301",

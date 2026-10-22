@@ -9,6 +9,7 @@ import {
   ChevronRight,
 } from 'lucide-react';
 import { useToast } from './ToastProvider';
+import { useI18n } from '../i18n/LanguageContext';
 import kutazeAvatar from '../assets/avatar_kutaze.png';
 
 // 主页设备管理中心 (多设备平铺：一台设备一张卡，未授权设备不展示)
@@ -27,6 +28,7 @@ export default function DeviceHomeView({
   onOpenGlobalSettings,
 }) {
   const { addToast } = useToast();
+  const { t } = useI18n();
 
   const isActive = (dev) =>
     (isConnected &&
@@ -43,15 +45,15 @@ export default function DeviceHomeView({
         <div className="flex items-center justify-between">
           <div>
             <h1 className="text-2xl font-black font-title text-[var(--text-primary)] tracking-tight flex items-center space-x-2.5">
-              <span>我的设备</span>
+              <span>{t('home.myDevices')}</span>
               <span className="text-[11px] px-2.5 py-0.5 rounded-full bg-[var(--primary-color)] text-[var(--text-inverse-100)] font-mono font-bold">
-                SparkLink
+                {t('home.sparklink')}
               </span>
             </h1>
             <p className="text-sm font-medium text-[var(--text-secondary)] mt-1.5">
               {devices.length > 0
-                ? `星闪低时延互联技术驱动 · 已连接 ${devices.length} 台星闪方案外设`
-                : '星闪低时延互联技术驱动 · 暂无已连接设备，请插入 USB 线连接键盘'}
+                ? t('home.subtitleConnected', { count: devices.length })
+                : t('home.subtitleEmpty')}
             </p>
           </div>
 
@@ -59,17 +61,17 @@ export default function DeviceHomeView({
             <button
               onClick={() => {
                 onRefreshDevices?.();
-                addToast({ message: '正在自主检索已连接的星闪设备...', type: 'info' });
+                addToast({ message: t('home.scanToast'), type: 'info' });
               }}
               className="flex items-center space-x-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold bg-[var(--bg-secondary)] border border-[var(--border-color)] hover:border-[var(--info-color)] text-[var(--text-secondary)] hover:text-[var(--info-color)] transition cursor-pointer shadow-2xs"
-              title="点击立即重新检索当前电脑连接的所有 USB HID 外设"
+              title={t('home.scanBtnTitle')}
             >
               <span className={`w-2 h-2 rounded-full ${isScanning ? 'bg-blue-500 animate-ping' : 'bg-emerald-500 animate-pulse'}`}></span>
-              <span>{isScanning ? '正在检索设备...' : '检索连接设备'}</span>
+              <span>{isScanning ? t('home.scanningBtn') : t('home.scanBtn')}</span>
             </button>
 
             <div className="flex items-center space-x-2 text-xs text-[var(--text-disabled)]">
-              <span className="font-medium text-[var(--text-disabled)]">自主监听运行中</span>
+              <span className="font-medium text-[var(--text-disabled)]">{t('home.autoListen')}</span>
             </div>
           </div>
         </div>
@@ -130,7 +132,7 @@ export default function DeviceHomeView({
                     onEnterDevice?.();
                   } else {
                     onConnectSpecific?.(dev);
-                    addToast({ message: `正在连接 ${modelName} ...`, type: 'info' });
+                    addToast({ message: t('home.connectingToast', { model: modelName }), type: 'info' });
                   }
                 }}
                 className={`group relative bg-[var(--bg-secondary)] rounded-[10px] p-6 border-2 transition-all duration-300 cursor-pointer flex flex-col justify-between overflow-hidden ${
@@ -176,7 +178,7 @@ export default function DeviceHomeView({
                           onEnterDevice?.();
                         } else {
                           onConnectSpecific?.(dev);
-                          addToast({ message: `正在连接 ${modelName} ...`, type: 'info' });
+                          addToast({ message: t('home.connectingToast', { model: modelName }), type: 'info' });
                         }
                       }}
                       className={`px-3 py-1.5 text-xs rounded-[8px] font-bold transition flex items-center space-x-1 shrink-0 mt-0.5 ${
@@ -188,11 +190,11 @@ export default function DeviceHomeView({
                       {active ? (
                         <>
                           <CheckCircle2 className="w-3 h-3" />
-                          <span>进入驱动</span>
+                          <span>{t('home.enterDriver')}</span>
                         </>
                       ) : (
                         <>
-                          <span>立即连接</span>
+                          <span>{t('home.connectNow')}</span>
                           <ArrowRight className="w-3 h-3" />
                         </>
                       )}
@@ -255,7 +257,7 @@ export default function DeviceHomeView({
                     active ? 'text-emerald-500 dark:text-emerald-400' : 'text-[var(--text-tertiary)]'
                   }`}>
                     {active && <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse inline-block" />}
-                    <span>{active ? '已连接' : '未激活'}</span>
+                    <span>{active ? t('home.connected') : t('home.inactive')}</span>
                     <ChevronRight className="w-4 h-4" />
                   </div>
                 </div>
@@ -267,16 +269,16 @@ export default function DeviceHomeView({
           <div
             onClick={onConnectDevice}
             className="group bg-[var(--bg-secondary)]/60 hover:bg-[var(--bg-secondary)] rounded-[10px] p-6 border-2 border-dashed border-[var(--border-color)] hover:border-[var(--info-color)] hover:shadow-lg transition-all duration-300 cursor-pointer flex flex-col items-center justify-center min-h-[290px] text-center"
-            title="点击打开添加与识别设备弹窗，扫描 USB HID 外设并可手动在星闪生态库中匹配档案"
+            title={t('home.addDeviceTitle')}
           >
             <div className="w-14 h-14 rounded-[8px] bg-[var(--bg-tertiary)] group-hover:bg-[var(--info-color)] group-hover:text-white border border-[var(--border-color)] group-hover:border-[var(--info-color)] flex items-center justify-center text-[var(--text-tertiary)] transition-all duration-300 mb-4 shadow-xs">
               <Plus className="w-7 h-7" />
             </div>
             <h4 className="text-base font-bold font-title text-[var(--text-primary)] group-hover:text-[var(--info-color)] transition tracking-wide">
-              添加设备
+              {t('home.addDevice')}
             </h4>
             <p className="text-[13px] text-[var(--text-secondary)] mt-1.5 max-w-[220px] leading-relaxed">
-              通过 USB 接入星闪方案磁轴键盘 / 自制 PCB / 外设生态库手动识别
+              {t('home.addDeviceDesc')}
             </p>
           </div>
 
@@ -285,7 +287,7 @@ export default function DeviceHomeView({
         {/* 空状态提示 */}
         {devices.length === 0 && (
           <div className="mt-6 text-center text-xs text-[var(--text-tertiary)]">
-            尚未检测到已授权设备 · 点击「添加设备」并选择你的键盘完成首次配对
+            {t('home.emptyTip')}
           </div>
         )}
       </div>
@@ -293,8 +295,8 @@ export default function DeviceHomeView({
       {/* 底部提示 */}
       <footer className="px-10 py-4 border-t border-[var(--border-color)]/70 bg-transparent flex flex-col sm:flex-row items-center justify-between text-[12px] text-[var(--text-tertiary)]">
         <div className="flex items-center space-x-2">
-          <span>温馨提示：</span>
-          <span>推荐在 Windows / macOS 主流操作系统下使用本开源驱动客户端访问与配置</span>
+          <span>{t('home.tipPrefix')}</span>
+          <span>{t('home.tipContent')}</span>
         </div>
         <div className="mt-1 sm:mt-0 flex items-center space-x-2 font-mono text-[11px]">
           <img 
@@ -315,11 +317,11 @@ export default function DeviceHomeView({
               }
             }}
             className="font-bold text-[var(--text-secondary)] hover:text-[var(--info-color)] hover:underline transition cursor-pointer"
-            title="查看开发者 乐禾泽 (Kutaze) 主页与软件信息"
+            title={t('home.authorLinkTitle')}
           >
             乐禾泽 (Kutaze)
           </button>
-          <span>· 个人独立开发者开源项目 · 基于星闪 NearLink 规范</span>
+          <span>· {t('home.copyright')}</span>
         </div>
       </footer>
 

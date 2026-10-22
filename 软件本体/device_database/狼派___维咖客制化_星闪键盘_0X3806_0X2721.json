@@ -15,7 +15,8 @@
     "productModel": "星闪键盘",
     "manufacturerString": "狼派 / 维咖客制化",
     "targetId": null,
-    "chipModel": "NearLink Wireless"
+    "chipModel": "NearLink Wireless",
+    "brand": "狼派 / 维咖客制化"
   },
   "deviceProfile": {
     "id": "catalog_0x3806_0x2721",

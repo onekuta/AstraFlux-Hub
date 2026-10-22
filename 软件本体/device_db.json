@@ -1,6 +1,6 @@
 {
-  "libVersion": "2026.10.20.1",
-  "exportedAt": "2026-10-20T17:31:17.083Z",
+  "libVersion": "2026.10.21.1",
+  "exportedAt": "2026-10-21T06:20:55.700Z",
   "generator": "SparkLink PlayJoy Community Keyboard Database Registry (高保真全量硬件库)",
   "description": "统一采用星闪探针硬件规范 (Probe Hardware Schema v1.4.1)，包含各品牌物理矩阵 physicalKeys、灯珠拓扑、5灯空格、上下双灯、高精校准与性能规格",
   "totalDevices": 638,

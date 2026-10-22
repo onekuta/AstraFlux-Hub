@@ -19,6 +19,7 @@ import { DV63_LAYOUT } from '../constants/dv63Layout';
 import { getLayoutBounds } from '../constants/keyboardLayouts';
 import { keyboardService } from '../services/keyboardService';
 import KeyTravelIndicator from './KeyTravelIndicator';
+import { useI18n } from '../i18n/LanguageContext';
 
 /**
  * 霍尔下压物理行程解算函数
@@ -59,6 +60,7 @@ export default function CalibrationModal({
   hwKeyCoords = null,
   findHwCoords = null,
 }) {
+  const { t } = useI18n();
   const KEYBOARD_LAYOUT = layout || DV63_LAYOUT;
 
   // 键盘校准开关
@@ -461,7 +463,7 @@ export default function CalibrationModal({
           <div className="flex items-center space-x-3 min-w-0">
             <h2 className="text-sm font-bold font-title modal-title flex items-center truncate text-[var(--text-primary)]">
               <Sparkles className="w-4 h-4 mr-1.5 text-[var(--info-color)] shrink-0" />
-              轴体全键校准
+              {t('calibration.title')}
             </h2>
 
             {/* 轴体型号切换与展示 (1:1 映射官网 V3 轴体库，支持切换) */}
@@ -480,8 +482,8 @@ export default function CalibrationModal({
               {showAxisDropdown && (
                 <div className="absolute left-0 top-full mt-1 w-60 max-h-60 overflow-y-auto rounded-lg bg-[var(--bg-secondary)] border border-[var(--border-color)] shadow-2xl z-[600] py-1 text-xs divide-y divide-[var(--border-color)]/40">
                   <div className="px-3 py-1.5 text-[10.5px] font-bold text-[var(--text-secondary)] bg-[var(--bg-tertiary)] flex items-center justify-between">
-                    <span>选择校准轴体 SKU</span>
-                    <span className="text-[9.5px] text-[var(--info-color)] font-mono">官方 V3 映射</span>
+                    <span>{t('calibration.selectAxisSku')}</span>
+                    <span className="text-[9.5px] text-[var(--info-color)] font-mono">{t('calibration.officialV3Mapping')}</span>
                   </div>
                   {(axisList && axisList.length > 0 ? axisList : [
                     { id: 788, name: '天际线轴', maxTravel: 3.55, badge: '高导光柱' },
@@ -517,7 +519,7 @@ export default function CalibrationModal({
             </div>
 
             <span className="text-xs font-mono shrink-0 text-[var(--text-secondary)]">
-              进度: <strong className="text-emerald-500 font-bold">{calibratedKeys.size}</strong> / {TOTAL_KEYS} 键
+              {t('calibration.progress')}: <strong className="text-emerald-500 font-bold">{calibratedKeys.size}</strong> / {TOTAL_KEYS} {t('calibration.keysUnit')}
             </span>
           </div>
 
@@ -527,16 +529,16 @@ export default function CalibrationModal({
               type="button"
               onClick={() => setShowInstructions(!showInstructions)}
               className="text-xs font-medium px-3 py-1.5 rounded-[7px] border border-[var(--border-color)] bg-[var(--bg-secondary)] hover:border-[var(--info-color)] text-[var(--text-secondary)] hover:text-[var(--info-color)] transition cursor-pointer flex items-center gap-1.5 shadow-2xs"
-              title={showInstructions ? '收起校准说明' : '展开校准说明'}
+              title={showInstructions ? t('calibration.collapseInstructionsTitle') : t('calibration.expandInstructionsTitle')}
             >
               <Info className="w-3.5 h-3.5 text-[var(--info-color)]" />
-              <span>{showInstructions ? '收起说明' : '校准说明'}</span>
+              <span>{showInstructions ? t('calibration.collapseInstructions') : t('calibration.expandInstructions')}</span>
               {showInstructions ? <ChevronUp className="w-3 h-3" /> : <ChevronDown className="w-3 h-3" />}
             </button>
 
             <div className="flex items-center space-x-2 px-3 py-1.5 rounded-[7px] border border-[var(--border-color)] bg-[var(--bg-secondary)] shadow-2xs">
               <span className="text-xs font-semibold text-[var(--text-secondary)]">
-                硬件校准
+                {t('calibration.hwCalibration')}
               </span>
               <label className="relative inline-flex items-center cursor-pointer shrink-0">
                 <input
@@ -563,7 +565,7 @@ export default function CalibrationModal({
               className="px-3 py-1.5 rounded-[7px] border border-[var(--border-color)] hover:border-[var(--info-color)] text-xs font-semibold text-[var(--info-color)] bg-[var(--bg-secondary)] hover:bg-[var(--primary-04)] transition cursor-pointer flex items-center shadow-2xs"
             >
               <RotateCcw className="w-3.5 h-3.5 mr-1.5" />
-              重新校准
+              {t('calibration.restartCalib')}
             </button>
 
             <button
@@ -572,7 +574,7 @@ export default function CalibrationModal({
               className="px-3 py-1.5 rounded-[7px] border border-[var(--border-color)] hover:border-red-400 text-xs font-semibold text-[var(--text-secondary)] hover:text-red-500 bg-[var(--bg-secondary)] hover:bg-red-50/10 transition cursor-pointer flex items-center shadow-2xs"
             >
               <X className="w-3.5 h-3.5 mr-1.5" />
-              退出校准
+              {t('calibration.exitCalib')}
             </button>
           </div>
         </div>
@@ -582,10 +584,10 @@ export default function CalibrationModal({
           <div className="px-3.5 py-1 text-[11px] flex items-center justify-between border-b border-amber-300/40 bg-amber-500/10 text-amber-600 dark:text-amber-400 font-medium shrink-0">
             <div className="flex items-center space-x-1.5 truncate">
               <AlertCircle className="w-3.5 h-3.5 shrink-0 text-amber-500" />
-              <span className="truncate">本地按键仿真模式运行中，按压键盘按键可实时呈现霍尔行程曲线与 2D 剖面下压动画。接入 USB 硬件时自动切换至 HID 采样。</span>
+              <span className="truncate">{t('calibration.simNotice')}</span>
             </div>
             <span className="text-[10px] font-mono px-1.5 py-0.2 rounded bg-amber-500/20 font-bold shrink-0 ml-2">
-              仿真就绪
+              {t('calibration.simReady')}
             </span>
           </div>
         )}
@@ -600,10 +602,10 @@ export default function CalibrationModal({
                 <div>
                   <h4 className="text-xs font-bold text-[var(--text-primary)] mb-0.5 flex items-center">
                     <span className="w-1.5 h-2.5 bg-[var(--info-color)] rounded-full mr-1.5 inline-block"></span>
-                    校准注意事项
+                    {t('calibration.notesTitle')}
                   </h4>
                   <p className="text-[10.5px] text-[var(--text-secondary)] leading-normal">
-                    白色表示未校准，绿色表示校准成功。已校准按键再次按下将重新校准。
+                    {t('calibration.notesDesc')}
                   </p>
                 </div>
                 <div className="flex items-center justify-center space-x-6 pt-1.5 mt-1 border-t border-[var(--border-color)]/60">
@@ -611,14 +613,14 @@ export default function CalibrationModal({
                     <div className="w-6 h-6 rounded-[5px] bg-[var(--bg-secondary)] border border-[var(--border-color)] flex items-center justify-center font-bold text-[11px] text-[var(--text-primary)] shadow-2xs">
                       A
                     </div>
-                    <span className="text-[9px] text-[var(--text-disabled)] mt-0.5">未校准</span>
+                    <span className="text-[9px] text-[var(--text-disabled)] mt-0.5">{t('calibration.uncalibrated')}</span>
                   </div>
                   <ArrowRight className="w-3.5 h-3.5 text-[var(--text-disabled)]" />
                   <div className="flex flex-col items-center">
                     <div className="w-6 h-6 rounded-[5px] bg-emerald-500 border border-emerald-600 flex items-center justify-center font-bold text-[11px] text-white shadow-xs">
                       A
                     </div>
-                    <span className="text-[9px] text-emerald-600 dark:text-emerald-400 mt-0.5 font-bold">校准成功</span>
+                    <span className="text-[9px] text-emerald-600 dark:text-emerald-400 mt-0.5 font-bold">{t('calibration.calibratedSuccess')}</span>
                   </div>
                 </div>
               </div>
@@ -627,24 +629,24 @@ export default function CalibrationModal({
                 <div>
                   <h4 className="text-xs font-bold text-[var(--text-primary)] mb-0.5 flex items-center">
                     <span className="w-1.5 h-2.5 bg-emerald-500 rounded-full mr-1.5 inline-block"></span>
-                    校准步骤
+                    {t('calibration.stepsTitle')}
                   </h4>
                   <p className="text-[10.5px] text-[var(--text-secondary)] leading-normal">
-                    将键盘放置在水平桌面，校准时勿移动；多次长按需要校准的轴体触底变绿。
+                    {t('calibration.stepsDesc')}
                   </p>
                 </div>
                 <div className="grid grid-cols-3 gap-1.5 pt-1.5 mt-1 border-t border-[var(--border-color)]/60 text-center">
                   <div className="py-1 px-1 rounded-[6px] bg-[var(--bg-secondary)] border border-[var(--border-color)] flex flex-col items-center">
-                    <span className="text-[10.5px] font-bold text-[var(--text-primary)]">步骤 1</span>
-                    <span className="text-[9.5px] text-[var(--text-disabled)] truncate">放平勿移动</span>
+                    <span className="text-[10.5px] font-bold text-[var(--text-primary)]">{t('calibration.step1Title')}</span>
+                    <span className="text-[9.5px] text-[var(--text-disabled)] truncate">{t('calibration.step1Desc')}</span>
                   </div>
                   <div className="py-1 px-1 rounded-[6px] bg-[var(--bg-secondary)] border border-[var(--border-color)] flex flex-col items-center">
-                    <span className="text-[10.5px] font-bold text-[var(--info-color)]">步骤 2</span>
-                    <span className="text-[9.5px] text-[var(--text-disabled)] truncate">长按触底</span>
+                    <span className="text-[10.5px] font-bold text-[var(--info-color)]">{t('calibration.step2Title')}</span>
+                    <span className="text-[9.5px] text-[var(--text-disabled)] truncate">{t('calibration.step2Desc')}</span>
                   </div>
                   <div className="py-1 px-1 rounded-[6px] bg-emerald-500/10 border border-emerald-500/40 flex flex-col items-center">
-                    <span className="text-[10.5px] font-bold text-emerald-600 dark:text-emerald-400">步骤 3</span>
-                    <span className="text-[9.5px] text-emerald-600 dark:text-emerald-400 truncate font-medium">变绿完成</span>
+                    <span className="text-[10.5px] font-bold text-emerald-600 dark:text-emerald-400">{t('calibration.step3Title')}</span>
+                    <span className="text-[9.5px] text-emerald-600 dark:text-emerald-400 truncate font-medium">{t('calibration.step3Desc')}</span>
                   </div>
                 </div>
               </div>
@@ -733,10 +735,10 @@ export default function CalibrationModal({
             <div className="flex items-center justify-between pb-1.5 mb-1.5 border-b border-[var(--border-color)]">
               <span className="text-xs font-bold text-[var(--text-primary)] flex items-center gap-1.5">
                 <Activity className="w-4 h-4 text-[#0052ef]" />
-                实时行程深度波形监控
+                {t('calibration.waveformTitle')}
               </span>
               <span className="text-xs font-mono text-[var(--text-secondary)]">
-                当前按键: <strong className="text-[#0052ef]">{activeKey?.label || '无'}</strong> ({activeAxisInfo.name} · Max {maxTravel.toFixed(2)}mm) | 当前深度: <strong className="text-emerald-500 font-bold">{currentTravel.toFixed(2)} mm</strong>
+                {t('calibration.currentKeyLabel')} <strong className="text-[#0052ef]">{activeKey?.label || t('calibration.noneKey')}</strong> ({activeAxisInfo.name} · {t('calibration.maxTravelPrefix')} {maxTravel.toFixed(2)}mm) | {t('calibration.currentDepthLabel')} <strong className="text-emerald-500 font-bold">{currentTravel.toFixed(2)} mm</strong>
               </span>
             </div>
 
@@ -802,25 +804,25 @@ export default function CalibrationModal({
               <div className="flex items-center justify-between pb-1.5 border-b border-[var(--border-color)]">
                 <div className="flex items-center space-x-1.5">
                   <Activity className="w-3.5 h-3.5 text-[var(--info-color)]" />
-                  <span className="text-xs font-bold text-[var(--text-primary)]">按键实时校准监控</span>
+                  <span className="text-xs font-bold text-[var(--text-primary)]">{t('calibration.realtimeMonitor')}</span>
                 </div>
 
                 {activeKey ? (
                   <div className="flex items-center space-x-1.5">
                     <span className="text-xs font-mono font-bold px-2 py-0.5 rounded bg-[var(--primary-04)] text-[var(--info-color)] border border-[var(--primary-15)]">
-                      当前按键: [{activeKey.label}]
+                      {t('calibration.currentKeyLabel')} [{activeKey.label}]
                     </span>
                     <span className={`text-xs font-bold px-2.5 py-0.5 rounded ${
                       isCurrentKeyCalibrated
                         ? 'bg-emerald-500/15 text-emerald-500 border border-emerald-500/30'
                         : 'bg-amber-500/15 text-amber-500 border border-amber-500/30'
                     }`}>
-                      {isCurrentKeyCalibrated ? '已校准' : '正在校准'}
+                      {isCurrentKeyCalibrated ? t('calibration.calibStatusCalibrated') : t('calibration.calibStatusCalibrating')}
                     </span>
                   </div>
                 ) : (
                   <span className="text-xs text-[var(--text-disabled)] font-mono">
-                    请按压物理键盘按键...
+                    {t('calibration.pressPrompt')}
                   </span>
                 )}
               </div>
@@ -828,7 +830,7 @@ export default function CalibrationModal({
               {/* 三大状态卡片 (居中自适应高度，大字号呈现) */}
               <div className="grid grid-cols-3 gap-2 my-auto py-1">
                 <div className="p-2 sm:p-2.5 rounded-[8px] border border-[var(--border-color)] bg-[var(--bg-tertiary)] flex flex-col justify-between">
-                  <span className="text-[10.5px] text-[var(--text-secondary)] font-medium leading-none mb-1">实时行程深度</span>
+                  <span className="text-[10.5px] text-[var(--text-secondary)] font-medium leading-none mb-1">{t('calibration.realtimeDepth')}</span>
                   <div className="flex items-baseline space-x-1 my-1">
                     <span className={`text-lg sm:text-xl font-black font-mono tracking-tight leading-none ${
                       currentTravel > 0 ? 'text-[#0052ef]' : 'text-[var(--text-primary)]'
@@ -838,12 +840,12 @@ export default function CalibrationModal({
                     <span className="text-[10px] text-[var(--text-disabled)] font-mono">mm</span>
                   </div>
                   <div className="text-[9.5px] text-[var(--text-disabled)] leading-none truncate font-mono">
-                    最大 {maxTravel.toFixed(2)}mm
+                    {t('calibration.maxTravelPrefix')} {maxTravel.toFixed(2)}mm
                   </div>
                 </div>
 
                 <div className="p-2 sm:p-2.5 rounded-[8px] border border-[var(--border-color)] bg-[var(--bg-tertiary)] flex flex-col justify-between">
-                  <span className="text-[10.5px] text-[var(--text-secondary)] font-medium leading-none mb-1">当前霍尔读数</span>
+                  <span className="text-[10.5px] text-[var(--text-secondary)] font-medium leading-none mb-1">{t('calibration.currentHallReading')}</span>
                   <div className="flex items-baseline space-x-1 my-1">
                     <span className={`text-lg sm:text-xl font-black font-mono tracking-tight leading-none ${
                       currentTravel > 0 ? 'text-emerald-500' : 'text-[var(--text-primary)]'
@@ -852,12 +854,12 @@ export default function CalibrationModal({
                     </span>
                   </div>
                   <div className="text-[9.5px] text-[var(--text-disabled)] leading-none truncate font-mono">
-                    基准 ~{(activeKey && baseAdcRef.current[activeKey.id]) || 2700} AD
+                    {t('calibration.hallBaseline')} ~{(activeKey && baseAdcRef.current[activeKey.id]) || 2700} AD
                   </div>
                 </div>
 
                 <div className="p-2 sm:p-2.5 rounded-[8px] border border-[var(--border-color)] bg-[var(--bg-tertiary)] flex flex-col justify-between">
-                  <span className="text-[10.5px] text-[var(--text-secondary)] font-medium leading-none mb-1">已完成按键</span>
+                  <span className="text-[10.5px] text-[var(--text-secondary)] font-medium leading-none mb-1">{t('calibration.completedKeys')}</span>
                   <div className="flex items-baseline space-x-1 my-1">
                     <span className="text-lg sm:text-xl font-black font-mono text-emerald-500 tracking-tight leading-none">
                       {calibratedKeys.size}
@@ -874,8 +876,8 @@ export default function CalibrationModal({
               <div className="pt-2 border-t border-[var(--border-color)] flex items-center justify-between gap-3">
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center justify-between text-[10.5px] font-mono text-[var(--text-disabled)] mb-1">
-                    <span>全键校准进度</span>
-                    <span>{calibratedKeys.size} / {TOTAL_KEYS} 键 ({Math.round((calibratedKeys.size / TOTAL_KEYS) * 100)}%)</span>
+                    <span>{t('calibration.overallProgress')}</span>
+                    <span>{calibratedKeys.size} / {TOTAL_KEYS} {t('calibration.keysUnit')} ({Math.round((calibratedKeys.size / TOTAL_KEYS) * 100)}%)</span>
                   </div>
                   <div className="h-2 w-full bg-[var(--bg-tertiary)] rounded-full overflow-hidden border border-[var(--border-color)]/50">
                     <div
@@ -889,10 +891,10 @@ export default function CalibrationModal({
                   type="button"
                   onClick={handleCalibrateAll}
                   className="px-3 py-1.5 rounded-[7px] border border-[var(--border-color)] hover:border-emerald-500 text-xs font-semibold text-emerald-600 dark:text-emerald-400 bg-[var(--bg-tertiary)] hover:bg-emerald-500/10 transition flex items-center space-x-1.5 cursor-pointer shrink-0 shadow-2xs"
-                  title="快速标记全部按键校准通过"
+                  title={t('calibration.markAllTooltip')}
                 >
                   <Check className="w-3.5 h-3.5" />
-                  <span>全部标为已校准</span>
+                  <span>{t('calibration.markAllCalibrated')}</span>
                 </button>
               </div>
             </div>

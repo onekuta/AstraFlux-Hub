@@ -15,7 +15,8 @@
     "productModel": "星闪键盘",
     "manufacturerString": "艾石头 IROK",
     "targetId": null,
-    "chipModel": "NearLink Wireless"
+    "chipModel": "NearLink Wireless",
+    "brand": "艾石头 IROK"
   },
   "deviceProfile": {
     "id": "catalog_0x38a6_0x28e0",

@@ -24,6 +24,7 @@ import {
   DownloadCloud,
   Link,
   Save,
+  FlaskConical,
 } from 'lucide-react';
 import { customDeviceRegistry } from '../services/customDeviceRegistry';
 import { updaterService } from '../services/updaterService';
@@ -49,9 +50,10 @@ export default function DevLabModal({
   const [passwordInput, setPasswordInput] = useState('');
   const [passwordError, setPasswordError] = useState(false);
 
-  // 两个返链配置 (数据库更新链接 & 驱动更新链接)
+  // 三个返链配置 (数据库更新链接 & 正式版驱动更新链接 & Beta 测试版更新链接)
   const [dbUpdateUrl, setDbUpdateUrl] = useState('');
   const [appUpdateUrl, setAppUpdateUrl] = useState('');
+  const [betaAppUpdateUrl, setBetaAppUpdateUrl] = useState('');
 
   // 版本检测与比对状态
   const [isCheckingBoth, setIsCheckingBoth] = useState(false);
@@ -78,6 +80,7 @@ export default function DevLabModal({
     if (isOpen) {
       setDbUpdateUrl(updaterService.getDbUpdateUrl());
       setAppUpdateUrl(updaterService.getAppUpdateUrl());
+      setBetaAppUpdateUrl(updaterService.getBetaAppUpdateUrl());
       setCurrentLibVersion(updaterService.getCurrentLibVersion());
       setAllProfiles(customDeviceRegistry.getAllProfiles());
       const now = new Date();
@@ -116,14 +119,25 @@ export default function DevLabModal({
       return;
     }
     updaterService.setAppUpdateUrl(appUpdateUrl.trim());
-    addToast({ message: '驱动软件更新链接已保存！', type: 'success' });
+    addToast({ message: '正式版驱动软件更新链接已保存！', type: 'success' });
+  };
+
+  // 保存 Beta 测试版更新链接
+  const handleSaveBetaAppUrl = () => {
+    if (!betaAppUpdateUrl.trim()) {
+      addToast({ message: 'Beta 测试版更新链接不能为空', type: 'warning' });
+      return;
+    }
+    updaterService.setBetaAppUpdateUrl(betaAppUpdateUrl.trim());
+    addToast({ message: 'Beta 测试版驱动更新链接已保存！', type: 'success' });
   };
 
   // 一键保存全部链接
   const handleSaveAllUrls = () => {
     updaterService.setDbUpdateUrl(dbUpdateUrl.trim());
     updaterService.setAppUpdateUrl(appUpdateUrl.trim());
-    addToast({ message: '数据库与驱动更新返链均已成功保存！', type: 'success' });
+    updaterService.setBetaAppUpdateUrl(betaAppUpdateUrl.trim());
+    addToast({ message: '数据库、正式版及 Beta 版三大更新返链均已成功保存！', type: 'success' });
   };
 
   // 综合比对检测云端最新版本
@@ -440,13 +454,13 @@ export default function DevLabModal({
               </div>
             </div>
 
-            {/* 1. 云端返链配置：两个专属返链/直链位置 (数据库更新链接 & 驱动更新链接) */}
+            {/* 1. 云端返链配置：三大专属返链/直链位置 (数据库更新链接 & 正式版驱动更新链接 & Beta 测试版更新链接) */}
             <div className="p-4 rounded-xl border border-[var(--border-color)] bg-[var(--bg-tertiary)] space-y-3.5">
               <div className="flex items-center justify-between">
                 <div className="flex items-center space-x-2">
                   <Link className="w-4 h-4 text-[var(--info-color)]" />
                   <h3 className="text-xs font-bold text-[var(--text-primary)]">
-                    云端返链与更新下载源配置 (Dual OTA Endpoints)
+                    云端返链与更新下载源配置 (Multi-Channel OTA Endpoints)
                   </h3>
                 </div>
                 <div className="flex items-center space-x-2">
@@ -464,13 +478,13 @@ export default function DevLabModal({
                 </div>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-3.5">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-3.5">
                 {/* 返链 1: 数据库在线更新链接 */}
                 <div className="p-3 rounded-lg border border-[var(--border-color)] bg-[var(--bg-secondary)] space-y-2">
                   <div className="flex items-center justify-between">
                     <div className="flex items-center space-x-1.5 text-xs font-bold text-sky-400">
                       <Database className="w-3.5 h-3.5" />
-                      <span>① 数据库更新的链接 (device_db.json / 清单)</span>
+                      <span>① 数据库更新链接 (device_db.json / 清单)</span>
                     </div>
                     <button
                       onClick={handleSaveDbUrl}
@@ -481,22 +495,22 @@ export default function DevLabModal({
                   </div>
                   <input
                     type="text"
-                    placeholder="https://gitee.com/your_account/sparklink-hub/raw/master/device_db.json"
+                    placeholder="https://gitee.com/Kutaze/astra-flux-hub/raw/main/database/manifest.json"
                     value={dbUpdateUrl}
                     onChange={(e) => setDbUpdateUrl(e.target.value)}
                     className="w-full px-2.5 py-1.5 text-xs font-mono rounded bg-[var(--bg-tertiary)] border border-[var(--border-color)] text-[var(--text-primary)] focus:outline-none focus:border-sky-500"
                   />
                   <div className="text-[10px] text-[var(--text-tertiary)] leading-tight">
-                    用于拉取外设适配库数据，在线更新数据库时将从此返链下载覆写。
+                    用于拉取外设适配库数据，定位到 database/ 专属目录。
                   </div>
                 </div>
 
-                {/* 返链 2: 驱动更新用的链接 */}
+                {/* 返链 2: 正式版驱动更新用的链接 */}
                 <div className="p-3 rounded-lg border border-[var(--border-color)] bg-[var(--bg-secondary)] space-y-2">
                   <div className="flex items-center justify-between">
                     <div className="flex items-center space-x-1.5 text-xs font-bold text-purple-400">
                       <ArrowUpCircle className="w-3.5 h-3.5" />
-                      <span>② 驱动更新用的链接 (Setup.exe / manifest)</span>
+                      <span>② 正式版驱动更新链接 (software/manifest)</span>
                     </div>
                     <button
                       onClick={handleSaveAppUrl}
@@ -507,13 +521,39 @@ export default function DevLabModal({
                   </div>
                   <input
                     type="text"
-                    placeholder="https://gitee.com/your_account/sparklink-hub/raw/master/manifest.json 或 Setup.exe 直链"
+                    placeholder="https://gitee.com/Kutaze/astra-flux-hub/raw/main/software/manifest.json"
                     value={appUpdateUrl}
                     onChange={(e) => setAppUpdateUrl(e.target.value)}
                     className="w-full px-2.5 py-1.5 text-xs font-mono rounded bg-[var(--bg-tertiary)] border border-[var(--border-color)] text-[var(--text-primary)] focus:outline-none focus:border-purple-500"
                   />
                   <div className="text-[10px] text-[var(--text-tertiary)] leading-tight">
-                    用于拉取驱动安装包或更新清单，在线升级驱动时将从此返链下载覆盖安装。
+                    用于拉取正式稳定版安装包清单，定位到 software/ 专属目录。
+                  </div>
+                </div>
+
+                {/* 返链 3: Beta 测试版驱动更新链接 */}
+                <div className="p-3 rounded-lg border border-amber-500/40 bg-amber-500/5 space-y-2">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center space-x-1.5 text-xs font-bold text-amber-400">
+                      <FlaskConical className="w-3.5 h-3.5 text-amber-400" />
+                      <span>③ Beta 测试版更新链接 (software(beta)/manifest)</span>
+                    </div>
+                    <button
+                      onClick={handleSaveBetaAppUrl}
+                      className="text-[10px] font-bold px-2 py-0.5 rounded bg-amber-500/20 text-amber-300 hover:bg-amber-500/30 border border-amber-500/40 transition cursor-pointer"
+                    >
+                      保存链接
+                    </button>
+                  </div>
+                  <input
+                    type="text"
+                    placeholder="https://gitee.com/Kutaze/astra-flux-hub/raw/main/software(beta)/manifest.json"
+                    value={betaAppUpdateUrl}
+                    onChange={(e) => setBetaAppUpdateUrl(e.target.value)}
+                    className="w-full px-2.5 py-1.5 text-xs font-mono rounded bg-[var(--bg-tertiary)] border border-amber-500/30 text-[var(--text-primary)] focus:outline-none focus:border-amber-500"
+                  />
+                  <div className="text-[10px] text-[var(--text-tertiary)] leading-tight">
+                    用于拉取 Beta 测试版驱动安装包清单，定位到 software(beta)/ 专属目录。
                   </div>
                 </div>
               </div>

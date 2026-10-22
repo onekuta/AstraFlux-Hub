@@ -1,0 +1,17 @@
+{
+  "manifestVersion": "1.4.1",
+  "appVersion": "beta0.26.10.23",
+  "channel": "beta",
+  "appDownloadUrl": "https://gitee.com/Kutaze/astra-flux-hub/releases/download/beta0.26.10.23/AstraFlux-HUB_Setup_beta0.26.10.23.exe",
+  "cdnDownloadUrl": "https://ghfast.top/https://github.com/Kutaze/AstraFlux-Hub/releases/download/beta0.26.10.23/AstraFlux-HUB_Setup_beta0.26.10.23.exe",
+  "githubDownloadUrl": "https://github.com/Kutaze/AstraFlux-Hub/releases/download/beta0.26.10.23/AstraFlux-HUB_Setup_beta0.26.10.23.exe",
+  "appReleaseUrl": "https://gitee.com/Kutaze/astra-flux-hub/releases",
+  "appChangelog": "【Beta0.26.10.23 抢先体验版】\n1. 全界面多语言国际化支持（简体中文/English/日本語）\n2. 全新高颜值自定义下拉框与暗黑模式深度契合\n3. 正式版与 Beta 测试版物理通道彻底隔离与风险隔离\n4. 关于软件检查更新卡片集成可滚动翻页的版本更新记录子视窗\n5. 开发者后台全面支持软件、数据库与 Beta 测试版三大 OTA 返链定位配置",
+  "appForceUpdate": false,
+  "appFileSize": "93.49 MB",
+  "setupSha256": "660db763aaacd7ba7cb112647598220fcf5b7ebeef0d280e35641be4a6af673c",
+  "libVersion": "2026.10.20.1",
+  "libDownloadUrl": "https://gitee.com/Kutaze/astra-flux-hub/raw/main/database/device_database.spkdb",
+  "totalDevices": 638,
+  "updatedAt": "2026-10-23T02:00:00.000Z"
+}

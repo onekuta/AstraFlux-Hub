@@ -15,7 +15,8 @@
     "productModel": "星闪键盘",
     "manufacturerString": "客制化客供 / NearLink Custom",
     "targetId": null,
-    "chipModel": "NearLink Wireless"
+    "chipModel": "NearLink Wireless",
+    "brand": "客制化客供 / NearLink Custom"
   },
   "deviceProfile": {
     "id": "catalog_0x7968_0x7000",

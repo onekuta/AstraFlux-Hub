@@ -15,7 +15,8 @@
     "productModel": "星闪键盘",
     "manufacturerString": "沁恒微电子 CH340/开发板",
     "targetId": null,
-    "chipModel": "NearLink Wireless"
+    "chipModel": "NearLink Wireless",
+    "brand": "沁恒微电子 CH340/开发板"
   },
   "deviceProfile": {
     "id": "catalog_0x1a86_0x8300",

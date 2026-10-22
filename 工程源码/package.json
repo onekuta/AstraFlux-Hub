@@ -9,6 +9,7 @@
     "build": "vite build",
     "repack": "node repack.js",
     "release:pack": "node tools/package-release.cjs",
+    "release:beta": "node tools/package-release.cjs --beta",
     "preview": "vite preview"
   },
   "dependencies": {

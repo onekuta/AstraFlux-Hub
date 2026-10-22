@@ -15,7 +15,8 @@
     "productModel": "星闪键盘",
     "manufacturerString": "新贵 Newmen",
     "targetId": null,
-    "chipModel": "NearLink Wireless"
+    "chipModel": "NearLink Wireless",
+    "brand": "新贵 Newmen"
   },
   "deviceProfile": {
     "id": "catalog_0x31e3_0x1320",

@@ -15,7 +15,8 @@
     "productModel": "XS213 鼠标",
     "manufacturerString": "星闪无线 (Mouse)",
     "targetId": 5,
-    "chipModel": "XS213"
+    "chipModel": "XS213",
+    "brand": "星闪无线 (Mouse)"
   },
   "deviceProfile": {
     "id": "catalog_0x3ca3_0x0d01",

@@ -15,7 +15,8 @@
     "productModel": "星闪键盘",
     "manufacturerString": "腹灵 FL·ESPORTS",
     "targetId": null,
-    "chipModel": "NearLink Wireless"
+    "chipModel": "NearLink Wireless",
+    "brand": "腹灵 FL·ESPORTS"
   },
   "deviceProfile": {
     "id": "catalog_0x39a5_0x5e11",

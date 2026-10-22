@@ -25,6 +25,7 @@ node_modules/
 *.lnk
 EnhanceHidUSB_V140.exe
 vulkan-1.dll
+安装包/**/*.exe
 
 # Excluded folders & local development SOPs (never upload SOP to cloud)
 UPDATE_WORKFLOW_RULES.md

@@ -12,15 +12,24 @@ import JSZip from 'jszip';
 
 const UPDATER_SETTINGS_KEY = 'SPARKLINK_OTA_UPDATER_SETTINGS_V2';
 
-// 默认预留的云端直链 (完全分离 database 与 software 独立目录，禁止混在 main 根目录)
+// 默认预留的云端直链 (完全分离 database 与 software 独立目录，包含正式版与 Beta 测试版通道)
 const DEFAULT_DB_URL = 'https://gitee.com/Kutaze/astra-flux-hub/raw/main/database/manifest.json';
 const DEFAULT_APP_URL = 'https://gitee.com/Kutaze/astra-flux-hub/raw/main/software/manifest.json';
+const DEFAULT_BETA_APP_URL = 'https://gitee.com/Kutaze/astra-flux-hub/raw/main/software(beta)/manifest.json';
 const DEFAULT_MANIFEST_URL = 'https://gitee.com/Kutaze/astra-flux-hub/raw/main/manifest.json';
 const GITEE_RELEASES_PAGE = 'https://gitee.com/Kutaze/astra-flux-hub/releases';
 const GITHUB_RELEASES_PAGE = 'https://github.com/Kutaze/AstraFlux-Hub/releases';
 
 const CURRENT_APP_VERSION = '1.1.2';
 const DEFAULT_LIB_VERSION = '2026.10.20.1';
+
+// 计算当前日期的默认 Beta 版本号格式：beta0.YY.MM.DD
+export function getFormattedBetaVersion(date = new Date()) {
+  const yy = String(date.getFullYear()).slice(-2);
+  const mm = String(date.getMonth() + 1).padStart(2, '0');
+  const dd = String(date.getDate()).padStart(2, '0');
+  return `beta0.${yy}.${mm}.${dd}`;
+}
 
 // 语义化版本号比对工具 (v1.1.1 > v1.1.0)
 function compareSemver(v1, v2) {
@@ -34,6 +43,33 @@ function compareSemver(v1, v2) {
     if (num1 < num2) return -1;
   }
   return 0;
+}
+
+// 版本更新可用性判定：根据当前渠道 (release 或 beta) 判定是否有新版本
+function compareVersions(cloudVer, localVer, channel = 'release') {
+  if (!cloudVer) return false;
+  const sCloud = String(cloudVer).trim();
+  const sLocal = String(localVer || '').trim();
+
+  if (channel === 'beta') {
+    // 若本地仍为正式稳定版 (非 beta 开头)，则云端推送的任何 beta 版本均可升级
+    if (!sLocal.toLowerCase().startsWith('beta')) {
+      return true;
+    }
+    // 本地和云端都是 beta 测试版时：比对日期序号
+    const pCloud = sCloud.replace(/^beta/i, '').split('.').map(n => parseInt(n, 10) || 0);
+    const pLocal = sLocal.replace(/^beta/i, '').split('.').map(n => parseInt(n, 10) || 0);
+    for (let i = 0; i < Math.max(pCloud.length, pLocal.length); i++) {
+      const c = pCloud[i] || 0;
+      const l = pLocal[i] || 0;
+      if (c > l) return true;
+      if (c < l) return false;
+    }
+    return false;
+  }
+
+  // 正式版渠道：标准语义化对比
+  return compareSemver(sCloud, sLocal) > 0;
 }
 
 class UpdaterService {
@@ -67,15 +103,21 @@ class UpdaterService {
             ? parsed.dbUpdateUrl.trim()
             : DEFAULT_DB_URL;
 
+          const cleanBetaAppUrl = (parsed.betaAppUpdateUrl && !parsed.betaAppUpdateUrl.includes('your_account'))
+            ? parsed.betaAppUpdateUrl.trim()
+            : DEFAULT_BETA_APP_URL;
+
           return {
             manifestUrl: DEFAULT_MANIFEST_URL,
             dbUpdateUrl: cleanDbUrl,
             appUpdateUrl: cleanAppUrl,
+            betaAppUpdateUrl: cleanBetaAppUrl,
             currentLibVersion: DEFAULT_LIB_VERSION,
             currentAppVersion: CURRENT_APP_VERSION,
             ...parsed,
             dbUpdateUrl: cleanDbUrl,
             appUpdateUrl: cleanAppUrl,
+            betaAppUpdateUrl: cleanBetaAppUrl,
           };
         }
       }
@@ -85,6 +127,7 @@ class UpdaterService {
       manifestUrl: DEFAULT_MANIFEST_URL,
       dbUpdateUrl: DEFAULT_DB_URL,
       appUpdateUrl: DEFAULT_APP_URL,
+      betaAppUpdateUrl: DEFAULT_BETA_APP_URL,
       currentLibVersion: DEFAULT_LIB_VERSION,
       currentAppVersion: CURRENT_APP_VERSION,
     };
@@ -121,7 +164,30 @@ class UpdaterService {
     this.saveSettings({ dbUpdateUrl: url ? url.trim() : '' });
   }
 
+  getUpdateChannel() {
+    try {
+      if (typeof window !== 'undefined' && window.localStorage) {
+        return window.localStorage.getItem('sparklink_hub_channel') || 'release';
+      }
+    } catch {}
+    return 'release';
+  }
+
+  setUpdateChannel(channel) {
+    if (channel === 'beta' || channel === 'release') {
+      try {
+        if (typeof window !== 'undefined' && window.localStorage) {
+          window.localStorage.setItem('sparklink_hub_channel', channel);
+        }
+      } catch {}
+    }
+  }
+
   getAppUpdateUrl() {
+    const channel = this.getUpdateChannel();
+    if (channel === 'beta') {
+      return this.getBetaAppUpdateUrl();
+    }
     const url = (this.settings.appUpdateUrl || '').trim();
     if (!url || url.includes('your_account') || url.endsWith('/raw/main/manifest.json')) {
       return DEFAULT_APP_URL;
@@ -133,7 +199,27 @@ class UpdaterService {
     this.saveSettings({ appUpdateUrl: url ? url.trim() : '' });
   }
 
+  getBetaAppUpdateUrl() {
+    const url = (this.settings.betaAppUpdateUrl || '').trim();
+    if (!url || url.includes('your_account')) {
+      return DEFAULT_BETA_APP_URL;
+    }
+    return url;
+  }
+
+  setBetaAppUpdateUrl(url) {
+    this.saveSettings({ betaAppUpdateUrl: url ? url.trim() : '' });
+  }
+
   getCurrentAppVersion() {
+    const channel = this.getUpdateChannel();
+    if (channel === 'beta') {
+      try {
+        const saved = window.localStorage.getItem('sparklink_hub_installed_beta_version');
+        if (saved) return saved;
+      } catch {}
+      return getFormattedBetaVersion();
+    }
     return CURRENT_APP_VERSION;
   }
 
@@ -212,8 +298,10 @@ class UpdaterService {
     // ----------------------------------------------------
     // 2. 独立检查【驱动软件客户端更新】(专属于 software/ 目录或 Gitee 发行版)
     // ----------------------------------------------------
-    const targetAppUrl = appUrl || DEFAULT_APP_URL;
+    const channel = this.getUpdateChannel();
+    const targetAppUrl = appUrl || (channel === 'beta' ? DEFAULT_BETA_APP_URL : DEFAULT_APP_URL);
     let appCheckedSuccess = false;
+    result.channel = channel;
 
     if (targetAppUrl && !targetAppUrl.includes('your_account')) {
       try {
@@ -230,20 +318,21 @@ class UpdaterService {
 
               // 智能计算/解析下载直链：优先用清单内提供的直链，若无或为通用链接，自动拼装 Gitee 发行版 exe 格式
               let download = json.appDownloadUrl || '';
-              if (!download || download.includes('/releases') || !download.endsWith('.exe')) {
+              if (!download || (!download.toLowerCase().includes('.exe') && download.includes('/releases'))) {
                 // 默认拼接 Gitee 发行版直链与 GitHub 直链
-                download = `https://gitee.com/Kutaze/astra-flux-hub/releases/download/v${json.appVersion}/AstraFlux-HUB_Setup_v${json.appVersion}.exe`;
+                const tagPrefix = json.appVersion.startsWith('v') || json.appVersion.startsWith('beta') ? '' : 'v';
+                download = `https://gitee.com/Kutaze/astra-flux-hub/releases/download/${tagPrefix}${json.appVersion}/AstraFlux-HUB_Setup_${tagPrefix}${json.appVersion}.exe`;
               }
               result.appDownloadUrl = download;
-              result.hasAppUpdate = compareSemver(result.cloudAppVersion, currentApp) > 0;
+              result.hasAppUpdate = compareVersions(result.cloudAppVersion, currentApp, channel);
               appCheckedSuccess = true;
             }
           }
         } else if (targetAppUrl.endsWith('.exe')) {
           result.appDownloadUrl = targetAppUrl;
-          const match = targetAppUrl.match(/v?(\d+\.\d+\.\d+)/i);
-          result.cloudAppVersion = match ? match[1] : '最新版';
-          result.hasAppUpdate = match ? compareSemver(match[1], currentApp) > 0 : true;
+          const match = targetAppUrl.match(/(?:v|beta0\.)?(\d+\.\d+\.\d+)/i);
+          result.cloudAppVersion = match ? match[0] : '最新版';
+          result.hasAppUpdate = compareVersions(result.cloudAppVersion, currentApp, channel);
           appCheckedSuccess = true;
         }
       } catch (e) {
@@ -252,9 +341,9 @@ class UpdaterService {
     }
 
     // ----------------------------------------------------
-    // 3. 兜底回退：如果 software/ 清单未抓到，尝试直接读取 Gitee Releases 发行版
+    // 3. 兜底回退：如果正式版 software/ 清单未抓到，尝试直接读取 Gitee Releases 发行版
     // ----------------------------------------------------
-    if (!appCheckedSuccess) {
+    if (!appCheckedSuccess && channel === 'release') {
       try {
         const giteeReleasesApi = 'https://gitee.com/api/v5/repos/kutaze/astra-flux-hub/releases/latest';
         const gResp = await fetch(`${giteeReleasesApi}?_t=${Date.now()}`, { cache: 'no-store' });
@@ -267,7 +356,7 @@ class UpdaterService {
             const exeAsset = relJson.assets?.find(a => a.name?.endsWith('.exe'));
             result.appDownloadUrl = exeAsset?.browser_download_url || 
               `https://gitee.com/Kutaze/astra-flux-hub/releases/download/v${tagVer}/AstraFlux-HUB_Setup_v${tagVer}.exe`;
-            result.hasAppUpdate = compareSemver(result.cloudAppVersion, currentApp) > 0;
+            result.hasAppUpdate = compareVersions(result.cloudAppVersion, currentApp, channel);
             result.appError = null;
           }
         }
@@ -276,7 +365,7 @@ class UpdaterService {
 
     // 默认保底下载链接
     if (!result.appDownloadUrl) {
-      result.appDownloadUrl = GITEE_RELEASES_PAGE;
+      result.appDownloadUrl = GITHUB_RELEASES_PAGE;
     }
 
     return result;
@@ -388,7 +477,7 @@ class UpdaterService {
     }
 
     // 如果链接是指向发行版页面且未直接以 .exe 结尾，自动解析
-    if (!finalDownloadUrl.endsWith('.exe') && (finalDownloadUrl.includes('/releases') || finalDownloadUrl === GITEE_RELEASES_PAGE)) {
+    if (!finalDownloadUrl.toLowerCase().includes('.exe') && (finalDownloadUrl.includes('/releases') || finalDownloadUrl === GITEE_RELEASES_PAGE)) {
       finalDownloadUrl = `https://gitee.com/Kutaze/astra-flux-hub/releases/download/v${CURRENT_APP_VERSION}/AstraFlux-HUB_Setup_v${CURRENT_APP_VERSION}.exe`;
     }
 

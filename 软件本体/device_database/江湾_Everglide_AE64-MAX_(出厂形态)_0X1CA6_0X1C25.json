@@ -15,7 +15,8 @@
     "productModel": "AE64-MAX (出厂形态)",
     "manufacturerString": "江湾 Everglide",
     "targetId": null,
-    "chipModel": "NearLink Wireless"
+    "chipModel": "NearLink Wireless",
+    "brand": "江湾 Everglide"
   },
   "deviceProfile": {
     "id": "ae64_max_alt",

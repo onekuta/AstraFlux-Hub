@@ -15,7 +15,8 @@
     "productModel": "星闪键盘",
     "manufacturerString": "狼蛛 AULA",
     "targetId": null,
-    "chipModel": "NearLink Wireless"
+    "chipModel": "NearLink Wireless",
+    "brand": "狼蛛 AULA"
   },
   "deviceProfile": {
     "id": "catalog_0x32ca_0x28e9",

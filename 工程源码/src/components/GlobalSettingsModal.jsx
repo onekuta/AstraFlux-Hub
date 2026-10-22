@@ -35,9 +35,15 @@ import {
   Save,
   Link as LinkIcon,
   BookOpen,
+  ChevronLeft,
+  ChevronRight,
+  History,
+  Sparkles,
 } from 'lucide-react';
 import AstraFluxLogo from './AstraFluxLogo';
 import { useToast } from './ToastProvider';
+import { useI18n } from '../i18n/LanguageContext';
+import CustomSelect from './CustomSelect';
 import { updaterService } from '../services/updaterService';
 import { customDeviceRegistry } from '../services/customDeviceRegistry';
 import kutazeAvatar from '../assets/avatar_kutaze.png';
@@ -120,6 +126,94 @@ const LICENSE_GROUPS = [
   }
 ];
 
+const CHANGELOG_DATA = [
+  {
+    version: 'v1.1.2',
+    date: '2026/10/22',
+    isCurrent: true,
+    tag: '最新稳定版',
+    tagColor: 'bg-emerald-500/10 text-emerald-500 border-emerald-500/30',
+    summary: '多语言国际化全量支持，全新高颜值下拉框，Beta独立渠道与Inno Setup现代安装向导',
+    sections: [
+      {
+        category: '新增特性',
+        color: 'text-blue-400',
+        items: [
+          '全软件多语言国际化支持（简体中文、English、日本語），实时动态切换无须重启',
+          '全新高颜值圆角阴影自定义下拉框（CustomSelect），全面替代系统原生单调下拉控件',
+          '正式版与 Beta 测试版物理渠道彻底隔离（software / software(beta)）',
+          '新增切换 Beta 测试版全屏安全风险警示弹窗与不可回退说明指引'
+        ]
+      },
+      {
+        category: '安装与打包',
+        color: 'text-purple-400',
+        items: [
+          '重构为 Inno Setup 6 官方原生现代安装向导，支持多步引导与快捷方式附加任务',
+          'LZMA2 深度极限体积压缩至 93.5MB，直接支持 Gitee 附件秒级直连下载',
+          '开发者云端发布工具新增专属【Beta测试版发布】管理界面与版本号校验'
+        ]
+      },
+      {
+        category: '修复与体验',
+        color: 'text-amber-400',
+        items: [
+          '官方技术交流群直达修复（QQ群：1131310645，支持一键复制与协议唤起）',
+          '精简设置卡片界面，移除多余云端返链展示，信息呈现更清爽专业',
+          '实验性全局通知等未上线功能增加灰度禁用与暂未开放提示'
+        ]
+      }
+    ]
+  },
+  {
+    version: 'v1.1.1',
+    date: '2026/10/21',
+    isCurrent: false,
+    tag: '重要更新',
+    tagColor: 'bg-blue-500/10 text-blue-500 border-blue-500/30',
+    summary: '双仓秒级同步、GitHub Issues 直达反馈、外设数据库与软件更新通道物理隔离',
+    sections: [
+      {
+        category: '通道与隔离',
+        color: 'text-purple-400',
+        items: [
+          '彻底解耦 database/ 外设数据库与 software/ 软件更新，避免 OTA 混淆冲突',
+          'Gitee 主分支自动纠偏与对齐，全面保障国内网络环境极速 OTA 握手',
+          '统一外设数据库格式（.spkdb），支持全量数据集合包导出与导入'
+        ]
+      },
+      {
+        category: '体验优化',
+        color: 'text-amber-400',
+        items: [
+          '问题反馈直达 GitHub Issues 官方页面，自动带参预填运行环境与反馈草稿',
+          '静默后台增量检查，有新版本才展示徽标红点，无更新时界面极简纯净',
+          '软件顶栏右上角新增 QQ 官方交流群快捷入口与一键复制指引'
+        ]
+      }
+    ]
+  },
+  {
+    version: 'v1.1.0',
+    date: '2026/10/21',
+    isCurrent: false,
+    tag: '基础版本',
+    tagColor: 'bg-zinc-500/10 text-zinc-400 border-zinc-500/30',
+    summary: 'AstraFlux-HUB 基础稳定版首发，星闪 8KHz 极速电竞生态就绪',
+    sections: [
+      {
+        category: '核心特性',
+        color: 'text-blue-400',
+        items: [
+          '星闪 (NearLink) 8KHz 极速回报率无线电竞协议全链路打通',
+          '全键磁轴高精行程校准、动态按键死区配置与板载方案实时存储',
+          '独立安装向导生成与自动化 OTA 版本检测机制首发就绪'
+        ]
+      }
+    ]
+  }
+];
+
 export default function GlobalSettingsModal({ 
   isOpen, 
   onClose,
@@ -131,13 +225,14 @@ export default function GlobalSettingsModal({
   const { addToast } = useToast();
   const [devClicks, setDevClicks] = useState(0);
   const [activeSection, setActiveSection] = useState(initialSection); // 'general' | 'notifications' | 'feedback' | 'about'
+  const [changelogPageIndex, setChangelogPageIndex] = useState(0);
   
   // 常规设置状态 (图四)
   const [autoLaunch, setAutoLaunch] = useState(false);
   const [launchMinimizeToTray, setLaunchMinimizeToTray] = useState(false);
   const [closeAction, setCloseAction] = useState('tray'); // 'exit' | 'tray'
   const [autoUpdate, setAutoUpdate] = useState(true);
-  const [language, setLanguage] = useState('zh-CN');
+  const { t, language, setLanguage, languages } = useI18n();
   const [uiScale, setUiScale] = useState('default');
 
   // 初始化加载已保存的设置
@@ -248,6 +343,10 @@ export default function GlobalSettingsModal({
   }, [initialSection]);
 
   // 更新中心状态 (数据库更新 & 驱动软件更新)
+  const [updateChannel, setUpdateChannel] = useState(() => updaterService.getUpdateChannel());
+  const [showBetaWarningModal, setShowBetaWarningModal] = useState(false);
+  const [showBetaExitTipModal, setShowBetaExitTipModal] = useState(false);
+
   const [libVersion, setLibVersion] = useState(() => updaterService.getCurrentLibVersion());
   const [dbUpdateUrl, setDbUpdateUrl] = useState(() => updaterService.getDbUpdateUrl());
   const [appUpdateUrl, setAppUpdateUrl] = useState(() => updaterService.getAppUpdateUrl());
@@ -269,6 +368,7 @@ export default function GlobalSettingsModal({
   // 每次打开弹窗或切换至更新中心时重新读取最新直链与版本
   React.useEffect(() => {
     if (isOpen) {
+      setUpdateChannel(updaterService.getUpdateChannel());
       setLibVersion(updaterService.getCurrentLibVersion());
       setDbUpdateUrl(updaterService.getDbUpdateUrl());
       setAppUpdateUrl(updaterService.getAppUpdateUrl());
@@ -551,11 +651,11 @@ export default function GlobalSettingsModal({
           {/* 左侧菜单导航 */}
           <aside className="w-56 p-5 border-r border-[var(--border-color)] bg-[var(--bg-tertiary)]/50 flex flex-col space-y-1.5">
             {[
-              { id: 'general', label: '常规设置', icon: Settings2 },
-              { id: 'notifications', label: '消息通知', icon: Bell },
-              { id: 'feedback', label: '反馈', icon: MessageSquare },
-              { id: 'updates', label: '软件更新', icon: DownloadCloud },
-              { id: 'about', label: '关于', icon: Info },
+              { id: 'general', label: t('settings.general', '常规设置'), icon: Settings2 },
+              { id: 'notifications', label: t('settings.notifications', '消息通知'), icon: Bell },
+              { id: 'feedback', label: t('settings.feedback', '反馈'), icon: MessageSquare },
+              { id: 'updates', label: t('settings.updates', '软件更新'), icon: DownloadCloud },
+              { id: 'about', label: t('settings.about', '关于'), icon: Info },
             ].map(tab => {
               const Icon = tab.icon;
               const active = activeSection === tab.id;
@@ -663,38 +763,48 @@ export default function GlobalSettingsModal({
                   />
                 </div>
 
-                {/* 语言切换 */}
+                {/* 语言切换 (优雅自定义下拉框) */}
                 <div className="p-4 rounded-[8px] bg-[var(--bg-primary)]/70 border border-[var(--border-color)] flex items-center justify-between">
                   <div>
-                    <h4 className="text-xs font-bold text-[var(--text-primary)]">语言</h4>
-                    <p className="text-[11px] text-[var(--text-tertiary)] mt-0.5">语言切换 / Language</p>
+                    <h4 className="text-xs font-bold text-[var(--text-primary)]">{t('settings.language', '语言')}</h4>
+                    <p className="text-[11px] text-[var(--text-tertiary)] mt-0.5">{t('settings.languageDesc', '语言切换 / Language')}</p>
                   </div>
-                  <select 
+                  <CustomSelect
                     value={language}
-                    onChange={(e) => setLanguage(e.target.value)}
-                    className="px-4 py-1.5 text-xs font-bold bg-[var(--bg-secondary)] border border-[var(--border-color)] rounded-xl text-[var(--text-primary)] focus:outline-none cursor-pointer"
-                  >
-                    <option value="zh-CN">简体中文</option>
-                    <option value="en-US">English (US)</option>
-                    <option value="ja-JP">日本語</option>
-                  </select>
+                    onChange={(newLang) => {
+                      setLanguage(newLang);
+                      const msgMap = {
+                        'zh-CN': '界面语言已切换为简体中文',
+                        'en-US': 'Interface language switched to English',
+                        'ja-JP': '表示言語を日本語に切り替えました',
+                      };
+                      addToast({
+                        message: msgMap[newLang] || 'Language updated',
+                        type: 'success',
+                        duration: 1500,
+                      });
+                    }}
+                    options={languages.map(l => ({ value: l.value, label: l.label }))}
+                    width="w-40"
+                  />
                 </div>
 
-                {/* 界面大小 */}
+                {/* 界面大小 (优雅自定义下拉框) */}
                 <div className="p-4 rounded-[8px] bg-[var(--bg-primary)]/70 border border-[var(--border-color)] flex items-center justify-between">
                   <div>
-                    <h4 className="text-xs font-bold text-[var(--text-primary)]">界面大小</h4>
-                    <p className="text-[11px] text-[var(--text-tertiary)] mt-0.5">调整字体及界面大小</p>
+                    <h4 className="text-xs font-bold text-[var(--text-primary)]">{t('settings.uiScale', '界面大小')}</h4>
+                    <p className="text-[11px] text-[var(--text-tertiary)] mt-0.5">{t('settings.uiScaleDesc', '调整字体及界面大小')}</p>
                   </div>
-                  <select 
+                  <CustomSelect
                     value={uiScale}
-                    onChange={(e) => handleUiScaleChange(e.target.value)}
-                    className="px-4 py-1.5 text-xs font-bold bg-[var(--bg-secondary)] border border-[var(--border-color)] rounded-xl text-[var(--text-primary)] focus:outline-none cursor-pointer"
-                  >
-                    <option value="default">默认 (100%)</option>
-                    <option value="110">放大 (110%)</option>
-                    <option value="125">高分屏 (125%)</option>
-                  </select>
+                    onChange={(newScale) => handleUiScaleChange(newScale)}
+                    options={[
+                      { value: 'default', label: t('settings.scaleDefault', '默认 (100%)') },
+                      { value: '110', label: t('settings.scale110', '放大 (110%)') },
+                      { value: '125', label: t('settings.scale125', '高分屏 (125%)') },
+                    ]}
+                    width="w-40"
+                  />
                 </div>
 
                 {/* 按键测试工具 */}
@@ -763,6 +873,11 @@ export default function GlobalSettingsModal({
                       <span className="text-xs font-mono px-2.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 font-bold border border-emerald-500/20 whitespace-nowrap">
                         外设适配库: {libVersion} ({customDeviceRegistry.getTotalCount()}款)
                       </span>
+                      {updateChannel === 'beta' && (
+                        <span className="text-xs font-mono px-2.5 py-0.5 rounded-full bg-rose-500/15 text-rose-500 font-bold border border-rose-500/30 whitespace-nowrap">
+                          🧪 Beta 测试通道
+                        </span>
+                      )}
                     </div>
 
                     <button
@@ -802,7 +917,7 @@ export default function GlobalSettingsModal({
                         包含各配列键盘键位映射、物理 LED 拓扑、出厂校准以及高精度磁轴行程参数数据库。
                       </p>
 
-                      {/* 状态徽标与返链展示 */}
+                      {/* 状态徽标展示 */}
                       <div className="p-2.5 rounded-lg bg-[var(--bg-secondary)]/70 border border-[var(--border-color)]/70 space-y-1.5 text-xs">
                         <div className="flex items-center justify-between">
                           <span className="text-[var(--text-tertiary)]">当前库版本</span>
@@ -811,12 +926,6 @@ export default function GlobalSettingsModal({
                         <div className="flex items-center justify-between">
                           <span className="text-[var(--text-tertiary)]">已收录硬件档案</span>
                           <span className="font-mono font-bold text-[var(--text-primary)]">{customDeviceRegistry.getTotalCount()} 款键盘</span>
-                        </div>
-                        <div className="flex items-center justify-between pt-1 border-t border-[var(--border-color)]/50">
-                          <span className="text-[var(--text-tertiary)]">云端返链状态</span>
-                          <span className={`font-mono text-[11px] truncate max-w-[180px] ${isDbConfigured ? 'text-sky-500 font-medium' : 'text-amber-500'}`} title={dbUpdateUrl}>
-                            {maskUrl(dbUpdateUrl)}
-                          </span>
                         </div>
                       </div>
 
@@ -921,7 +1030,7 @@ export default function GlobalSettingsModal({
                         包含 Electron 驱动客户端核心进程、USB/星闪底层 HID 协议栈与前端操作界面。
                       </p>
 
-                      {/* 状态徽标与返链展示 */}
+                      {/* 状态徽标展示 */}
                       <div className="p-2.5 rounded-lg bg-[var(--bg-secondary)]/70 border border-[var(--border-color)]/70 space-y-1.5 text-xs">
                         <div className="flex items-center justify-between">
                           <span className="text-[var(--text-tertiary)]">当前驱动版本</span>
@@ -929,13 +1038,31 @@ export default function GlobalSettingsModal({
                         </div>
                         <div className="flex items-center justify-between">
                           <span className="text-[var(--text-tertiary)]">发行渠道</span>
-                          <span className="font-medium text-[var(--text-primary)]">正式稳定版 (开源免安装)</span>
-                        </div>
-                        <div className="flex items-center justify-between pt-1 border-t border-[var(--border-color)]/50">
-                          <span className="text-[var(--text-tertiary)]">云端返链状态</span>
-                          <span className={`font-mono text-[11px] truncate max-w-[180px] ${isAppConfigured ? 'text-indigo-500 font-medium' : 'text-amber-500'}`} title={appUpdateUrl}>
-                            {maskUrl(appUpdateUrl)}
-                          </span>
+                          {updateChannel === 'beta' ? (
+                            <div className="flex items-center space-x-1.5">
+                              <span className="px-2 py-0.5 rounded-full text-[11px] font-bold bg-rose-500/15 text-rose-500 border border-rose-500/30">
+                                🧪 Beta 测试版
+                              </span>
+                              <button
+                                type="button"
+                                onClick={() => setShowBetaExitTipModal(true)}
+                                className="text-[11px] text-amber-500 hover:underline cursor-pointer"
+                              >
+                                {t('betaModal.howToExitBtn', '如何返回正式版？')}
+                              </button>
+                            </div>
+                          ) : (
+                            <div className="flex items-center space-x-2">
+                              <span className="font-medium text-[var(--text-primary)]">正式稳定版</span>
+                              <button
+                                type="button"
+                                onClick={() => setShowBetaWarningModal(true)}
+                                className="px-2.5 py-0.5 rounded-lg text-xs font-bold bg-rose-500/15 hover:bg-rose-500/25 text-rose-600 dark:text-rose-400 border border-rose-500/30 transition cursor-pointer flex items-center space-x-1"
+                              >
+                                <span>{t('betaModal.btnSwitchBeta', '⚡ 切换至 Beta 测试版')}</span>
+                              </button>
+                            </div>
+                          )}
                         </div>
                       </div>
 
@@ -955,7 +1082,7 @@ export default function GlobalSettingsModal({
                       {/* 待检测就绪状态展示 */}
                       {!appCheckResult && isAppConfigured && (
                         <div className="p-2.5 rounded-lg border border-dashed border-[var(--border-color)] bg-[var(--bg-secondary)]/40 text-[11px] text-[var(--text-secondary)] flex items-center justify-between">
-                          <span>已连接 Gitee software/ 发行通道，点击下方按钮实时比对</span>
+                          <span>{updateChannel === 'beta' ? '已连接 Gitee software(beta)/ 测试更新通道，点击下方按钮实时比对' : '已连接 Gitee software/ 发行通道，点击下方按钮实时比对'}</span>
                           <span className="font-mono text-sky-500 font-bold">就绪</span>
                         </div>
                       )}
@@ -1035,7 +1162,7 @@ export default function GlobalSettingsModal({
                         className="w-full py-2 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 disabled:opacity-60 text-white font-bold text-xs rounded-xl transition shadow-xs cursor-pointer flex items-center justify-center space-x-1.5"
                       >
                         <RefreshCw className={`w-3.5 h-3.5 ${isCheckingApp ? 'animate-spin' : ''}`} />
-                        <span>{isCheckingApp ? '正在查询版本...' : '检查并更新驱动客户端'}</span>
+                        <span>{isCheckingApp ? '正在查询版本...' : (updateChannel === 'beta' ? '检查并更新 Beta 测试客户端' : '检查并更新驱动客户端')}</span>
                       </button>
 
                       <button
@@ -1054,53 +1181,57 @@ export default function GlobalSettingsModal({
               </div>
             )}
 
-            {/* 3. 消息通知 (纯键盘专用通知) */}
+            {/* 3. 消息通知 (未上线功能置灰禁用，杜绝误操作) */}
             {activeSection === 'notifications' && (
               <div className="space-y-4 max-w-2xl">
-                <h2 className="text-base font-black font-title text-[var(--text-primary)] pb-2 border-b border-[var(--border-color)]">
-                  消息通知
-                </h2>
+                <div className="flex items-center justify-between pb-2 border-b border-[var(--border-color)]">
+                  <h2 className="text-base font-black font-title text-[var(--text-primary)]">
+                    {t('settings.notificationsTitle', '消息通知')}
+                  </h2>
+                  <span className="text-[11px] text-amber-600 dark:text-amber-400 font-medium flex items-center gap-1.5 bg-amber-500/10 px-2 py-0.5 rounded-full border border-amber-500/20">
+                    <span className="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse" />
+                    {t('common.underDevelopment', '功能开发中')}
+                  </span>
+                </div>
 
                 {[
                   {
-                    title: '手动切换板载通知',
-                    desc: '仅支持星闪磁轴键盘',
-                    checked: notifyManualProfile,
-                    onChange: setNotifyManualProfile
+                    title: t('settings.notifyManualProfile', '手动切换板载通知'),
+                    desc: t('settings.notifyManualProfileDesc', '仅支持星闪磁轴键盘'),
                   },
                   {
-                    title: '自动切换板载通知',
-                    desc: '启用自动切换板载功能后生效',
-                    checked: notifyAutoProfile,
-                    onChange: setNotifyAutoProfile
+                    title: t('settings.notifyAutoProfile', '自动切换板载通知'),
+                    desc: t('settings.notifyAutoProfileDesc', '启用自动切换板载功能后生效'),
                   },
                   {
-                    title: '按键切换通知',
-                    desc: '包括 Caps Lock、Num Lock、Scroll Lock 的开启和关闭的通知',
-                    checked: notifyLockKeys,
-                    onChange: setNotifyLockKeys
+                    title: t('settings.notifyLockKeys', '按键切换通知'),
+                    desc: t('settings.notifyLockKeysDesc', '包括 Caps Lock、Num Lock、Scroll Lock 的开启和关闭的通知'),
                   },
                   {
-                    title: '键盘低电量通知',
-                    desc: '键盘电量低于 10% 时进行提示',
-                    checked: notifyLowBattery,
-                    onChange: setNotifyLowBattery
+                    title: t('settings.notifyLowBattery', '键盘低电量通知'),
+                    desc: t('settings.notifyLowBatteryDesc', '键盘电量低于 10% 时进行提示'),
                   },
                 ].map((item, idx) => (
-                  <div key={idx} className="p-4 rounded-[8px] bg-[var(--bg-primary)]/70 border border-[var(--border-color)] flex items-center justify-between">
+                  <div 
+                    key={idx} 
+                    className="p-4 rounded-[8px] bg-[var(--bg-primary)]/40 border border-[var(--border-color)]/60 flex items-center justify-between opacity-50 cursor-not-allowed select-none transition-opacity"
+                    title={t('settings.notifyDisabledTip', '该功能正在系统驱动层对接中，将在后续固件与版本上线')}
+                  >
                     <div>
-                      <h4 className="text-xs font-bold text-[var(--text-primary)]">{item.title}</h4>
+                      <div className="flex items-center space-x-2">
+                        <h4 className="text-xs font-bold text-[var(--text-secondary)]">{item.title}</h4>
+                        <span className="px-1.5 py-0.2 text-[10px] font-semibold rounded bg-zinc-500/10 text-zinc-500 dark:text-zinc-400 border border-zinc-500/20">
+                          {t('common.comingSoon', '暂未开放')}
+                        </span>
+                      </div>
                       <p className="text-[11px] text-[var(--text-tertiary)] mt-0.5">{item.desc}</p>
                     </div>
-                    <label className="relative inline-flex items-center cursor-pointer">
-                      <input 
-                        type="checkbox" 
-                        checked={item.checked} 
-                        onChange={(e) => item.onChange(e.target.checked)}
-                        className="sr-only peer" 
-                      />
-                      <div className="w-11 h-6 bg-[var(--bg-tertiary)] peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-[var(--border-color)] after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[var(--info-color)]"></div>
-                    </label>
+                    {/* 置灰不可点击的 Switch 开关 */}
+                    <div className="relative inline-flex items-center cursor-not-allowed pointer-events-none opacity-60">
+                      <div className="w-11 h-6 bg-zinc-300 dark:bg-zinc-700 rounded-full relative">
+                        <div className="absolute top-[2px] left-[2px] bg-white rounded-full h-5 w-5 shadow-xs"></div>
+                      </div>
+                    </div>
                   </div>
                 ))}
               </div>
@@ -1411,6 +1542,108 @@ export default function GlobalSettingsModal({
                           开源免安装构建
                         </span>
                       </div>
+
+                      {/* 可滚动翻页的版本更新记录子窗口 */}
+                      {(() => {
+                        const curChangelog = CHANGELOG_DATA[changelogPageIndex] || CHANGELOG_DATA[0];
+                        return (
+                          <div className="mt-3.5 bg-[var(--bg-secondary)]/90 border border-[var(--border-color)] rounded-xl p-3 flex flex-col shadow-inner">
+                            {/* 子窗口顶栏：标题 + 翻页指示与控制器 */}
+                            <div className="flex items-center justify-between pb-2 border-b border-[var(--border-color)]/60">
+                              <div className="flex items-center space-x-1.5">
+                                <History className="w-3.5 h-3.5 text-blue-500" />
+                                <span className="text-xs font-bold text-[var(--text-primary)]">版本更新记录</span>
+                                <span className={`text-[10px] px-1.5 py-0.2 rounded font-mono font-bold border ${curChangelog.tagColor}`}>
+                                  {curChangelog.version}
+                                </span>
+                              </div>
+
+                              {/* 左右翻页控制器 */}
+                              <div className="flex items-center space-x-1">
+                                <span className="text-[10px] text-[var(--text-tertiary)] font-mono mr-1">
+                                  {changelogPageIndex + 1} / {CHANGELOG_DATA.length}
+                                </span>
+                                <button
+                                  type="button"
+                                  disabled={changelogPageIndex === 0}
+                                  onClick={() => setChangelogPageIndex(prev => Math.max(0, prev - 1))}
+                                  className="p-1 rounded-md hover:bg-[var(--bg-primary)] text-[var(--text-secondary)] disabled:opacity-25 disabled:cursor-not-allowed transition cursor-pointer"
+                                  title="上一版本"
+                                >
+                                  <ChevronLeft className="w-3.5 h-3.5" />
+                                </button>
+                                <button
+                                  type="button"
+                                  disabled={changelogPageIndex === CHANGELOG_DATA.length - 1}
+                                  onClick={() => setChangelogPageIndex(prev => Math.min(CHANGELOG_DATA.length - 1, prev + 1))}
+                                  className="p-1 rounded-md hover:bg-[var(--bg-primary)] text-[var(--text-secondary)] disabled:opacity-25 disabled:cursor-not-allowed transition cursor-pointer"
+                                  title="下一版本"
+                                >
+                                  <ChevronRight className="w-3.5 h-3.5" />
+                                </button>
+                              </div>
+                            </div>
+
+                            {/* 快速翻页版本药丸栏 */}
+                            <div className="flex items-center space-x-1.5 py-2 overflow-x-auto no-scrollbar">
+                              {CHANGELOG_DATA.map((item, idx) => (
+                                <button
+                                  key={item.version}
+                                  type="button"
+                                  onClick={() => setChangelogPageIndex(idx)}
+                                  className={`px-2 py-0.5 rounded-full text-[10px] font-mono transition cursor-pointer shrink-0 ${
+                                    changelogPageIndex === idx
+                                      ? 'bg-blue-600 text-white font-bold shadow-xs'
+                                      : 'bg-[var(--bg-primary)]/80 text-[var(--text-tertiary)] hover:text-[var(--text-primary)] border border-[var(--border-color)]/60'
+                                  }`}
+                                >
+                                  {item.version} {item.isCurrent ? '(当前)' : ''}
+                                </button>
+                              ))}
+                            </div>
+
+                            {/* 核心内容区：支持上下鼠标滚轮滚动 */}
+                            <div 
+                              className="h-44 overflow-y-auto pr-1.5 space-y-2.5 text-xs text-[var(--text-secondary)]"
+                              style={{ scrollbarWidth: 'thin' }}
+                            >
+                              <div className="flex items-center justify-between text-[10px] text-[var(--text-tertiary)] font-mono">
+                                <span>发布日期：{curChangelog.date}</span>
+                                <span className={`px-1.5 py-0.5 rounded font-bold border ${curChangelog.tagColor}`}>
+                                  {curChangelog.tag}
+                                </span>
+                              </div>
+
+                              <p className="text-[11px] text-[var(--text-primary)] font-medium bg-[var(--bg-primary)]/70 p-2 rounded-lg border border-[var(--border-color)]/50 leading-relaxed">
+                                💡 {curChangelog.summary}
+                              </p>
+
+                              {curChangelog.sections.map((sec, sIdx) => (
+                                <div key={sIdx} className="space-y-1">
+                                  <div className={`text-[11px] font-bold ${sec.color} flex items-center space-x-1`}>
+                                    <span>❖</span>
+                                    <span>{sec.category}</span>
+                                  </div>
+                                  <ul className="space-y-1 pl-1.5">
+                                    {sec.items.map((it, iIdx) => (
+                                      <li key={iIdx} className="text-[11px] leading-relaxed flex items-start space-x-1.5 text-[var(--text-secondary)]">
+                                        <span className="text-[var(--text-tertiary)] select-none mt-0.5">•</span>
+                                        <span>{it}</span>
+                                      </li>
+                                    ))}
+                                  </ul>
+                                </div>
+                              ))}
+                            </div>
+
+                            {/* 子窗口底栏提示 */}
+                            <div className="pt-2 mt-1.5 border-t border-[var(--border-color)]/40 flex items-center justify-between text-[10px] text-[var(--text-tertiary)]">
+                              <span>↕ 鼠标滚轮上下滑动查看更多</span>
+                              <span>{curChangelog.isCurrent ? '⚡ 当前已就绪' : '📦 历史归档'}</span>
+                            </div>
+                          </div>
+                        );
+                      })()}
                     </div>
 
                     <div className="space-y-2 pt-2">
@@ -1427,16 +1660,17 @@ export default function GlobalSettingsModal({
                         <button
                           type="button"
                           onClick={() => {
+                            setChangelogPageIndex(0);
                             addToast({
-                              message: '【V1.1.1 更新日志】1. 问题反馈直达 GitHub Issues；2. 云端目录 database/ 与 software/ 分离；3. 修复 Gitee 分支对齐；4. 支持 Gitee+GitHub 双仓一键秒级同步。',
+                              message: '已在上方子窗口定位至 v1.1.2 当前版本更新日志，可滚动翻页浏览',
                               type: 'info',
-                              duration: 4000
+                              duration: 3000
                             });
                           }}
                           className="text-[var(--text-secondary)] hover:text-[var(--info-color)] transition flex items-center space-x-1 cursor-pointer text-[11px]"
                         >
                           <FileText className="w-3 h-3" />
-                          <span>查看更新日志</span>
+                          <span>定位当前更新日志</span>
                         </button>
 
                         <button
@@ -1822,6 +2056,135 @@ export default function GlobalSettingsModal({
         </div>
 
       </div>
+
+      {/* Beta 切换高危警示弹窗 (完全对齐用户要求：红色警示按钮、不可软件内回退、需卸载重装正式版) */}
+      {showBetaWarningModal && (
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/65 backdrop-blur-sm animate-in fade-in duration-150">
+          <div className="w-full max-w-md bg-[var(--bg-primary)] border border-rose-500/40 rounded-2xl p-6 shadow-2xl shadow-rose-950/40 space-y-4">
+            
+            <div className="flex items-start space-x-3">
+              <div className="w-10 h-10 rounded-xl bg-rose-500/15 border border-rose-500/30 flex items-center justify-center text-rose-500 shrink-0 mt-0.5">
+                <AlertTriangle className="w-5 h-5 text-rose-500" />
+              </div>
+              <div>
+                <h3 className="text-base font-black text-rose-600 dark:text-rose-400">
+                  {t('betaModal.warningTitle', '切换至 Beta 测试更新通道')}
+                </h3>
+                <p className="text-xs text-[var(--text-tertiary)] mt-0.5">
+                  {t('betaModal.warningSub', '请仔细阅读以下前沿测试通道使用与回退规则')}
+                </p>
+              </div>
+            </div>
+
+            <div className="p-3.5 rounded-xl bg-rose-500/10 border border-rose-500/20 text-xs text-[var(--text-secondary)] space-y-2.5 leading-relaxed">
+              <div className="flex items-start space-x-2">
+                <span className="text-rose-500 font-bold shrink-0">•</span>
+                <p>
+                  <strong className="text-[var(--text-primary)]">{t('betaModal.risk1Title', '测试版本说明')}：</strong>
+                  {t('betaModal.risk1Desc', 'Beta 版本为前沿实验测试版本，功能不一定完全正常，可能包含未知的按键逻辑异常、偶发 Bug 或界面卡顿。')}
+                </p>
+              </div>
+              <div className="flex items-start space-x-2">
+                <span className="text-rose-500 font-bold shrink-0">•</span>
+                <p>
+                  <strong className="text-rose-500 font-bold">{t('betaModal.risk2Title', '无法软件内回退')}：</strong>
+                  <span className="underline font-bold text-rose-500">{t('betaModal.risk2Desc', '测试版本升级后只能继续升级测试版，不能软件内回退！')}</span>
+                </p>
+              </div>
+              <div className="flex items-start space-x-2">
+                <span className="text-rose-500 font-bold shrink-0">•</span>
+                <p>
+                  <strong className="text-[var(--text-primary)]">{t('betaModal.risk3Title', '恢复正式版方式')}：</strong>
+                  {t('betaModal.risk3Desc', '如果想切换成正式版，请完全卸载当前测试版软件，进入网站或发布页重新下载安装正式版。')}
+                </p>
+              </div>
+            </div>
+
+            <div className="flex items-center justify-end space-x-3 pt-2">
+              <button
+                type="button"
+                onClick={() => setShowBetaWarningModal(false)}
+                className="px-4 py-2 rounded-xl border border-[var(--border-color)] bg-[var(--bg-secondary)] hover:bg-[var(--bg-tertiary)] text-xs font-bold text-[var(--text-secondary)] transition cursor-pointer"
+              >
+                {t('betaModal.cancelBtn', '取消')}
+              </button>
+              <button
+                type="button"
+                onClick={() => {
+                  updaterService.setUpdateChannel('beta');
+                  setUpdateChannel('beta');
+                  setShowBetaWarningModal(false);
+                  addToast({
+                    message: '⚠️ 已切换至 Beta 测试更新通道！正在查询云端测试版...',
+                    type: 'warning',
+                    duration: 3000,
+                  });
+                  setTimeout(() => {
+                    handleCheckAndUpdateApp();
+                  }, 200);
+                }}
+                className="px-4 py-2 rounded-xl bg-red-600 hover:bg-red-700 active:bg-red-800 text-white text-xs font-bold transition cursor-pointer shadow-lg shadow-red-600/30 flex items-center space-x-1.5"
+              >
+                <span>{t('betaModal.confirmBtn', '我确认进入 beta 测试版')}</span>
+              </button>
+            </div>
+
+          </div>
+        </div>
+      )}
+
+      {/* Beta 切回正式版指引弹窗 */}
+      {showBetaExitTipModal && (
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-in fade-in duration-150">
+          <div className="w-full max-w-md bg-[var(--bg-primary)] border border-amber-500/30 rounded-2xl p-6 shadow-2xl space-y-4">
+            <div className="flex items-start space-x-3">
+              <div className="w-10 h-10 rounded-xl bg-amber-500/15 border border-amber-500/30 flex items-center justify-center text-amber-500 shrink-0">
+                <Info className="w-5 h-5 text-amber-500" />
+              </div>
+              <div>
+                <h3 className="text-base font-black text-[var(--text-primary)]">
+                  {t('betaModal.betaTipTitle', '如何切回正式稳定版？')}
+                </h3>
+                <p className="text-xs text-[var(--text-tertiary)] mt-0.5">
+                  {t('betaModal.howToExitBtn', 'Beta 测试版回退指引')}
+                </p>
+              </div>
+            </div>
+
+            <div className="p-3.5 rounded-xl bg-[var(--bg-secondary)] border border-[var(--border-color)] text-xs text-[var(--text-secondary)] space-y-2 leading-relaxed">
+              <p>
+                {t('betaModal.betaTipDesc', '根据系统安全机制，Beta 测试版与正式版数据库及驱动结构不同，无法直接在软件内执行在线降级。')}
+              </p>
+            </div>
+
+            <div className="flex items-center justify-between pt-2">
+              <button
+                type="button"
+                onClick={() => {
+                  updaterService.setUpdateChannel('release');
+                  setUpdateChannel('release');
+                  setShowBetaExitTipModal(false);
+                  addToast({
+                    message: '已切换回正式版检测通道',
+                    type: 'info',
+                  });
+                  setTimeout(() => handleCheckAndUpdateApp(), 200);
+                }}
+                className="text-xs text-[var(--text-tertiary)] hover:text-amber-500 underline cursor-pointer"
+              >
+                {t('betaModal.cancelBtn', '切回正式通道检测')}
+              </button>
+              <button
+                type="button"
+                onClick={() => setShowBetaExitTipModal(false)}
+                className="px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold transition cursor-pointer"
+              >
+                {t('betaModal.gotIt', '我知道了')}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
     </div>
   );

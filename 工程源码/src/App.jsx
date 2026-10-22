@@ -72,6 +72,7 @@ import AstraFluxLogo from './components/AstraFluxLogo';
 import ErrorBoundary from './components/ErrorBoundary';
 import { Home, ExternalLink } from 'lucide-react';
 import { useToast } from './components/ToastProvider';
+import { useI18n } from './i18n/LanguageContext';
 import { DEVICE_PROFILES, supportsContinuousRt, CONTINUOUS_RT_MIN_FIRMWARE, getMinActuationPoint, SPARKLINK_HID_FILTERS, isSupportedSparklinkDevice, getDecorateLightingConfig } from './constants/deviceProfiles';
 import { findMatchedEcosystemProduct } from './constants/sparklinkEcosystem';
 import { customDeviceRegistry } from './services/customDeviceRegistry';
@@ -82,6 +83,7 @@ import { computeKeyLighting, computeStripLedColor } from './utils/lightingEffect
 
 export default function App() {
   const { addToast } = useToast();
+  const { t } = useI18n();
 
   // 主题切换（前行者同款：跟随系统 + 手动覆盖 + localStorage 持久化 + URL 参数指定）
   const [theme, setTheme] = useState(() => {
@@ -2622,15 +2624,15 @@ export default function App() {
   const handleClose = () => window.electronAPI?.close?.();
 
   // 左侧导航 (学习前行者 EWEADN 桌面端信息架构)
-  const TABS = [
-    { id: 'lighting', label: '灯光配置', icon: Lightbulb },
-    { id: 'trigger', label: '触发配置', icon: Zap },
-    { id: 'keybinds', label: '改键配置', icon: Keyboard },
-    { id: 'advanced', label: '高级按键', icon: Gamepad2 },
-    { id: 'macro', label: '快捷指令', icon: Sparkles },
-    { id: 'performance', label: '性能配置', icon: Sliders },
-    { id: 'settings', label: '其他设置', icon: Settings2 },
-  ];
+  const TABS = useMemo(() => [
+    { id: 'lighting', label: t('nav.lighting', '灯光配置'), icon: Lightbulb },
+    { id: 'trigger', label: t('nav.trigger', '触发配置'), icon: Zap },
+    { id: 'keybinds', label: t('nav.keybinds', '改键配置'), icon: Keyboard },
+    { id: 'advanced', label: t('nav.advanced', '高级按键'), icon: Gamepad2 },
+    { id: 'macro', label: t('nav.macro', '快捷指令'), icon: Sparkles },
+    { id: 'performance', label: t('nav.performance', '性能配置'), icon: Sliders },
+    { id: 'settings', label: t('nav.settings', '其他设置'), icon: Settings2 },
+  ], [t]);
 
   return (
     <div className="app-shell">
@@ -2702,14 +2704,14 @@ export default function App() {
                 style={{ color: 'var(--text-tertiary)', border: '1px solid var(--border-color)' }}
               >
                 <Home className="w-3 h-3" />
-                <span>设备主页</span>
+                <span>{t('app.deviceHome')}</span>
               </button>
             </div>
           ) : (
             <div className="flex items-center gap-2 pl-2.5 shrink-0" style={{ borderLeft: '1px solid var(--border-color)' }}>
               <span className="text-[12px] font-medium text-[var(--text-tertiary)] whitespace-nowrap flex items-center gap-1.5 select-none">
                 <span className="w-1.5 h-1.5 rounded-full bg-emerald-500/80 animate-pulse"></span>
-                <span>NearLink 互联设备管理中心</span>
+                <span>{t('app.nearlinkCenter')}</span>
               </span>
             </div>
           )}
@@ -2729,7 +2731,7 @@ export default function App() {
               title={`发现新版本 (v${availableUpdate.version})，点击前往更新中心下载`}
             >
               <DownloadCloud className="w-3.5 h-3.5 text-blue-500 group-hover:scale-110 transition-transform" />
-              <span className="whitespace-nowrap text-[11.5px]">更新可用</span>
+              <span className="whitespace-nowrap text-[11.5px]">{t('app.updateAvailable')}</span>
               <span className="absolute -top-1 -right-1 flex h-2.5 w-2.5">
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-rose-400 opacity-75"></span>
                 <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-rose-500 border border-white dark:border-neutral-900"></span>
@@ -2742,10 +2744,10 @@ export default function App() {
             type="button"
             onClick={handleJoinQQGroup}
             className="flex items-center gap-1.5 h-7 px-2.5 rounded-lg text-xs font-semibold bg-[var(--bg-secondary)] hover:bg-[var(--bg-tertiary)] border border-[var(--border-color)] text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition cursor-pointer shadow-2xs group"
-            title="官方交流群：1131310645 (点击复制群号并唤起加群)"
+            title={t('app.groupCopyTitle')}
           >
             <Users className="w-3.5 h-3.5 text-blue-500 group-hover:scale-110 transition-transform" />
-            <span className="whitespace-nowrap text-[12px]">交流群</span>
+            <span className="whitespace-nowrap text-[12px]">{t('app.communityGroup')}</span>
             <span className="text-[11px] font-mono text-[var(--text-tertiary)] group-hover:text-[var(--text-secondary)]">
               1131310645
             </span>
@@ -2755,17 +2757,17 @@ export default function App() {
             onClick={() => setShowAddDeviceModal(true)}
             className="flex items-center gap-1.5 h-7 px-3 rounded-lg text-[13px] font-semibold transition cursor-pointer"
             style={{ background: isConnected ? 'var(--primary-04)' : 'var(--bg-tertiary)', color: 'var(--text-secondary)' }}
-            title="查看已连接设备或添加/手动识别新设备"
+            title={t('app.switchDeviceTitle')}
           >
             <Cable className="w-3.5 h-3.5" style={{ color: isConnected ? 'var(--success-color)' : 'var(--text-disabled)' }} />
-            <span className="font-mono whitespace-nowrap">{isConnected ? 'USB 8KHz' : '接入设备'}</span>
+            <span className="font-mono whitespace-nowrap">{isConnected ? t('app.pluggedInRate') : t('app.connectDevice')}</span>
           </button>
 
           <button
             onClick={toggleTheme}
             className="icon-button"
             style={{ width: 32, height: 32, color: 'var(--text-tertiary)' }}
-            title="切换深浅色主题"
+            title={t('app.themeToggle')}
           >
             {theme === 'system'
               ? (systemDark ? <Moon className="w-4 h-4" /> : <Sun className="w-4 h-4" />)
@@ -2779,7 +2781,7 @@ export default function App() {
             }}
             className="icon-button"
             style={{ width: 32, height: 32, color: 'var(--text-tertiary)' }}
-            title="常规设置 / 消息通知 / 软件更新 / 关于"
+            title={t('app.globalSettingsTooltip')}
           >
             <Settings2 className="w-4 h-4" />
           </button>
@@ -2792,7 +2794,7 @@ export default function App() {
               onClick={handleMaximize} 
               className="icon-button" 
               style={{ width: 30, height: 30, color: 'var(--text-tertiary)' }}
-              title={isWindowMaximized ? '还原窗口' : '最大化窗口'}
+              title={isWindowMaximized ? t('app.unmaximize') : t('app.maximize')}
             >
               {isWindowMaximized ? (
                 <Copy className="w-3 h-3 rotate-90" />
@@ -2800,7 +2802,7 @@ export default function App() {
                 <Square className="w-3 h-3" />
               )}
             </button>
-            <button onClick={handleClose} className="icon-button" style={{ width: 30, height: 30, color: 'var(--text-tertiary)' }}>
+            <button onClick={handleClose} className="icon-button" style={{ width: 30, height: 30, color: 'var(--text-tertiary)' }} title={t('app.close')}>
               <X className="w-3.5 h-3.5" />
             </button>
           </div>
@@ -2886,7 +2888,7 @@ export default function App() {
                   e.stopPropagation();
                   setShowHwInfoModal(true);
                 }}
-                title="查看星闪键盘出厂硬件参数与芯片信息"
+                title={t('app.chipInfoTitle')}
                 className="p-1 rounded-md hover:bg-[var(--primary-09)] text-[var(--primary-color)] transition cursor-pointer"
               >
                 <Cpu className="w-4 h-4" />
@@ -2898,11 +2900,11 @@ export default function App() {
               <span className="flex items-center space-x-1.5">
                 <span className={`w-2 h-2 rounded-full ${isConnected ? 'bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.7)]' : 'bg-slate-400'}`} />
                 <span className={isConnected ? 'text-emerald-500 font-semibold' : 'text-[var(--text-disabled)]'}>
-                  {isConnected ? '已连接' : '未连接'}
+                  {isConnected ? t('common.connected') : t('common.disconnected')}
                 </span>
               </span>
               <span className="font-mono text-xs px-2 py-0.5 rounded bg-[var(--bg-secondary)] border border-[var(--border-color)] font-bold text-[var(--text-secondary)]">
-                {pollingRate}Hz
+                {t('app.rateHz', { rate: pollingRate })}
               </span>
             </div>
 
@@ -2914,26 +2916,26 @@ export default function App() {
                 navigator.clipboard?.writeText?.(rawSn);
                 setSnCopied(true);
                 addToast({
-                  message: `已复制出厂 SN 码：${rawSn}`,
+                  message: t('app.snCopySuccess', { sn: rawSn }),
                   type: 'success',
                 });
                 setTimeout(() => setSnCopied(false), 2000);
               }}
               className="flex items-center justify-between w-full px-2.5 py-1.5 rounded-lg bg-[var(--bg-secondary)] hover:bg-[var(--bg-primary)] border border-[var(--border-color)] text-xs font-mono cursor-pointer transition mb-2.5 group/sn"
-              title={rawSn ? `点击一键复制完整出厂序列号: ${rawSn}` : '未读取到出厂 SN'}
+              title={rawSn ? t('app.snCopyTitle', { sn: rawSn }) : t('app.snNotRead')}
             >
               <span className="truncate text-[var(--text-primary)] font-semibold">
-                SN: {shortSn}
+                {t('app.snPrefix')}: {shortSn}
               </span>
               <span className="shrink-0 text-[var(--text-disabled)] group-hover/sn:text-[var(--primary-color)] transition ml-1">
                 {snCopied ? <Check className="w-3.5 h-3.5 text-emerald-500" /> : <Copy className="w-3.5 h-3.5" />}
               </span>
             </div>
 
-            {/* 第四行：切换设备下拉菜单 (完全对齐截图「切换设备: [ EWEADN ES68 Da...  v ]」) */}
+            {/* 第四行：切换设备下拉菜单 */}
             <div className="relative w-full pt-1.5 border-t border-[var(--border-color)]/70">
               <div className="flex items-center justify-between gap-1.5 text-xs">
-                <span className="shrink-0 text-[var(--text-secondary)] text-xs font-medium">切换设备:</span>
+                <span className="shrink-0 text-[var(--text-secondary)] text-xs font-medium">{t('app.switchDevice')}</span>
                 <button
                   type="button"
                   onClick={(e) => {
@@ -2956,8 +2958,8 @@ export default function App() {
                   onClick={(e) => e.stopPropagation()}
                 >
                   <div className="px-2 py-1 text-[10px] text-[var(--text-disabled)] border-b border-[var(--border-color)] font-mono flex items-center justify-between">
-                    <span>检测到星闪外设</span>
-                    <span>{allSwitchableDevices.length} 台</span>
+                    <span>{t('app.detectedDevices')}</span>
+                    <span>{allSwitchableDevices.length} {t('app.devicesUnit')}</span>
                   </div>
                   <div className="max-h-36 overflow-y-auto py-1">
                     {allSwitchableDevices.map((dev, idx) => {
@@ -2984,7 +2986,7 @@ export default function App() {
                           }`}
                         >
                           <span className="truncate">{devName}</span>
-                          {isCurrent && <span className="text-[10px] px-1 rounded bg-emerald-500/20 text-emerald-500 shrink-0 ml-1">当前</span>}
+                          {isCurrent && <span className="text-[10px] px-1 rounded bg-emerald-500/20 text-emerald-500 shrink-0 ml-1">{t('app.currentTag')}</span>}
                         </button>
                       );
                     })}
@@ -2998,7 +3000,7 @@ export default function App() {
                       }}
                       className="w-full text-center py-1 text-[11px] text-[var(--primary-color)] hover:underline cursor-pointer"
                     >
-                      + 扫描 / 授权新设备
+                      {t('app.scanAuthorizeNew')}
                     </button>
                   </div>
                 </div>
@@ -3009,7 +3011,7 @@ export default function App() {
           <div className="sidebar-scroll">
           {/* 配置导航组（对应官方 .menu-list / .menu-child） */}
           <div className="nav-group">
-            <div className="nav-group-title">配置</div>
+            <div className="nav-group-title">{t('app.configGroup')}</div>
             <div className="nav-list">
             {TABS.map((tab) => {
               const Icon = tab.icon;
@@ -3032,8 +3034,8 @@ export default function App() {
           {/* 方案管理集合按钮 (悬浮弹出悬浮窗快捷切换，点击进入配置管理中心) */}
           <div className="nav-group">
             <div className="flex items-center justify-between pr-1">
-              <div className="nav-group-title">方案管理</div>
-              <span className="text-xs font-mono pb-2 text-[var(--text-disabled)]">4 槽板载</span>
+              <div className="nav-group-title">{t('app.profileManagement')}</div>
+              <span className="text-xs font-mono pb-2 text-[var(--text-disabled)]">{t('app.profileSlots')}</span>
             </div>
             <div className="nav-list relative">
               <div 
@@ -3068,7 +3070,7 @@ export default function App() {
           <div className="sidebar-footer flex flex-col gap-1.5">
             <button className="ghost-button !h-10 text-xs" onClick={() => setShowCalibrateModal(true)}>
               <RotateCcw className="w-3.5 h-3.5" />
-              <span className="truncate">全键消磁校准</span>
+              <span className="truncate">{t('app.fullKeyCalibBtn')}</span>
             </button>
             <button 
               className="ghost-button !h-10 text-xs" 
@@ -3076,10 +3078,10 @@ export default function App() {
                 setGlobalSettingsSection('about');
                 setShowGlobalSettings(true);
               }}
-              title="关于软件、开发者与开源生态"
+              title={t('settings.aboutTitle')}
             >
               <Info className="w-3.5 h-3.5" />
-              <span className="truncate">关于软件</span>
+              <span className="truncate">{t('nav.about')}</span>
             </button>
           </div>
         </aside>
@@ -4220,21 +4222,21 @@ export default function App() {
             <div className="relative z-10 flex items-center justify-between gap-3 px-1 min-w-0">
               <div className="flex items-center space-x-1.5 p-1 bg-[var(--primary-09)] rounded-[8px] border border-[var(--border-color)] shrink-0">
                 {[
-                  { id: 'trigger', label: '触发设置' },
-                  { id: 'deadzone', label: '死区设置' },
-                  { id: 'switch', label: '轴体设置' },
-                ].map((t) => (
+                  { id: 'trigger', label: t('nav.trigger', '触发设置') },
+                  { id: 'deadzone', label: t('nav.deadzone', '死区设置') },
+                  { id: 'switch', label: t('nav.switch', '轴体设置') },
+                ].map((sub) => (
                   <button
-                    key={t.id}
-                    data-subtab={t.id}
-                    onClick={() => setTriggerSubTab(t.id)}
+                    key={sub.id}
+                    data-subtab={sub.id}
+                    onClick={() => setTriggerSubTab(sub.id)}
                     className={`px-4 py-1 rounded-lg text-xs font-bold transition-all ${
-                      triggerSubTab === t.id
+                      triggerSubTab === sub.id
                         ? 'bg-[var(--primary-color)] text-[var(--text-inverse-100)] shadow-sm'
                         : 'text-[var(--text-tertiary)] hover:text-[var(--text-primary)]'
                     }`}
                   >
-                    {t.label}
+                    {sub.label}
                   </button>
                 ))}
               </div>

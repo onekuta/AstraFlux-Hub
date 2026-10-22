@@ -15,7 +15,8 @@
     "productModel": "星闪键盘",
     "manufacturerString": "迈从 MCHOSE",
     "targetId": null,
-    "chipModel": "NearLink Wireless"
+    "chipModel": "NearLink Wireless",
+    "brand": "迈从 MCHOSE"
   },
   "deviceProfile": {
     "id": "catalog_0x3151_0x4010",

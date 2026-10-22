@@ -15,7 +15,8 @@
     "productModel": "星闪键盘",
     "manufacturerString": "维咖 VGN",
     "targetId": null,
-    "chipModel": "NearLink Wireless"
+    "chipModel": "NearLink Wireless",
+    "brand": "维咖 VGN"
   },
   "deviceProfile": {
     "id": "catalog_0x3233_0x2606",

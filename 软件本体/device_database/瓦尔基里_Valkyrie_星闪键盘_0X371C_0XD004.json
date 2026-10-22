@@ -15,7 +15,8 @@
     "productModel": "星闪键盘",
     "manufacturerString": "瓦尔基里 Valkyrie",
     "targetId": null,
-    "chipModel": "NearLink Wireless"
+    "chipModel": "NearLink Wireless",
+    "brand": "瓦尔基里 Valkyrie"
   },
   "deviceProfile": {
     "id": "catalog_0x371c_0xd004",

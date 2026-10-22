@@ -15,7 +15,8 @@
     "productModel": "星闪键盘",
     "manufacturerString": "机械师 MACHENIKE",
     "targetId": null,
-    "chipModel": "NearLink Wireless"
+    "chipModel": "NearLink Wireless",
+    "brand": "机械师 MACHENIKE"
   },
   "deviceProfile": {
     "id": "catalog_0x3973_0x0109",

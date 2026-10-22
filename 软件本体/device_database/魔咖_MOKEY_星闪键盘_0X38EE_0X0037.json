@@ -15,7 +15,8 @@
     "productModel": "星闪键盘",
     "manufacturerString": "魔咖 MOKEY",
     "targetId": null,
-    "chipModel": "NearLink Wireless"
+    "chipModel": "NearLink Wireless",
+    "brand": "魔咖 MOKEY"
   },
   "deviceProfile": {
     "id": "catalog_0x38ee_0x0037",

@@ -15,7 +15,8 @@
     "productModel": "XS215 鼠标",
     "manufacturerString": "星闪无线 (Mouse)",
     "targetId": 3,
-    "chipModel": "XS215"
+    "chipModel": "XS215",
+    "brand": "星闪无线 (Mouse)"
   },
   "deviceProfile": {
     "id": "catalog_0x3ca3_0x1001",

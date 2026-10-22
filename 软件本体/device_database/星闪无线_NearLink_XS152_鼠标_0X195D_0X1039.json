@@ -15,7 +15,8 @@
     "productModel": "XS152 鼠标",
     "manufacturerString": "星闪无线 NearLink",
     "targetId": 5,
-    "chipModel": "XS152"
+    "chipModel": "XS152",
+    "brand": "星闪无线 NearLink"
   },
   "deviceProfile": {
     "id": "catalog_0x195d_0x1039",

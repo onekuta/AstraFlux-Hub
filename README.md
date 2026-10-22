@@ -106,7 +106,7 @@
 | 分发通道 | 适用网络环境 | 下载链接 | 说明 |
 | :--- | :--- | :--- | :--- |
 | 🚀 **GitHub Releases** | 国际 / 全球网络 (代码主干) | [👉 点击跳转 GitHub Releases 页面](https://github.com/Kutaze/AstraFlux-Hub/releases) | 完整发布包、便携包与源码历史归档 |
-| ⚡ **Gitee Releases** | 国内网络 (极速免代理直连) | [👉 点击跳转 Gitee Releases 页面](https://gitee.com/Kutaze/astra-flux-hub/releases) | 国内高速下载通道，自动双向同步 |
+| ⚡ **国内高速 CDN 直链** | 国内网络 (极速免代理直连) | [👉 点击直接下载 V1.1.2 安装包](https://ghfast.top/https://github.com/Kutaze/AstraFlux-Hub/releases/download/v1.1.2/AstraFlux-HUB_Setup_v1.1.2.exe) | 基于 GitHub Release 专线 CDN 加速，跑满带宽 |
 
 ### 2. 最新版本发布包资产 (V1.1.2)
 
@@ -114,7 +114,7 @@
 
 | 文件名 | 分发类型 | 文件大小 | SHA-256 校验哈希 |
 | :--- | :--- | :--- | :--- |
-| **`AstraFlux-HUB_Setup_v1.1.2.exe`** | 推荐安装向导 (最新 V1.1.2) | ~143 MB | `5a6614d75c109d96d654a8d80986d10d6afad2b55f4678052a8def49b1fd571e` |
+| **`AstraFlux-HUB_Setup_v1.1.2.exe`** | 推荐 Inno Setup 官方向导 (最新 V1.1.2) | 93.49 MB | `b62fea864d81fee05d4c30fe0240735026a8d4c9f3019fbaf79af1dc08dc3cfb` |
 | **`AstraFlux-HUB_Setup_v1.1.1.exe`** | 历史版本向导 (V1.1.1) | ~142 MB | `fb25d73678a3c87fadd0d57a44f7abb236411efd1b03842b81002362fc763ea6` |
 | **`AstraFlux-HUB_Setup_v1.1.0.exe`** | 历史版本向导 (V1.1.0) | ~142 MB | `0c6d93ae99af667557fb625c50231fa9fcf2c31ff332d2b82cfa8ca21c2f29eb` |
 

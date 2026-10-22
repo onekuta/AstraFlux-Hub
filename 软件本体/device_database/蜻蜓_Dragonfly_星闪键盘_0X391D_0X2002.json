@@ -15,7 +15,8 @@
     "productModel": "星闪键盘",
     "manufacturerString": "蜻蜓 Dragonfly",
     "targetId": null,
-    "chipModel": "NearLink Wireless"
+    "chipModel": "NearLink Wireless",
+    "brand": "蜻蜓 Dragonfly"
   },
   "deviceProfile": {
     "id": "catalog_0x391d_0x2002",

@@ -15,7 +15,8 @@
     "productModel": "星闪键盘",
     "manufacturerString": "达尔优 DAREU",
     "targetId": null,
-    "chipModel": "NearLink Wireless"
+    "chipModel": "NearLink Wireless",
+    "brand": "达尔优 DAREU"
   },
   "deviceProfile": {
     "id": "catalog_0x36b5_0x75d4",

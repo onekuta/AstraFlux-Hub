@@ -15,7 +15,8 @@
     "productModel": "星闪键盘",
     "manufacturerString": "八位堂 8BitDo",
     "targetId": null,
-    "chipModel": "NearLink Wireless"
+    "chipModel": "NearLink Wireless",
+    "brand": "八位堂 8BitDo"
   },
   "deviceProfile": {
     "id": "catalog_0x2dc8_0x206f",
