@@ -4,6 +4,6 @@
   "libDownloadUrl": "https://gitee.com/kutaze/astra-flux-hub/raw/main/database/device_database.spkdb",
   "githubDownloadUrl": "https://github.com/Kutaze/AstraFlux-Hub/raw/main/database/device_database.spkdb",
   "totalDevices": 638,
-  "libChangelog": "修复了一些键盘的适配bug",
-  "updatedAt": "2026-10-23T08:49:41.460Z"
+  "libChangelog": "新增适配 638 款星闪方案外设 PCB，支持高频回报率与磁轴快速触发",
+  "updatedAt": "2026-10-23T09:03:47.576Z"
 }
