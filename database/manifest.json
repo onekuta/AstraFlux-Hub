@@ -1,9 +1,9 @@
 {
   "manifestVersion": "1.4.1",
-  "libVersion": "2026.10.23.3",
+  "libVersion": "2026.10.23.2",
   "libDownloadUrl": "https://gitee.com/kutaze/astra-flux-hub/raw/main/database/device_database.spkdb",
   "githubDownloadUrl": "https://github.com/Kutaze/AstraFlux-Hub/raw/main/database/device_database.spkdb",
   "totalDevices": 638,
   "libChangelog": "修复了一些键盘的适配bug",
-  "updatedAt": "2026-10-23T08:49:06.344Z"
+  "updatedAt": "2026-10-23T08:49:41.460Z"
 }
