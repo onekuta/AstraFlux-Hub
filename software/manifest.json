@@ -1,10 +1,19 @@
 {
   "manifestVersion": "1.4.1",
-  "channel": "release",
   "appVersion": "1.1.3",
+  "buildTimeCode": "26.10.23",
+  "buildDate": "2026-10-23",
+  "channel": "release",
   "appDownloadUrl": "https://gitee.com/Kutaze/astra-flux-hub/releases/download/v1.1.3/AstraFlux-HUB_Setup_v1.1.3.exe",
-  "appChangelog": "1. 数据库更新后自动执行二次全量扫描\n2. 全面绑定标准版本构建时间码 (26.10.23)，建立防止从新版正式版倒退安装旧 Beta 版本的安全门禁\n3. 全软件多语言国际化支持（简体中文、English、日本語）\n4. 全新高颜值自定义下拉框（CustomSelect），修复设置页右上角标签折行与界面细节\n5. 数据库更新卡片动态展示云端更新日志说明 (libChangelog)\n6. 修复了一些键盘适配BUG\n7. 新增加了Beta版更新渠道，用做最新测试需求\n8. 修复了一些软件UI显示问题",
+  "cdnDownloadUrl": "https://ghfast.top/https://github.com/Kutaze/AstraFlux-Hub/releases/download/v1.1.3/AstraFlux-HUB_Setup_v1.1.3.exe",
+  "githubDownloadUrl": "https://github.com/Kutaze/AstraFlux-Hub/releases/download/v1.1.3/AstraFlux-HUB_Setup_v1.1.3.exe",
+  "appReleaseUrl": "https://gitee.com/Kutaze/astra-flux-hub/releases",
+  "appChangelog": "1. 数据库更新后自动执行二次全量扫描，无需重启即刻消除首页“更新可用”提示与小红点\n2. 全面绑定标准版本构建时间码 (26.10.23)，建立防止从新版正式版倒退安装旧 Beta 版本的安全门禁\n3. 全软件多语言国际化支持（简体中文、English、日本語），实时动态切换无须重启\n4. 全新高颜值自定义下拉框（CustomSelect），修复设置页右上角标签折行与界面细节\n5. 数据库更新卡片动态展示云端更新日志说明 (libChangelog)\n6. 官方原生 Inno Setup 6 现代安装向导，LZMA2 深度压缩至 93.5MB",
   "appForceUpdate": false,
-  "appFileSize": "93.5 MB",
-  "updatedAt": "2026-10-23T09:22:47.022Z"
+  "appFileSize": "93.50 MB",
+  "setupSha256": "bc371c234caa4e2fb104b3a38ff1dd3dcd6edfb185691016f2ea90d44260b5f9",
+  "libVersion": "2026.10.20.1",
+  "libDownloadUrl": "https://gitee.com/Kutaze/astra-flux-hub/raw/main/database/device_database.spkdb",
+  "totalDevices": 638,
+  "updatedAt": "2026-10-23T09:13:05.983Z"
 }
