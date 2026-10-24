@@ -448,9 +448,7 @@ export default function DevLabModal({
     } else if (switchBrandFilter === 'gateron') {
       list = list.filter((a) => a.brand?.includes('佳达隆') || a.brand?.toLowerCase().includes('gateron'));
     } else if (switchBrandFilter === 'ttc') {
-      list = list.filter((a) => a.brand?.includes('正牌科电') || a.brand?.toUpperCase().includes('TTC'));
-    } else if (switchBrandFilter === 'shenma') {
-      list = list.filter((a) => a.brand?.includes('神马') || a.name?.includes('神马') || a.name?.includes('马轴'));
+      list = list.filter((a) => a.brand?.includes('正牌科电') || a.brand?.toUpperCase().includes('TTC') || a.name?.includes('神马'));
     } else if (switchBrandFilter === 'other') {
       list = list.filter(
         (a) =>
@@ -460,7 +458,6 @@ export default function DevLabModal({
           !a.brand?.toLowerCase().includes('gateron') &&
           !a.brand?.includes('正牌科电') &&
           !a.brand?.toUpperCase().includes('TTC') &&
-          !a.brand?.includes('神马') &&
           !a.name?.includes('神马')
       );
     }
@@ -1283,8 +1280,7 @@ export default function DevLabModal({
                         <option value="all">全部品牌</option>
                         <option value="jiangwan">江湾 (Everglide)</option>
                         <option value="gateron">佳达隆 (Gateron)</option>
-                        <option value="ttc">正牌科电 (TTC)</option>
-                        <option value="shenma">神马 (Shenma)</option>
+                        <option value="ttc">正牌科电 (TTC / 含神马轴)</option>
                         <option value="other">其它品牌</option>
                       </select>
 

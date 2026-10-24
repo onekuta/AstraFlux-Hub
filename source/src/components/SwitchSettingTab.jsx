@@ -196,7 +196,7 @@ export default function SwitchSettingTab({
     } else if (activeBrand === 'gateron') {
       list = currentScopeAxes.filter(a => a.brand?.includes('佳达隆') || a.brand?.toLowerCase().includes('gateron'));
     } else if (activeBrand === 'ttc') {
-      list = currentScopeAxes.filter(a => a.brand?.includes('正牌科电') || a.brand?.toUpperCase().includes('TTC'));
+      list = currentScopeAxes.filter(a => a.brand?.includes('正牌科电') || a.brand?.toUpperCase().includes('TTC') || a.name?.includes('神马'));
     } else if (activeBrand === 'other') {
       list = currentScopeAxes.filter(a => 
         !a.brand?.includes('江湾') && 
@@ -204,7 +204,8 @@ export default function SwitchSettingTab({
         !a.brand?.includes('佳达隆') && 
         !a.brand?.toLowerCase().includes('gateron') && 
         !a.brand?.includes('正牌科电') && 
-        !a.brand?.toUpperCase().includes('TTC')
+        !a.brand?.toUpperCase().includes('TTC') &&
+        !a.name?.includes('神马')
       );
     }
 
