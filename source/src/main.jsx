@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
 import './index.css';
+import ErrorBoundary from './components/ErrorBoundary';
 import { ToastProvider } from './components/ToastProvider';
 import { LanguageProvider } from './i18n/LanguageContext';
 
@@ -33,10 +34,12 @@ window.addEventListener('unhandledrejection', (event) => {
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <ToastProvider>
-      <LanguageProvider>
-        <App />
-      </LanguageProvider>
-    </ToastProvider>
+    <ErrorBoundary>
+      <ToastProvider>
+        <LanguageProvider>
+          <App />
+        </LanguageProvider>
+      </ToastProvider>
+    </ErrorBoundary>
   </React.StrictMode>
 );
