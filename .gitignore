@@ -37,7 +37,9 @@ EnhanceHidUSB_V140.exe
 vulkan-1.dll
 安装包/**/*.exe
 
-# Excluded folders & local development SOPs (never upload SOP to cloud)
+# Excluded folders & local binaries (never commit directly to git)
+宣传/
+软件本体/
 UPDATE_WORKFLOW_RULES.md
 *SOP*.md
 docs/
