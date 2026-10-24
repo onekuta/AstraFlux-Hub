@@ -174,37 +174,60 @@ export default function App() {
         hasUpdate: true,
         version: '1.2.0',
         type: 'app',
-        url: 'https://github.com/Kutaze/AstraFlux-Hub/releases'
+        url: 'https://github.com/onekuta/AstraFlux-Hub/releases'
       };
     }
     return null;
   });
 
-  // 首次启动软件时后台静默检查一遍更新 (不阻断用户交互)
+  // 首页更新状态实时探测与二次扫描机制：
+  // 当首次加载、设置弹窗关闭、应用切回前台或在更新页面执行热更新/离线导入后，自动执行全面比对
+  const scanUpdateStatus = useCallback(async (isSilent = true) => {
+    try {
+      const res = await updaterService.checkBothVersions();
+      if (res && (res.hasAppUpdate || res.hasLibUpdate)) {
+        setAvailableUpdate({
+          hasUpdate: true,
+          version: res.hasAppUpdate ? (res.cloudAppVersion || '最新版') : (res.cloudLibVersion || '最新版'),
+          type: res.hasAppUpdate ? 'app' : 'db',
+          url: res.appDownloadUrl || res.libDownloadUrl,
+        });
+        return res;
+      } else {
+        // 当前数据库与软件客户端皆已是最新版，彻底清除首页红点与更新提示
+        setAvailableUpdate(null);
+        return res;
+      }
+    } catch (e) {
+      if (!isSilent) console.error('[App] 更新检查异常:', e);
+    }
+    return null;
+  }, []);
+
+  // 1. 首次启动软件时后台静默检查一遍更新 (不阻断用户交互)
   useEffect(() => {
     let isMounted = true;
-    const runSilentUpdateCheck = async () => {
-      try {
-        const res = await updaterService.checkBothVersions();
-        if (!isMounted) return;
-        if (res && (res.hasAppUpdate || res.hasLibUpdate)) {
-          setAvailableUpdate({
-            hasUpdate: true,
-            version: res.cloudAppVersion || res.cloudLibVersion || '最新版',
-            type: res.hasAppUpdate ? 'app' : 'db',
-            url: res.appDownloadUrl || res.libDownloadUrl,
-          });
-        }
-      } catch (e) {
-        // 静默探测，离线时不干扰
-      }
-    };
-    const timer = setTimeout(runSilentUpdateCheck, 1500);
+    const timer = setTimeout(() => {
+      if (isMounted) scanUpdateStatus(true);
+    }, 1500);
     return () => {
       isMounted = false;
       clearTimeout(timer);
     };
-  }, []);
+  }, [scanUpdateStatus]);
+
+  // 2. 监听全局更新事件与前台焦点 (热更新覆写数据库/导入离线包等无须重启时，自动二次扫描消除红点)
+  useEffect(() => {
+    const handleUpdateRefresh = () => {
+      scanUpdateStatus(true);
+    };
+    window.addEventListener('sparklink-update-status-refresh', handleUpdateRefresh);
+    window.addEventListener('focus', handleUpdateRefresh);
+    return () => {
+      window.removeEventListener('sparklink-update-status-refresh', handleUpdateRefresh);
+      window.removeEventListener('focus', handleUpdateRefresh);
+    };
+  }, [scanUpdateStatus]);
 
   // 加入官方交流群 (1131310645)
   const handleJoinQQGroup = () => {
@@ -3922,16 +3945,17 @@ export default function App() {
                           }
                         } else if (activeTab === 'trigger' && paramPreviewMode === 'rt') {
                           if (effectiveRtOn) {
+                            const val = Number(effectiveRtPress || 0.01);
                             topNode = (
                               <span className="text-[9.5px] font-mono leading-none px-1 py-0.5 rounded bg-amber-500/15 text-amber-600 dark:text-amber-400 border border-amber-500/30 font-bold">
-                                {effectiveRtPress < 0.01 ? effectiveRtPress.toFixed(3) : effectiveRtPress.toFixed(2)}
+                                {val < 0.01 ? val.toFixed(3) : val.toFixed(2)}
                               </span>
                             );
                           }
                         } else if (activeTab === 'trigger' && paramPreviewMode === 'deadzone') {
                           topNode = (
                             <span className="text-[9px] font-mono leading-none text-rose-500 font-bold tracking-tight">
-                              ▲{effectiveTopDeadzone.toFixed(2)}
+                              ▲{Number(effectiveTopDeadzone ?? 0.04).toFixed(2)}
                             </span>
                           );
                         }
@@ -3951,13 +3975,14 @@ export default function App() {
                           if (paramPreviewMode === 'ap') {
                             paramNode = (
                               <span className="text-[9.5px] font-mono font-bold leading-none text-[var(--info-color)]">
-                                ▲{effectiveAP.toFixed(2)}
+                                ▲{Number(effectiveAP ?? 0.40).toFixed(2)}
                               </span>
                             );
                           } else if (paramPreviewMode === 'rt') {
+                            const relVal = Number(effectiveRtRelease || 0.01);
                             paramNode = effectiveRtOn ? (
                               <span className="text-[8.5px] font-mono leading-none px-1 py-0.5 rounded bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border border-emerald-500/30 font-bold">
-                                {effectiveRtRelease < 0.01 ? effectiveRtRelease.toFixed(3) : effectiveRtRelease.toFixed(2)}
+                                {relVal < 0.01 ? relVal.toFixed(3) : relVal.toFixed(2)}
                               </span>
                             ) : (
                               <span className="text-[8.5px] font-mono font-bold text-[var(--text-disabled)]">OFF</span>
@@ -3965,7 +3990,7 @@ export default function App() {
                           } else if (paramPreviewMode === 'deadzone') {
                             paramNode = (
                               <span className="text-[9px] font-mono leading-none text-amber-500 font-bold tracking-tight">
-                                ▼{effectiveBottomDeadzone.toFixed(2)}
+                                ▼{Number(effectiveBottomDeadzone ?? 0.05).toFixed(2)}
                               </span>
                             );
                           }
@@ -4444,25 +4469,34 @@ export default function App() {
           {activeTab === 'trigger' && triggerSubTab === 'switch' && (
             <SwitchSettingTab
               currentAxis={currentAxis}
+              deviceProfile={deviceProfile}
               selectedKeysCount={selectedKeys.size}
               keyCount={KEY_COUNT}
               allAxes={axisList}
-              primaryAxisKeyword={deviceProfile?.defaultAxis || '磁玉'}
+              primaryAxisKeyword={deviceProfile?.defaultAxis || '神马'}
               primaryAxisBadge='出厂标配'
               onSelectAxis={(sw) => {
-                setCurrentAxis(sw);
-                axisService.applyAxisToKeyboard(sw);
-                if (actuationPoint > sw.travel) setActuationPoint(sw.travel);
+                const safeTravel = Number(sw.maxTravel || sw.travel || 3.50);
+                const normalized = {
+                  ...sw,
+                  travel: safeTravel,
+                  maxTravel: safeTravel,
+                  recommendedAP: Number(sw.recommendedAP || (safeTravel > 3.0 ? 0.35 : 0.30)),
+                  minActuationPoint: Number(sw.minActuationPoint || 0.05),
+                };
+                setCurrentAxis(normalized);
+                axisService.applyAxisToKeyboard(normalized);
+                if (actuationPoint > safeTravel) setActuationPoint(safeTravel);
                 if (selectedKeys.size > 0) {
                   const updated = { ...perKeySwitches };
                   selectedKeys.forEach(id => {
-                    updated[id] = sw.name;
+                    updated[id] = normalized.name;
                   });
                   setPerKeySwitches(updated);
                 } else {
                   const updated = {};
                   ACTIVE_LAYOUT.forEach(r => r.forEach(k => {
-                    updated[k.id] = sw.name;
+                    updated[k.id] = normalized.name;
                   }));
                   setPerKeySwitches(updated);
                 }
@@ -4509,7 +4543,7 @@ export default function App() {
                       <p className="text-xs text-[var(--text-secondary)] font-medium leading-tight">为所选按键设置物理触发点</p>
                     </div>
                     <span className="text-xs font-mono font-bold text-[var(--info-color)] bg-[var(--primary-04)] px-2.5 py-0.5 rounded border border-[var(--primary-15)]">
-                      {actuationPoint.toFixed(2)} mm
+                      {Number(actuationPoint || 0.40).toFixed(2)} mm
                     </span>
                   </div>
 
@@ -4524,7 +4558,7 @@ export default function App() {
                         title="点击展开全量轴体选择"
                       >
                         <span className="w-1.5 h-1.5 rounded-full bg-[var(--primary-color)] shrink-0"></span>
-                        <span className="truncate max-w-[110px]">{currentAxis.name}</span>
+                        <span className="truncate max-w-[110px]">{currentAxis?.name || (deviceProfile?.defaultAxis || '神马轴')}</span>
                         <span className="text-[11px] text-[var(--text-secondary)] font-normal shrink-0">▾</span>
                       </button>
                     </div>
@@ -4534,8 +4568,9 @@ export default function App() {
                         type="button"
                         onClick={() => {
                           setParamPreviewMode('ap');
-                          setActuationPoint(currentAxis.recommendedAP || 0.40);
-                          addToast({ message: `已恢复推荐触发行程: ${currentAxis.recommendedAP || 0.40}mm`, type: 'info' });
+                          const rec = Number(currentAxis?.recommendedAP || 0.40);
+                          setActuationPoint(rec);
+                          addToast({ message: `已恢复推荐触发行程: ${rec}mm`, type: 'info' });
                         }}
                         className="text-xs px-2.5 py-0.5 rounded bg-[var(--bg-secondary)] border border-[var(--border-color)] hover:border-[var(--info-color)] hover:text-[var(--info-color)] text-[var(--text-secondary)] font-medium transition cursor-pointer"
                         title="恢复推荐触发行程"
@@ -4559,18 +4594,18 @@ export default function App() {
                     <div className="flex items-center justify-between mb-1 shrink-0">
                       <span className="text-xs font-semibold text-[var(--text-secondary)]">行程范围</span>
                       <span className="text-xs text-[var(--text-secondary)] font-mono">
-                        {minActuationPoint.toFixed(minActuationPoint < 0.01 ? 3 : 2)} ~ {currentAxis.maxTravel.toFixed(2)}mm
+                        {(Number(minActuationPoint || 0.05)).toFixed(minActuationPoint < 0.01 ? 3 : 2)} ~ {(Number(currentAxis?.maxTravel || currentAxis?.travel || 3.50)).toFixed(2)}mm
                       </span>
                     </div>
                     <div className="flex-1 flex items-center justify-center my-auto py-1">
                       <VerticalTravelSlider
                         value={actuationPoint}
-                        max={currentAxis.maxTravel}
+                        max={Number(currentAxis?.maxTravel || currentAxis?.travel || 3.50)}
                         min={minActuationPoint}
                         step={activeActuationStep}
                         height={116}
                         showSwitchIllustration={true}
-                        ariaLabel={`${currentAxis.name} 触发行程`}
+                        ariaLabel={`${currentAxis?.name || '磁轴'} 触发行程`}
                         onChange={(v) => {
                           setParamPreviewMode('ap');
                           setActuationPoint(v);
@@ -4600,13 +4635,13 @@ export default function App() {
                         return;
                       }
                       setParamPreviewMode('ap');
-                      const recAP = currentAxis.recommendedAP || 0.40;
+                      const recAP = Number(currentAxis?.recommendedAP || 0.40);
                       setActuationPoint(recAP);
                       writePerformanceToKeys({ normalPress: recAP, rtFirstTouch: recAP }, '推荐触发行程');
                     }} 
                     className="text-xs text-[var(--info-color)] font-semibold hover:underline cursor-pointer"
                   >
-                    恢复推荐 ({currentAxis.recommendedAP || 0.40}mm)
+                    恢复推荐 ({(Number(currentAxis?.recommendedAP || 0.40)).toFixed(2)}mm)
                   </button>
                 </div>
               </div>
@@ -4681,7 +4716,7 @@ export default function App() {
                         }`}
                       />
                       <div className="flex justify-between text-[10px] font-mono text-[var(--text-disabled)] mt-0.5">
-                        <span>{minRtPress.toFixed(minRtPress < 0.01 ? 3 : (minRtPress < 0.1 ? 2 : 1))}mm</span>
+                        <span>{(Number(minRtPress || 0.01)).toFixed(minRtPress < 0.01 ? 3 : (minRtPress < 0.1 ? 2 : 1))}mm</span>
                         <span>2.000mm</span>
                       </div>
                     </div>
@@ -4725,7 +4760,7 @@ export default function App() {
                         }`}
                       />
                       <div className="flex justify-between text-[10px] font-mono text-[var(--text-disabled)] mt-0.5">
-                        <span>{minRtRelease.toFixed(minRtRelease < 0.01 ? 3 : (minRtRelease < 0.1 ? 2 : 1))}mm</span>
+                        <span>{(Number(minRtRelease || 0.01)).toFixed(minRtRelease < 0.01 ? 3 : (minRtRelease < 0.1 ? 2 : 1))}mm</span>
                         <span>2.000mm</span>
                       </div>
                     </div>
@@ -5113,7 +5148,12 @@ export default function App() {
       {/* 全局设置弹窗 (完全还原迈从 图一/图二/图三) */}
       <GlobalSettingsModal 
         isOpen={showGlobalSettings}
-        onClose={() => setShowGlobalSettings(false)}
+        onClose={() => {
+          setShowGlobalSettings(false);
+          // 弹窗关闭时再次主动扫描当前数据库与软件是否已是最新，若已最新则立即消除首页红点提示
+          scanUpdateStatus(true);
+        }}
+        onUpdateStatusChange={() => scanUpdateStatus(true)}
         initialSection={globalSettingsSection}
         isConnected={isConnected}
         hardwareInfo={hardwareInfo}
@@ -5266,7 +5306,7 @@ export default function App() {
                   <div className="flex items-center justify-between text-xs">
                     <span className="text-[var(--text-secondary)] font-medium">触发行程 (AP)</span>
                     <span className="font-mono font-bold text-[var(--info-color)]">
-                      {hoveredKeyTooltip.effectiveAP.toFixed(2)} mm
+                      {Number(hoveredKeyTooltip.effectiveAP ?? 0.40).toFixed(2)} mm
                     </span>
                   </div>
 
@@ -5284,14 +5324,14 @@ export default function App() {
                   <div className="flex items-center justify-between text-xs">
                     <span className="text-[var(--text-secondary)] font-medium">RT 按压灵敏度</span>
                     <span className="font-mono font-bold text-amber-600 dark:text-amber-400">
-                      {hoveredKeyTooltip.effectiveRtPress.toFixed(3)} mm
+                      {Number(hoveredKeyTooltip.effectiveRtPress ?? 0.01).toFixed(3)} mm
                     </span>
                   </div>
 
                   <div className="flex items-center justify-between text-xs">
                     <span className="text-[var(--text-secondary)] font-medium">RT 抬起灵敏度</span>
                     <span className="font-mono font-bold text-emerald-600 dark:text-emerald-400">
-                      {hoveredKeyTooltip.effectiveRtRelease.toFixed(3)} mm
+                      {Number(hoveredKeyTooltip.effectiveRtRelease ?? 0.01).toFixed(3)} mm
                     </span>
                   </div>
 
@@ -5299,7 +5339,7 @@ export default function App() {
                   <div className="flex items-center justify-between text-xs">
                     <span className="text-[var(--text-secondary)] font-medium">死区设置 (顶/底)</span>
                     <span className="font-mono font-bold text-[var(--text-primary)]">
-                      顶 <span className="text-rose-500 font-bold">{hoveredKeyTooltip.effectiveTopDeadzone.toFixed(3)}</span> / 底 <span className="text-amber-500 font-bold">{hoveredKeyTooltip.effectiveBottomDeadzone.toFixed(3)}</span> mm
+                      顶 <span className="text-rose-500 font-bold">{Number(hoveredKeyTooltip.effectiveTopDeadzone ?? 0.04).toFixed(3)}</span> / 底 <span className="text-amber-500 font-bold">{Number(hoveredKeyTooltip.effectiveBottomDeadzone ?? 0.05).toFixed(3)}</span> mm
                     </span>
                   </div>
 

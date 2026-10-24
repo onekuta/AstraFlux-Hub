@@ -25,9 +25,16 @@ import {
   Link,
   Save,
   FlaskConical,
+  Sliders,
+  ShieldCheck,
+  Eye,
+  EyeOff,
+  Search,
+  FileText,
 } from 'lucide-react';
 import { customDeviceRegistry } from '../services/customDeviceRegistry';
 import { updaterService } from '../services/updaterService';
+import { axisService } from '../services/axisService';
 import { useToast } from './ToastProvider';
 
 const DEV_PASSWORD = 'kutaze1234';
@@ -75,6 +82,15 @@ export default function DevLabModal({
   const [isExportingPatch, setIsExportingPatch] = useState(false);
   const [isExportingBundle, setIsExportingBundle] = useState(false);
 
+  // 开发者后台主导航 (外设库管理 vs 轴体库管理)
+  const [activeDevTab, setActiveDevTab] = useState('devices'); // 'devices' | 'switches'
+  const [axesList, setAxesList] = useState(() => axisService.axes || []);
+  const [switchSearchQuery, setSwitchSearchQuery] = useState('');
+  const [switchBrandFilter, setSwitchBrandFilter] = useState('all');
+  const [switchAuthFilter, setSwitchAuthFilter] = useState('all'); // 'all' | 'official' | 'unverified'
+  const [switchDeviceFilter, setSwitchDeviceFilter] = useState('all'); // 'all' | 'dv63' | 'ae64' | 'es68'
+  const [isSyncingAxes, setIsSyncingAxes] = useState(false);
+
   // 初始化加载
   useEffect(() => {
     if (isOpen) {
@@ -83,6 +99,7 @@ export default function DevLabModal({
       setBetaAppUpdateUrl(updaterService.getBetaAppUpdateUrl());
       setCurrentLibVersion(updaterService.getCurrentLibVersion());
       setAllProfiles(customDeviceRegistry.getAllProfiles());
+      setAxesList([...axisService.axes]);
       const now = new Date();
       const dateTag = now.toISOString().slice(0, 10).replace(/-/g, '.');
       setExportLibVersion(`${dateTag}.1`);
@@ -327,6 +344,87 @@ export default function DevLabModal({
     addToast({ message: `已从数据库移除: ${name}`, type: 'info' });
   };
 
+  // 轴体库管理：在线重新拉取云端官方轴体库
+  const handleSyncCloudAxes = async () => {
+    setIsSyncingAxes(true);
+    try {
+      await axisService.loadAxisList();
+      setAxesList([...axisService.axes]);
+      addToast({
+        message: `🎉 云端官方轴体库同步成功！当前收录 ${axisService.axes.length} 款真实磁轴`,
+        type: 'success',
+      });
+    } catch (err) {
+      addToast({ message: `云端同步失败: ${err.message}`, type: 'error' });
+    } finally {
+      setIsSyncingAxes(false);
+    }
+  };
+
+  // 轴体库管理：切换轴体鉴权/可见状态
+  const handleToggleAxisVerification = (id, currentName) => {
+    const newStatus = axisService.toggleAxisVerification(id);
+    setAxesList([...axisService.axes]);
+    addToast({
+      message: `已将轴体【${currentName}】标记为: ${newStatus ? '官方真实已核准 (前台可见)' : '未核准/已隐藏 (前台隐藏)'}`,
+      type: newStatus ? 'success' : 'info',
+    });
+  };
+
+  // 轴体库管理：导出全量轴体校准库 JSON
+  const handleExportAxesDb = () => {
+    try {
+      const jsonStr = axisService.exportAxisDbJson();
+      const blob = new Blob([jsonStr], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `axes_database_${new Date().toISOString().slice(0, 10)}.json`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+      addToast({
+        message: `全量轴体校准数据库已导出 (共 ${axisService.axes.length} 款)，包含真实标定曲线与硬件电气映射！`,
+        type: 'success',
+      });
+    } catch (e) {
+      addToast({ message: `导出轴体库失败: ${e.message}`, type: 'error' });
+    }
+  };
+
+  // 轴体库管理：导入自定义轴体校准配置文件
+  const handleImportCustomAxis = async (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    try {
+      const text = await file.text();
+      const json = JSON.parse(text);
+      if (Array.isArray(json.axes)) {
+        json.axes.forEach((a) => axisService.importCustomAxis(a));
+        setAxesList([...axisService.axes]);
+        addToast({ message: `成功批量导入 ${json.axes.length} 款轴体配置！`, type: 'success' });
+      } else {
+        const imported = axisService.importCustomAxis(json);
+        setAxesList([...axisService.axes]);
+        addToast({ message: `成功导入轴体 [${imported.name}] 并完成电气标定注册！`, type: 'success' });
+      }
+    } catch (err) {
+      addToast({ message: `导入解析失败: ${err.message}`, type: 'error' });
+    } finally {
+      e.target.value = '';
+    }
+  };
+
+  // 轴体库管理：重置为出厂官方基线
+  const handleResetAxes = async () => {
+    if (confirm('确定要重置轴体库回官方出厂基线吗？所有未核准与测试轴体将被重置。')) {
+      await axisService.resetToOfficialAxes();
+      setAxesList([...axisService.axes]);
+      addToast({ message: '轴体库已成功恢复至官方出厂标定基线', type: 'info' });
+    }
+  };
+
   // 过滤显示的设备
   const displayedProfiles = allProfiles.filter((p) => {
     if (filterType === 'official') return p.isOfficial;
@@ -336,6 +434,66 @@ export default function DevLabModal({
 
   const customCount = allProfiles.filter((p) => !p.isOfficial).length;
   const officialCount = allProfiles.filter((p) => p.isOfficial).length;
+
+  // 轴体库统计
+  const axisStats = useMemo(() => {
+    return axisService.getAxisStats();
+  }, [axesList]);
+
+  // 过滤显示的轴体
+  const displayedAxes = useMemo(() => {
+    let list = [...axesList];
+    if (switchBrandFilter === 'jiangwan') {
+      list = list.filter((a) => a.brand?.includes('江湾') || a.brand?.toLowerCase().includes('everglide'));
+    } else if (switchBrandFilter === 'gateron') {
+      list = list.filter((a) => a.brand?.includes('佳达隆') || a.brand?.toLowerCase().includes('gateron'));
+    } else if (switchBrandFilter === 'ttc') {
+      list = list.filter((a) => a.brand?.includes('正牌科电') || a.brand?.toUpperCase().includes('TTC'));
+    } else if (switchBrandFilter === 'shenma') {
+      list = list.filter((a) => a.brand?.includes('神马') || a.name?.includes('神马') || a.name?.includes('马轴'));
+    } else if (switchBrandFilter === 'other') {
+      list = list.filter(
+        (a) =>
+          !a.brand?.includes('江湾') &&
+          !a.brand?.toLowerCase().includes('everglide') &&
+          !a.brand?.includes('佳达隆') &&
+          !a.brand?.toLowerCase().includes('gateron') &&
+          !a.brand?.includes('正牌科电') &&
+          !a.brand?.toUpperCase().includes('TTC') &&
+          !a.brand?.includes('神马') &&
+          !a.name?.includes('神马')
+      );
+    }
+
+    if (switchAuthFilter === 'official') {
+      list = list.filter((a) => a.isOfficial !== false && a.verified !== false);
+    } else if (switchAuthFilter === 'unverified') {
+      list = list.filter((a) => a.isOfficial === false || a.verified === false);
+    }
+
+    if (switchDeviceFilter === 'dv63') {
+      const dv63Keys = ['神马', '磁玉', '万磁王', '天际线'];
+      list = list.filter((a) => dv63Keys.some((k) => a.name.includes(k)));
+    } else if (switchDeviceFilter === 'ae64') {
+      const ae64Keys = ['天际线', '库里南', '磁神', '磁玉', '万磁王'];
+      list = list.filter((a) => ae64Keys.some((k) => a.name.includes(k)));
+    } else if (switchDeviceFilter === 'es68') {
+      const es68Keys = ['磁玉', '超竞', '双轨磁白', '万磁王', '天王'];
+      list = list.filter((a) => es68Keys.some((k) => a.name.includes(k)));
+    }
+
+    if (switchSearchQuery.trim()) {
+      const q = switchSearchQuery.trim().toLowerCase();
+      list = list.filter(
+        (a) =>
+          a.name.toLowerCase().includes(q) ||
+          (a.brand && a.brand.toLowerCase().includes(q)) ||
+          String(a.id).includes(q) ||
+          String(a.hardwareAxisId).includes(q)
+      );
+    }
+    return list;
+  }, [axesList, switchBrandFilter, switchAuthFilter, switchDeviceFilter, switchSearchQuery]);
 
   if (!isOpen) return null;
 
@@ -411,6 +569,49 @@ export default function DevLabModal({
         ) : (
           /* 后台操作主面板 */
           <div className="flex-1 overflow-y-auto p-6 space-y-5">
+            {/* 开发者二级导航选项卡 */}
+            <div className="flex items-center justify-between border-b border-[var(--border-color)] pb-3 shrink-0">
+              <div className="flex items-center bg-[var(--bg-tertiary)] p-1 rounded-xl border border-[var(--border-color)]">
+                <button
+                  type="button"
+                  onClick={() => setActiveDevTab('devices')}
+                  className={`px-4 py-1.5 rounded-lg text-xs font-bold transition flex items-center space-x-2 cursor-pointer ${
+                    activeDevTab === 'devices'
+                      ? 'bg-[var(--info-color)] text-white shadow-xs'
+                      : 'text-[var(--text-tertiary)] hover:text-[var(--text-primary)]'
+                  }`}
+                >
+                  <Database className="w-3.5 h-3.5" />
+                  <span>外设硬件数据库与在线更新</span>
+                  <span className="text-[10px] px-1.5 py-0.2 rounded-full bg-white/20 font-mono font-bold">
+                    {allProfiles.length}
+                  </span>
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setActiveDevTab('switches')}
+                  className={`px-4 py-1.5 rounded-lg text-xs font-bold transition flex items-center space-x-2 cursor-pointer ${
+                    activeDevTab === 'switches'
+                      ? 'bg-[var(--info-color)] text-white shadow-xs'
+                      : 'text-[var(--text-tertiary)] hover:text-[var(--text-primary)]'
+                  }`}
+                >
+                  <Sliders className="w-3.5 h-3.5" />
+                  <span>轴体库与底层校准文件管理</span>
+                  <span className="text-[10px] px-1.5 py-0.2 rounded-full bg-amber-500/20 text-amber-300 font-mono font-bold">
+                    {axesList.length}款
+                  </span>
+                </button>
+              </div>
+
+              <div className="text-xs text-[var(--text-tertiary)] flex items-center gap-2">
+                <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                <span>NearLink Driver Core Lab</span>
+              </div>
+            </div>
+
+            {activeDevTab === 'devices' && (
+              <>
             {/* 0. 硬件级灯光通讯与实时物理直读开关 (隐藏在此处进行开发者管控) */}
             <div className="p-4 rounded-xl border border-[var(--border-color)] bg-[var(--bg-tertiary)] space-y-3">
               <div className="flex items-center justify-between">
@@ -875,6 +1076,333 @@ export default function DevLabModal({
                 })}
               </div>
             </div>
+            </>
+            )}
+
+            {/* 轴体库与底层校准文件管理面板 */}
+            {activeDevTab === 'switches' && (
+              <div className="space-y-4">
+                {/* 1. 轴体库全景统计与鉴权概览 */}
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+                  <div className="p-3 rounded-xl border border-[var(--border-color)] bg-[var(--bg-tertiary)] flex items-center space-x-3">
+                    <div className="w-10 h-10 rounded-xl bg-[var(--info-color)]/10 text-[var(--info-color)] flex items-center justify-center shrink-0">
+                      <Layers className="w-5 h-5" />
+                    </div>
+                    <div className="min-w-0">
+                      <div className="text-[10px] text-[var(--text-tertiary)]">轴体总数 (底层标定)</div>
+                      <div className="text-base font-bold font-mono text-[var(--text-primary)]">
+                        {axesList.length} <span className="text-[10px] font-normal text-[var(--text-secondary)]">款</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="p-3 rounded-xl border border-emerald-500/30 bg-emerald-500/5 flex items-center space-x-3">
+                    <div className="w-10 h-10 rounded-xl bg-emerald-500/10 text-emerald-500 flex items-center justify-center shrink-0">
+                      <ShieldCheck className="w-5 h-5" />
+                    </div>
+                    <div className="min-w-0">
+                      <div className="text-[10px] text-emerald-500/80 font-medium">官方真实已鉴权</div>
+                      <div className="text-base font-bold font-mono text-emerald-500">
+                        {axesList.filter((a) => a.isOfficial !== false && a.verified !== false).length}{' '}
+                        <span className="text-[10px] font-normal">款 (前台可见)</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="p-3 rounded-xl border border-amber-500/30 bg-amber-500/5 flex items-center space-x-3">
+                    <div className="w-10 h-10 rounded-xl bg-amber-500/10 text-amber-500 flex items-center justify-center shrink-0">
+                      <EyeOff className="w-5 h-5" />
+                    </div>
+                    <div className="min-w-0">
+                      <div className="text-[10px] text-amber-500/80 font-medium">未核准/实验轴体</div>
+                      <div className="text-base font-bold font-mono text-amber-500">
+                        {axesList.filter((a) => a.isOfficial === false || a.verified === false).length}{' '}
+                        <span className="text-[10px] font-normal">款 (前台隐藏)</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="p-3 rounded-xl border border-purple-500/30 bg-purple-500/5 flex items-center space-x-3">
+                    <div className="w-10 h-10 rounded-xl bg-purple-500/10 text-purple-400 flex items-center justify-center shrink-0">
+                      <Cpu className="w-5 h-5" />
+                    </div>
+                    <div className="min-w-0">
+                      <div className="text-[10px] text-purple-400/80 font-medium">成品键盘标定支持</div>
+                      <div className="text-xs font-bold font-mono text-purple-400 truncate">
+                        DV63 (7款) · AE64 · ES68
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* 2. 底层轴体库映射数据文件管理 (底层文件状态透明化) */}
+                <div className="p-4 rounded-xl border border-[var(--border-color)] bg-[var(--bg-tertiary)] space-y-3">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center space-x-2">
+                      <FileText className="w-4 h-4 text-[var(--info-color)]" />
+                      <h3 className="text-xs font-bold text-[var(--text-primary)]">
+                        底层轴体库数据映射文件架构 (Official Ground-Truth Files)
+                      </h3>
+                    </div>
+                    <span className="text-[11px] text-emerald-500 font-bold flex items-center">
+                      <CheckCircle2 className="w-3.5 h-3.5 mr-1" />
+                      官网多源真实数据融合
+                    </span>
+                  </div>
+
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+                    {/* 文件 1: ae64AxisListV3.json */}
+                    <div className="p-3 rounded-lg border border-[var(--border-color)] bg-[var(--bg-secondary)] space-y-1.5">
+                      <div className="flex items-center justify-between text-xs font-bold text-[var(--text-primary)]">
+                        <span className="font-mono text-sky-400">ae64AxisListV3.json</span>
+                        <span className="text-[10px] px-1.5 py-0.2 rounded bg-sky-500/15 text-sky-400">75 款分类预设</span>
+                      </div>
+                      <p className="text-[11px] text-[var(--text-tertiary)] leading-tight">
+                        江湾、佳达隆、正牌科电及客制化多品牌分类层级结构，内含天际线轴 3.55mm、库里南轴 3.60mm 等真实电气 Detail ID。
+                      </p>
+                    </div>
+
+                    {/* 文件 2: officialAxisCache.json */}
+                    <div className="p-3 rounded-lg border border-[var(--border-color)] bg-[var(--bg-secondary)] space-y-1.5">
+                      <div className="flex items-center justify-between text-xs font-bold text-[var(--text-primary)]">
+                        <span className="font-mono text-purple-400">officialAxisCache.json</span>
+                        <span className="text-[10px] px-1.5 py-0.2 rounded bg-purple-500/15 text-purple-400">222 款全量缓存</span>
+                      </div>
+                      <p className="text-[11px] text-[var(--text-tertiary)] leading-tight">
+                        星闪云端 API 官方全量轴体标定缓存。收录官方 doctrine_range_left 行程极值、磁通响应系数及官方真实配色。
+                      </p>
+                    </div>
+
+                    {/* 文件 3: PRIMARY_AXES */}
+                    <div className="p-3 rounded-lg border border-[var(--border-color)] bg-[var(--bg-secondary)] space-y-1.5">
+                      <div className="flex items-center justify-between text-xs font-bold text-[var(--text-primary)]">
+                        <span className="font-mono text-amber-400">PRIMARY_AXES (特调SKU)</span>
+                        <span className="text-[10px] px-1.5 py-0.2 rounded bg-amber-500/15 text-amber-400">出厂原厂级</span>
+                      </div>
+                      <p className="text-[11px] text-[var(--text-tertiary)] leading-tight">
+                        硬件级原生出厂特调标定。DV63 原生神马轴 3.45mm、AE64-MAX 江湾天际线轴、ES68 磁玉 Pro 超竞版出厂调优。
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* 3. 轴体数据库操作动作栏 */}
+                <div className="p-4 rounded-xl border border-[var(--border-color)] bg-[var(--bg-tertiary)] flex flex-wrap items-center justify-between gap-3">
+                  <div className="flex items-center space-x-2">
+                    <Sparkles className="w-4 h-4 text-amber-400" />
+                    <div>
+                      <h3 className="text-xs font-bold text-[var(--text-primary)]">轴体库数据维护与导入导出</h3>
+                      <p className="text-[10px] text-[var(--text-tertiary)]">支持全量导出、外部标定参数导入及云端官方数据热同步</p>
+                    </div>
+                  </div>
+
+                  <div className="flex flex-wrap items-center gap-2">
+                    <button
+                      type="button"
+                      onClick={handleSyncCloudAxes}
+                      disabled={isSyncingAxes}
+                      className="px-3 py-1.5 rounded-lg bg-[var(--bg-secondary)] border border-[var(--border-color)] hover:border-sky-500 hover:text-sky-400 text-[var(--text-primary)] text-xs font-bold transition flex items-center space-x-1.5 cursor-pointer disabled:opacity-50"
+                      title="重新请求官方星闪云端 API 获取最新轴体标定更新"
+                    >
+                      <RefreshCw className={`w-3.5 h-3.5 ${isSyncingAxes ? 'animate-spin' : ''}`} />
+                      <span>{isSyncingAxes ? '同步中...' : '同步云端最新库'}</span>
+                    </button>
+
+                    <button
+                      type="button"
+                      onClick={handleExportAxesDb}
+                      className="px-3 py-1.5 rounded-lg bg-emerald-500/15 border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/25 text-xs font-bold transition flex items-center space-x-1.5 cursor-pointer"
+                      title="导出包含全部轴体标定参数的 JSON 文件"
+                    >
+                      <Download className="w-3.5 h-3.5" />
+                      <span>导出轴体校准库 (.json)</span>
+                    </button>
+
+                    <label className="px-3 py-1.5 rounded-lg bg-sky-500/15 border border-sky-500/30 text-sky-400 hover:bg-sky-500/25 text-xs font-bold transition flex items-center space-x-1.5 cursor-pointer">
+                      <UploadCloud className="w-3.5 h-3.5" />
+                      <span>导入新轴体配置</span>
+                      <input
+                        type="file"
+                        accept=".json"
+                        onChange={handleImportCustomAxis}
+                        className="hidden"
+                      />
+                    </label>
+
+                    <button
+                      type="button"
+                      onClick={handleResetAxes}
+                      className="px-3 py-1.5 rounded-lg bg-rose-500/10 border border-rose-500/25 text-rose-400 hover:bg-rose-500/20 text-xs font-bold transition flex items-center space-x-1.5 cursor-pointer"
+                      title="还原重置回官方原生基线"
+                    >
+                      <RotateCcw className="w-3.5 h-3.5" />
+                      <span>重置出厂基线</span>
+                    </button>
+                  </div>
+                </div>
+
+                {/* 4. 全量轴体鉴权门禁管理与检索列表 */}
+                <div className="space-y-3">
+                  <div className="flex flex-wrap items-center justify-between gap-2.5">
+                    <div className="flex items-center space-x-2">
+                      <Layers className="w-4 h-4 text-[var(--info-color)]" />
+                      <h3 className="text-xs font-bold text-[var(--text-primary)]">
+                        全量轴体鉴权与机型绑定清单 (显示 {displayedAxes.length} / 共 {axesList.length} 款)
+                      </h3>
+                    </div>
+
+                    {/* 筛选与搜索控件 */}
+                    <div className="flex flex-wrap items-center gap-2">
+                      {/* 搜索框 */}
+                      <div className="relative">
+                        <Search className="w-3 h-3 text-[var(--text-tertiary)] absolute left-2.5 top-1/2 -translate-y-1/2 pointer-events-none" />
+                        <input
+                          type="text"
+                          placeholder="搜索轴体名称、品牌或 ID..."
+                          value={switchSearchQuery}
+                          onChange={(e) => setSwitchSearchQuery(e.target.value)}
+                          className="pl-7 pr-6 py-1 bg-[var(--bg-tertiary)] border border-[var(--border-color)] rounded-lg text-xs w-44 text-[var(--text-primary)] placeholder-[var(--text-tertiary)] focus:outline-none focus:border-[var(--info-color)]"
+                        />
+                        {switchSearchQuery && (
+                          <button
+                            type="button"
+                            onClick={() => setSwitchSearchQuery('')}
+                            className="absolute right-2 top-1/2 -translate-y-1/2 text-[var(--text-tertiary)] hover:text-[var(--text-primary)] text-xs cursor-pointer"
+                          >
+                            ✕
+                          </button>
+                        )}
+                      </div>
+
+                      {/* 品牌过滤 */}
+                      <select
+                        value={switchBrandFilter}
+                        onChange={(e) => setSwitchBrandFilter(e.target.value)}
+                        className="px-2 py-1 bg-[var(--bg-tertiary)] border border-[var(--border-color)] rounded-lg text-xs font-bold text-[var(--text-secondary)] focus:outline-none cursor-pointer"
+                      >
+                        <option value="all">全部品牌</option>
+                        <option value="jiangwan">江湾 (Everglide)</option>
+                        <option value="gateron">佳达隆 (Gateron)</option>
+                        <option value="ttc">正牌科电 (TTC)</option>
+                        <option value="shenma">神马 (Shenma)</option>
+                        <option value="other">其它品牌</option>
+                      </select>
+
+                      {/* 鉴权状态过滤 */}
+                      <select
+                        value={switchAuthFilter}
+                        onChange={(e) => setSwitchAuthFilter(e.target.value)}
+                        className="px-2 py-1 bg-[var(--bg-tertiary)] border border-[var(--border-color)] rounded-lg text-xs font-bold text-[var(--text-secondary)] focus:outline-none cursor-pointer"
+                      >
+                        <option value="all">全部状态</option>
+                        <option value="official">官方真实已鉴权</option>
+                        <option value="unverified">未核准/实验 (已隐藏)</option>
+                      </select>
+
+                      {/* 机型适配过滤 */}
+                      <select
+                        value={switchDeviceFilter}
+                        onChange={(e) => setSwitchDeviceFilter(e.target.value)}
+                        className="px-2 py-1 bg-[var(--bg-tertiary)] border border-[var(--border-color)] rounded-lg text-xs font-bold text-[var(--text-secondary)] focus:outline-none cursor-pointer"
+                      >
+                        <option value="all">全部机型</option>
+                        <option value="dv63">DV63 适配</option>
+                        <option value="ae64">AE64-MAX 适配</option>
+                        <option value="es68">ES68 破晓适配</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  {/* 轴体卡片列表 */}
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3 max-h-72 overflow-y-auto pr-1">
+                    {displayedAxes.map((a) => {
+                      const isVerified = a.isOfficial !== false && a.verified !== false;
+                      const trav = Number(a.maxTravel || a.travel || 3.5);
+                      return (
+                        <div
+                          key={`${a.id}-${a.name}`}
+                          className={`p-3 rounded-xl border transition flex items-center justify-between group ${
+                            isVerified
+                              ? 'border-[var(--border-color)] bg-[var(--bg-tertiary)] hover:border-emerald-500/50'
+                              : 'border-amber-500/30 bg-amber-500/5'
+                          }`}
+                        >
+                          <div className="flex items-center space-x-3 min-w-0 flex-1">
+                            <div className="w-8 h-8 rounded-lg bg-[var(--bg-secondary)] border border-[var(--border-color)] flex items-center justify-center shrink-0">
+                              <span
+                                className="w-3.5 h-3.5 rounded-full border border-black/20 dark:border-white/20 shadow-xs"
+                                style={{ backgroundColor: a.color || '#2563eb' }}
+                              />
+                            </div>
+
+                            <div className="min-w-0 flex-1 space-y-0.5">
+                              <div className="flex items-center space-x-1.5">
+                                <span className="text-xs font-bold text-[var(--text-primary)] truncate font-title">
+                                  {a.name}
+                                </span>
+                                {isVerified ? (
+                                  <span className="text-[9px] font-bold px-1.5 py-0.2 rounded bg-emerald-500/10 text-emerald-500 border border-emerald-500/30 shrink-0">
+                                    官方真实
+                                  </span>
+                                ) : (
+                                  <span className="text-[9px] font-bold px-1.5 py-0.2 rounded bg-amber-500/10 text-amber-500 border border-amber-500/30 shrink-0">
+                                    未核准(隐藏)
+                                  </span>
+                                )}
+                                {a.badge && (
+                                  <span className="text-[9px] px-1 rounded bg-[var(--bg-secondary)] text-[var(--text-tertiary)] truncate max-w-[60px]">
+                                    {a.badge}
+                                  </span>
+                                )}
+                              </div>
+
+                              <div className="text-[11px] font-mono text-[var(--text-tertiary)] flex flex-wrap items-center gap-x-2 gap-y-0.5">
+                                <span>
+                                  行程: <b className="text-[var(--text-primary)]">{trav.toFixed(2)}mm</b>
+                                </span>
+                                <span>推荐AP: {Number(a.recommendedAP || 0.35).toFixed(2)}mm</span>
+                                <span>品牌: {a.brand || '星闪'}</span>
+                                <span>ID: #{a.id}</span>
+                              </div>
+                            </div>
+                          </div>
+
+                          {/* 鉴权切换动作 */}
+                          <div className="shrink-0 ml-2">
+                            <button
+                              type="button"
+                              onClick={() => handleToggleAxisVerification(a.id, a.name)}
+                              className={`px-2 py-1 rounded text-[10px] font-bold border transition cursor-pointer flex items-center space-x-1 ${
+                                isVerified
+                                  ? 'border-amber-500/30 text-amber-400 hover:bg-amber-500/10'
+                                  : 'border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/10'
+                              }`}
+                              title={
+                                isVerified
+                                  ? '点击设为未核准（将在用户端轴体库隐藏）'
+                                  : '点击设为官方真实核准（将在用户端放行显示）'
+                              }
+                            >
+                              {isVerified ? (
+                                <>
+                                  <EyeOff className="w-3 h-3" />
+                                  <span>隐藏</span>
+                                </>
+                              ) : (
+                                <>
+                                  <Eye className="w-3 h-3" />
+                                  <span>放行</span>
+                                </>
+                              )}
+                            </button>
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
         )}
 

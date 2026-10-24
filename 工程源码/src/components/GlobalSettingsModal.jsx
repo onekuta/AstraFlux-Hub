@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { 
   Home, 
   Settings2, 
@@ -39,6 +39,7 @@ import {
   ChevronRight,
   History,
   Sparkles,
+  Copy,
 } from 'lucide-react';
 import AstraFluxLogo from './AstraFluxLogo';
 import { useToast } from './ToastProvider';
@@ -126,13 +127,95 @@ const LICENSE_GROUPS = [
   }
 ];
 
-const CHANGELOG_DATA = [
+// Beta 测试版专属更新记录
+const BETA_CHANGELOG = [
   {
-    version: 'v1.1.2',
-    date: '2026/10/22',
+    version: 'beta0.26.10.23',
+    buildTimeCode: '26.10.23',
+    date: '2026/10/23',
     isCurrent: true,
+    channel: 'beta',
+    tag: '最新Beta测试版',
+    tagColor: 'bg-rose-500/10 text-rose-500 border-rose-500/30',
+    summary: '全界面多语言国际化支持，全新高颜值自定义下拉框，Beta独立物理更新通道与风险隔离',
+    sections: [
+      {
+        category: 'Beta专属特性',
+        color: 'text-rose-400',
+        items: [
+          '正式版与 Beta 测试版物理渠道彻底隔离 (software / software(beta))',
+          '全软件多语言国际化支持（简体中文、English、日本語），实时动态切换无须重启',
+          '全新高颜值圆角阴影自定义下拉框（CustomSelect），全面替代系统原生控件',
+          '关于软件检查更新卡片集成可滚动翻页的版本更新记录子视窗',
+          '开发者后台全面支持软件、数据库与 Beta 测试版三大 OTA 返链配置'
+        ]
+      },
+      {
+        category: '安装包与构建',
+        color: 'text-purple-400',
+        items: [
+          '基于 Inno Setup 6 独立生成 Beta0.26.10.23 安装包向导',
+          'LZMA2 深度极限体积压缩至 93.49MB，Gitee Release 极速直连下载',
+          '修复云端发布工具拖拽导入与清单文件选择功能'
+        ]
+      }
+    ]
+  }
+];
+
+// 正式稳定版专属更新记录 (绝不混杂 Beta 版本)
+const RELEASE_CHANGELOG = [
+  {
+    version: 'v1.1.3',
+    buildTimeCode: '26.10.23',
+    date: '2026/10/23',
+    isCurrent: true,
+    channel: 'release',
     tag: '最新稳定版',
     tagColor: 'bg-emerald-500/10 text-emerald-500 border-emerald-500/30',
+    summary: '热更新二次全量校验与首页红点实时消除、版本构建码与防倒退门禁、数据库更新说明动态呈现',
+    sections: [
+      {
+        category: 'OTA与状态同步',
+        color: 'text-emerald-400',
+        items: [
+          '数据库更新后立即在后台执行二次全量扫描，秒级消除首页顶栏“更新可用”按钮与红点',
+          '全面绑定构建时间码 (26.10.23)，建立防止从新版正式版倒退安装旧 Beta 版本的门禁拦截机制',
+          '数据库更新卡片动态读取并展示云端清单的真实更新说明 (libChangelog)',
+          '正式稳定版与 Beta 测试版物理渠道彻底隔离 (software/ 与 software(beta)/)',
+          '新增加了Beta版更新渠道，用做最新测试需求'
+        ]
+      },
+      {
+        category: '界面与国际化',
+        color: 'text-blue-400',
+        items: [
+          '全软件多语言国际化支持（简体中文、English、日本語），实时动态切换无须重启',
+          '全新高颜值圆角阴影自定义下拉框（CustomSelect），全面替代系统原生控件',
+          '修复设置页右上角稳定版标签折行挤压，纯净化切换通道按钮图标',
+          '关于软件检查更新卡片集成可滚动翻页的版本更新记录子视窗',
+          '修复了一些软件UI显示问题'
+        ]
+      },
+      {
+        category: '外设适配与打包',
+        color: 'text-purple-400',
+        items: [
+          '修复了一些键盘适配BUG',
+          '官方原生 Inno Setup 6 现代安装向导，支持选择安装路径与附加任务引导',
+          'LZMA2 深度极限体积压缩至 93.5MB，直接支持 Gitee 官方发行版极速直下'
+        ]
+      }
+    ]
+  },
+  {
+    version: 'v1.1.2',
+    buildTimeCode: '26.10.22',
+    date: '2026/10/22',
+    isCurrent: false,
+    channel: 'release',
+    tag: '稳定版本',
+    tagColor: 'bg-blue-500/10 text-blue-500 border-blue-500/30',
     summary: '多语言国际化全量支持，全新高颜值下拉框，Beta独立渠道与Inno Setup现代安装向导',
     sections: [
       {
@@ -169,6 +252,7 @@ const CHANGELOG_DATA = [
     version: 'v1.1.1',
     date: '2026/10/21',
     isCurrent: false,
+    channel: 'release',
     tag: '重要更新',
     tagColor: 'bg-blue-500/10 text-blue-500 border-blue-500/30',
     summary: '双仓秒级同步、GitHub Issues 直达反馈、外设数据库与软件更新通道物理隔离',
@@ -197,6 +281,7 @@ const CHANGELOG_DATA = [
     version: 'v1.1.0',
     date: '2026/10/21',
     isCurrent: false,
+    channel: 'release',
     tag: '基础版本',
     tagColor: 'bg-zinc-500/10 text-zinc-400 border-zinc-500/30',
     summary: 'AstraFlux-HUB 基础稳定版首发，星闪 8KHz 极速电竞生态就绪',
@@ -221,6 +306,7 @@ export default function GlobalSettingsModal({
   onOpenDevLab = () => {},
   isConnected = false,
   hardwareInfo = null,
+  onUpdateStatusChange = () => {},
 }) {
   const { addToast } = useToast();
   const [devClicks, setDevClicks] = useState(0);
@@ -326,6 +412,56 @@ export default function GlobalSettingsModal({
     });
   };
 
+  const handleOpenLogsFolder = async () => {
+    try {
+      if (window.electronAPI?.openLogsFolder) {
+        const res = await window.electronAPI.openLogsFolder();
+        if (res?.success) {
+          addToast({ message: `已打开日志目录: ${res.path}`, type: 'success' });
+        } else {
+          addToast({ message: res?.error || '打开日志目录失败', type: 'error' });
+        }
+      } else {
+        addToast({ message: '网页端环境不支持打开本地日志目录', type: 'warning' });
+      }
+    } catch (e) {
+      addToast({ message: `打开日志失败: ${e.message}`, type: 'error' });
+    }
+  };
+
+  const handleCopyDiagnostics = async () => {
+    try {
+      let reportText = '';
+      if (window.electronAPI?.getRecentLogs) {
+        const res = await window.electronAPI.getRecentLogs(100);
+        if (res?.success && res.report) {
+          reportText = res.report;
+        }
+      }
+      if (!reportText) {
+        reportText = [
+          `==================================================`,
+          `AstraFlux-HUB 运行诊断报告`,
+          `生成时间: ${new Date().toLocaleString()}`,
+          `驱动版本: v${updaterService.getCurrentAppVersion()}`,
+          `运行渠道: ${updateChannel}`,
+          `构建时间码: ${updaterService.getCurrentAppBuildTimeCode()}`,
+          `==================================================`,
+          `(未检测到异常报错记录，系统运行平稳)`
+        ].join('\n');
+      }
+
+      if (navigator.clipboard?.writeText) {
+        await navigator.clipboard.writeText(reportText);
+        addToast({ message: t('settings.copyDiagSuccess', '已复制运行诊断报告！可直接发送给开发者排查'), type: 'success', duration: 3000 });
+      } else {
+        addToast({ message: '无法访问剪贴板', type: 'error' });
+      }
+    } catch (e) {
+      addToast({ message: `复制诊断日志失败: ${e.message}`, type: 'error' });
+    }
+  };
+
   // 消息通知状态 (键盘专用通知)
   const [notifyManualProfile, setNotifyManualProfile] = useState(true);
   const [notifyAutoProfile, setNotifyAutoProfile] = useState(true);
@@ -346,6 +482,15 @@ export default function GlobalSettingsModal({
   const [updateChannel, setUpdateChannel] = useState(() => updaterService.getUpdateChannel());
   const [showBetaWarningModal, setShowBetaWarningModal] = useState(false);
   const [showBetaExitTipModal, setShowBetaExitTipModal] = useState(false);
+
+  // 严格隔离：正式版只展示正式版更新记录，Beta 渠道只展示 Beta 测试版更新记录
+  const activeChangelogList = useMemo(() => {
+    return updateChannel === 'beta' ? BETA_CHANGELOG : RELEASE_CHANGELOG;
+  }, [updateChannel]);
+
+  React.useEffect(() => {
+    setChangelogPageIndex(0);
+  }, [updateChannel]);
 
   const [libVersion, setLibVersion] = useState(() => updaterService.getCurrentLibVersion());
   const [dbUpdateUrl, setDbUpdateUrl] = useState(() => updaterService.getDbUpdateUrl());
@@ -398,6 +543,13 @@ export default function GlobalSettingsModal({
       });
       setDbCheckResult(res);
 
+      if (typeof window !== 'undefined') {
+        window.dispatchEvent(new CustomEvent('sparklink-update-status-refresh', { detail: res }));
+      }
+      if (typeof onUpdateStatusChange === 'function') {
+        onUpdateStatusChange(res);
+      }
+
       if (!isDbConfigured) {
         addToast({
           message: '暂未在开发者后台配置有效的数据库更新链接',
@@ -428,7 +580,19 @@ export default function GlobalSettingsModal({
       const prefetched = (dbCheckResult?.rawDbData && Array.isArray(dbCheckResult.rawDbData.profiles)) ? dbCheckResult.rawDbData : null;
       const res = await updaterService.performOnlineDbUpdate(downloadUrl, prefetched);
       setLibVersion(updaterService.getCurrentLibVersion());
-      setDbCheckResult(prev => prev ? { ...prev, hasLibUpdate: false } : null);
+
+      // 核心需求：热更新完成后无需重启，立即主动二次全量扫描，确认当前数据库已是最新
+      const recheckRes = await updaterService.checkBothVersions({ dbUrl: '', appUrl: '' });
+      setDbCheckResult(recheckRes);
+
+      // 实时向首页广播事件，彻底消除首页顶栏的“更新可用”提示与小红点！
+      if (typeof window !== 'undefined') {
+        window.dispatchEvent(new CustomEvent('sparklink-update-status-refresh', { detail: recheckRes }));
+      }
+      if (typeof onUpdateStatusChange === 'function') {
+        onUpdateStatusChange(recheckRes);
+      }
+
       addToast({
         message: `🎉 数据库更新成功！已无感覆写并生效 ${res.count} 款键盘适配数据 (版本: ${res.libVersion})！`,
         type: 'success',
@@ -473,6 +637,16 @@ export default function GlobalSettingsModal({
           });
         }
       }
+
+      // 核心需求：导入离线库完成后无需重启，立即主动二次全量扫描，若数据库已为最新则通知首页消除红点
+      const recheckRes = await updaterService.checkBothVersions({ dbUrl: '', appUrl: '' });
+      setDbCheckResult(recheckRes);
+      if (typeof window !== 'undefined') {
+        window.dispatchEvent(new CustomEvent('sparklink-update-status-refresh', { detail: recheckRes }));
+      }
+      if (typeof onUpdateStatusChange === 'function') {
+        onUpdateStatusChange(recheckRes);
+      }
     } catch (err) {
       addToast({ message: `导入离线包失败: ${err.message}`, type: 'error' });
     } finally {
@@ -494,6 +668,13 @@ export default function GlobalSettingsModal({
       });
       setAppCheckResult(res);
 
+      if (typeof window !== 'undefined') {
+        window.dispatchEvent(new CustomEvent('sparklink-update-status-refresh', { detail: res }));
+      }
+      if (typeof onUpdateStatusChange === 'function') {
+        onUpdateStatusChange(res);
+      }
+
       if (!isAppConfigured) {
         addToast({
           message: '暂未在开发者后台配置有效的驱动客户端更新链接',
@@ -501,13 +682,30 @@ export default function GlobalSettingsModal({
         });
       } else if (res.appError) {
         addToast({ message: `检查驱动更新失败: ${res.appError}`, type: 'error' });
+      } else if (res.isBetaBlockedByNewerOfficial) {
+        addToast({
+          message: res.betaBlockReason || `当前正式稳定版（构建 ${updaterService.getCurrentAppBuildTimeCode()}）比云端 Beta 版本更新，暂无更新的 Beta 测试版本！`,
+          type: 'info',
+          duration: 4500,
+        });
+      } else if (res.cannotDowngradeFromBeta) {
+        addToast({
+          message: '当前本地已安装 Beta 测试版，无法直接回退至旧正式版。若需回到正式稳定版，请下载正式版安装包重新安装。',
+          type: 'warning',
+          duration: 4500,
+        });
       } else if (res.hasAppUpdate) {
         addToast({
-          message: `发现驱动客户端新版本 (V${res.cloudAppVersion})，可一键自动覆盖安装！`,
+          message: `发现驱动客户端新版本 (${res.cloudAppVersion}${res.cloudAppBuildTimeCode ? `，构建 ${res.cloudAppBuildTimeCode}` : ''})，可一键自动覆盖安装！`,
           type: 'info',
         });
       } else {
-        addToast({ message: '当前驱动客户端已是最新版本！', type: 'success' });
+        addToast({
+          message: updateChannel === 'beta'
+            ? '当前 Beta 测试客户端已是最新版本！'
+            : '当前正式版驱动客户端已是最新版本！',
+          type: 'success'
+        });
       }
     } catch (err) {
       addToast({ message: `检查驱动异常: ${err.message}`, type: 'error' });
@@ -526,6 +724,10 @@ export default function GlobalSettingsModal({
       const res = await updaterService.performOnlineAppUpdate(targetUrl, (progress) => {
         setAppDownloadProgress(progress.percent || 0);
       });
+      // 记录已升级的标准 Beta 版本号
+      if (updateChannel === 'beta' && appCheckResult?.cloudAppVersion) {
+        updaterService.recordInstalledBetaVersion(appCheckResult.cloudAppVersion);
+      }
       if (res.browserOpened) {
         addToast({ message: '已为您在浏览器打开最新安装包下载页面！', type: 'success' });
       }
@@ -559,6 +761,13 @@ export default function GlobalSettingsModal({
       });
       setDbCheckResult(res);
       setAppCheckResult(res);
+
+      if (typeof window !== 'undefined') {
+        window.dispatchEvent(new CustomEvent('sparklink-update-status-refresh', { detail: res }));
+      }
+      if (typeof onUpdateStatusChange === 'function') {
+        onUpdateStatusChange(res);
+      }
 
       if (res.hasLibUpdate || res.hasAppUpdate) {
         addToast({
@@ -597,11 +806,11 @@ export default function GlobalSettingsModal({
 
   const handleOpenGitHubIssue = (customText = '') => {
     const text = (customText || feedbackText || '').trim();
-    let targetUrl = 'https://github.com/Kutaze/AstraFlux-Hub/issues/new';
+    let targetUrl = 'https://github.com/onekuta/AstraFlux-Hub/issues/new';
     if (text) {
       const title = encodeURIComponent(text.length > 25 ? text.slice(0, 25) + '...' : text);
       const body = encodeURIComponent(`### 问题/建议描述\n${text}\n\n### 环境信息\n- 驱动版本: V${updaterService.getCurrentAppVersion()}\n- 适配库版本: ${updaterService.getCurrentLibVersion()}\n- 操作系统: Windows`);
-      targetUrl = `https://github.com/Kutaze/AstraFlux-Hub/issues/new?title=${title}&body=${body}`;
+      targetUrl = `https://github.com/onekuta/AstraFlux-Hub/issues/new?title=${title}&body=${body}`;
       try {
         if (navigator.clipboard?.writeText) {
           navigator.clipboard.writeText(text);
@@ -839,6 +1048,34 @@ export default function GlobalSettingsModal({
                   </button>
                 </div>
 
+                {/* 运行日志与故障排查 */}
+                <div className="p-4 rounded-[8px] bg-[var(--bg-primary)]/70 border border-[var(--border-color)] flex items-center justify-between">
+                  <div>
+                    <h4 className="text-xs font-bold text-[var(--text-primary)]">{t('settings.logsTitle', '运行日志与故障排查')}</h4>
+                    <p className="text-[11px] text-[var(--text-tertiary)] mt-0.5">{t('settings.logsDesc', '自动持久化记录软件运行状态与异常报错，便于故障诊断与排查')}</p>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <button 
+                      type="button"
+                      onClick={handleCopyDiagnostics}
+                      className="px-3.5 py-1.5 text-xs font-bold rounded-lg border border-[var(--border-color)] hover:border-blue-500 text-[var(--text-primary)] hover:bg-[var(--bg-secondary)] transition cursor-pointer flex items-center gap-1.5 shadow-2xs"
+                      title="提取并复制系统环境与近期错误日志"
+                    >
+                      <Copy className="w-3.5 h-3.5 text-blue-500" />
+                      <span>{t('settings.copyDiagBtn', '复制诊断报告')}</span>
+                    </button>
+                    <button 
+                      type="button"
+                      onClick={handleOpenLogsFolder}
+                      className="px-3.5 py-1.5 text-xs font-bold rounded-lg border border-[var(--border-color)] hover:border-[var(--info-color)] text-[var(--info-color)] hover:bg-[var(--bg-secondary)] transition cursor-pointer flex items-center gap-1.5 shadow-2xs"
+                      title="在文件资源管理器中打开日志文件夹"
+                    >
+                      <FolderOpen className="w-3.5 h-3.5" />
+                      <span>{t('settings.openLogsBtn', '打开日志目录')}</span>
+                    </button>
+                  </div>
+                </div>
+
               </div>
             )}
 
@@ -961,8 +1198,8 @@ export default function GlobalSettingsModal({
                                   {dbCheckResult.cloudLibTotalDevices} 款设备
                                 </span>
                               </div>
-                              <p className="text-[11px] text-[var(--text-secondary)]">
-                                体积约数十 KB，无感秒级加载，无需重新安装客户端
+                              <p className="text-[11px] text-[var(--text-secondary)] leading-relaxed whitespace-pre-line">
+                                {dbCheckResult.libChangelog || '包含最新星闪方案外设键盘规范与按键行程参数'}
                               </p>
                               <button
                                 type="button"
@@ -1039,17 +1276,36 @@ export default function GlobalSettingsModal({
                         <div className="flex items-center justify-between">
                           <span className="text-[var(--text-tertiary)]">发行渠道</span>
                           {updateChannel === 'beta' ? (
-                            <div className="flex items-center space-x-1.5">
+                            <div className="flex items-center space-x-2">
                               <span className="px-2 py-0.5 rounded-full text-[11px] font-bold bg-rose-500/15 text-rose-500 border border-rose-500/30">
-                                🧪 Beta 测试版
+                                {updaterService.isCurrentVersionBeta() ? '🧪 Beta 测试版 (已就绪)' : '🧪 Beta 通道 (待升级)'}
                               </span>
-                              <button
-                                type="button"
-                                onClick={() => setShowBetaExitTipModal(true)}
-                                className="text-[11px] text-amber-500 hover:underline cursor-pointer"
-                              >
-                                {t('betaModal.howToExitBtn', '如何返回正式版？')}
-                              </button>
+                              {!updaterService.isCurrentVersionBeta() ? (
+                                <button
+                                  type="button"
+                                  onClick={() => {
+                                    updaterService.setUpdateChannel('release');
+                                    setUpdateChannel('release');
+                                    setChangelogPageIndex(1);
+                                    addToast({
+                                      message: '已退回正式稳定版更新通道',
+                                      type: 'info',
+                                    });
+                                    setTimeout(() => handleCheckAndUpdateApp(), 200);
+                                  }}
+                                  className="px-2.5 py-0.5 rounded-lg text-xs font-bold bg-sky-500/15 hover:bg-sky-500/25 text-sky-600 dark:text-sky-400 border border-sky-500/30 transition cursor-pointer flex items-center space-x-1"
+                                >
+                                  <span>{t('betaModal.backToRelease', '切回正式稳定版')}</span>
+                                </button>
+                              ) : (
+                                <button
+                                  type="button"
+                                  onClick={() => setShowBetaExitTipModal(true)}
+                                  className="text-[11px] text-amber-500 hover:underline cursor-pointer"
+                                >
+                                  {t('betaModal.howToExitBtn', '如何返回正式版？')}
+                                </button>
+                              )}
                             </div>
                           ) : (
                             <div className="flex items-center space-x-2">
@@ -1059,7 +1315,7 @@ export default function GlobalSettingsModal({
                                 onClick={() => setShowBetaWarningModal(true)}
                                 className="px-2.5 py-0.5 rounded-lg text-xs font-bold bg-rose-500/15 hover:bg-rose-500/25 text-rose-600 dark:text-rose-400 border border-rose-500/30 transition cursor-pointer flex items-center space-x-1"
                               >
-                                <span>{t('betaModal.btnSwitchBeta', '⚡ 切换至 Beta 测试版')}</span>
+                                <span>{t('betaModal.btnSwitchBeta', '切换至 Beta 测试版')}</span>
                               </button>
                             </div>
                           )}
@@ -1095,12 +1351,57 @@ export default function GlobalSettingsModal({
                               <AlertTriangle className="w-4 h-4 shrink-0" />
                               <span>驱动检测异常: {appCheckResult.appError}</span>
                             </div>
+                          ) : appCheckResult.isBetaBlockedByNewerOfficial ? (
+                            <div className="p-2.5 rounded-lg bg-amber-500/10 border border-amber-500/20 space-y-1.5">
+                              <div className="flex items-center space-x-1.5 text-xs font-bold text-amber-600 dark:text-amber-400">
+                                <AlertTriangle className="w-3.5 h-3.5 shrink-0" />
+                                <span>暂无更新的 Beta 测试版 (正式版构建更新)</span>
+                              </div>
+                              <p className="text-[11px] text-[var(--text-secondary)] leading-relaxed">
+                                {appCheckResult.betaBlockReason || `当前运行的正式稳定版构建时间（${updaterService.getCurrentAppBuildTimeCode()}）比云端 Beta 版本更新或同等最新。Beta 通道仅支持向更新的实验构建升级，不可倒退回旧 Beta 版本。`}
+                              </p>
+                              <div className="pt-0.5">
+                                <button
+                                  type="button"
+                                  onClick={handleOpenAppBrowserDownload}
+                                  className="w-full py-1.5 border border-[var(--border-color)] bg-[var(--bg-primary)] hover:bg-[var(--border-color)] text-[var(--text-secondary)] font-bold text-xs rounded-lg transition cursor-pointer flex items-center justify-center space-x-1"
+                                >
+                                  <ExternalLink className="w-3 h-3" />
+                                  <span>打开发布页查看详情</span>
+                                </button>
+                              </div>
+                            </div>
+                          ) : appCheckResult.cannotDowngradeFromBeta ? (
+                            <div className="p-2.5 rounded-lg bg-rose-500/10 border border-rose-500/20 space-y-1.5">
+                              <div className="flex items-center space-x-1.5 text-xs font-bold text-rose-600 dark:text-rose-400">
+                                <AlertTriangle className="w-3.5 h-3.5 shrink-0" />
+                                <span>Beta 测试版不支持向后回退至正式版</span>
+                              </div>
+                              <p className="text-[11px] text-[var(--text-secondary)] leading-relaxed">
+                                当前本地已安装并运行 Beta 测试版，无法直接在线回退至旧正式版本。若需彻底回归正式稳定版，请下载正式版安装包重新安装。
+                              </p>
+                              <div className="pt-0.5">
+                                <button
+                                  type="button"
+                                  onClick={handleOpenAppBrowserDownload}
+                                  className="w-full py-1.5 border border-[var(--border-color)] bg-[var(--bg-primary)] hover:bg-[var(--border-color)] text-[var(--text-secondary)] font-bold text-xs rounded-lg transition cursor-pointer flex items-center justify-center space-x-1"
+                                >
+                                  <ExternalLink className="w-3 h-3" />
+                                  <span>前往下载正式版安装包</span>
+                                </button>
+                              </div>
+                            </div>
                           ) : appCheckResult.hasAppUpdate ? (
                             <div className="p-2 rounded-lg bg-sky-500/10 border border-sky-500/20 space-y-1.5">
                               <div className="flex items-center justify-between">
                                 <div className="text-xs font-bold text-sky-600 dark:text-sky-400 flex items-center space-x-1.5">
                                   <ArrowUpCircle className="w-3.5 h-3.5" />
-                                  <span>发现新版本驱动 (V{appCheckResult.cloudAppVersion})</span>
+                                  <span>发现新版本驱动 ({appCheckResult.cloudAppVersion})</span>
+                                  {appCheckResult.cloudAppBuildTimeCode && (
+                                    <span className="text-[10px] px-1.5 py-0.2 rounded font-mono bg-sky-500/20 border border-sky-500/30 text-sky-600 dark:text-sky-300">
+                                      构建码: {appCheckResult.cloudAppBuildTimeCode}
+                                    </span>
+                                  )}
                                 </div>
                               </div>
                               <p className="text-[11px] text-[var(--text-secondary)] leading-relaxed">
@@ -1146,7 +1447,7 @@ export default function GlobalSettingsModal({
                           ) : (
                             <div className="flex items-center space-x-2 text-xs text-emerald-600 dark:text-emerald-400 font-bold">
                               <CheckCircle2 className="w-4 h-4 shrink-0" />
-                              <span>当前驱动客户端已是最新版本！</span>
+                              <span>当前驱动客户端已是最新版本 (构建: {updaterService.getCurrentAppBuildTimeCode()})！</span>
                             </div>
                           )}
                         </div>
@@ -1283,7 +1584,7 @@ export default function GlobalSettingsModal({
 
                     <button
                       type="button"
-                      onClick={() => openExternal('https://github.com/Kutaze/AstraFlux-Hub/issues', 'GitHub Issues 列表')}
+                      onClick={() => openExternal('https://github.com/onekuta/AstraFlux-Hub/issues', 'GitHub Issues 列表')}
                       className="px-4 py-2.5 rounded-xl bg-[var(--bg-secondary)] hover:bg-[var(--bg-tertiary)] border border-[var(--border-color)] text-[var(--text-primary)] font-bold text-xs flex items-center justify-center space-x-2 transition cursor-pointer active:scale-[0.99]"
                     >
                       <span>📋 查看已提交的所有 Issue 进度</span>
@@ -1335,7 +1636,7 @@ export default function GlobalSettingsModal({
                     </button>
                     <button
                       type="button"
-                      onClick={() => openExternal('https://github.com/Kutaze/AstraFlux-Hub', 'GitHub 仓库')}
+                      onClick={() => openExternal('https://github.com/onekuta/AstraFlux-Hub', 'GitHub 仓库')}
                       className="px-3 py-1.5 rounded-lg bg-[var(--bg-secondary)] hover:bg-[var(--bg-tertiary)] border border-[var(--border-color)] text-xs font-semibold text-[var(--text-primary)] flex items-center space-x-1.5 cursor-pointer transition shrink-0"
                     >
                       <GithubIcon className="w-3.5 h-3.5" />
@@ -1368,6 +1669,39 @@ export default function GlobalSettingsModal({
                     >
                       <span>前往 GitHub 提交 Issue</span>
                       <ExternalLink className="w-3 h-3" />
+                    </button>
+                  </div>
+                </div>
+
+                {/* 4. 本地日志与故障诊断提取 */}
+                <div className="p-4 rounded-xl bg-[var(--bg-primary)]/80 border border-[var(--border-color)] flex items-center justify-between">
+                  <div>
+                    <h4 className="text-xs font-bold text-[var(--text-primary)] flex items-center space-x-1.5">
+                      <FileText className="w-3.5 h-3.5 text-blue-500" />
+                      <span>{t('settings.logsTitle', '运行日志与故障排查')}</span>
+                    </h4>
+                    <p className="text-[11px] text-[var(--text-tertiary)] mt-0.5">
+                      {t('settings.logsDesc', '自动持久化记录软件运行状态与异常报错，便于故障诊断与排查')}
+                    </p>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <button 
+                      type="button"
+                      onClick={handleCopyDiagnostics}
+                      className="px-3.5 py-1.5 text-xs font-bold rounded-lg border border-[var(--border-color)] hover:border-blue-500 text-[var(--text-primary)] hover:bg-[var(--bg-secondary)] transition cursor-pointer flex items-center gap-1.5 shadow-2xs"
+                      title="提取并复制系统环境与近期错误日志"
+                    >
+                      <Copy className="w-3.5 h-3.5 text-blue-500" />
+                      <span>{t('settings.copyDiagBtn', '复制诊断报告')}</span>
+                    </button>
+                    <button 
+                      type="button"
+                      onClick={handleOpenLogsFolder}
+                      className="px-3.5 py-1.5 text-xs font-bold rounded-lg border border-[var(--border-color)] hover:border-[var(--info-color)] text-[var(--info-color)] hover:bg-[var(--bg-secondary)] transition cursor-pointer flex items-center gap-1.5 shadow-2xs"
+                      title="在文件资源管理器中打开日志文件夹"
+                    >
+                      <FolderOpen className="w-3.5 h-3.5" />
+                      <span>{t('settings.openLogsBtn', '打开日志目录')}</span>
                     </button>
                   </div>
                 </div>
@@ -1425,7 +1759,7 @@ export default function GlobalSettingsModal({
                     <div className="flex flex-wrap items-center gap-2 pt-1">
                       <button
                         type="button"
-                        onClick={() => openExternal('https://github.com/Kutaze/AstraFlux-Hub', 'GitHub 开源项目')}
+                        onClick={() => openExternal('https://github.com/onekuta/AstraFlux-Hub', 'GitHub 开源项目')}
                         className="px-3.5 py-1.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold transition flex items-center space-x-1.5 cursor-pointer shadow-xs"
                       >
                         <GithubIcon className="w-3.5 h-3.5" />
@@ -1508,125 +1842,174 @@ export default function GlobalSettingsModal({
 
                   </div>
 
-                  {/* 右上：检查更新卡 */}
-                  <div className="lg:col-span-5 p-5 rounded-2xl bg-[var(--bg-primary)]/80 border border-[var(--border-color)] flex flex-col justify-between space-y-4 shadow-xs">
-                    <div>
-                      <div className="flex items-center space-x-2.5">
-                        <div className="w-8 h-8 rounded-xl bg-blue-500/10 text-blue-500 flex items-center justify-center">
-                          <RefreshCw className="w-4 h-4" />
+                  {/* 右上：检查更新卡 (对齐图三、四、五，无留白，尺寸适中) */}
+                  <div className="lg:col-span-5 p-4.5 rounded-2xl bg-[var(--bg-primary)]/80 border border-[var(--border-color)] flex flex-col justify-between shadow-xs">
+                    <div className="space-y-2.5">
+                      {/* 卡片顶栏：图标标题与状态徽标 */}
+                      <div className="flex items-center justify-between gap-2">
+                        <div className="flex items-center space-x-2.5 min-w-0">
+                          <div className={`w-8 h-8 rounded-xl shrink-0 flex items-center justify-center ${updateChannel === 'beta' ? 'bg-rose-500/10 text-rose-500' : 'bg-blue-500/10 text-blue-500'}`}>
+                            <RefreshCw className="w-4 h-4" />
+                          </div>
+                          <div className="min-w-0">
+                            <h4 className="text-sm font-bold text-[var(--text-primary)] leading-tight">检查更新</h4>
+                            <p className="text-[11px] text-[var(--text-tertiary)] truncate">获取驱动客户端最新版本与更新日志</p>
+                          </div>
                         </div>
-                        <div>
-                          <h4 className="text-sm font-bold text-[var(--text-primary)]">检查更新</h4>
-                          <p className="text-[11px] text-[var(--text-tertiary)]">获取驱动客户端最新版本与更新日志</p>
+
+                        <div className="flex items-center space-x-1.5 shrink-0">
+                          {updateChannel === 'beta' ? (
+                            <span className="px-2.5 py-0.5 rounded-full text-[10px] font-mono font-bold whitespace-nowrap select-none bg-rose-500/15 text-rose-600 dark:text-rose-400 border border-rose-500/30">
+                              Beta 测试版
+                            </span>
+                          ) : (
+                            <span className="px-2.5 py-0.5 rounded-full text-[10px] font-mono font-bold whitespace-nowrap select-none bg-blue-500/10 text-blue-600 dark:text-blue-400 border border-blue-500/20">
+                              正式稳定版
+                            </span>
+                          )}
                         </div>
                       </div>
 
-                      {/* 当前版本 vs 最新版本对比卡片 */}
-                      <div className="grid grid-cols-2 gap-3 mt-4">
-                        <div className="p-3 rounded-xl bg-[var(--bg-secondary)]/80 border border-[var(--border-color)] text-center">
+                      {/* 当前版本 vs 云端版本对比大卡片 (1:1 对齐图五，文字宽敞居中不挤压) */}
+                      <div className="grid grid-cols-2 gap-3 mt-1">
+                        <div className="p-3 rounded-xl bg-[var(--bg-secondary)]/80 border border-[var(--border-color)] text-center shadow-xs">
                           <span className="text-[10px] text-[var(--text-tertiary)] block">当前运行版本</span>
-                          <span className="text-base font-extrabold text-[var(--text-primary)] font-mono mt-0.5 block">v{updaterService.getCurrentAppVersion()}</span>
+                          <span className="text-sm font-extrabold text-[var(--text-primary)] font-mono mt-0.5 block truncate">
+                            {updateChannel === 'beta'
+                              ? (updaterService.isCurrentVersionBeta() ? updaterService.getCurrentAppVersion() : `v${updaterService.getCurrentAppVersion()}`)
+                              : `v${updaterService.getCurrentAppVersion()}`
+                            }
+                          </span>
+                          <span className="text-[10px] text-[var(--text-tertiary)] font-mono block mt-0.5">
+                            构建码: {updaterService.getCurrentAppBuildTimeCode()}
+                          </span>
                         </div>
-                        <div className="p-3 rounded-xl bg-[var(--bg-secondary)]/80 border border-[var(--border-color)] text-center">
+                        <div className="p-3 rounded-xl bg-[var(--bg-secondary)]/80 border border-[var(--border-color)] text-center shadow-xs">
                           <span className="text-[10px] text-[var(--text-tertiary)] block">云端最新版本</span>
-                          <span className="text-base font-extrabold text-emerald-500 font-mono mt-0.5 block">v{updaterService.getCurrentAppVersion()}</span>
+                          <span className="text-sm font-extrabold text-emerald-500 font-mono mt-0.5 block truncate">
+                            {updateChannel === 'beta'
+                              ? (appCheckResult?.cloudAppVersion || 'beta0.26.10.23')
+                              : (appCheckResult?.cloudAppVersion ? `v${appCheckResult.cloudAppVersion.replace(/^v/i, '')}` : `v${updaterService.getCurrentAppVersion()}`)
+                            }
+                          </span>
+                          <span className="text-[10px] text-emerald-600/80 dark:text-emerald-400/80 font-mono block mt-0.5">
+                            构建码: {updateChannel === 'beta'
+                              ? (appCheckResult?.cloudAppBuildTimeCode || '26.10.23')
+                              : (appCheckResult?.cloudAppBuildTimeCode || '26.10.22')
+                            }
+                          </span>
                         </div>
                       </div>
 
-                      {/* 发布标签 */}
-                      <div className="flex items-center justify-center space-x-2 mt-3">
-                        <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-blue-500 text-white shadow-xs">
-                          正式稳定版
-                        </span>
-                        <span className="px-2.5 py-0.5 rounded-full text-[10px] font-semibold bg-[var(--bg-secondary)] text-[var(--text-tertiary)] border border-[var(--border-color)]">
-                          开源免安装构建
-                        </span>
+                      {/* 渠道标签栏 (对齐图三与图四) */}
+                      <div className="flex items-center justify-center space-x-2 pt-0.5">
+                        {updateChannel === 'beta' ? (
+                          <>
+                            <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-rose-500 text-white shadow-xs">
+                              Beta 测试版
+                            </span>
+                            <span className="px-2.5 py-0.5 rounded-full text-[10px] font-semibold bg-rose-500/10 text-rose-500 border border-rose-500/25">
+                              抢先体验通道
+                            </span>
+                          </>
+                        ) : (
+                          <>
+                            <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-blue-500 text-white shadow-xs">
+                              正式稳定版
+                            </span>
+                            <span className="px-2.5 py-0.5 rounded-full text-[10px] font-semibold bg-[var(--bg-secondary)] text-[var(--text-tertiary)] border border-[var(--border-color)]">
+                              开源免安装构建
+                            </span>
+                          </>
+                        )}
                       </div>
 
-                      {/* 可滚动翻页的版本更新记录子窗口 */}
+                      {/* 可滚动翻页更新记录子窗口 (严格按渠道隔离：正式版只展示正式版，Beta只展示Beta) */}
                       {(() => {
-                        const curChangelog = CHANGELOG_DATA[changelogPageIndex] || CHANGELOG_DATA[0];
+                        const curChangelog = activeChangelogList[changelogPageIndex] || activeChangelogList[0];
                         return (
-                          <div className="mt-3.5 bg-[var(--bg-secondary)]/90 border border-[var(--border-color)] rounded-xl p-3 flex flex-col shadow-inner">
-                            {/* 子窗口顶栏：标题 + 翻页指示与控制器 */}
-                            <div className="flex items-center justify-between pb-2 border-b border-[var(--border-color)]/60">
+                          <div className="bg-[var(--bg-secondary)]/90 border border-[var(--border-color)] rounded-xl p-2.5 flex flex-col shadow-inner">
+                            {/* 子窗口顶栏：标题 + 左右翻页控制器 */}
+                            <div className="flex items-center justify-between pb-1.5 border-b border-[var(--border-color)]/60">
                               <div className="flex items-center space-x-1.5">
-                                <History className="w-3.5 h-3.5 text-blue-500" />
-                                <span className="text-xs font-bold text-[var(--text-primary)]">版本更新记录</span>
+                                <History className={`w-3.5 h-3.5 ${updateChannel === 'beta' ? 'text-rose-500' : 'text-blue-500'}`} />
+                                <span className="text-xs font-bold text-[var(--text-primary)]">
+                                  {updateChannel === 'beta' ? 'Beta测试版更新记录' : '版本更新记录'}
+                                </span>
                                 <span className={`text-[10px] px-1.5 py-0.2 rounded font-mono font-bold border ${curChangelog.tagColor}`}>
                                   {curChangelog.version}
                                 </span>
                               </div>
 
-                              {/* 左右翻页控制器 */}
+                              {/* 左右翻页 */}
                               <div className="flex items-center space-x-1">
                                 <span className="text-[10px] text-[var(--text-tertiary)] font-mono mr-1">
-                                  {changelogPageIndex + 1} / {CHANGELOG_DATA.length}
+                                  {Math.min(changelogPageIndex + 1, activeChangelogList.length)}/{activeChangelogList.length}
                                 </span>
                                 <button
                                   type="button"
                                   disabled={changelogPageIndex === 0}
                                   onClick={() => setChangelogPageIndex(prev => Math.max(0, prev - 1))}
-                                  className="p-1 rounded-md hover:bg-[var(--bg-primary)] text-[var(--text-secondary)] disabled:opacity-25 disabled:cursor-not-allowed transition cursor-pointer"
+                                  className="p-0.5 rounded hover:bg-[var(--bg-primary)] text-[var(--text-secondary)] disabled:opacity-25 disabled:cursor-not-allowed transition cursor-pointer"
                                   title="上一版本"
                                 >
-                                  <ChevronLeft className="w-3.5 h-3.5" />
+                                  <ChevronLeft className="w-3 h-3" />
                                 </button>
                                 <button
                                   type="button"
-                                  disabled={changelogPageIndex === CHANGELOG_DATA.length - 1}
-                                  onClick={() => setChangelogPageIndex(prev => Math.min(CHANGELOG_DATA.length - 1, prev + 1))}
-                                  className="p-1 rounded-md hover:bg-[var(--bg-primary)] text-[var(--text-secondary)] disabled:opacity-25 disabled:cursor-not-allowed transition cursor-pointer"
+                                  disabled={changelogPageIndex >= activeChangelogList.length - 1}
+                                  onClick={() => setChangelogPageIndex(prev => Math.min(activeChangelogList.length - 1, prev + 1))}
+                                  className="p-0.5 rounded hover:bg-[var(--bg-primary)] text-[var(--text-secondary)] disabled:opacity-25 disabled:cursor-not-allowed transition cursor-pointer"
                                   title="下一版本"
                                 >
-                                  <ChevronRight className="w-3.5 h-3.5" />
+                                  <ChevronRight className="w-3 h-3" />
                                 </button>
                               </div>
                             </div>
 
-                            {/* 快速翻页版本药丸栏 */}
-                            <div className="flex items-center space-x-1.5 py-2 overflow-x-auto no-scrollbar">
-                              {CHANGELOG_DATA.map((item, idx) => (
+                            {/* 快速版本切换小标签 (严格仅展示当前渠道专属版本) */}
+                            <div className="flex items-center space-x-1.5 py-1.5 overflow-x-auto no-scrollbar">
+                              {activeChangelogList.map((item, idx) => (
                                 <button
                                   key={item.version}
                                   type="button"
                                   onClick={() => setChangelogPageIndex(idx)}
                                   className={`px-2 py-0.5 rounded-full text-[10px] font-mono transition cursor-pointer shrink-0 ${
                                     changelogPageIndex === idx
-                                      ? 'bg-blue-600 text-white font-bold shadow-xs'
+                                      ? (updateChannel === 'beta' ? 'bg-rose-500 text-white font-bold shadow-xs' : 'bg-blue-600 text-white font-bold shadow-xs')
                                       : 'bg-[var(--bg-primary)]/80 text-[var(--text-tertiary)] hover:text-[var(--text-primary)] border border-[var(--border-color)]/60'
                                   }`}
                                 >
-                                  {item.version} {item.isCurrent ? '(当前)' : ''}
+                                  {item.version} {item.isCurrent ? '(最新)' : ''}
                                 </button>
                               ))}
                             </div>
 
-                            {/* 核心内容区：支持上下鼠标滚轮滚动 */}
+                            {/* 核心内容区：适中高度 h-24 (96px)，饱满填充空间，鼠标滚轮可自如滑动 */}
                             <div 
-                              className="h-44 overflow-y-auto pr-1.5 space-y-2.5 text-xs text-[var(--text-secondary)]"
+                              className="h-24 overflow-y-auto pr-1 space-y-1 text-xs text-[var(--text-secondary)] custom-scrollbar"
                               style={{ scrollbarWidth: 'thin' }}
                             >
                               <div className="flex items-center justify-between text-[10px] text-[var(--text-tertiary)] font-mono">
                                 <span>发布日期：{curChangelog.date}</span>
-                                <span className={`px-1.5 py-0.5 rounded font-bold border ${curChangelog.tagColor}`}>
+                                <span className={`px-1.5 py-0.2 rounded font-bold border ${curChangelog.tagColor}`}>
                                   {curChangelog.tag}
                                 </span>
                               </div>
 
-                              <p className="text-[11px] text-[var(--text-primary)] font-medium bg-[var(--bg-primary)]/70 p-2 rounded-lg border border-[var(--border-color)]/50 leading-relaxed">
+                              <p className="text-[10.5px] text-[var(--text-primary)] font-medium leading-relaxed bg-[var(--bg-primary)]/60 p-1.5 rounded-lg border border-[var(--border-color)]/40">
                                 💡 {curChangelog.summary}
                               </p>
 
                               {curChangelog.sections.map((sec, sIdx) => (
-                                <div key={sIdx} className="space-y-1">
-                                  <div className={`text-[11px] font-bold ${sec.color} flex items-center space-x-1`}>
+                                <div key={sIdx} className="space-y-0.5">
+                                  <div className={`text-[10px] font-bold ${sec.color} flex items-center space-x-1`}>
                                     <span>❖</span>
                                     <span>{sec.category}</span>
                                   </div>
-                                  <ul className="space-y-1 pl-1.5">
+                                  <ul className="space-y-0.5 pl-1.5">
                                     {sec.items.map((it, iIdx) => (
-                                      <li key={iIdx} className="text-[11px] leading-relaxed flex items-start space-x-1.5 text-[var(--text-secondary)]">
+                                      <li key={iIdx} className="text-[10px] leading-tight flex items-start space-x-1 text-[var(--text-secondary)]">
                                         <span className="text-[var(--text-tertiary)] select-none mt-0.5">•</span>
                                         <span>{it}</span>
                                       </li>
@@ -1635,51 +2018,45 @@ export default function GlobalSettingsModal({
                                 </div>
                               ))}
                             </div>
-
-                            {/* 子窗口底栏提示 */}
-                            <div className="pt-2 mt-1.5 border-t border-[var(--border-color)]/40 flex items-center justify-between text-[10px] text-[var(--text-tertiary)]">
-                              <span>↕ 鼠标滚轮上下滑动查看更多</span>
-                              <span>{curChangelog.isCurrent ? '⚡ 当前已就绪' : '📦 历史归档'}</span>
-                            </div>
                           </div>
                         );
                       })()}
                     </div>
 
-                    <div className="space-y-2 pt-2">
+                    <div className="space-y-1.5 pt-2">
                       <button
                         type="button"
                         onClick={() => setActiveSection('updates')}
-                        className="w-full py-2.5 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-bold text-xs rounded-xl transition shadow-sm cursor-pointer flex items-center justify-center space-x-2 active:scale-98"
+                        className="w-full py-2 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-bold text-xs rounded-xl transition shadow-xs cursor-pointer flex items-center justify-center space-x-1.5 active:scale-98"
                       >
-                        <DownloadCloud className="w-4 h-4" />
+                        <DownloadCloud className="w-3.5 h-3.5" />
                         <span>前往软件与适配库更新中心</span>
                       </button>
 
-                      <div className="flex items-center justify-between text-xs pt-1 px-1">
+                      <div className="flex items-center justify-between text-xs px-1">
                         <button
                           type="button"
                           onClick={() => {
                             setChangelogPageIndex(0);
                             addToast({
-                              message: '已在上方子窗口定位至 v1.1.2 当前版本更新日志，可滚动翻页浏览',
+                              message: `已定位至当前 ${updateChannel === 'beta' ? 'Beta 测试版' : '正式稳定版'} 最新更新日志`,
                               type: 'info',
-                              duration: 3000
+                              duration: 2500
                             });
                           }}
-                          className="text-[var(--text-secondary)] hover:text-[var(--info-color)] transition flex items-center space-x-1 cursor-pointer text-[11px]"
+                          className="text-[var(--text-secondary)] hover:text-[var(--info-color)] transition flex items-center space-x-1 cursor-pointer text-[10px]"
                         >
-                          <FileText className="w-3 h-3" />
+                          <FileText className="w-3.5 h-3.5" />
                           <span>定位当前更新日志</span>
                         </button>
 
                         <button
                           type="button"
-                          onClick={() => openExternal('https://github.com/Kutaze/AstraFlux-Hub/releases', 'GitHub Releases')}
-                          className="text-[var(--text-secondary)] hover:text-[var(--info-color)] transition flex items-center space-x-1 cursor-pointer text-[11px]"
+                          onClick={() => openExternal('https://gitee.com/Kutaze/astra-flux-hub/releases', 'Gitee Releases')}
+                          className="text-[var(--text-secondary)] hover:text-[var(--info-color)] transition flex items-center space-x-1 cursor-pointer text-[10px]"
                         >
                           <span>打开发布页</span>
-                          <ExternalLink className="w-3 h-3" />
+                          <ExternalLink className="w-3.5 h-3.5" />
                         </button>
                       </div>
                     </div>
@@ -1721,7 +2098,7 @@ export default function GlobalSettingsModal({
                       <div className="grid grid-cols-2 gap-2">
                         {/* 贡献者 1: 作者 乐禾泽 */}
                         <div 
-                          onClick={() => openExternal('https://github.com/Kutaze/AstraFlux-Hub', '乐禾泽 (Kutaze)')}
+                          onClick={() => openExternal('https://github.com/onekuta/AstraFlux-Hub', '乐禾泽 (Kutaze)')}
                           className="p-2.5 rounded-xl bg-[var(--bg-secondary)]/70 hover:bg-[var(--bg-secondary)] border border-[var(--border-color)] flex items-center justify-between transition cursor-pointer group"
                         >
                           <div className="flex items-center space-x-2.5 min-w-0">
@@ -1830,14 +2207,14 @@ export default function GlobalSettingsModal({
 
                         <button
                           type="button"
-                          onClick={() => openExternal('https://github.com/Kutaze/AstraFlux-Hub', 'GitHub 仓库')}
+                          onClick={() => openExternal('https://github.com/onekuta/AstraFlux-Hub', 'GitHub 仓库')}
                           className="w-full px-2.5 py-1.5 rounded-lg bg-[var(--bg-secondary)]/50 hover:bg-[var(--bg-secondary)] border border-[var(--border-color)]/70 flex items-center justify-between text-left transition cursor-pointer group"
                         >
                           <div className="flex items-center space-x-2 min-w-0">
                             <GithubIcon className="w-3.5 h-3.5 text-[var(--text-primary)] shrink-0" />
                             <div className="min-w-0">
                               <span className="text-[10px] text-[var(--text-tertiary)] block">开源仓库 (GitHub)</span>
-                              <span className="text-[11px] font-medium text-[var(--text-primary)] font-mono truncate block">github.com/Kutaze/AstraFlux-Hub</span>
+                              <span className="text-[11px] font-medium text-[var(--text-primary)] font-mono truncate block">github.com/onekuta/AstraFlux-Hub</span>
                             </div>
                           </div>
                           <ExternalLink className="w-3 h-3 text-[var(--text-tertiary)] group-hover:text-blue-500 shrink-0 ml-1 transition" />
@@ -2039,7 +2416,7 @@ export default function GlobalSettingsModal({
                   <div className="flex justify-end pt-1">
                     <button
                       type="button"
-                      onClick={() => openExternal('https://github.com/Kutaze/AstraFlux-Hub', 'GitHub 开源仓库')}
+                      onClick={() => openExternal('https://github.com/onekuta/AstraFlux-Hub', 'GitHub 开源仓库')}
                       className="px-4 py-2 rounded-xl bg-[var(--bg-secondary)] hover:bg-[var(--bg-tertiary)] border border-[var(--border-color)] text-xs font-bold text-[var(--text-primary)] flex items-center space-x-1.5 cursor-pointer transition shadow-xs"
                     >
                       <GithubIcon className="w-3.5 h-3.5" />
@@ -2113,6 +2490,7 @@ export default function GlobalSettingsModal({
                 onClick={() => {
                   updaterService.setUpdateChannel('beta');
                   setUpdateChannel('beta');
+                  setChangelogPageIndex(0);
                   setShowBetaWarningModal(false);
                   addToast({
                     message: '⚠️ 已切换至 Beta 测试更新通道！正在查询云端测试版...',
@@ -2143,37 +2521,50 @@ export default function GlobalSettingsModal({
               </div>
               <div>
                 <h3 className="text-base font-black text-[var(--text-primary)]">
-                  {t('betaModal.betaTipTitle', '如何切回正式稳定版？')}
+                  {updaterService.isCurrentVersionBeta()
+                    ? t('betaModal.betaTipTitle', '如何退回正式稳定版？')
+                    : '如何退回正式稳定版？'}
                 </h3>
                 <p className="text-xs text-[var(--text-tertiary)] mt-0.5">
-                  {t('betaModal.howToExitBtn', 'Beta 测试版回退指引')}
+                  {updaterService.isCurrentVersionBeta()
+                    ? t('betaModal.howToExitBtn', 'Beta 测试版回退指引')
+                    : '如何返回正式版？'}
                 </p>
               </div>
             </div>
 
             <div className="p-3.5 rounded-xl bg-[var(--bg-secondary)] border border-[var(--border-color)] text-xs text-[var(--text-secondary)] space-y-2 leading-relaxed">
               <p>
-                {t('betaModal.betaTipDesc', '根据系统安全机制，Beta 测试版与正式版数据库及驱动结构不同，无法直接在软件内执行在线降级。')}
+                {updaterService.isCurrentVersionBeta()
+                  ? t('betaModal.betaTipDesc', '由于 Beta 测试版的配置与内核协议向前递进，无法在客户端内直接一键降级。若需要恢复正式版，请先卸载驱动程序，然后前往官网或 GitHub 下载正式版安装包重新安装即可。')
+                  : '由于 Beta 测试版的配置与内核协议向前递进，无法在客户端内直接一键降级。若需要恢复正式版，请先卸载驱动程序，然后前往官网或 GitHub 下载正式版安装包重新安装即可。'}
               </p>
             </div>
 
             <div className="flex items-center justify-between pt-2">
-              <button
-                type="button"
-                onClick={() => {
-                  updaterService.setUpdateChannel('release');
-                  setUpdateChannel('release');
-                  setShowBetaExitTipModal(false);
-                  addToast({
-                    message: '已切换回正式版检测通道',
-                    type: 'info',
-                  });
-                  setTimeout(() => handleCheckAndUpdateApp(), 200);
-                }}
-                className="text-xs text-[var(--text-tertiary)] hover:text-amber-500 underline cursor-pointer"
-              >
-                {t('betaModal.cancelBtn', '切回正式通道检测')}
-              </button>
+              {!updaterService.isCurrentVersionBeta() ? (
+                <button
+                  type="button"
+                  onClick={() => {
+                    updaterService.setUpdateChannel('release');
+                    setUpdateChannel('release');
+                    setChangelogPageIndex(1);
+                    setShowBetaExitTipModal(false);
+                    addToast({
+                      message: '已退回正式稳定版更新通道',
+                      type: 'info',
+                    });
+                    setTimeout(() => handleCheckAndUpdateApp(), 200);
+                  }}
+                  className="text-xs text-[var(--text-secondary)] hover:text-blue-500 underline cursor-pointer font-medium"
+                >
+                  保持当前正式版
+                </button>
+              ) : (
+                <span className="text-[11px] text-[var(--text-tertiary)] opacity-60 select-none">
+                  需卸载后重装正式版
+                </span>
+              )}
               <button
                 type="button"
                 onClick={() => setShowBetaExitTipModal(false)}

@@ -58,7 +58,16 @@
     ],
     "defaultPollingRate": 8000,
     "minActuationPoint": 0.01,
-    "defaultAxis": "双子星自研马轴",
+    "defaultAxis": "神马轴",
+    "supportedSwitches": [
+      "神马轴",
+      "磁玉 Pro",
+      "磁玉轴",
+      "磁玉 Pro 超竞版",
+      "万磁王",
+      "万磁王 RGB",
+      "天际线轴"
+    ],
     "features": {
       "magneticAxis": true,
       "rtSupport": true,

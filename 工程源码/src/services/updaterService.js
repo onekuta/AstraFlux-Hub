@@ -18,9 +18,10 @@ const DEFAULT_APP_URL = 'https://gitee.com/Kutaze/astra-flux-hub/raw/main/softwa
 const DEFAULT_BETA_APP_URL = 'https://gitee.com/Kutaze/astra-flux-hub/raw/main/software(beta)/manifest.json';
 const DEFAULT_MANIFEST_URL = 'https://gitee.com/Kutaze/astra-flux-hub/raw/main/manifest.json';
 const GITEE_RELEASES_PAGE = 'https://gitee.com/Kutaze/astra-flux-hub/releases';
-const GITHUB_RELEASES_PAGE = 'https://github.com/Kutaze/AstraFlux-Hub/releases';
+const GITHUB_RELEASES_PAGE = 'https://github.com/onekuta/AstraFlux-Hub/releases';
 
-const CURRENT_APP_VERSION = '1.1.2';
+const CURRENT_APP_VERSION = '1.1.3';
+const CURRENT_APP_BUILD_TIMECODE = '26.10.23';
 const DEFAULT_LIB_VERSION = '2026.10.20.1';
 
 // 计算当前日期的默认 Beta 版本号格式：beta0.YY.MM.DD
@@ -29,6 +30,37 @@ export function getFormattedBetaVersion(date = new Date()) {
   const mm = String(date.getMonth() + 1).padStart(2, '0');
   const dd = String(date.getDate()).padStart(2, '0');
   return `beta0.${yy}.${mm}.${dd}`;
+}
+
+// 解析任意版本字符串或日期格式为整数时间码 (如 "26.10.23" -> 261023, "beta0.26.10.23" -> 261023, "2026-10-23" -> 261023)
+export function parseTimeCode(val) {
+  if (!val) return 0;
+  const s = String(val).trim();
+  // 1. beta0.YY.MM.DD 或 beta.YY.MM.DD
+  const betaM = s.match(/beta\d*[\.-](\d{2})\.(\d{1,2})\.(\d{1,2})/i);
+  if (betaM) {
+    return parseInt(`${betaM[1].padStart(2, '0')}${betaM[2].padStart(2, '0')}${betaM[3].padStart(2, '0')}`, 10);
+  }
+  // 2. YY.MM.DD 或 20YY.MM.DD
+  const dotM = s.match(/(?:20)?(\d{2})\.(\d{1,2})\.(\d{1,2})/);
+  if (dotM) {
+    return parseInt(`${dotM[1].padStart(2, '0')}${dotM[2].padStart(2, '0')}${dotM[3].padStart(2, '0')}`, 10);
+  }
+  // 3. 20YY-MM-DD 或 ISO 字符串
+  const dashM = s.match(/(?:20)?(\d{2})-(\d{1,2})-(\d{1,2})/);
+  if (dashM) {
+    return parseInt(`${dashM[1].padStart(2, '0')}${dashM[2].padStart(2, '0')}${dashM[3].padStart(2, '0')}`, 10);
+  }
+  return 0;
+}
+
+// 将整数时间码或日期还原为标准 YY.MM.DD 显示格式
+export function formatTimeCode(val) {
+  if (!val) return '';
+  const num = typeof val === 'number' ? val : parseTimeCode(val);
+  if (!num) return String(val);
+  const s = String(num).padStart(6, '0');
+  return `${s.slice(0, 2)}.${s.slice(2, 4)}.${s.slice(4, 6)}`;
 }
 
 // 语义化版本号比对工具 (v1.1.1 > v1.1.0)
@@ -45,31 +77,109 @@ function compareSemver(v1, v2) {
   return 0;
 }
 
-// 版本更新可用性判定：根据当前渠道 (release 或 beta) 判定是否有新版本
-function compareVersions(cloudVer, localVer, channel = 'release') {
-  if (!cloudVer) return false;
+// 版本更新可用性判定：根据当前渠道 (release 或 beta) 判定是否有新版本，严格防止倒退与回退
+export function compareAppVersions(cloudVer, localVer, channel = 'release', cloudManifest = null, localTimeCode = CURRENT_APP_BUILD_TIMECODE) {
+  if (!cloudVer) {
+    return { hasUpdate: false, reason: 'no_cloud_version' };
+  }
   const sCloud = String(cloudVer).trim();
   const sLocal = String(localVer || '').trim();
+  const isLocalBeta = sLocal.toLowerCase().startsWith('beta');
+
+  // 提取云端与本地的时间码 (整数，可直接比大小)
+  const cloudTimeCodeRaw = cloudManifest?.buildTimeCode || cloudManifest?.buildDate || sCloud;
+  const cloudTimeNum = parseTimeCode(cloudTimeCodeRaw) || parseTimeCode(cloudManifest?.updatedAt);
+  const localTimeNum = parseTimeCode(localTimeCode) || (isLocalBeta ? parseTimeCode(sLocal) : parseTimeCode(CURRENT_APP_BUILD_TIMECODE));
 
   if (channel === 'beta') {
-    // 若本地仍为正式稳定版 (非 beta 开头)，则云端推送的任何 beta 版本均可升级
-    if (!sLocal.toLowerCase().startsWith('beta')) {
-      return true;
+    // 场景 A：本地当前运行的是【正式稳定版】
+    if (!isLocalBeta) {
+      // 业务硬性门禁规则：
+      // 如果当前本地正式版的时间码 比 云端 Beta 的时间码更近（或同一天最新），
+      // 说明正式版已吸收或超越了此 Beta 版本，坚决禁止“升级”（实质为倒退）至旧 Beta 版本！
+      if (cloudTimeNum <= localTimeNum) {
+        return {
+          hasUpdate: false,
+          isBlockedByNewerOfficial: true,
+          blockReason: `当前正式稳定版构建时间（${formatTimeCode(localTimeNum)}）比云端 Beta 版本（${formatTimeCode(cloudTimeNum) || sCloud}）更新或同等最新，不支持更新/回退至旧 Beta 版本`,
+          cloudTimeCode: formatTimeCode(cloudTimeNum),
+          localTimeCode: formatTimeCode(localTimeNum),
+        };
+      }
+      // 云端 Beta 构建时间严格新于当前正式稳定版 -> 允许升级体验
+      return {
+        hasUpdate: true,
+        cloudTimeCode: formatTimeCode(cloudTimeNum),
+        localTimeCode: formatTimeCode(localTimeNum),
+      };
     }
-    // 本地和云端都是 beta 测试版时：比对日期序号
-    const pCloud = sCloud.replace(/^beta/i, '').split('.').map(n => parseInt(n, 10) || 0);
-    const pLocal = sLocal.replace(/^beta/i, '').split('.').map(n => parseInt(n, 10) || 0);
-    for (let i = 0; i < Math.max(pCloud.length, pLocal.length); i++) {
-      const c = pCloud[i] || 0;
-      const l = pLocal[i] || 0;
-      if (c > l) return true;
-      if (c < l) return false;
+
+    // 场景 B：本地运行的已经是【Beta 测试版】
+    // 此时两者皆为 Beta，仅当云端 Beta 时间码严格大于本地已安装的 Beta 时间码时才允许更新
+    if (cloudTimeNum > localTimeNum) {
+      return {
+        hasUpdate: true,
+        cloudTimeCode: formatTimeCode(cloudTimeNum),
+        localTimeCode: formatTimeCode(localTimeNum),
+      };
     }
-    return false;
+    return {
+      hasUpdate: false,
+      reason: 'already_latest_beta',
+      cloudTimeCode: formatTimeCode(cloudTimeNum),
+      localTimeCode: formatTimeCode(localTimeNum),
+    };
   }
 
-  // 正式版渠道：标准语义化对比
-  return compareSemver(sCloud, sLocal) > 0;
+  // 正式版渠道 (release)
+  if (isLocalBeta) {
+    // 已安装 Beta 测试版的用户切换回正式版渠道：
+    // 若云端正式版更新了，且时间码新于当前本地 Beta，允许回归最新正式版
+    if (cloudTimeNum > localTimeNum) {
+      return {
+        hasUpdate: true,
+        cloudTimeCode: formatTimeCode(cloudTimeNum),
+        localTimeCode: formatTimeCode(localTimeNum),
+      };
+    }
+    // 否则已安装 Beta 版本无法向后回退至老正式版
+    return {
+      hasUpdate: false,
+      cannotDowngradeFromBeta: true,
+      reason: 'beta_cannot_downgrade_to_older_release',
+      cloudTimeCode: formatTimeCode(cloudTimeNum),
+      localTimeCode: formatTimeCode(localTimeNum),
+    };
+  }
+
+  // 本地是正式版，云端是正式版：优先语义化版本号，若版本号相同则比对构建时间码 (用于同版本修复构建)
+  const semverDiff = compareSemver(sCloud, sLocal);
+  if (semverDiff > 0) {
+    return {
+      hasUpdate: true,
+      cloudTimeCode: formatTimeCode(cloudTimeNum),
+      localTimeCode: formatTimeCode(localTimeNum),
+    };
+  } else if (semverDiff === 0 && cloudTimeNum > localTimeNum) {
+    return {
+      hasUpdate: true,
+      isHotfix: true,
+      cloudTimeCode: formatTimeCode(cloudTimeNum),
+      localTimeCode: formatTimeCode(localTimeNum),
+    };
+  }
+
+  return {
+    hasUpdate: false,
+    reason: 'already_latest_release',
+    cloudTimeCode: formatTimeCode(cloudTimeNum),
+    localTimeCode: formatTimeCode(localTimeNum),
+  };
+}
+
+// 保持向下兼容的老函数名
+function compareVersions(cloudVer, localVer, channel = 'release', cloudManifest = null, localTimeCode = CURRENT_APP_BUILD_TIMECODE) {
+  return compareAppVersions(cloudVer, localVer, channel, cloudManifest, localTimeCode).hasUpdate;
 }
 
 class UpdaterService {
@@ -215,12 +325,53 @@ class UpdaterService {
     const channel = this.getUpdateChannel();
     if (channel === 'beta') {
       try {
-        const saved = window.localStorage.getItem('sparklink_hub_installed_beta_version');
-        if (saved) return saved;
+        if (typeof window !== 'undefined' && window.localStorage) {
+          const saved = window.localStorage.getItem('sparklink_hub_installed_beta_version');
+          // 仅当用户真正安装升级过标准 Beta 版本时，本地版本才呈现为 Beta 格式
+          if (saved && String(saved).toLowerCase().startsWith('beta')) {
+            return String(saved).trim();
+          }
+        }
       } catch {}
-      return getFormattedBetaVersion();
+      // 切换至 Beta 通道但尚未执行升级安装前，本地版本严格保持真实正式版本号 (如 1.1.2)
+      return CURRENT_APP_VERSION;
     }
     return CURRENT_APP_VERSION;
+  }
+
+  // 获取当前运行客户端的构建时间码 (如 "26.10.22" 或 "26.10.23")
+  getCurrentAppBuildTimeCode() {
+    if (this.isCurrentVersionBeta()) {
+      const ver = this.getCurrentAppVersion();
+      const code = formatTimeCode(ver);
+      return code || '26.10.23';
+    }
+    return CURRENT_APP_BUILD_TIMECODE; // '26.10.22'
+  }
+
+  // 判定当前运行的本地客户端是否已是标准 Beta 版本 (按安装后的版本号标准判定)
+  isCurrentVersionBeta() {
+    const ver = this.getCurrentAppVersion();
+    return String(ver).toLowerCase().startsWith('beta');
+  }
+
+  // 记录已安装的标准 Beta 版本号
+  recordInstalledBetaVersion(version) {
+    try {
+      if (typeof window !== 'undefined' && window.localStorage) {
+        window.localStorage.setItem('sparklink_hub_installed_beta_version', version || getFormattedBetaVersion());
+        window.dispatchEvent(new CustomEvent('sparklink-update-status-refresh', { detail: { type: 'app', version } }));
+      }
+    } catch {}
+  }
+
+  // 清除 Beta 版本记录 (卸载重装正式版或彻底还原时)
+  clearInstalledBetaVersion() {
+    try {
+      if (typeof window !== 'undefined' && window.localStorage) {
+        window.localStorage.removeItem('sparklink_hub_installed_beta_version');
+      }
+    } catch {}
   }
 
   getCurrentLibVersion() {
@@ -234,6 +385,7 @@ class UpdaterService {
 
     const currentLib = this.getCurrentLibVersion();
     const currentApp = this.getCurrentAppVersion();
+    const currentBuildTime = this.getCurrentAppBuildTimeCode();
 
     const result = {
       configured: true,
@@ -246,8 +398,13 @@ class UpdaterService {
       libError: null,
 
       currentAppVersion: currentApp,
+      currentAppBuildTimeCode: currentBuildTime,
       cloudAppVersion: null,
+      cloudAppBuildTimeCode: null,
       hasAppUpdate: false,
+      isBetaBlockedByNewerOfficial: false,
+      betaBlockReason: null,
+      cannotDowngradeFromBeta: false,
       appDownloadUrl: null,
       appChangelog: null,
       appFileSize: null,
@@ -270,16 +427,20 @@ class UpdaterService {
             const json = await resp.json();
             if (Array.isArray(json.profiles)) {
               result.rawDbData = json;
+              result.cloudLibVersion = json.libVersion;
+              result.cloudLibTotalDevices = json.totalDevices || json.profiles.length;
+              result.libChangelog = json.libChangelog || json.changelog || `收录 ${result.cloudLibTotalDevices} 款星闪方案外设 PCB`;
+              result.hasLibUpdate = !!(result.cloudLibVersion && result.cloudLibVersion > currentLib);
             } else {
               result.rawManifest = json;
               result.rawDbData = null;
-            }
-            if (json.libVersion) {
-              result.cloudLibVersion = json.libVersion;
-              result.cloudLibTotalDevices = json.totalDevices || json.profiles?.length || 0;
-              result.libDownloadUrl = json.libDownloadUrl || targetDbUrl.replace(/manifest\.json.*$/, 'device_database.spkdb');
-              result.libChangelog = json.libChangelog || `新增适配 ${result.cloudLibTotalDevices} 款星闪方案外设 PCB`;
-              result.hasLibUpdate = !!(result.cloudLibVersion && result.cloudLibVersion > currentLib);
+              if (json.libVersion) {
+                result.cloudLibVersion = json.libVersion;
+                result.cloudLibTotalDevices = json.totalDevices || json.profiles?.length || 0;
+                result.libDownloadUrl = json.libDownloadUrl || targetDbUrl.replace(/manifest\.json.*$/, 'device_database.spkdb');
+                result.libChangelog = json.libChangelog || json.changelog || `新增适配 ${result.cloudLibTotalDevices} 款星闪方案外设 PCB`;
+                result.hasLibUpdate = !!(result.cloudLibVersion && result.cloudLibVersion > currentLib);
+              }
             }
           } else {
             result.libError = `HTTP ${resp.status}`;
@@ -316,6 +477,11 @@ class UpdaterService {
               result.appFileSize = json.appFileSize || '';
               result.appForceUpdate = !!json.appForceUpdate;
 
+              // 提取云端与本地时间码
+              const cloudBuildTime = json.buildTimeCode || formatTimeCode(json.buildDate) || formatTimeCode(json.appVersion) || formatTimeCode(json.updatedAt) || (channel === 'beta' ? '26.10.23' : '26.10.22');
+              result.cloudAppBuildTimeCode = cloudBuildTime;
+              result.currentAppBuildTimeCode = currentBuildTime;
+
               // 智能计算/解析下载直链：优先用清单内提供的直链，若无或为通用链接，自动拼装 Gitee 发行版 exe 格式
               let download = json.appDownloadUrl || '';
               if (!download || (!download.toLowerCase().includes('.exe') && download.includes('/releases'))) {
@@ -324,7 +490,13 @@ class UpdaterService {
                 download = `https://gitee.com/Kutaze/astra-flux-hub/releases/download/${tagPrefix}${json.appVersion}/AstraFlux-HUB_Setup_${tagPrefix}${json.appVersion}.exe`;
               }
               result.appDownloadUrl = download;
-              result.hasAppUpdate = compareVersions(result.cloudAppVersion, currentApp, channel);
+
+              // 执行多维度时间码与防回退判定
+              const comp = compareAppVersions(result.cloudAppVersion, currentApp, channel, json, currentBuildTime);
+              result.hasAppUpdate = comp.hasUpdate;
+              result.isBetaBlockedByNewerOfficial = !!comp.isBlockedByNewerOfficial;
+              result.betaBlockReason = comp.blockReason || null;
+              result.cannotDowngradeFromBeta = !!comp.cannotDowngradeFromBeta;
               appCheckedSuccess = true;
             }
           }
@@ -332,7 +504,14 @@ class UpdaterService {
           result.appDownloadUrl = targetAppUrl;
           const match = targetAppUrl.match(/(?:v|beta0\.)?(\d+\.\d+\.\d+)/i);
           result.cloudAppVersion = match ? match[0] : '最新版';
-          result.hasAppUpdate = compareVersions(result.cloudAppVersion, currentApp, channel);
+          const cloudBuildTime = formatTimeCode(result.cloudAppVersion) || (channel === 'beta' ? '26.10.23' : '26.10.22');
+          result.cloudAppBuildTimeCode = cloudBuildTime;
+          result.currentAppBuildTimeCode = currentBuildTime;
+          const comp = compareAppVersions(result.cloudAppVersion, currentApp, channel, null, currentBuildTime);
+          result.hasAppUpdate = comp.hasUpdate;
+          result.isBetaBlockedByNewerOfficial = !!comp.isBlockedByNewerOfficial;
+          result.betaBlockReason = comp.blockReason || null;
+          result.cannotDowngradeFromBeta = !!comp.cannotDowngradeFromBeta;
           appCheckedSuccess = true;
         }
       } catch (e) {
@@ -356,7 +535,14 @@ class UpdaterService {
             const exeAsset = relJson.assets?.find(a => a.name?.endsWith('.exe'));
             result.appDownloadUrl = exeAsset?.browser_download_url || 
               `https://gitee.com/Kutaze/astra-flux-hub/releases/download/v${tagVer}/AstraFlux-HUB_Setup_v${tagVer}.exe`;
-            result.hasAppUpdate = compareVersions(result.cloudAppVersion, currentApp, channel);
+            const cloudBuildTime = formatTimeCode(relJson.published_at || relJson.created_at) || '26.10.22';
+            result.cloudAppBuildTimeCode = cloudBuildTime;
+            result.currentAppBuildTimeCode = currentBuildTime;
+            const comp = compareAppVersions(result.cloudAppVersion, currentApp, channel, { updatedAt: relJson.published_at }, currentBuildTime);
+            result.hasAppUpdate = comp.hasUpdate;
+            result.isBetaBlockedByNewerOfficial = !!comp.isBlockedByNewerOfficial;
+            result.betaBlockReason = comp.blockReason || null;
+            result.cannotDowngradeFromBeta = !!comp.cannotDowngradeFromBeta;
             result.appError = null;
           }
         }
@@ -444,6 +630,9 @@ class UpdaterService {
     const result = customDeviceRegistry.importFullDatabase(dbObj);
     if (dbObj.libVersion) {
       this.saveSettings({ currentLibVersion: dbObj.libVersion });
+    }
+    if (typeof window !== 'undefined') {
+      window.dispatchEvent(new CustomEvent('sparklink-update-status-refresh', { detail: { type: 'db', libVersion: dbObj.libVersion } }));
     }
     return {
       success: true,
@@ -562,6 +751,9 @@ class UpdaterService {
         const importRes = customDeviceRegistry.importFullDatabase(fullDb);
         const effectiveVer = fullDb.libVersion || manifest?.libVersion || this.getCurrentLibVersion();
         this.saveSettings({ currentLibVersion: effectiveVer });
+        if (typeof window !== 'undefined') {
+          window.dispatchEvent(new CustomEvent('sparklink-update-status-refresh', { detail: { type: 'db', libVersion: effectiveVer } }));
+        }
 
         if (typeof window !== 'undefined' && window.electronAPI?.saveDeviceDatabaseBundle) {
           try {

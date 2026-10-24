@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>宣传海报 16:9 - 玩家自制好用驱动</title>
+  <style>
+    @font-face {
+      font-family: 'NotoSansSC';
+      src: url('./assets/fonts/NotoSansSC-chinese-simplified-700.woff2') format('woff2');
+      font-weight: 700;
+      font-display: block;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      width: 1920px;
+      height: 1080px;
+      overflow: hidden;
+      background: #f8fafc;
+      font-family: 'NotoSansSC', -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+      color: #0f172a;
+      position: relative;
+    }
+
+    .bg {
+      position: absolute;
+      inset: 0;
+      background: 
+        radial-gradient(circle at 18% 22%, #ffffff 0%, rgba(241, 245, 249, 0.95) 50%, #e2e8f0 100%);
+      z-index: 1;
+    }
+
+    .top-accent-bar {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 6px;
+      background: linear-gradient(90deg, #2563eb, #38bdf8, #6366f1);
+      z-index: 10;
+    }
+
+    .container {
+      position: relative;
+      z-index: 2;
+      width: 100%;
+      height: 100%;
+      padding: 56px 80px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    /* 顶部导航与品牌 */
+    .top-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .brand-box {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .brand-logo {
+      width: 52px;
+      height: 52px;
+      border-radius: 14px;
+      box-shadow: 0 4px 12px rgba(15, 23, 42, 0.1);
+    }
+
+    .brand-text {
+      font-size: 28px;
+      font-weight: 700;
+      color: #0f172a;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      letter-spacing: -0.5px;
+    }
+
+    .brand-badge {
+      background: #eff6ff;
+      border: 1px solid #bfdbfe;
+      color: #1d4ed8;
+      font-size: 15px;
+      padding: 4px 12px;
+      border-radius: 9999px;
+    }
+
+    .top-pills {
+      display: flex;
+      gap: 14px;
+    }
+
+    .top-pill {
+      background: #ffffff;
+      border: 1px solid #cbd5e1;
+      padding: 8px 18px;
+      border-radius: 9999px;
+      font-size: 16px;
+      font-weight: 700;
+      color: #475569;
+    }
+
+    .top-pill.highlight {
+      background: #0f172a;
+      border-color: #0f172a;
+      color: #ffffff;
+    }
+
+    /* 主体内容 */
+    .body-content {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 60px;
+      margin-top: 20px;
+    }
+
+    .left-section {
+      flex: 0.95;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .eyebrow-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: #0f172a;
+      color: #ffffff;
+      padding: 8px 22px;
+      border-radius: 9999px;
+      font-size: 20px;
+      font-weight: 700;
+      width: fit-content;
+      box-shadow: 0 4px 12px rgba(15, 23, 42, 0.1);
+    }
+
+    .eyebrow-pill span.cyan-text {
+      color: #38bdf8;
+    }
+
+    .big-title {
+      font-size: 80px;
+      font-weight: 700;
+      line-height: 1.12;
+      color: #0f172a;
+      letter-spacing: -0.5px;
+    }
+
+    .big-title .blue {
+      color: #2563eb;
+    }
+
+    /* 3 个纯交互体验卡片 */
+    .feature-row {
+      display: flex;
+      gap: 18px;
+      margin-top: 6px;
+    }
+
+    .feature-box {
+      flex: 1;
+      background: #ffffff;
+      border: 1.5px solid #e2e8f0;
+      border-radius: 16px;
+      padding: 20px 22px;
+      box-shadow: 0 4px 16px rgba(15, 23, 42, 0.04);
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .feature-box.primary {
+      border-color: #93c5fd;
+      background: #eff6ff;
+    }
+
+    .box-val {
+      font-size: 28px;
+      font-weight: 700;
+      color: #0f172a;
+    }
+
+    .feature-box.primary .box-val {
+      color: #1d4ed8;
+    }
+
+    .box-lbl {
+      font-size: 17px;
+      font-weight: 700;
+      color: #64748b;
+      line-height: 1.4;
+    }
+
+    /* 右侧实机窗口 */
+    .right-section {
+      flex: 1.35;
+      position: relative;
+      perspective: 1400px;
+    }
+
+    .floating-tag {
+      position: absolute;
+      top: -16px;
+      right: 36px;
+      background: #2563eb;
+      color: #ffffff;
+      padding: 8px 22px;
+      border-radius: 10px;
+      font-size: 16px;
+      font-weight: 700;
+      box-shadow: 0 6px 18px rgba(37, 99, 235, 0.28);
+      z-index: 10;
+    }
+
+    .window-card {
+      background: #ffffff;
+      border: 1.5px solid #cbd5e1;
+      border-radius: 20px;
+      overflow: hidden;
+      transform: rotateY(-10deg) rotateX(3deg) scale(1.08);
+      transform-origin: center right;
+      box-shadow: 
+        -25px 35px 80px rgba(15, 23, 42, 0.18),
+        0 4px 20px rgba(15, 23, 42, 0.06);
+    }
+
+    .win-head {
+      background: #f1f5f9;
+      padding: 12px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid #e2e8f0;
+    }
+
+    .dots {
+      display: flex;
+      gap: 7px;
+    }
+
+    .dot {
+      width: 11px;
+      height: 11px;
+      border-radius: 50%;
+    }
+    .dot.r { background: #f87171; }
+    .dot.y { background: #fbbf24; }
+    .dot.g { background: #34d399; }
+
+    .win-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: #334155;
+    }
+
+    .win-status {
+      font-size: 13px;
+      font-weight: 700;
+      color: #2563eb;
+      background: #dbeafe;
+      padding: 3px 10px;
+      border-radius: 9999px;
+    }
+
+    .win-img {
+      width: 100%;
+      height: auto;
+      display: block;
+      background: #ffffff;
+    }
+  </style>
+</head>
+<body>
+  <div class="top-accent-bar"></div>
+  <div class="bg"></div>
+
+  <div class="container">
+    <!-- 顶部 -->
+    <header class="top-header">
+      <div class="brand-box">
+        <img class="brand-logo" src="assets/logo.png" alt="AstraFlux">
+        <div class="brand-text">
+          ASTRAFLUX-HUB
+          <span class="brand-badge">最新正式版</span>
+        </div>
+      </div>
+
+      <div class="top-pills">
+        <div class="top-pill highlight">【玩家自制】纯净开源驱动</div>
+        <div class="top-pill">纯净 0 后台 · 原生直连</div>
+      </div>
+    </header>
+
+    <!-- 主体 -->
+    <main class="body-content">
+      <div class="left-section">
+        <div class="eyebrow-pill">
+          <span>星闪悦动磁轴键盘方案专属 · </span>
+          <span class="cyan-text">驱动交互体验全面革新</span>
+        </div>
+
+        <h1 class="big-title">
+          这可能是你用过<br>
+          <span class="blue">交互最舒服</span> 的星闪悦动磁轴驱动！
+        </h1>
+
+        <!-- 3 大交互体验指标 -->
+        <div class="feature-row">
+          <div class="feature-box primary">
+            <div class="box-val">直观可视</div>
+            <div class="box-lbl">曲线实时拖拽 · 按键行程一目了然</div>
+          </div>
+
+          <div class="feature-box">
+            <div class="box-val">纯净 0 后台</div>
+            <div class="box-lbl">用完即关 · 绝不偷跑开机后台进程</div>
+          </div>
+
+          <div class="feature-box">
+            <div class="box-val">极简上手</div>
+            <div class="box-lbl">界面清爽通透 · 告别原厂繁琐反人类</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 右侧最新浅色实机界面 -->
+      <div class="right-section">
+        <div class="floating-tag">
+          触发死区直观调校页
+        </div>
+
+        <div class="window-card">
+          <div class="win-head">
+            <div class="dots">
+              <div class="dot r"></div>
+              <div class="dot y"></div>
+              <div class="dot g"></div>
+            </div>
+            <div class="win-title">AstraFlux-HUB | 直观可视死区标定</div>
+            <div class="win-status">0 后台</div>
+          </div>
+          <img class="win-img" src="assets/latest_light/v113_light_trigger.png" alt="浅色实机截图">
+        </div>
+      </div>
+    </main>
+  </div>
+</body>
+</html>

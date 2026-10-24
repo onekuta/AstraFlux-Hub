@@ -129,7 +129,16 @@ export const DEVICE_PROFILES = {
     supportedPollingRates: [1000, 2000, 4000, 8000],
     defaultPollingRate: 8000,
     minActuationPoint: 0.01,
-    defaultAxis: '马轴',
+    defaultAxis: '神马轴',
+    supportedSwitches: [
+      '神马轴',
+      '磁玉 Pro',
+      '磁玉轴',
+      '磁玉 Pro 超竞版',
+      '万磁王',
+      '万磁王 RGB',
+      '天际线轴',
+    ],
     features: {
       magneticAxis: true,
       rtSupport: true,
@@ -162,6 +171,14 @@ export const DEVICE_PROFILES = {
     defaultPollingRate: 8000,
     minActuationPoint: 0.001,
     defaultAxis: '天际线轴', // 官网 V3 轴体映射实测（0x1CA6:0x300D 硬件板载 axisV2Id: 12608 对应天际线轴 3.55mm）
+    supportedSwitches: [
+      '天际线轴',
+      '库里南轴',
+      '磁神轴',
+      '磁玉 Pro',
+      '磁玉轴',
+      '万磁王',
+    ],
     features: {
       magneticAxis: true,
       rtSupport: true,
@@ -209,6 +226,14 @@ export const DEVICE_PROFILES = {
     defaultPollingRate: 8000,
     minActuationPoint: 0.001,
     defaultAxis: '磁玉 Pro',
+    supportedSwitches: [
+      '磁玉 Pro 超竞版',
+      '磁玉 Pro',
+      '磁玉轴',
+      '佳达隆双轨磁白轴',
+      '万磁王',
+      '天王轴',
+    ],
     features: {
       magneticAxis: true,
       rtSupport: true,
@@ -259,6 +284,14 @@ export const DEVICE_PROFILES = {
     defaultPollingRate: 8000,
     minActuationPoint: 0.001,
     defaultAxis: '磁玉 Pro',
+    supportedSwitches: [
+      '磁玉 Pro 超竞版',
+      '磁玉 Pro',
+      '磁玉轴',
+      '佳达隆双轨磁白轴',
+      '万磁王',
+      '天王轴',
+    ],
     features: {
       magneticAxis: true,
       rtSupport: true,
@@ -288,6 +321,14 @@ export const DEVICE_PROFILES = {
     defaultPollingRate: 8000,
     minActuationPoint: 0.001,
     defaultAxis: '磁玉 Pro',
+    supportedSwitches: [
+      '磁玉 Pro 超竞版',
+      '磁玉 Pro',
+      '磁玉轴',
+      '佳达隆双轨磁白轴',
+      '万磁王',
+      '天王轴',
+    ],
     features: {
       magneticAxis: true,
       rtSupport: true,
@@ -317,6 +358,14 @@ export const DEVICE_PROFILES = {
     defaultPollingRate: 8000,
     minActuationPoint: 0.01,
     defaultAxis: '磁玉 Pro',
+    supportedSwitches: [
+      '磁玉 Pro 超竞版',
+      '磁玉 Pro',
+      '磁玉轴',
+      '佳达隆双轨磁白轴',
+      '万磁王',
+      '天王轴',
+    ],
     features: {
       magneticAxis: true,
       rtSupport: true,
@@ -346,6 +395,14 @@ export const DEVICE_PROFILES = {
     defaultPollingRate: 8000,
     minActuationPoint: 0.01,
     defaultAxis: '磁玉 Pro',
+    supportedSwitches: [
+      '磁玉 Pro 超竞版',
+      '磁玉 Pro',
+      '磁玉轴',
+      '佳达隆双轨磁白轴',
+      '万磁王',
+      '天王轴',
+    ],
     features: {
       magneticAxis: true,
       rtSupport: true,
@@ -375,6 +432,14 @@ export const DEVICE_PROFILES = {
     defaultPollingRate: 8000,
     minActuationPoint: 0.01,
     defaultAxis: '磁玉 Pro',
+    supportedSwitches: [
+      '磁玉 Pro 超竞版',
+      '磁玉 Pro',
+      '磁玉轴',
+      '佳达隆双轨磁白轴',
+      '万磁王',
+      '天王轴',
+    ],
     features: {
       magneticAxis: true,
       rtSupport: true,

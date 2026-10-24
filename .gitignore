@@ -21,6 +21,16 @@ node_modules/
 工程源码/tools/electron-bin/
 工程源码/device_database/
 
+# Video, audio & clip projects
+sp/
+*.mp4
+*.mkv
+*.avi
+*.mov
+*.wav
+*.flac
+*.mp3
+
 # Temporary & system shortcuts / stray root files
 *.lnk
 EnhanceHidUSB_V140.exe

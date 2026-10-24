@@ -215,9 +215,16 @@ export default {
     appDesc: '星閃 (NearLink) 磁気軸ゲーミングキーボード向けオープンソース制御センター',
     author: '開発者',
     license: 'ライセンスと謝辞',
+    
+    // ログと診断
+    logsTitle: '動作ログとトラブルシューティング',
+    logsDesc: '動作状態やエラーを自動的にファイルへ保存し、障害調査を容易にします',
+    copyDiagBtn: '診断ログをコピー',
+    openLogsBtn: 'ログフォルダを開く',
+    copyDiagSuccess: '診断レポートをクリップボードにコピーしました！',
   },
   betaModal: {
-    btnSwitchBeta: '⚡ Beta テスト版に切り替え',
+    btnSwitchBeta: 'Beta テスト版に切り替え',
     warningTitle: '重要警告：Beta テスト版チャンネルへの切り替え',
     warningSub: '以下の注意事項およびリスクをよくご確認の上、選択してください',
     risk1Title: 'テスト版のため動作が不安定な場合があります',

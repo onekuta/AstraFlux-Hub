@@ -1,0 +1,65 @@
+<svg viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- 底座白色微晶微质感渐变 (零阴影、高雅通透) -->
+    <linearGradient id="sq_bg" x1="40" y1="40" x2="472" y2="472" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#FFFFFF" />
+      <stop offset="60%" stop-color="#F8FAFC" />
+      <stop offset="100%" stop-color="#F1F5F9" />
+    </linearGradient>
+
+    <!-- 底座高精度微边框 -->
+    <linearGradient id="sq_stroke" x1="40" y1="40" x2="472" y2="472" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#E2E8F0" />
+      <stop offset="100%" stop-color="#CBD5E1" />
+    </linearGradient>
+
+    <!-- 上流线高对比渐变：高饱和电竞青蓝 -> 纯净蔚蓝 (零阴影、纯净平整) -->
+    <linearGradient id="stream_top" x1="116" y1="180" x2="346" y2="246" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#00C0FF" />
+      <stop offset="50%" stop-color="#0088FF" />
+      <stop offset="100%" stop-color="#0060E6" />
+    </linearGradient>
+
+    <!-- 下流线高对比渐变：霓虹极光紫 -> 鲜艳洋红 (零阴影、纯净平整) -->
+    <linearGradient id="stream_bot" x1="166" y1="266" x2="396" y2="332" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#7928CA" />
+      <stop offset="50%" stop-color="#C026D3" />
+      <stop offset="100%" stop-color="#FF007A" />
+    </linearGradient>
+  </defs>
+
+  <!-- 1. 珍珠白圆角底座：448x448 (留 32px 安全留白，绝不切边，0 阴影) -->
+  <rect 
+    x="32" y="32" 
+    width="448" height="448" 
+    rx="108" ry="108" 
+    fill="url(#sq_bg)" 
+    stroke="url(#sq_stroke)" 
+    stroke-width="3.5"
+  />
+
+  <!-- 2. 双子流线图层：0 滤镜、0 阴影、极致纯净 -->
+  <g>
+    <!-- 上流线：平滑圆角胶囊 (左前探) -->
+    <rect x="120" y="184" width="224" height="64" rx="32" ry="32" fill="url(#stream_top)" />
+    <!-- 上流线纯白导流高光槽 -->
+    <path 
+      d="M 130 210 C 130 196 170 196 324 196" 
+      stroke="#FFFFFF" 
+      stroke-width="7" 
+      stroke-linecap="round" 
+      opacity="0.9" 
+    />
+
+    <!-- 下流线：向右错位并排流线 (右后随) -->
+    <rect x="168" y="264" width="224" height="64" rx="32" ry="32" fill="url(#stream_bot)" />
+    <!-- 下流线纯白导流高光槽 -->
+    <path 
+      d="M 178 290 C 178 276 218 276 372 276" 
+      stroke="#FFFFFF" 
+      stroke-width="7" 
+      stroke-linecap="round" 
+      opacity="0.9" 
+    />
+  </g>
+</svg>

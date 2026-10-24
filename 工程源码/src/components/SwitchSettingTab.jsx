@@ -1,44 +1,16 @@
 import React, { useState, useMemo } from 'react';
-import { Check, CheckCircle2, Sparkles, Layers, Search, ShieldCheck } from 'lucide-react';
-import { axisService } from '../services/axisService';
+import { Check, CheckCircle2, Sparkles, Layers, Search, ShieldCheck, Cpu } from 'lucide-react';
+import { axisService, PRIMARY_AXES } from '../services/axisService';
 
-// 精确还原星闪驱动与轴体品牌分类 (首项遵从用户需求命名为常用轴体)
+// 精确还原星闪驱动与轴体品牌分类 (首项遵从用户需求命名为常用/本机轴体)
 export const SPARK_SWITCH_BRANDS = [
   { id: 'custom', label: '常用轴体' },
   { id: 'jiangwan', label: '江湾 (Everglide)' },
   { id: 'gateron', label: '佳达隆 (Gateron)' },
   { id: 'ttc', label: '正牌科电 (TTC)' },
-  { id: 'all', label: '全部校准库 (220+款)' },
+  { id: 'other', label: '其它品牌' },
+  { id: 'all', label: '全部官方校准库' },
 ];
-
-export const BRANDED_SWITCHES = {
-  custom: [
-    { id: 788, name: '天际线轴', travel: 3.55, brand: '江湾 (Everglide)', color: '#4dd1f9', badge: '高导光柱', desc: '江湾天际线磁轴，高导光柱，极速回弹，线性顺滑手感' },
-    { id: 1, name: '磁玉 Pro', travel: 3.50, brand: '佳达隆 (Gateron)', color: '#70cb9a', badge: '佳达隆标配', desc: '佳达隆磁玉 Pro 磁轴，双轨结构，高透光上盖，3.5mm 顺滑低抖' },
-    { id: 1003, name: '磁玉 Pro 超竞版', travel: 3.50, brand: '佳达隆 (Gateron)', color: '#3b82f6', badge: '超竞特调', desc: '佳达隆特调超竞版磁轴，双轨结构，高频电竞调校，极速响应' },
-    { id: 1002, name: '神马轴', travel: 3.45, brand: '神马 (Shenma)', color: '#2563eb', badge: '初始高磁通', desc: '神马磁轴，初始磁通量高，RT响应极速' },
-    { id: 1219, name: '库里南轴', travel: 3.60, brand: '江湾 (Everglide)', color: '#eaeaea', badge: '江湾原厂', desc: '江湾库里南磁轴，双轨超顺滑，HiFi 敲击音' },
-    { id: 20, name: '默认磁轴', travel: 3.50, brand: '常用轴体', color: '#64748b', badge: '通用标准', desc: '标准通用霍尔电压标定曲线' },
-  ],
-  jiangwan: [
-    { id: 788, name: '天际线轴', travel: 3.55, brand: '江湾 (Everglide)', color: '#4dd1f9', badge: '高导光柱', desc: '江湾天际线磁轴，高导光柱，极速回弹，线性顺滑手感' },
-    { id: 1219, name: '库里南轴', travel: 3.60, brand: '江湾 (Everglide)', color: '#eaeaea', badge: '江湾旗舰', desc: '江湾库里南磁轴，双轨超顺滑，HiFi 敲击音' },
-    { id: 791, name: '磁神轴', travel: 3.47, brand: '江湾 (Everglide)', color: '#d3e4ff', badge: '电竞调校', desc: '江湾磁神轴，低死区高线性，瞬态响应' },
-  ],
-  gateron: [
-    { id: 1, name: '磁玉 Pro', travel: 3.50, brand: '佳达隆', color: '#70cb9a', badge: '旗舰推荐', desc: '聚光镜大通孔，透光率提升35%，磁通量线性度优异' },
-    { id: 18, name: '磁玉轴', travel: 3.30, brand: '佳达隆', color: '#a04444', badge: '经典HiFi', desc: '全POM材质，顺滑度极高' },
-    { id: 4, name: '磁玉Gaming', travel: 3.50, brand: '佳达隆', color: '#a7e1d6', badge: '电竞强化', desc: '触发行程短，回弹跟手迅速' },
-    { id: 8, name: '双轨磁白轴', travel: 4.00, brand: '佳达隆', color: '#c45353', badge: '4.0mm全键程', desc: '双轨导向结构，稳定性极强' },
-  ],
-  ttc: [
-    { id: 3, name: '万磁王', travel: 3.50, brand: 'TTC', color: '#5f3873', badge: '旗舰电竞', desc: '聚光大通孔，RT 0.001mm 极致灵敏' },
-    { id: 2, name: '万磁王RGB', travel: 3.40, brand: 'TTC', color: '#a04444', badge: 'RGB聚光', desc: '全透聚光柱设计，灯光效果拔群' },
-    { id: 5, name: '天王轴', travel: 3.50, brand: 'TTC', color: '#2bc2bd', badge: '强劲回弹', desc: '双段长弹簧，段落感与线性兼顾' },
-    { id: 7, name: 'POM万磁王', travel: 3.40, brand: 'TTC', color: '#ddcde6', badge: '自润滑', desc: '高硬度全POM外壳，越用越顺' },
-    { id: 30, name: '爱心万磁王', travel: 3.30, brand: 'TTC', color: '#74d1e0', badge: '轻柔触感', desc: '粉色透光上盖，敲击轻盈省力' },
-  ]
-};
 
 // 紧凑轻量 3D 机械轴体 SVG 图标组件 (尺寸 26~32px)
 function Switch3DIcon({ color = '#2563eb', size = 28 }) {
@@ -72,11 +44,6 @@ export function formatAxisName(rawName) {
 
 /**
  * 智能轴体匹配检索函数：全面支持轴体全称、品牌名、角标、描述以及行程数值检索
- * 支持场景：
- * 1. 轴体名称/品牌：如 "磁玉", "天际线", "江湾", "Gateron", "TTC", "超竞"
- * 2. 纯行程数值：如 "3.5", "3.55", "3.50", "3.6", "4.0", "4"
- * 3. 带单位行程：如 "3.5mm", "3.50mm", "3.55毫米", "3.5 mm"
- * 4. 组合关键词：如 "磁玉 3.5", "江湾 3.55mm", "TTC 3.50", "行程 3.6"
  */
 export function matchSwitch(sw, query) {
   if (!query || !query.trim()) return true;
@@ -91,12 +58,12 @@ export function matchSwitch(sw, query) {
     if (sw.desc && sw.desc.toLowerCase().includes(token)) return true;
 
     // 2. 轴体行程深度匹配 (Travel / Stroke)
-    if (sw.travel != null && !isNaN(sw.travel)) {
-      const travelNum = Number(sw.travel);
-      const travelFixed2 = travelNum.toFixed(2); // 如 "3.50", "3.55", "3.60", "4.00"
-      const travelStr = String(travelNum);       // 如 "3.5", "3.55", "3.6", "4"
+    const travelVal = sw.maxTravel || sw.travel;
+    if (travelVal != null && !isNaN(travelVal)) {
+      const travelNum = Number(travelVal);
+      const travelFixed2 = travelNum.toFixed(2);
+      const travelStr = String(travelNum);
 
-      // 清除用户输入中的行程前缀及单位: 如 "3.5mm" -> "3.5", "行程3.5" -> "3.5", "3.5毫米" -> "3.5"
       const cleanToken = token
         .replace(/mm$/i, '')
         .replace(/毫米$/i, '')
@@ -107,12 +74,10 @@ export function matchSwitch(sw, query) {
       if (cleanToken && !isNaN(cleanToken)) {
         const queryNum = parseFloat(cleanToken);
         if (cleanToken.includes('.')) {
-          // 带小数点的行程搜索（如 "3.5", "3.50", "3.55", "3.6", "4.0"）
           if (travelFixed2.startsWith(cleanToken)) return true;
           if (travelStr.startsWith(cleanToken)) return true;
           if (Math.abs(travelNum - queryNum) < 0.001) return true;
         } else {
-          // 纯整数行程搜索（如 "3" 匹配 3.x 行程轴体，"4" 匹配 4.0 行程轴体，杜绝 3.45 中的 4 误匹配）
           if (Math.floor(travelNum) === parseInt(cleanToken, 10)) return true;
         }
       }
@@ -125,89 +90,172 @@ export function matchSwitch(sw, query) {
 export default function SwitchSettingTab({ 
   currentAxis, 
   onSelectAxis, 
+  deviceProfile,
   selectedKeysCount = 4,
   keyCount = 64,
   onApplyToSelected,
   onApplyToAll,
   allAxes = [],
-  primaryAxisKeyword = '破晓',
+  primaryAxisKeyword = '神马',
   primaryAxisBadge = '出厂默认'
 }) {
-  const [activeBrand, setActiveBrand] = useState(() => {
-    try {
-      return new URLSearchParams(window.location.search).get('brand') || 'custom';
-    } catch (e) {
-      return 'custom';
-    }
-  });
+  const [activeBrand, setActiveBrand] = useState('custom');
   const [searchQuery, setSearchQuery] = useState('');
-  const [hoveredSwitch, setHoveredSwitch] = useState(() => {
-    try {
-      const p = new URLSearchParams(window.location.search);
-      if (p.get('hover') === 'true') {
-        return {
-          sw: BRANDED_SWITCHES.gateron[1],
-          rect: { left: 450, top: 480, width: 225, height: 50 }
-        };
-      }
-    } catch (e) {}
-    return null;
-  });
+  const [hoveredSwitch, setHoveredSwitch] = useState(null);
 
-  // 全库轴体标准格式列表 (供全库搜索与跨分类提示使用)
-  const fullLibraryList = useMemo(() => {
-    if (allAxes && allAxes.length > 0) {
-      return allAxes.map(a => ({
-        id: a.id,
-        name: formatAxisName(a.name),
-        travel: a.maxTravel,
-        brand: a.brand || '其他',
-        color: a.color || '#2563eb',
-        badge: a.badge || (a.name.includes(primaryAxisKeyword) ? primaryAxisBadge : '星闪校准'),
-        desc: a.description || `${a.brand} 磁轴`
-      }));
-    }
-    // 回退备选
-    return BRANDED_SWITCHES.custom;
+  // 检测是否为具有特定出厂支持轴体库的成品键盘 (如 VICTKONG DV63、ES68、AE64-MAX)
+  const supportedList = deviceProfile?.supportedSwitches;
+  const isFinishedKeyboard = Array.isArray(supportedList) && supportedList.length > 0;
+  const [onlyShowSupported, setOnlyShowSupported] = useState(isFinishedKeyboard);
+
+  // 全量已鉴权官方真实轴体库 (通过官网与驱动官方库鉴权，排除未核准的虚假/实验轴体)
+  const authenticatedAxes = useMemo(() => {
+    const rawList = (allAxes && allAxes.length > 0) ? allAxes : (axisService.axes || PRIMARY_AXES);
+    return rawList
+      .filter(a => a && a.verified !== false && a.isOfficial !== false)
+      .map(a => {
+        const safeTravel = Number(a.maxTravel || a.travel || 3.50);
+        return {
+          ...a,
+          id: a.id,
+          hardwareAxisId: a.hardwareAxisId || a.id,
+          name: formatAxisName(a.name),
+          travel: safeTravel,
+          maxTravel: safeTravel,
+          driveRange: Number(a.driveRange || safeTravel - 0.20),
+          recommendedAP: Number(a.recommendedAP || (safeTravel > 3.0 ? 0.35 : 0.30)),
+          minActuationPoint: Number(a.minActuationPoint || 0.05),
+          brand: a.brand || '星闪校准',
+          color: a.color || '#2563eb',
+          badge: a.badge || (a.name.includes(primaryAxisKeyword) ? primaryAxisBadge : '官方核准'),
+          desc: a.description || `${a.brand || ''} ${a.name} 磁轴，行程 ${safeTravel}mm`,
+          isOfficial: true,
+          verified: true
+        };
+      });
   }, [allAxes, primaryAxisKeyword, primaryAxisBadge]);
 
-  // 全库在当前搜索关键词下的匹配结果
-  const fullLibraryMatches = useMemo(() => {
-    if (!searchQuery.trim()) return fullLibraryList;
-    return fullLibraryList.filter(s => matchSwitch(s, searchQuery));
-  }, [fullLibraryList, searchQuery]);
+  // 当前机型官方专属支持的轴体列表 (针对 DV63、AE64、ES68 等成品键盘过滤)
+  const supportedAxes = useMemo(() => {
+    if (!isFinishedKeyboard) return authenticatedAxes;
+    const supSet = new Set(supportedList.map(s => s.toLowerCase().replace(/\s+/g, '')));
+    const matched = authenticatedAxes.filter(a => {
+      const n = a.name.toLowerCase().replace(/\s+/g, '');
+      const sn = (a.shortName || '').toLowerCase().replace(/\s+/g, '');
+      if (supSet.has(n) || supSet.has(sn)) return true;
+      return supportedList.some(k => {
+        const cleanK = k.toLowerCase().replace(/\s+/g, '');
+        return n.includes(cleanK) || cleanK.includes(n);
+      });
+    });
+    return matched.length > 0 ? matched : authenticatedAxes;
+  }, [authenticatedAxes, isFinishedKeyboard, supportedList]);
 
-  // 综合计算平铺显示的轴体卡片列表
+  // 根据当前过滤模式决定的轴体集合
+  const currentScopeAxes = useMemo(() => {
+    if (isFinishedKeyboard && onlyShowSupported) {
+      return supportedAxes;
+    }
+    return authenticatedAxes;
+  }, [isFinishedKeyboard, onlyShowSupported, supportedAxes, authenticatedAxes]);
+
+  // 动态品牌分类选项
+  const brandTabs = useMemo(() => {
+    const customLabel = isFinishedKeyboard && onlyShowSupported 
+      ? `${deviceProfile.shortName || deviceProfile.model} 专属支持` 
+      : '常用推荐轴体';
+    return [
+      { id: 'custom', label: customLabel },
+      { id: 'jiangwan', label: '江湾 (Everglide)' },
+      { id: 'gateron', label: '佳达隆 (Gateron)' },
+      { id: 'ttc', label: '正牌科电 (TTC)' },
+      { id: 'other', label: '其它品牌' },
+      { id: 'all', label: `全部校准库 (${currentScopeAxes.length}款)` },
+    ];
+  }, [isFinishedKeyboard, onlyShowSupported, deviceProfile, currentScopeAxes.length]);
+
+  // 综合计算在当前选中品牌及搜索关键词下展示的轴体列表
   const displayedSwitches = useMemo(() => {
     let list = [];
     if (activeBrand === 'all') {
-      list = fullLibraryList;
-    } else {
-      list = (BRANDED_SWITCHES[activeBrand] || []).map(s => ({
-        ...s,
-        name: formatAxisName(s.name)
-      }));
+      list = currentScopeAxes;
+    } else if (activeBrand === 'custom') {
+      if (isFinishedKeyboard) {
+        list = supportedAxes;
+      } else {
+        // 客制化键盘展示核心特调出厂 SKU
+        list = authenticatedAxes.filter(a => 
+          PRIMARY_AXES.some(p => p.id === a.id || p.name === a.name) ||
+          a.badge?.includes('标配') ||
+          a.badge?.includes('原厂')
+        );
+        if (list.length === 0) list = currentScopeAxes.slice(0, 8);
+      }
+    } else if (activeBrand === 'jiangwan') {
+      list = currentScopeAxes.filter(a => a.brand?.includes('江湾') || a.brand?.toLowerCase().includes('everglide'));
+    } else if (activeBrand === 'gateron') {
+      list = currentScopeAxes.filter(a => a.brand?.includes('佳达隆') || a.brand?.toLowerCase().includes('gateron'));
+    } else if (activeBrand === 'ttc') {
+      list = currentScopeAxes.filter(a => a.brand?.includes('正牌科电') || a.brand?.toUpperCase().includes('TTC'));
+    } else if (activeBrand === 'other') {
+      list = currentScopeAxes.filter(a => 
+        !a.brand?.includes('江湾') && 
+        !a.brand?.toLowerCase().includes('everglide') && 
+        !a.brand?.includes('佳达隆') && 
+        !a.brand?.toLowerCase().includes('gateron') && 
+        !a.brand?.includes('正牌科电') && 
+        !a.brand?.toUpperCase().includes('TTC')
+      );
     }
 
     if (searchQuery.trim()) {
       return list.filter(s => matchSwitch(s, searchQuery));
     }
     return list;
-  }, [activeBrand, fullLibraryList, searchQuery]);
+  }, [activeBrand, currentScopeAxes, supportedAxes, authenticatedAxes, isFinishedKeyboard, searchQuery]);
+
+  // 全库在当前搜索关键词下的匹配结果
+  const fullLibraryMatches = useMemo(() => {
+    if (!searchQuery.trim()) return currentScopeAxes;
+    return currentScopeAxes.filter(s => matchSwitch(s, searchQuery));
+  }, [currentScopeAxes, searchQuery]);
+
+  // 点击选轴安全包裹：保证传递给外部的轴体对象 100% 具备 travel、maxTravel、recommendedAP
+  const handleSelectAxis = (sw) => {
+    const travelVal = Number(sw.maxTravel || sw.travel || 3.50);
+    const safeSw = {
+      ...sw,
+      id: sw.id,
+      name: sw.name,
+      travel: travelVal,
+      maxTravel: travelVal,
+      recommendedAP: Number(sw.recommendedAP || (travelVal > 3.0 ? 0.35 : 0.30)),
+      minActuationPoint: Number(sw.minActuationPoint || 0.05),
+      brand: sw.brand || '星闪校准',
+      color: sw.color || '#2563eb',
+      badge: sw.badge || '官方核准',
+      desc: sw.desc || sw.description || `${sw.name} 磁轴`,
+      isOfficial: true,
+      verified: true
+    };
+    onSelectAxis(safeSw);
+  };
 
   return (
     <div className="panel-operation panel-operation-bottom min-h-0 select-none flex flex-col justify-between overflow-hidden relative">
       <div className="operation-columns flex-1 min-h-0">
         {/* 左侧品牌紧凑胶囊栏 */}
-        <div className="col flex flex-col justify-between shrink-0" style={{ flex: '0 0 180px' }}>
+        <div className="col flex flex-col justify-between shrink-0" style={{ flex: '0 0 190px' }}>
           <div>
-            <h3 className="text-xs font-bold text-[var(--text-primary)] flex items-center mb-2 font-title tracking-wider">
-              <Layers className="w-3.5 h-3.5 mr-1.5 text-[var(--info-color)]" />
-              轴体品牌分类
-            </h3>
+            <div className="flex items-center justify-between mb-2">
+              <h3 className="text-xs font-bold text-[var(--text-primary)] flex items-center font-title tracking-wider">
+                <Layers className="w-3.5 h-3.5 mr-1.5 text-[var(--info-color)]" />
+                轴体品牌分类
+              </h3>
+            </div>
 
             <div className="space-y-1">
-              {SPARK_SWITCH_BRANDS.map((b) => {
+              {brandTabs.map((b) => {
                 const active = activeBrand === b.id;
                 return (
                   <button
@@ -227,38 +275,67 @@ export default function SwitchSettingTab({
             </div>
           </div>
 
-          <div className="p-2.5 bg-[var(--bg-tertiary)] border border-[var(--border-color)] rounded-xl space-y-1 text-xs text-[var(--text-secondary)] shrink-0 mt-2">
-            <div className="flex items-center font-bold text-[var(--text-primary)] font-title tracking-wider">
+          {/* 底部机型与出厂硬件标定库信息 */}
+          <div className="p-2.5 bg-[var(--bg-tertiary)] border border-[var(--border-color)] rounded-xl space-y-1.5 text-xs text-[var(--text-secondary)] shrink-0 mt-2">
+            <div className="flex items-center font-bold text-[var(--text-primary)] font-title tracking-wider text-[11px]">
               <ShieldCheck className="w-3.5 h-3.5 mr-1 text-emerald-500 shrink-0" />
-              出厂硬件校准库
+              <span>官网真实轴体鉴权库</span>
             </div>
-            <p className="text-xs text-[var(--text-secondary)] leading-relaxed font-medium">
-              收录 220+ 款磁轴标定参数。公模客制化默认搭载磁玉 Pro。
+            <p className="text-[10px] text-[var(--text-secondary)] leading-relaxed font-medium">
+              已对轴体库进行官方鉴权，收录真实官方标定参数 (已过滤隐藏未核准轴体)。
             </p>
+            {isFinishedKeyboard && (
+              <div className="pt-1 border-t border-[var(--border-color)]/60 text-[10px] font-mono text-emerald-600 dark:text-emerald-400 flex items-center gap-1 font-bold">
+                <Cpu className="w-3 h-3 shrink-0" />
+                <span>当前机型: {deviceProfile?.shortName || deviceProfile?.model} (出厂标配: {deviceProfile?.defaultAxis || '神马轴'})</span>
+              </div>
+            )}
           </div>
         </div>
 
         {/* 右侧轴体高密度紧凑平铺网格区 */}
         <div className="col flex flex-col justify-between min-h-0 flex-1 ml-4 pl-4 border-l border-[var(--border-color)]/80">
           <div className="flex flex-col flex-1 min-h-0">
-            {/* 顶栏：分类标题与快速搜索 */}
-            <div className="flex items-center justify-between mb-2 pb-2 border-b border-[var(--border-color)] shrink-0">
-              <div className="min-w-0">
-                <h3 className="text-xs font-bold text-[var(--text-primary)] flex items-center font-title tracking-wider">
+            {/* 顶栏：分类标题、机型模式切换与快速搜索 */}
+            <div className="flex items-center justify-between mb-2 pb-2 border-b border-[var(--border-color)] shrink-0 gap-2">
+              <div className="min-w-0 flex items-center gap-2">
+                <h3 className="text-xs font-bold text-[var(--text-primary)] flex items-center font-title tracking-wider shrink-0">
                   <Sparkles className="w-3.5 h-3.5 mr-1.5 text-[var(--info-color)] shrink-0" />
-                  <span className="truncate">{SPARK_SWITCH_BRANDS.find(b => b.id === activeBrand)?.label}</span>
+                  <span className="truncate">{brandTabs.find(b => b.id === activeBrand)?.label}</span>
                   <span className="ml-2 text-xs text-[var(--text-secondary)] font-normal font-mono">
-                    (共 {displayedSwitches.length} 款{searchQuery.trim() && activeBrand !== 'all' && fullLibraryMatches.length > 0 ? (
-                      <span 
-                        onClick={() => setActiveBrand('all')}
-                        className="ml-1 text-[var(--info-color)] hover:underline cursor-pointer"
-                        title="点击查看全库匹配轴体"
-                      >
-                        · 全库 {fullLibraryMatches.length} 款
-                      </span>
-                    ) : ''})
+                    (共 {displayedSwitches.length} 款)
                   </span>
                 </h3>
+
+                {/* 成品键盘 (如 DV63) 专属支持库与全量官方库快速切换 */}
+                {isFinishedKeyboard && (
+                  <div className="flex items-center bg-[var(--bg-secondary)] border border-[var(--border-color)] rounded-lg p-0.5 text-[10px] font-bold shrink-0">
+                    <button
+                      type="button"
+                      onClick={() => setOnlyShowSupported(true)}
+                      className={`px-2 py-0.5 rounded transition cursor-pointer ${
+                        onlyShowSupported 
+                          ? 'bg-[var(--info-color)] text-white shadow-2xs font-extrabold' 
+                          : 'text-[var(--text-tertiary)] hover:text-[var(--text-primary)]'
+                      }`}
+                      title={`仅显示 ${deviceProfile?.shortName || '本机'} 出厂与硬件官方适配支持的轴体`}
+                    >
+                      本机专属支持 ({supportedAxes.length}款)
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setOnlyShowSupported(false)}
+                      className={`px-2 py-0.5 rounded transition cursor-pointer ${
+                        !onlyShowSupported 
+                          ? 'bg-[var(--info-color)] text-white shadow-2xs font-extrabold' 
+                          : 'text-[var(--text-tertiary)] hover:text-[var(--text-primary)]'
+                      }`}
+                      title="放开限制查看全部已鉴权的 220+ 款官方真实磁轴库"
+                    >
+                      全量官方库 ({authenticatedAxes.length}款)
+                    </button>
+                  </div>
+                )}
               </div>
 
               <div className="flex items-center space-x-2 shrink-0">
@@ -269,7 +346,7 @@ export default function SwitchSettingTab({
                     placeholder="搜索轴体名称、行程(如3.5mm)..."
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
-                    className="pl-7 pr-6 py-1 bg-[var(--bg-tertiary)] border border-[var(--border-color)] rounded-lg text-xs focus:outline-none focus:border-[var(--info-color)] w-56 text-[var(--text-primary)] placeholder-[var(--text-tertiary)] transition-colors"
+                    className="pl-7 pr-6 py-1 bg-[var(--bg-tertiary)] border border-[var(--border-color)] rounded-lg text-xs focus:outline-none focus:border-[var(--info-color)] w-52 text-[var(--text-primary)] placeholder-[var(--text-tertiary)] transition-colors"
                   />
                   {searchQuery && (
                     <button
@@ -283,12 +360,12 @@ export default function SwitchSettingTab({
                 </div>
 
                 <div className="text-xs text-[var(--text-secondary)] font-mono font-medium hidden sm:block">
-                  默认: <strong className="text-[var(--info-color)] font-bold">{currentAxis?.name || '天际线轴'}</strong>
+                  默认: <strong className="text-[var(--info-color)] font-bold">{currentAxis?.name || (deviceProfile?.defaultAxis || '神马轴')}</strong>
                 </div>
               </div>
             </div>
 
-            {/* 高密度轴体卡片平铺网格 (225px 宽卡片，顶行独占轴体名称，彻底消除截断) */}
+            {/* 高密度轴体卡片平铺网格 */}
             <div 
               className="flex-1 overflow-y-auto pr-1"
               onScroll={() => setHoveredSwitch(null)}
@@ -302,7 +379,7 @@ export default function SwitchSettingTab({
                     当前分类未找到匹配轴体
                   </div>
                   <div className="text-[11px] text-[var(--text-secondary)] mb-3 max-w-sm leading-relaxed">
-                    在「{SPARK_SWITCH_BRANDS.find(b => b.id === activeBrand)?.label}」中未搜索到与 “<span className="text-[var(--info-color)] font-bold">{searchQuery}</span>” 相关的轴体名称或行程
+                    在当前分类中未搜索到与 “<span className="text-[var(--info-color)] font-bold">{searchQuery}</span>” 相关的轴体
                   </div>
                   {activeBrand !== 'all' && fullLibraryMatches.length > 0 && (
                     <button
@@ -310,18 +387,27 @@ export default function SwitchSettingTab({
                       className="px-3.5 py-1.5 rounded-lg bg-[var(--primary-color)] text-[var(--text-inverse-100)] text-xs font-bold hover:brightness-110 transition shadow-xs cursor-pointer flex items-center gap-1.5"
                     >
                       <Sparkles className="w-3.5 h-3.5" />
-                      <span>切换至【全部校准库】查看 ({fullLibraryMatches.length} 款)</span>
+                      <span>查看全库匹配轴体 ({fullLibraryMatches.length} 款)</span>
+                    </button>
+                  )}
+                  {isFinishedKeyboard && onlyShowSupported && (
+                    <button
+                      onClick={() => setOnlyShowSupported(false)}
+                      className="mt-2 text-xs text-[var(--info-color)] hover:underline cursor-pointer"
+                    >
+                      切换到【全量官方库】继续搜索全部 220+ 款轴体 →
                     </button>
                   )}
                 </div>
               ) : (
                 <div className="grid grid-cols-[repeat(auto-fill,minmax(225px,1fr))] gap-2.5">
                   {displayedSwitches.map((sw) => {
-                    const isSelected = currentAxis?.name === sw.name;
+                    const isSelected = currentAxis?.name === sw.name || currentAxis?.id === sw.id;
+                    const travelNum = Number(sw.maxTravel || sw.travel || 3.50);
                     return (
                       <div
-                        key={sw.id + sw.name}
-                        onClick={() => onSelectAxis(sw)}
+                        key={`${sw.id}-${sw.name}`}
+                        onClick={() => handleSelectAxis(sw)}
                         onMouseEnter={(e) => setHoveredSwitch({ sw, rect: e.currentTarget.getBoundingClientRect() })}
                         onMouseLeave={() => setHoveredSwitch(null)}
                         className={`p-2.5 rounded-xl border transition-all cursor-pointer flex items-center justify-between relative group ${
@@ -336,7 +422,7 @@ export default function SwitchSettingTab({
                             <Switch3DIcon color={sw.color} size={30} />
                           </div>
 
-                          {/* 轴体名称与行程 (顶行独占轴体全称，次行呈现高对比行程+角标+品牌) */}
+                          {/* 轴体名称与行程 */}
                           <div className="min-w-0 flex-1">
                             <div className="flex items-center justify-between gap-1.5">
                               <span className="text-xs font-bold text-[var(--text-primary)] group-hover:text-[var(--info-color)] transition truncate">
@@ -348,38 +434,38 @@ export default function SwitchSettingTab({
                                 </span>
                               )}
                             </div>
-                          <div className="flex items-center gap-1.5 mt-1">
-                            {/* 行程深度高对比度徽章 */}
-                            <span className="inline-flex items-center gap-1 font-mono font-bold text-[11px] px-1.5 py-0.5 rounded bg-[var(--bg-primary)] border border-[var(--border-color)] text-[var(--text-primary)] shrink-0 shadow-2xs">
-                              <span 
-                                className="w-1.5 h-1.5 rounded-full shrink-0 border border-black/20 dark:border-white/20" 
-                                style={{ backgroundColor: (sw.color && sw.color !== '#ffffff' && sw.color !== '#fff') ? sw.color : '#3b82f6' }} 
-                              />
-                              <span>{Number(sw.travel).toFixed(2)}mm</span>
-                            </span>
-                            {sw.badge && (
-                              <span className="text-[10px] px-1.5 py-0.5 rounded bg-[var(--bg-secondary)] border border-[var(--border-color)] text-[var(--text-secondary)] font-medium truncate max-w-[70px]">
-                                {sw.badge}
+                            <div className="flex items-center gap-1.5 mt-1">
+                              {/* 行程深度高对比度徽章 */}
+                              <span className="inline-flex items-center gap-1 font-mono font-bold text-[11px] px-1.5 py-0.5 rounded bg-[var(--bg-primary)] border border-[var(--border-color)] text-[var(--text-primary)] shrink-0 shadow-2xs">
+                                <span 
+                                  className="w-1.5 h-1.5 rounded-full shrink-0 border border-black/20 dark:border-white/20" 
+                                  style={{ backgroundColor: (sw.color && sw.color !== '#ffffff' && sw.color !== '#fff') ? sw.color : '#3b82f6' }} 
+                                />
+                                <span>{travelNum.toFixed(2)}mm</span>
                               </span>
-                            )}
-                            <span className="text-[10px] text-[var(--text-disabled)] truncate">
-                              · {sw.brand?.replace(/\s*\(.*\)/, '') || '默认'}
-                            </span>
+                              {sw.badge && (
+                                <span className="text-[10px] px-1.5 py-0.5 rounded bg-[var(--bg-secondary)] border border-[var(--border-color)] text-[var(--text-secondary)] font-medium truncate max-w-[70px]">
+                                  {sw.badge}
+                                </span>
+                              )}
+                              <span className="text-[10px] text-[var(--text-disabled)] truncate">
+                                · {sw.brand?.replace(/\s*\(.*\)/, '') || '星闪'}
+                              </span>
+                            </div>
                           </div>
                         </div>
                       </div>
-                    </div>
-                  );
-                })}
-              </div>
-            )}
-          </div>
+                    );
+                  })}
+                </div>
+              )}
+            </div>
           </div>
 
           {/* 底部实时状态条 */}
           <div className="pt-2 mt-2 border-t border-[var(--border-color)] flex items-center justify-between shrink-0">
             <div className="text-xs text-[var(--text-secondary)]">
-              当前轴体: <strong className="text-[var(--info-color)] font-bold">{currentAxis?.name}</strong> ({currentAxis?.maxTravel?.toFixed(2) || 3.40}mm)
+              当前轴体: <strong className="text-[var(--info-color)] font-bold">{currentAxis?.name || '神马轴'}</strong> ({Number(currentAxis?.maxTravel || currentAxis?.travel || 3.45).toFixed(2)}mm)
             </div>
 
             <div className="flex items-center space-x-1.5 text-xs text-emerald-600 font-bold bg-emerald-500/10 px-3 py-1 rounded-xl border border-emerald-500/20">
@@ -390,7 +476,7 @@ export default function SwitchSettingTab({
         </div>
       </div>
 
-      {/* 统一风格的浮动悬浮窗 Tooltip (纯整像素无 Transform 渲染，彻底消除文字模糊与亚像素抖动) */}
+      {/* 统一风格的浮动悬浮窗 Tooltip */}
       {hoveredSwitch && hoveredSwitch.rect && (() => {
         const rect = hoveredSwitch.rect;
         const tooltipWidth = 286;
@@ -398,6 +484,7 @@ export default function SwitchSettingTab({
         const finalLeft = Math.max(16, Math.min(window.innerWidth - tooltipWidth - 16, idealLeft));
         const placeAbove = rect.top > 250;
         const sw = hoveredSwitch.sw;
+        const swTravel = Number(sw.maxTravel || sw.travel || 3.50);
 
         return (
           <div
@@ -435,7 +522,7 @@ export default function SwitchSettingTab({
                   className="w-1.5 h-1.5 rounded-full shrink-0 border border-black/20 dark:border-white/20"
                   style={{ backgroundColor: (sw.color && sw.color !== '#ffffff' && sw.color !== '#fff') ? sw.color : '#3b82f6' }}
                 />
-                <span>{Number(sw.travel).toFixed(2)}mm</span>
+                <span>{swTravel.toFixed(2)}mm</span>
               </span>
             </div>
 

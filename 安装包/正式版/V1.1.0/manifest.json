@@ -1,7 +1,7 @@
 {
   "manifestVersion": "1.4.1",
   "appVersion": "1.1.0",
-  "appDownloadUrl": "https://github.com/Kutaze/AstraFlux-Hub/releases/download/v1.1.0/AstraFlux-HUB_Setup_v1.1.0.exe",
+  "appDownloadUrl": "https://github.com/onekuta/AstraFlux-Hub/releases/download/v1.1.0/AstraFlux-HUB_Setup_v1.1.0.exe",
   "appGiteeUrl": "https://gitee.com/Kutaze/astra-flux-hub/releases",
   "appChangelog": "AstraFlux-HUB V1.1.0 正式版发布",
   "appForceUpdate": false,

@@ -2,6 +2,71 @@ const { app, BrowserWindow, ipcMain, Tray, Menu, nativeImage } = require('electr
 const path = require('path');
 const fs = require('fs');
 
+// 规范统一主程序名称与用户数据存储目录 (统一更名为 AstraFlux-HUB)
+const APP_NAME = 'AstraFlux-HUB';
+app.name = APP_NAME;
+if (typeof app.setName === 'function') {
+  app.setName(APP_NAME);
+}
+try {
+  const customUserData = path.join(app.getPath('appData'), APP_NAME);
+  app.setPath('userData', customUserData);
+} catch (e) {}
+
+// 平滑迁移旧版目录配置与数据 (sparklink-playjoy-hub / sparklink-hub -> AstraFlux-HUB)
+const migrateOldUserData = () => {
+  try {
+    const newDir = app.getPath('userData');
+    const oldDirs = [
+      path.join(app.getPath('appData'), 'sparklink-playjoy-hub'),
+      path.join(app.getPath('appData'), 'sparklink-hub'),
+    ];
+    if (!fs.existsSync(newDir)) {
+      fs.mkdirSync(newDir, { recursive: true });
+    }
+    for (const oldDir of oldDirs) {
+      if (fs.existsSync(oldDir)) {
+        // 迁移 settings
+        const oldSettings = path.join(oldDir, 'app-settings.json');
+        const newSettings = path.join(newDir, 'app-settings.json');
+        if (fs.existsSync(oldSettings) && !fs.existsSync(newSettings)) {
+          fs.copyFileSync(oldSettings, newSettings);
+        }
+        // 迁移数据库文件
+        ['device_db.json', 'device_db.spkdb'].forEach(f => {
+          const oldF = path.join(oldDir, f);
+          const newF = path.join(newDir, f);
+          if (fs.existsSync(oldF) && !fs.existsSync(newF)) {
+            try { fs.copyFileSync(oldF, newF); } catch (e) {}
+          }
+        });
+        const oldDbFolder = path.join(oldDir, 'device_database');
+        const newDbFolder = path.join(newDir, 'device_database');
+        if (fs.existsSync(oldDbFolder) && !fs.existsSync(newDbFolder)) {
+          try { fs.cpSync(oldDbFolder, newDbFolder, { recursive: true }); } catch (e) {}
+        }
+        // 迁移日志
+        const oldLogs = path.join(oldDir, 'logs');
+        const newLogs = path.join(newDir, 'logs');
+        if (fs.existsSync(oldLogs) && !fs.existsSync(newLogs)) {
+          try { fs.cpSync(oldLogs, newLogs, { recursive: true }); } catch (e) {}
+        }
+
+        // 迁移完成后尝试安全删除旧目录（若未被占用）
+        try {
+          fs.rmSync(oldDir, { recursive: true, force: true });
+        } catch (e) {}
+      }
+    }
+  } catch (e) {}
+};
+migrateOldUserData();
+
+const logger = require('./logger');
+
+// 初始化全局本地日志系统
+logger.init();
+
 // 针对 Windows 平台深度优化 Chromium 字体渲染：开启 ClearType 亚像素抗锯齿与文字锐利渲染，防止字体模糊发虚
 app.commandLine.appendSwitch('enable-font-antialiasing');
 app.commandLine.appendSwitch('font-render-hinting', 'medium');
@@ -533,8 +598,7 @@ function createWindow() {
       const targetDirs = [
         app.getPath('userData'),
         path.dirname(process.execPath),
-        path.join(process.env.APPDATA || '', 'sparklink-playjoy-hub'),
-        path.join(process.env.APPDATA || '', 'sparklink-hub'),
+        path.join(process.env.APPDATA || '', 'AstraFlux-HUB'),
       ];
 
       targetDirs.forEach((dir) => {
@@ -703,24 +767,19 @@ taskkill /F /IM "sparklink-hub.exe" >nul 2>&1
 ping 127.0.0.1 -n 2 >nul
 
 echo [2/3] 正在自动检索驱动本地数据库存储目录...
-set "TARGET_DIR1=%APPDATA%\\sparklink-playjoy-hub"
-set "TARGET_DIR2=%APPDATA%\\sparklink-hub"
+set "TARGET_DIR1=%APPDATA%\\AstraFlux-HUB"
 
 if not exist "%TARGET_DIR1%" mkdir "%TARGET_DIR1%" >nul 2>&1
-if not exist "%TARGET_DIR2%" mkdir "%TARGET_DIR2%" >nul 2>&1
 
 echo [3/3] 正在安全覆写最新高版本外设数据库 (V${ver})...
 if exist "%~dp0device_db.json" (
     copy /Y "%~dp0device_db.json" "%TARGET_DIR1%\\device_db.json" >nul 2>&1
 ) else (
-    powershell -NoProfile -ExecutionPolicy Bypass -Command "[System.IO.File]::WriteAllBytes(($env:APPDATA + '\\sparklink-playjoy-hub\\device_db.json'), [System.Convert]::FromBase64String('${base64Str}'))"
+    powershell -NoProfile -ExecutionPolicy Bypass -Command "[System.IO.File]::WriteAllBytes(($env:APPDATA + '\\AstraFlux-HUB\\device_db.json'), [System.Convert]::FromBase64String('${base64Str}'))"
 )
-
-copy /Y "%TARGET_DIR1%\\device_db.json" "%TARGET_DIR2%\\device_db.json" >nul 2>&1
 
 if exist "%~dp0device_database" (
     xcopy /E /I /Y "%~dp0device_database" "%TARGET_DIR1%\\device_database" >nul 2>&1
-    xcopy /E /I /Y "%~dp0device_database" "%TARGET_DIR2%\\device_database" >nul 2>&1
 )
 
 echo.
@@ -797,13 +856,30 @@ pause >nul
       }, 500);
       return { success: true };
     } catch (e) {
+      logger.error('OTA', `下载更新安装包异常: ${e.message}`, e.stack);
       return { success: false, error: e.message };
     }
   });
 
-  // 将渲染进程控制台日志转发到主进程终端，便于调试设备连接 / 写入流程
+  // 本地日志与故障排查系统
+  ipcMain.handle('open-logs-folder', async () => logger.openLogsFolder());
+  ipcMain.handle('get-recent-logs', async (event, maxLines) => logger.getRecentLogs(maxLines));
+  ipcMain.handle('get-logs-path', async () => ({ success: true, path: logger.getLogsDir() }));
+  ipcMain.handle('log-error', async (event, payload) => {
+    const { source = 'Renderer', message = '', stack = '', level = 'ERROR' } = payload || {};
+    logger.log(level, source, message, stack);
+    return { success: true };
+  });
+
+  // 将渲染进程控制台日志转发到主进程终端与本地日志文件
   mainWindow.webContents.on('console-message', (event, level, message) => {
-    console.log(`[renderer] ${message}`);
+    const levelStr = level === 3 ? 'ERROR' : (level === 2 ? 'WARN' : 'INFO');
+    const isErrorOrWarn = level >= 2 || /\[SparkLink ErrorBoundary\]|Error:|Exception:/i.test(message);
+    if (isErrorOrWarn) {
+      logger.log(levelStr, 'renderer', message);
+    } else {
+      logger.info('renderer', message);
+    }
   });
 
   // 直接加载打包好的 dist/index.html

@@ -20,6 +20,12 @@ try {
   console.log('正在复制最新 electron/main.js 与 preload.js...');
   fs.cpSync(srcElectron, path.join(tempDir, 'electron'), { recursive: true });
 
+  console.log('正在同步根目录 package.json 到 asar...');
+  const srcPkg = path.resolve(__dirname, 'package.json');
+  if (fs.existsSync(srcPkg)) {
+    fs.copyFileSync(srcPkg, path.join(tempDir, 'package.json'));
+  }
+
   console.log('正在打包回 asar...');
   execSync(`npx asar pack "${tempDir}" "${targetAsar}"`, { stdio: 'inherit' });
 

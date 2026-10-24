@@ -48,4 +48,9 @@ contextBridge.exposeInMainWorld('electronAPI', {
     ipcRenderer.on('tray-show-device', handler);
     return () => ipcRenderer.removeListener('tray-show-device', handler);
   },
+  // 本地日志与故障排查系统
+  openLogsFolder: () => ipcRenderer.invoke('open-logs-folder'),
+  getRecentLogs: (maxLines) => ipcRenderer.invoke('get-recent-logs', maxLines),
+  getLogsPath: () => ipcRenderer.invoke('get-logs-path'),
+  logError: (payload) => ipcRenderer.invoke('log-error', payload),
 });

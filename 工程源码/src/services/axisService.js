@@ -5,7 +5,7 @@ import cachedAxes from '../constants/officialAxisCache.json' with { type: 'json'
 import ae64AxisListV3 from '../constants/ae64AxisListV3.json' with { type: 'json' };
 
 // 核心出厂与推荐磁轴校准 SKU (针对不同键盘部署原生出厂轴体，公模/客制化默认搭载磁玉 Pro)
-export const PRIMARY_AXES = [
+const RAW_PRIMARY_AXES = [
   {
     id: 788,
     hardwareAxisId: 788,
@@ -160,6 +160,13 @@ export const PRIMARY_AXES = [
   },
 ];
 
+export const PRIMARY_AXES = RAW_PRIMARY_AXES.map((a) => ({
+  ...a,
+  travel: a.maxTravel,
+  isOfficial: true,
+  verified: true,
+}));
+
 // 向后兼容 DV63 引用
 export const DV63_PRIMARY_AXES = PRIMARY_AXES;
 
@@ -313,12 +320,15 @@ class AxisService {
           shortName: name,
           brand: cat.type_name || raw.brand || '星闪校准',
           maxTravel,
+          travel: maxTravel,
           driveRange,
           deadzone: 0.20,
           color: raw.axis_color ? (raw.axis_color.startsWith('#') ? raw.axis_color : '#' + raw.axis_color) : '#4dd1f9',
           imageUrl: raw.image_url && raw.image_url !== '#' ? raw.image_url : null,
           badge: id === 788 ? '高导光柱' : (cat.type_name ? `${cat.type_name}原厂` : '星闪校准'),
           recommendedAP: 0.35,
+          isOfficial: true,
+          verified: true,
           description: `${cat.type_name || ''} ${name} 磁轴，行程 ${maxTravel}mm (官方 V3 校准)`
         });
       });
@@ -327,16 +337,20 @@ class AxisService {
     const featuredList = PRIMARY_AXES.map((f) => {
       const m = v3Map.get(f.id) || (f.axisV2Id ? Array.from(v3Map.values()).find(x => x.axisV2Id === f.axisV2Id) : null);
       if (m) {
+        const trav = f.maxTravel || m.maxTravel || 3.50;
         return {
           ...f,
-          maxTravel: f.maxTravel || m.maxTravel,
+          maxTravel: trav,
+          travel: trav,
           driveRange: f.driveRange || m.driveRange,
           axisV2Id: f.axisV2Id || m.axisV2Id,
           axisRangeMax: f.axisRangeMax || m.axisRangeMax,
           axisCoefficient: f.axisCoefficient || m.axisCoefficient,
+          isOfficial: true,
+          verified: true,
         };
       }
-      return { ...f };
+      return { ...f, travel: f.maxTravel, isOfficial: true, verified: true };
     });
 
     const finalAxes = [...featuredList];
@@ -373,6 +387,7 @@ class AxisService {
         shortName: name,
         brand,
         maxTravel: maxTravel > 0 ? maxTravel : 3.50,
+        travel: maxTravel > 0 ? maxTravel : 3.50,
         driveRange: driveRange > 0 ? driveRange : maxTravel,
         deadzone,
         color,
@@ -382,24 +397,28 @@ class AxisService {
         axisCoefficient: 1.0,
         description: `${brand} ${name} 磁轴，行程 ${maxTravel}mm (有效行程 ${driveRange}mm)`,
         isOfficial: true,
+        verified: true,
       });
     });
 
     // 2. 将核心特调预设与官方数据深度联动融合
-    // 对于 ID 在官方库中存在的（如 ID 1 磁玉 Pro, ID 3 万磁王等），补全官方真实 imageUrl, color 等属性
     const featuredList = PRIMARY_AXES.map((featured) => {
       const officialMatch = officialMap.get(featured.hardwareAxisId ?? featured.id);
+      const trav = featured.maxTravel || officialMatch?.maxTravel || 3.50;
       if (officialMatch) {
         return {
           ...featured,
-          maxTravel: featured.maxTravel || officialMatch.maxTravel,
+          maxTravel: trav,
+          travel: trav,
           driveRange: featured.driveRange || officialMatch.driveRange,
           deadzone: featured.deadzone || officialMatch.deadzone,
           imageUrl: featured.imageUrl || officialMatch.imageUrl,
           color: featured.color || officialMatch.color,
+          isOfficial: true,
+          verified: true,
         };
       }
-      return { ...featured };
+      return { ...featured, maxTravel: trav, travel: trav, isOfficial: true, verified: true };
     });
 
     // 3. 构建全量平铺列表：先放核心推荐轴体，再按 ID 顺序追加其余全部官方云端校准轴体
@@ -416,6 +435,135 @@ class AxisService {
     });
 
     this.axes = finalAxes;
+  }
+
+  // 获取全部轴体（默认过滤掉未鉴权/未核准的实验轴体，实现鉴权门禁）
+  getAllAxes(includeUnverified = false) {
+    if (includeUnverified) return this.axes;
+    return this.axes.filter((a) => a.verified !== false && a.isOfficial !== false);
+  }
+
+  // 依据当前键盘 Profile 过滤其硬件适配的轴体库
+  // 成品键盘（如 DV63、ES68、AE64-MAX）出厂固件针对特定轴体标定，读取并限制显示其对应支持列表
+  // 若键盘未做限制（客制化/开源PCB），或用户选择强制浏览全库，则放行全部已鉴权轴体
+  getSupportedAxesForProfile(profile, forceAll = false) {
+    const verifiedAxes = this.getAllAxes(false);
+    if (forceAll) return verifiedAxes;
+    const supported = profile?.supportedSwitches;
+    if (Array.isArray(supported) && supported.length > 0) {
+      const supSet = new Set(supported.map((s) => s.toLowerCase().replace(/\s+/g, '')));
+      const matched = verifiedAxes.filter((a) => {
+        const n = (a.name || '').toLowerCase().replace(/\s+/g, '');
+        const sn = (a.shortName || '').toLowerCase().replace(/\s+/g, '');
+        if (supSet.has(n) || supSet.has(sn)) return true;
+        return supported.some((key) => {
+          const cleanKey = key.toLowerCase().replace(/\s+/g, '');
+          return n.includes(cleanKey) || cleanKey.includes(n);
+        });
+      });
+      if (matched.length > 0) return matched;
+    }
+    return verifiedAxes;
+  }
+
+  // 轴体库全景统计与鉴权分析
+  getAxisStats() {
+    const total = this.axes.length;
+    const official = this.axes.filter((a) => a.isOfficial !== false && a.verified !== false).length;
+    const unverified = total - official;
+    const brands = {};
+    this.axes.forEach((a) => {
+      const b = a.brand || '其它';
+      brands[b] = (brands[b] || 0) + 1;
+    });
+    return {
+      total,
+      official,
+      unverified,
+      brands,
+      sources: [
+        {
+          name: 'ae64AxisListV3.json',
+          desc: '官网 V3 轴体映射库 (分品牌分类)',
+          count: Array.isArray(ae64AxisListV3) ? ae64AxisListV3.reduce((s, c) => s + (c.list?.length || 0), 0) : 0,
+        },
+        {
+          name: 'officialAxisCache.json',
+          desc: '星闪云端 API 全量轴体缓存 (真实官方鉴权)',
+          count: Array.isArray(cachedAxes) ? cachedAxes.length : 0,
+        },
+        {
+          name: 'PRIMARY_AXES',
+          desc: '出厂硬件特调与推荐标配 SKU',
+          count: PRIMARY_AXES.length,
+        },
+      ],
+    };
+  }
+
+  // 切换单个轴体的鉴权/可见状态 (开发者管理面板)
+  toggleAxisVerification(id) {
+    const axis = this.axes.find((a) => a.id === id);
+    if (axis) {
+      const current = axis.verified !== false && axis.isOfficial !== false;
+      axis.verified = !current;
+      axis.isOfficial = !current;
+      return axis.verified;
+    }
+    return false;
+  }
+
+  // 导出全量轴体数据库 JSON
+  exportAxisDbJson() {
+    return JSON.stringify(
+      {
+        version: '2026.10.24',
+        exportedAt: new Date().toISOString(),
+        total: this.axes.length,
+        officialCount: this.axes.filter((a) => a.verified !== false).length,
+        axes: this.axes,
+      },
+      null,
+      2
+    );
+  }
+
+  // 导入自定义新轴体校准配置
+  importCustomAxis(axisData) {
+    if (!axisData || !axisData.name) throw new Error('无效的轴体数据：缺少名称');
+    const id = axisData.id || Math.max(...this.axes.map((a) => a.id), 2000) + 1;
+    const maxTravel = parseFloat(axisData.maxTravel || axisData.travel || 3.5);
+    const newAxis = {
+      id,
+      hardwareAxisId: axisData.hardwareAxisId || id,
+      name: axisData.name,
+      shortName: axisData.shortName || axisData.name,
+      brand: axisData.brand || '客制化/第三方',
+      maxTravel,
+      travel: maxTravel,
+      driveRange: parseFloat(axisData.driveRange || maxTravel - 0.2),
+      deadzone: parseFloat(axisData.deadzone || 0.2),
+      color: axisData.color || '#3b82f6',
+      badge: axisData.badge || '自定义标定',
+      recommendedAP: parseFloat(axisData.recommendedAP || 0.35),
+      isOfficial: !!axisData.isOfficial,
+      verified: !!axisData.verified,
+      description: axisData.description || `自定义磁轴 ${axisData.name}`,
+    };
+    const existingIdx = this.axes.findIndex((a) => a.id === id || a.name === axisData.name);
+    if (existingIdx >= 0) {
+      this.axes[existingIdx] = newAxis;
+    } else {
+      this.axes.push(newAxis);
+    }
+    return newAxis;
+  }
+
+  // 重置回官方出厂基线
+  resetToOfficialAxes() {
+    this.isLoaded = false;
+    this.axes = [...PRIMARY_AXES];
+    return this.loadAxisList();
   }
 
   // 根据轴体名称获取配置

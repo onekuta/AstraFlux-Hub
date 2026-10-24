@@ -8,18 +8,18 @@
 **面向磁轴键盘与极速电竞外设打造的第三方现代化桌面控制中枢，支持热插拔即用、毫秒级调校与全量云端设备库。**
 
 <p align="center">
-  <a href="https://github.com/Kutaze/AstraFlux-Hub"><img src="https://img.shields.io/badge/WebHID-Direct_Link-0284c7?style=flat-square&logo=google-chrome&logoColor=white" alt="WebHID" /></a>
-  <a href="https://github.com/Kutaze/AstraFlux-Hub/releases"><img src="https://img.shields.io/badge/Release-V1.1.2-6366f1?style=flat-square" alt="Release" /></a>
+  <a href="https://github.com/onekuta/AstraFlux-Hub"><img src="https://img.shields.io/badge/WebHID-Direct_Link-0284c7?style=flat-square&logo=google-chrome&logoColor=white" alt="WebHID" /></a>
+  <a href="https://github.com/onekuta/AstraFlux-Hub/releases"><img src="https://img.shields.io/badge/Release-V1.1.2-6366f1?style=flat-square" alt="Release" /></a>
   <a href="https://gitee.com/Kutaze/astra-flux-hub"><img src="https://img.shields.io/badge/Gitee-国内更新镜像-c71d23?style=flat-square&logo=gitee&logoColor=white" alt="Gitee" /></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-10b981?style=flat-square" alt="License" /></a>
-  <a href="https://github.com/Kutaze/AstraFlux-Hub"><img src="https://img.shields.io/badge/Platform-Windows_10_%7C_11-00f0ff?style=flat-square&logo=windows&logoColor=black" alt="Platform" /></a>
-  <a href="https://github.com/Kutaze/AstraFlux-Hub"><img src="https://img.shields.io/badge/Polling_Rate-Up_to_8000Hz-8b5cf6?style=flat-square" alt="8000Hz" /></a>
-  <a href="https://github.com/Kutaze/AstraFlux-Hub"><img src="https://img.shields.io/badge/Rapid_Trigger-0.01mm_Precision-f59e0b?style=flat-square" alt="0.01mm" /></a>
+  <a href="https://github.com/onekuta/AstraFlux-Hub"><img src="https://img.shields.io/badge/Platform-Windows_10_%7C_11-00f0ff?style=flat-square&logo=windows&logoColor=black" alt="Platform" /></a>
+  <a href="https://github.com/onekuta/AstraFlux-Hub"><img src="https://img.shields.io/badge/Polling_Rate-Up_to_8000Hz-8b5cf6?style=flat-square" alt="8000Hz" /></a>
+  <a href="https://github.com/onekuta/AstraFlux-Hub"><img src="https://img.shields.io/badge/Rapid_Trigger-0.01mm_Precision-f59e0b?style=flat-square" alt="0.01mm" /></a>
   <a href="https://qm.qq.com/cgi-bin/qm/qr?k=7RG3iDSoQvmEPAic1ZzNYVLRObp4GZOK&jump_from=webapi&authKey=Xlf2ahwjHImCM02F6DctGvq6spka6sqGE3qLI/msv6ZsqKgaiOh5ol1IHVI0LmBI" target="_blank" rel="noopener noreferrer"><img src="https://img.shields.io/badge/QQ群-1131310645-12b7f5?style=flat-square&logo=tencent-qq&logoColor=white" alt="QQ群: 1131310645" /></a>
 </p>
 
 <p align="center">
-  <a href="https://github.com/Kutaze/AstraFlux-Hub/releases" target="_blank" rel="noopener noreferrer">
+  <a href="https://github.com/onekuta/AstraFlux-Hub/releases" target="_blank" rel="noopener noreferrer">
     <img src="https://img.shields.io/badge/📥_GitHub_Releases-获取最新发布包-24292e?style=for-the-badge&logo=github" alt="GitHub Releases" height="36" />
   </a>
   &nbsp;&nbsp;
@@ -105,8 +105,8 @@
 
 | 分发通道 | 适用网络环境 | 下载链接 | 说明 |
 | :--- | :--- | :--- | :--- |
-| 🚀 **GitHub Releases** | 国际 / 全球网络 (代码主干) | [👉 点击跳转 GitHub Releases 页面](https://github.com/Kutaze/AstraFlux-Hub/releases) | 完整发布包、便携包与源码历史归档 |
-| ⚡ **国内高速 CDN 直链** | 国内网络 (极速免代理直连) | [👉 点击直接下载 V1.1.2 安装包](https://ghfast.top/https://github.com/Kutaze/AstraFlux-Hub/releases/download/v1.1.2/AstraFlux-HUB_Setup_v1.1.2.exe) | 基于 GitHub Release 专线 CDN 加速，跑满带宽 |
+| 🚀 **GitHub Releases** | 国际 / 全球网络 (代码主干) | [👉 点击跳转 GitHub Releases 页面](https://github.com/onekuta/AstraFlux-Hub/releases) | 完整发布包、便携包与源码历史归档 |
+| ⚡ **国内高速 CDN 直链** | 国内网络 (极速免代理直连) | [👉 点击直接下载 V1.1.2 安装包](https://ghfast.top/https://github.com/onekuta/AstraFlux-Hub/releases/download/v1.1.2/AstraFlux-HUB_Setup_v1.1.2.exe) | 基于 GitHub Release 专线 CDN 加速，跑满带宽 |
 
 ### 2. 最新版本发布包资产 (V1.1.2)
 
@@ -157,7 +157,7 @@ flowchart LR
 
 ## 📝 更新日志 (Changelog)
 
-> 💡 **同步说明**：主页更新日志同步跟随 [GitHub Releases](https://github.com/Kutaze/AstraFlux-Hub/releases) / [Gitee Releases](https://gitee.com/Kutaze/astra-flux-hub/releases) 进行维护与归档。
+> 💡 **同步说明**：主页更新日志同步跟随 [GitHub Releases](https://github.com/onekuta/AstraFlux-Hub/releases) / [Gitee Releases](https://gitee.com/Kutaze/astra-flux-hub/releases) 进行维护与归档。
 
 <details open>
 <summary><b>📋 点击展开 / 折叠版本更新日志 (Changelog Archive)</b></summary>
@@ -228,8 +228,8 @@ flowchart LR
 ## 📈 Star History
 
 <div align="center">
-  <a href="https://star-history.com/#Kutaze/AstraFlux-Hub&Date" target="_blank" rel="noopener noreferrer">
-    <img src="https://api.star-history.com/svg?repos=Kutaze/AstraFlux-Hub&type=Date" alt="Star History Chart" />
+  <a href="https://star-history.com/#onekuta/AstraFlux-Hub&Date" target="_blank" rel="noopener noreferrer">
+    <img src="https://api.star-history.com/svg?repos=onekuta/AstraFlux-Hub&type=Date" alt="Star History Chart" />
   </a>
 </div>
 
@@ -290,5 +290,5 @@ AstraFlux-HUB 的诞生离不开开源社区与星闪技术生态先锋者的无
 3. **硬件安全性**：软件已实施严格的参数边界保护（如回报率真实封顶 8000Hz、死区安全防撞红线等），但对于用户自行刷写第三方非官方固件、超频改装、或极端电压扰动引发的物理损坏，作者及社区贡献者概不承担任何法律连带责任。请始终在官方额定规格内合理调校设备。
 
 <div align="center">
-  <p>Made with ⚡ by <a href="https://github.com/Kutaze">Kutaze</a> and the Open Source Gaming Community.</p>
+  <p>Made with ⚡ by <a href="https://github.com/onekuta">Kutaze</a> and the Open Source Gaming Community.</p>
 </div>

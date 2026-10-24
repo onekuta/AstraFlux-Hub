@@ -120,14 +120,21 @@ async function main() {
     } catch (e) {}
   }
 
+  const now = new Date();
+  const yy = String(now.getFullYear()).slice(-2);
+  const mm = String(now.getMonth() + 1).padStart(2, '0');
+  const dd = String(now.getDate()).padStart(2, '0');
+  const timeCode = `${yy}.${mm}.${dd}`;
+  const buildDateStr = `${now.getFullYear()}-${mm}-${dd}`;
+
   const changelogText = publisherConfig.appRelease?.changelog || 
-    `1. 全新升级为官方原生 Inno Setup 主流安装向导，完美支持附加任务（桌面/开始菜单快捷方式）与平滑安装体验\n2. 修复官方技术交流群 (1131310645) 唤起跳转参数，精准对齐腾讯加群组件协议\n3. 软件更新与数据库隔离 (software/ 与 database/)\n4. 采用极致 LZMA2 压缩率，安装包轻量化至 93.5MB，直挂 Gitee 官方发行版`;
+    `1. 数据库更新后自动执行二次全量扫描，无需重启即刻消除首页“更新可用”提示与小红点\n2. 全面绑定标准版本构建时间码 (${timeCode})，建立防止从新版正式版倒退安装旧 Beta 版本的安全门禁\n3. 全软件多语言国际化支持（简体中文、English、日本語），实时动态切换无须重启\n4. 全新高颜值自定义下拉框（CustomSelect），修复设置页右上角标签折行与界面细节\n5. 数据库更新卡片动态展示云端更新日志说明 (libChangelog)\n6. 官方原生 Inno Setup 6 现代安装向导，LZMA2 深度压缩至 93.5MB`;
 
   // 4.1 生成「更新日志.md」
   const changelogMdContent = `# 🚀 AstraFlux-HUB 更新日志 - V${version}
 
-- **发布版本**：V${version}
-- **发布日期**：${new Date().toLocaleDateString('zh-CN')}
+- **发布版本**：V${version} (构建码: ${timeCode})
+- **发布日期**：${now.toLocaleDateString('zh-CN')}
 - **支持架构**：Windows 10 / 11 (x64)
 - **安装包架构**：Inno Setup 6 官方原生现代向导 (Setup Wizard)
 
@@ -135,20 +142,26 @@ async function main() {
 
 ## 📝 本次改动摘要
 
-### 📦 [安装体验全面重构 (Inno Setup)]
-- **官方 Inno Setup 原生向导**：彻底告别简陋界面，完全支持多步引导：选择安装目录、附加任务选择（创建桌面快捷方式/开始菜单快捷方式）、平滑安装进度与完成启动引导。
-- **极致体积优化 (93.5 MB)**：采用 LZMA2/Ultra64 压缩并精简非必要语言包，安装包体积由 144MB 骤降至 93.5MB，直接支持 Gitee 官方发行版附件挂载直下。
+### 🔄 [OTA 升级与二次扫描联动]
+- **数据库更新后二次即时扫描**：在设置中心更新完适配库后，后台立即执行全量二次校验，确认无未完成更新后瞬间消除首页顶栏的“更新可用”按钮与红点，无需重启驱动。
+- **时间码与防倒退门禁**：正式版全量绑定时间码（${timeCode}），当切换至旧 Beta 通道时自动拦截倒退更新，确保稳定版不受旧测试版降级干扰。
+- **动态更新记录呈现**：更新数据库卡片动态解析并展示云端真实的 \`libChangelog\` 内容。
 
-### 🐛 [问题修复与通道优化]
-- **官方技术交流群唤起直达修复**：精确对齐腾讯官方加群组件协议（群号：\`1131310645\`），修复参数大小写识别问题，支持一键复制并无障碍唤起 QQ 加群。
-- **软件与外设库更新目录物理隔离**：彻底解耦 \`database/\` (外设数据库) 与 \`software/\` (客户端软件更新)，杜绝仓库主分支清单混杂冲突。
-- **软件更新检测与返链状态修正**：修复客户端更新页云端返链状态展示，默认锁定官方 software 专属通道，支持直连 Gitee Releases 下载覆盖升级。
+### 🌐 [全界面多语言国际化与视觉进化]
+- **三语无感切换**：全量支持简体中文、English、日本語，界面实时无缝切换。
+- **全新高颜值控件**：深度打造 CustomSelect 控件与暗黑主题深度契合。
+- **界面细节打磨**：修复设置页右上角标签折行挤压，纯净化切换通道按钮图标。
+
+### 📦 [安装包架构 (Inno Setup 6)]
+- **官方 Inno Setup 原生现代向导**：支持选择安装目录、快捷方式附加任务引导。
+- **极致体积优化 (93.5 MB)**：LZMA2/Ultra64 压缩，直接支持 Gitee 官方发行版极速直下。
 
 ---
 
 ## 📦 安装包文件信息 (标准三件套之一)
 - **文件名称**：\`${setupExeName}\`
 - **文件体积**：\`${setupSizeMb} MB\` (\`${setupSizeBytes}\` 字节)
+- **构建代码**：\`${timeCode}\`
 - **SHA-256 哈希值**：\`${setupSha256}\`
 `;
 
@@ -161,16 +174,19 @@ async function main() {
   const manifestData = {
     manifestVersion: '1.4.1',
     appVersion: version,
+    buildTimeCode: timeCode,
+    buildDate: buildDateStr,
     channel: isBeta ? 'beta' : 'release',
+    prerelease: isBeta,
     appDownloadUrl: `https://gitee.com/Kutaze/astra-flux-hub/releases/download/${targetTag}/${setupExeName}`,
-    cdnDownloadUrl: `https://ghfast.top/https://github.com/Kutaze/AstraFlux-Hub/releases/download/${targetTag}/${setupExeName}`,
-    githubDownloadUrl: `https://github.com/Kutaze/AstraFlux-Hub/releases/download/${targetTag}/${setupExeName}`,
+    cdnDownloadUrl: `https://ghfast.top/https://github.com/onekuta/AstraFlux-Hub/releases/download/${targetTag}/${setupExeName}`,
+    githubDownloadUrl: `https://github.com/onekuta/AstraFlux-Hub/releases/download/${targetTag}/${setupExeName}`,
     appReleaseUrl: `https://gitee.com/Kutaze/astra-flux-hub/releases`,
     appChangelog: changelogText,
     appForceUpdate: false,
     appFileSize: `${setupSizeMb} MB`,
     setupSha256: setupSha256,
-    libVersion: publisherConfig.dbRelease?.libVersion || '2026.10.20.1',
+    libVersion: publisherConfig.dbRelease?.libVersion || '2026.10.21.1',
     libDownloadUrl: 'https://gitee.com/Kutaze/astra-flux-hub/raw/main/database/device_database.spkdb',
     totalDevices: 638,
     updatedAt: new Date().toISOString()

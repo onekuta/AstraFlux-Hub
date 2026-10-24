@@ -215,9 +215,16 @@ export default {
     appDesc: 'Universal open-source control center for NearLink magnetic gaming keyboards',
     author: 'Author',
     license: 'License & Acknowledgements',
+    
+    // Logs & Diagnostics
+    logsTitle: 'Runtime Logs & Diagnostics',
+    logsDesc: 'Automatically logs software runtime events and errors for troubleshooting',
+    copyDiagBtn: 'Copy Diagnostics',
+    openLogsBtn: 'Open Logs Folder',
+    copyDiagSuccess: 'Diagnostic report copied to clipboard!',
   },
   betaModal: {
-    btnSwitchBeta: '⚡ Switch to Beta Channel',
+    btnSwitchBeta: 'Switch to Beta Channel',
     warningTitle: 'Important Notice: Switch to Beta Channel',
     warningSub: 'Please read the following risks carefully before switching',
     risk1Title: 'Beta versions may contain instability',

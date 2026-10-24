@@ -311,9 +311,9 @@ export default function DeviceHomeView({
               if (typeof onOpenGlobalSettings === 'function') {
                 onOpenGlobalSettings('about');
               } else if (window.electronAPI && typeof window.electronAPI.openExternalUrl === 'function') {
-                window.electronAPI.openExternalUrl('https://github.com/Kutaze/AstraFlux-Hub');
+                window.electronAPI.openExternalUrl('https://github.com/onekuta/AstraFlux-Hub');
               } else {
-                window.open('https://github.com/Kutaze/AstraFlux-Hub', '_blank', 'noopener,noreferrer');
+                window.open('https://github.com/onekuta/AstraFlux-Hub', '_blank', 'noopener,noreferrer');
               }
             }}
             className="font-bold text-[var(--text-secondary)] hover:text-[var(--info-color)] hover:underline transition cursor-pointer"

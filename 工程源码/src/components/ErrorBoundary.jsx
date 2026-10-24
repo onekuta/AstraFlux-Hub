@@ -1,5 +1,5 @@
 import React from 'react';
-import { RotateCcw, AlertTriangle, Home } from 'lucide-react';
+import { RotateCcw, AlertTriangle, Home, FolderOpen, Copy, Check } from 'lucide-react';
 
 /**
  * 星闪驱动全局与模块级错误边界守护组件
@@ -8,7 +8,7 @@ import { RotateCcw, AlertTriangle, Home } from 'lucide-react';
 export default class ErrorBoundary extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { hasError: false, error: null, errorInfo: null };
+    this.state = { hasError: false, error: null, errorInfo: null, copied: false };
   }
 
   static getDerivedStateFromError(error) {
@@ -18,10 +18,20 @@ export default class ErrorBoundary extends React.Component {
   componentDidCatch(error, errorInfo) {
     console.error('[SparkLink ErrorBoundary 捕获到组件异常]:', error, errorInfo);
     this.setState({ errorInfo });
+    try {
+      if (window.electronAPI?.logError) {
+        window.electronAPI.logError({
+          source: 'React ErrorBoundary',
+          message: error?.message || '组件未捕获异常',
+          stack: error?.stack || '',
+          componentStack: errorInfo?.componentStack || ''
+        });
+      }
+    } catch (e) {}
   }
 
   handleReset = () => {
-    this.setState({ hasError: false, error: null, errorInfo: null });
+    this.setState({ hasError: false, error: null, errorInfo: null, copied: false });
     if (this.props.onReset) {
       this.props.onReset();
     } else {
@@ -30,7 +40,7 @@ export default class ErrorBoundary extends React.Component {
   };
 
   handleBackHome = () => {
-    this.setState({ hasError: false, error: null, errorInfo: null });
+    this.setState({ hasError: false, error: null, errorInfo: null, copied: false });
     if (this.props.onBackHome) {
       this.props.onBackHome();
     } else {
@@ -38,6 +48,27 @@ export default class ErrorBoundary extends React.Component {
       url.searchParams.set('view', 'home');
       window.location.href = url.toString();
     }
+  };
+
+  handleOpenLogs = () => {
+    try {
+      window.electronAPI?.openLogsFolder?.();
+    } catch (e) {}
+  };
+
+  handleCopyError = () => {
+    try {
+      const text = [
+        `[AstraFlux-HUB 异常报告]`,
+        `时间: ${new Date().toLocaleString()}`,
+        `错误: ${this.state.error?.name || 'Error'}: ${this.state.error?.message || ''}`,
+        `堆栈: ${this.state.error?.stack || ''}`,
+        `组件层级: ${this.state.errorInfo?.componentStack || ''}`
+      ].join('\n');
+      navigator.clipboard.writeText(text);
+      this.setState({ copied: true });
+      setTimeout(() => this.setState({ copied: false }), 2000);
+    } catch (e) {}
   };
 
   render() {
@@ -53,7 +84,7 @@ export default class ErrorBoundary extends React.Component {
           </h2>
 
           <p className="text-xs text-[var(--text-tertiary)] max-w-md mb-6 leading-relaxed">
-            设备通信或组件状态已由守护系统自动隔离拦截，防止软件崩溃白屏。您可以尝试重新加载或返回主页。
+            设备通信或组件状态已由守护系统自动隔离拦截，防止软件崩溃白屏，且报错已自动落盘至本地日志。您可以尝试重新加载或返回主页。
           </p>
 
           {this.state.error && (
@@ -63,7 +94,7 @@ export default class ErrorBoundary extends React.Component {
             </div>
           )}
 
-          <div className="flex items-center space-x-3">
+          <div className="flex items-center space-x-3 mb-4">
             <button
               onClick={this.handleReset}
               className="flex items-center space-x-1.5 px-4 py-2 rounded-xl text-xs font-bold bg-[var(--primary-color)] text-[var(--text-inverse-100)] hover:brightness-110 transition cursor-pointer shadow-md"
@@ -78,6 +109,23 @@ export default class ErrorBoundary extends React.Component {
             >
               <Home className="w-3.5 h-3.5" />
               <span>返回设备管理主页</span>
+            </button>
+          </div>
+
+          <div className="flex items-center space-x-3 text-[11px] text-[var(--text-tertiary)]">
+            <button
+              onClick={this.handleCopyError}
+              className="flex items-center space-x-1 hover:text-[var(--primary-color)] transition cursor-pointer px-2 py-1 rounded bg-[var(--bg-secondary)] border border-[var(--border-color)]"
+            >
+              {this.state.copied ? <Check className="w-3 h-3 text-emerald-400" /> : <Copy className="w-3 h-3" />}
+              <span>{this.state.copied ? '已复制报错信息' : '复制报错信息'}</span>
+            </button>
+            <button
+              onClick={this.handleOpenLogs}
+              className="flex items-center space-x-1 hover:text-[var(--primary-color)] transition cursor-pointer px-2 py-1 rounded bg-[var(--bg-secondary)] border border-[var(--border-color)]"
+            >
+              <FolderOpen className="w-3 h-3" />
+              <span>打开本地日志目录</span>
             </button>
           </div>
         </div>

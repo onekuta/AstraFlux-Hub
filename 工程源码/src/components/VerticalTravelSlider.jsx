@@ -31,19 +31,23 @@ export default function VerticalTravelSlider({
   const bubbleDragRef = useRef(null);
   const [dragging, setDragging] = useState(false);
 
+  // 安全数值保护
+  const safeValue = Number.isFinite(Number(value)) ? Number(value) : (min || 0.40);
+  const safeMax = (Number.isFinite(Number(max)) && Number(max) > 0) ? Number(max) : 3.50;
+
   // 动态精度：若 min < 0.01 (如 0.001) 则采用 3 位小数，若 min < 0.1 (如 0.01) 则采用 2 位小数
   const precision = min < 0.01 ? 3 : (min < 0.1 ? 2 : 1);
 
   // 键盘输入直接编辑模式
   const [isEditing, setIsEditing] = useState(false);
-  const [inputValue, setInputValue] = useState(value.toFixed(precision));
+  const [inputValue, setInputValue] = useState(safeValue.toFixed(precision));
   const inputRef = useRef(null);
 
   useEffect(() => {
     if (!isEditing) {
-      setInputValue(value.toFixed(precision));
+      setInputValue(safeValue.toFixed(precision));
     }
-  }, [value, isEditing, precision]);
+  }, [safeValue, isEditing, precision]);
 
   useEffect(() => {
     if (isEditing && inputRef.current) {
@@ -52,11 +56,10 @@ export default function VerticalTravelSlider({
     }
   }, [isEditing]);
 
-  const safeMax = max > 0 ? max : 3.5;
   const clamp = (v) => Math.min(safeMax, Math.max(min, v));
   const round = (v) => Number(clamp(v).toFixed(precision));
 
-  const ratio = Math.max(0, Math.min(1, value / safeMax));
+  const ratio = Math.max(0, Math.min(1, safeValue / safeMax));
   const topPct = `${(ratio * 100).toFixed(3)}%`;
 
   const emit = (v) => {
@@ -152,7 +155,7 @@ export default function VerticalTravelSlider({
     if (!isNaN(parsed)) {
       emit(clamp(parsed));
     } else {
-      setInputValue(value.toFixed(precision));
+      setInputValue(safeValue.toFixed(precision));
     }
     setIsEditing(false);
   };
@@ -163,7 +166,7 @@ export default function VerticalTravelSlider({
       commitInput();
     } else if (e.key === 'Escape') {
       e.preventDefault();
-      setInputValue(value.toFixed(precision));
+      setInputValue(safeValue.toFixed(precision));
       setIsEditing(false);
     }
   };
@@ -229,8 +232,8 @@ export default function VerticalTravelSlider({
             aria-label={ariaLabel}
             aria-valuemin={min}
             aria-valuemax={Number(safeMax.toFixed(2))}
-            aria-valuenow={Number(value.toFixed(2))}
-            aria-valuetext={`${value.toFixed(2)}${unit}`}
+            aria-valuenow={Number(safeValue.toFixed(2))}
+            aria-valuetext={`${safeValue.toFixed(2)}${unit}`}
             aria-disabled={disabled || undefined}
             onPointerDown={handleTrackPointerDown}
             onPointerMove={handleTrackPointerMove}
@@ -309,7 +312,7 @@ export default function VerticalTravelSlider({
             ) : (
               <div className="flex items-center gap-1.5 select-none">
                 <span className="font-mono text-xs font-bold text-[var(--text-primary)] pointer-events-none select-none">
-                  {value.toFixed(precision)}{unit}
+                  {safeValue.toFixed(precision)}{unit}
                 </span>
                 <button
                   type="button"
@@ -324,7 +327,7 @@ export default function VerticalTravelSlider({
                   onClick={(e) => {
                     e.stopPropagation();
                     e.preventDefault();
-                    setInputValue(value.toFixed(precision));
+                    setInputValue(safeValue.toFixed(precision));
                     setIsEditing(true);
                   }}
                 >

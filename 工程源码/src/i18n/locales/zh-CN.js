@@ -215,9 +215,16 @@ export default {
     appDesc: '通用星闪 (NearLink) 磁轴电竞外设开源控制中心',
     author: '核心作者',
     license: '开源许可与致谢',
+    
+    // 日志与故障诊断
+    logsTitle: '运行日志与故障排查',
+    logsDesc: '自动持久化记录软件运行状态与异常报错，便于故障诊断与排查',
+    copyDiagBtn: '复制诊断报告',
+    openLogsBtn: '打开日志目录',
+    copyDiagSuccess: '已复制运行诊断报告！可直接发送给开发者排查',
   },
   betaModal: {
-    btnSwitchBeta: '⚡ 切换至 Beta 测试版',
+    btnSwitchBeta: '切换至 Beta 测试版',
     warningTitle: '重要警示：切换至 Beta 测试版本渠道',
     warningSub: '请仔细阅读以下测试版风险须知后慎重选择',
     risk1Title: '测试版本功能不保证绝对稳定',
