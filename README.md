@@ -110,7 +110,7 @@
 
 ### 2. 最新版本发布包资产 (V1.1.2)
 
-> 📦 **标准三文件封包规范**：发布包存放于 `安装包/V<Version>/` 独立目录中，包含更新日志、独立安装包及可直接上传至云端发布工具的 `manifest.json` 更新清单。
+> 📦 **标准三文件封包规范**：发布包存放于 `installers/release/V<Version>/` 独立目录中，包含更新日志、独立安装包及可直接上传至云端发布工具的 `manifest.json` 更新清单。
 
 | 文件名 | 分发类型 | 文件大小 | SHA-256 校验哈希 |
 | :--- | :--- | :--- | :--- |
@@ -203,7 +203,7 @@ flowchart LR
 </div>
 
 > 📌 **进群交流须知**：  
-> 1. 如遇到未识别的星闪键盘，可使用根目录下 `PCB信息枚举探针/星闪PCB适配探针.exe` 抓取设备指纹后在群内发送给开发者；  
+> 1. 如遇到未识别的星闪键盘，可使用根目录下 `pcb-probe/星闪PCB适配探针.exe` 抓取设备指纹后在群内发送给开发者；  
 > 2. 请遵守社区文明公约，文明交流，严禁发布商业广告与不良虚假内容。
 
 ---
@@ -239,8 +239,8 @@ flowchart LR
 
 ### 1. 启动与日常调试
 ```bash
-# 进入工程源码目录
-cd 工程源码
+# 进入源码目录
+cd source
 
 # 启动前端开发调试（浏览器内调 UI）
 npm run dev
@@ -251,7 +251,7 @@ env -u ELECTRON_RUN_AS_NODE npx electron --no-sandbox --disable-gpu --disable-so
 
 ### 2. 生产构建与安装包封装
 ```bash
-cd 工程源码
+cd source
 
 # 1. 编译前端生产静态文件 -> dist/
 npm run build
@@ -259,7 +259,7 @@ npm run build
 # 2. 原地更新解包与覆盖 app.asar（规避 Windows 文件锁）
 npm run repack
 
-# 3. 一键生成对应版本 Setup.exe 与 Portable 绿色包至 安装包_V<Version>/
+# 3. 一键生成对应版本 Setup.exe 与 Portable 绿色包至 installers/
 npm run release:pack
 ```
 

@@ -49,20 +49,20 @@ async function main() {
     const mm = String(now.getMonth() + 1).padStart(2, '0');
     const dd = String(now.getDate()).padStart(2, '0');
     version = `beta0.${yy}.${mm}.${dd}`;
-    categoryDir = 'Beta测试版';
+    categoryDir = 'beta';
     releaseDirName = version;
     setupExeName = `AstraFlux-HUB_Setup_${version}.exe`;
     console.log(`[1/4] 当前发布目标为【Beta 测试版】: ${version}`);
   } else {
     version = pkg.version || '1.1.2';
-    categoryDir = '正式版';
+    categoryDir = 'release';
     releaseDirName = `V${version}`;
     setupExeName = `AstraFlux-HUB_Setup_v${version}.exe`;
     console.log(`[1/4] 当前发布目标为【正式稳定版】: V${version}`);
   }
 
-  // 统一父目录：根目录「安装包/」，分类「正式版/」与「Beta测试版/」
-  const releasesParentDir = path.join(ROOT_DIR, '安装包', categoryDir);
+  // 统一父目录：根目录「installers/」，分类「release/」与「beta/」
+  const releasesParentDir = path.join(ROOT_DIR, 'installers', categoryDir);
   const releaseDirPath = path.join(releasesParentDir, releaseDirName);
   
   if (!fs.existsSync(releasesParentDir)) {
@@ -70,9 +70,9 @@ async function main() {
   }
   if (!fs.existsSync(releaseDirPath)) {
     fs.mkdirSync(releaseDirPath, { recursive: true });
-    console.log(`      ✓ 已创建新发布文件夹: 安装包/${categoryDir}/${releaseDirName}/`);
+    console.log(`      ✓ 已创建新发布文件夹: installers/${categoryDir}/${releaseDirName}/`);
   } else {
-    console.log(`      ✓ 目标发布文件夹已就绪: 安装包/${categoryDir}/${releaseDirName}/`);
+    console.log(`      ✓ 目标发布文件夹已就绪: installers/${categoryDir}/${releaseDirName}/`);
   }
 
   // 2. 检查并定位 Inno Setup 编译器

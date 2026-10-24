@@ -9,17 +9,17 @@ lerna-debug.log*
 
 # Node & Build caches
 node_modules/
-工程源码/node_modules/
-工程源码/dist/
-工程源码/dist-electron/
-工程源码/release/
-工程源码/release-v4/
-工程源码/.asar-tmp/
-工程源码/scratch/
-工程源码/scratch_official/
-工程源码/scratch_v2/
-工程源码/tools/electron-bin/
-工程源码/device_database/
+source/node_modules/
+source/dist/
+source/dist-electron/
+source/release/
+source/release-v4/
+source/.asar-tmp/
+source/scratch/
+source/scratch_official/
+source/scratch_v2/
+source/tools/electron-bin/
+source/device_database/
 
 # Video, audio & clip projects
 sp/
@@ -35,7 +35,7 @@ sp/
 *.lnk
 EnhanceHidUSB_V140.exe
 vulkan-1.dll
-安装包/**/*.exe
+installers/**/*.exe
 
 # Excluded folders & local binaries (never commit directly to git)
 宣传/
