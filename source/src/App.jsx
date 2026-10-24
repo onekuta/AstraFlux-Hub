@@ -146,6 +146,26 @@ export default function App() {
     ? getLayoutByKey(overrideLayoutKey) 
     : resolveLayoutForProfile(deviceProfile);
   const KEY_COUNT = getKeyCountForLayout(ACTIVE_LAYOUT);
+
+  // 视觉键位按 row-major 顺序展开 (与硬件矩阵按序对齐，严格过滤占位 spacer)
+  const VISUAL_KEY_ORDER = useMemo(
+    () => ACTIVE_LAYOUT.flat().filter((k) => k && !k.isSpacer && !k.gap && k.id),
+    [ACTIVE_LAYOUT]
+  );
+
+  const KEY_LAYOUT_INDEX = useMemo(() => {
+    const map = {};
+    ACTIVE_LAYOUT.forEach((row) => {
+      row.forEach((k) => {
+        if (k && !k.isSpacer && !k.gap && k.id) {
+          map[k.id] = k;
+        }
+      });
+    });
+    return map;
+  }, [ACTIVE_LAYOUT]);
+
+  const findLayoutKey = (id) => KEY_LAYOUT_INDEX[id];
   // 「连续快速触发」当前只有 AE64-MAX 支持（features.continuousRt），需固件 ≥ 0.04。
   // ES68 / DV63 / 通用兜底档案该位为 false → 触发页不渲染这一行。
   const canContinuousRt = supportsContinuousRt(deviceProfile);
@@ -826,7 +846,8 @@ export default function App() {
         if (Array.isArray(parsed)) return new Set(parsed);
       }
     } catch (e) {}
-    return new Set(VISUAL_KEY_ORDER.map(k => k.id));
+    const ids = (VISUAL_KEY_ORDER || []).map(k => k.id);
+    return new Set(ids);
   });
 
   // 重新校准提示弹窗 (1:1 官方逻辑：当有按键未校准时，每次重进驱动或连接键盘提示用户重新校准)
@@ -845,13 +866,14 @@ export default function App() {
         }
       }
     } catch (e) {}
-    setCalibratedKeys(new Set(VISUAL_KEY_ORDER.map(k => k.id)));
+    const ids = (VISUAL_KEY_ORDER || []).map(k => k.id);
+    setCalibratedKeys(new Set(ids));
   }, [deviceProfile?.id, deviceProfile?.model]);
 
   // 当重进驱动页面或设备连接时，检测是否存在待校准按键；若有，弹出官方同款提示
   useEffect(() => {
     if (!deviceProfile) return;
-    const allKeyIds = VISUAL_KEY_ORDER.map(k => k.id);
+    const allKeyIds = (VISUAL_KEY_ORDER || []).map(k => k.id);
     const hasUncalibrated = allKeyIds.some(id => !calibratedKeys.has(id));
     if (hasUncalibrated) {
       setShowCalibPrompt(true);
@@ -2046,26 +2068,6 @@ export default function App() {
   };
 
   // ---------- 硬件写入工具 ----------
-  // 视觉键位按 row-major 顺序展开 (与硬件矩阵按序对齐，严格过滤占位 spacer)
-  const VISUAL_KEY_ORDER = useMemo(
-    () => ACTIVE_LAYOUT.flat().filter((k) => k && !k.isSpacer && !k.gap && k.id),
-    [ACTIVE_LAYOUT]
-  );
-
-  const KEY_LAYOUT_INDEX = useMemo(() => {
-    const map = {};
-    ACTIVE_LAYOUT.forEach((row) => {
-      row.forEach((k) => {
-        if (k && !k.isSpacer && !k.gap && k.id) {
-          map[k.id] = k;
-        }
-      });
-    });
-    return map;
-  }, [ACTIVE_LAYOUT]);
-
-  const findLayoutKey = (id) => KEY_LAYOUT_INDEX[id];
-
   // 设备真实矩阵坐标 (getKeyLayoutStyle 读取)；读取失败时回落视觉布局坐标
   const [hwKeyCoords, setHwKeyCoords] = useState(null);
 

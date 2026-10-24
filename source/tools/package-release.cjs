@@ -127,11 +127,80 @@ async function main() {
   const timeCode = `${yy}.${mm}.${dd}`;
   const buildDateStr = `${now.getFullYear()}-${mm}-${dd}`;
 
-  const changelogText = publisherConfig.appRelease?.changelog || 
+  const defaultReleaseChangelog = 
     `1. 数据库更新后自动执行二次全量扫描，无需重启即刻消除首页“更新可用”提示与小红点\n2. 全面绑定标准版本构建时间码 (${timeCode})，建立防止从新版正式版倒退安装旧 Beta 版本的安全门禁\n3. 全软件多语言国际化支持（简体中文、English、日本語），实时动态切换无须重启\n4. 全新高颜值自定义下拉框（CustomSelect），修复设置页右上角标签折行与界面细节\n5. 数据库更新卡片动态展示云端更新日志说明 (libChangelog)\n6. 官方原生 Inno Setup 6 现代安装向导，LZMA2 深度压缩至 93.5MB`;
 
+  const betaChangelogSummary = 
+    `【Beta ${version.replace(/^beta/i, '')} 抢先体验版】\n` +
+    `1. 轴体库校验机制与硬件 PCB 专属库存隔离：接入官方 SDK getAxisList 探针，严格限制江湾 PCB 专属 75 款认证轴体与 DV63 专属出厂轴体，杜绝杂牌未支持轴体混入\n` +
+    `2. 消除轴体切换时序死区白屏 BUG：根治在轴体库配置后跨页面跳转偶发的 ReferenceError 异常拦截\n` +
+    `3. 混轴设置完美支持：修复此前全键强制统一修改问题，现已支持单颗按键 / 局部框选多键独立配置不同轴体\n` +
+    `4. 校准视窗 UI 架构重构：解决校准说明展开/折叠时底部按键与 ADC 采样子窗口挤压拉伸变形，移除左上角多余轴体设置入口，补齐未校准智能提示\n` +
+    `5. GitHub 官方仓库定位全面恢复：修复跳转链接与国内高速加速下载镜像\n` +
+    `6. 键盘型号识别与配列修复：修复 AE61 Pro 等 61 键键盘在驱动中被误识别为 68 配列的问题\n` +
+    `7. 软件防崩溃与稳定性全面强化：WebHID 握手容错优化与本地存储脏数据防御保护\n` +
+    `8. PCB 板载轴体独立探针系统 (DevLab)：支持穿透直读主控烧录轴体 ID 与电气寄存器参数`;
+
+  const changelogText = isBeta ? betaChangelogSummary : (publisherConfig.appRelease?.changelog || defaultReleaseChangelog);
+
   // 4.1 生成「更新日志.md」
-  const changelogMdContent = `# 🚀 AstraFlux-HUB 更新日志 - V${version}
+  const betaChangelogMd = `# 🧪 AstraFlux-HUB 测试版更新日志 - ${version}
+
+- **发布版本**：${version} (构建码: ${timeCode})
+- **版本渠道**：Beta 测试版专属通道 (software(beta)/)
+- **发布日期**：${now.toLocaleDateString('zh-CN')}
+- **支持架构**：Windows 10 / 11 (x64)
+- **安装包架构**：Inno Setup 6 官方原生现代向导 (Setup Wizard)
+
+---
+
+## 📝 本次改动详细说明
+
+### 1. 🎯 [轴体库校验机制与硬件 PCB 专属库存隔离 (Beta 抢先测试)]
+- **官方硬件轴体探针对接**：全面接入官方 SDK \`ServiceKeyboard.getAxisList()\` 物理探针能力，优先通过底层 HID 协议穿透直读键盘主控芯片硬件烧录的真实轴体表。
+- **PCB 物理库存严格隔离**：
+  - **江湾 Everglide 系列 PCB**（AE64-MAX、AE64 Pro、AE61 Pro、SU66 等）：彻底切断非认证杂牌轴体的混入注水，严格锁定官方鉴权的 75 款标准认证轴体（江湾 1款【库里南轴】、佳达隆 30款、正牌科电 19款、其它品牌 25款），每款轴体均包含真实出厂行程上限（\`axis_range_max\`）与磁通量灵敏度系数（\`axis_coefficient\`）。
+  - **VICTKONG DV63**：严格隔离并仅开放其出厂物理支持的 6 款核心轴体（神马轴、磁玉轴、磁玉 Pro、磁玉 Gaming、万磁王、万磁王 RGB），防止混入不兼容轴体。
+- **⚠️ Beta 测试避坑指南**：因各家客制化 PCB 固件版本差异较大，部分非标固件可能存在协议兼容性差异，**强烈建议在轴体库中选择您所使用的键盘官方出厂支持清单内的轴体，切勿盲目写入未经验证或超出该 PCB 支持范围的轴体**，以免引起主控识别回落或触发异常。
+
+### 2. 🛡️ [消除轴体切换与视图跳转时偶发的崩溃拦截 BUG]
+- **清除执行时序死区（TDZ）**：修复了在轴体库配置或校准状态初始化时，排布键位常量因初始化时序引发的 \`ReferenceError: Cannot access 'Ei' before initialization\` 临时异常视图拦截，恢复秒开秒切的丝滑体验。
+- **动态状态热重置**：优化了切换轴体后即刻跳转触发页、灯效页或设置页时的状态上下文回收，彻底杜绝切换页面引发的白屏与组件卸载残留问题。
+
+### 3. 🎛️ [按键级独立“混轴”个性化设置全面支持]
+- **告别全键被动连带修改**：彻底重构轴体应用逻辑，修复了此前一旦配置轴体就强制将全键盘所有按键同时修改的痛点。
+- **单键 / 框选多键精准混轴**：现已完美支持按需自由选择单颗按键（如仅将 WASD 或空格键设为特定电竞磁轴），实现任意键位独立选用不同轴体参数的高自由度客制化“混轴”体验。
+
+### 4. 📐 [校准页面 UI 布局与多余控件深度重构]
+- **彻底根治展开说明时的挤压拉伸变形**：重构校准视窗的弹性布局架构，无论是默认展开校准说明，还是折叠收起说明，底部按键面板、ADC 实时采样子视窗与交互控件均能保持正常比例，严防任何拉伸与 UI 挤压错位。
+- **精简校准页多余入口**：依据官方驱动人机工效学逻辑，校准视窗移除左上角多余且易引起逻辑混淆的轴体下拉菜单，校准流程统一继承轴体设置页已生效的轴体电气参数，逻辑更加清晰严谨。
+- **官方同款未校准按键智能提示**：在检测到键盘存在未校准键位时，进入驱动或切换设备即刻主动弹出官方同款友好校准提醒，避免未校准影响手感。
+
+### 5. 🔗 [GitHub 仓库定位恢复与多通道直连修复]
+- **主干仓库重定向修正**：全面恢复并矫正客户端内外所有指向 GitHub 官方开源仓库的跳转定位（直达 \`onekuta/AstraFlux-Hub\`）。
+- **国内极速镜像双轨支持**：关于页面与更新卡片无缝支持 Gitee 与 GitHub CDN 加速通道双向自由切换，国内用户不再受网络阻断困扰。
+
+### 6. ⌨️ [客制化 PCB 型号识别与配列支持修复]
+- **AE61 Pro 经典 61 配列彻底纠偏**：修复了用户反馈的 AE61 Pro 连接后被误识别为 68 配列的硬件分析 BUG，建立基于按键矩阵与特征码的无损仲裁机制，确保 61 配列键盘 100% 精确渲染为 61 键经典布局。
+- **多配列适配矩阵鲁棒性增强**：增强了 60%/61%/64%/68%/75%/87%/98 等多种客制化 PCB 的自动识别与热插拔动态重测能力。
+
+### 7. 🚀 [底层防崩溃引擎与稳定性全面加强]
+- **通信守护与防雪崩重连**：强化 WebHID 底层通信容错，捕获个别主控只读指令超时的偶发异常，防止设备插拔瞬态导致渲染进程异常。
+- **本地存储校验保护**：对校准状态与自定义键位等本地 LocalStorage 读写增加防御性解析保护，杜绝因旧版本历史脏数据导致的启动故障。
+
+### 8. 🔍 [PCB 板载轴体独立探针系统 (DevLab)]
+- **专属硬件透视诊断工具**：在开发者实验室（DevLab）中新增“硬件板载轴体探针”专属面板，一键发送底层探针指令，实时解密并可视化呈现当前物理键盘内部烧录的硬件轴体 ID 数组、Esc 键电气寄存器实测参数与协议架构版本（V1 固件索引 vs V2/V3 动态扩展）。
+
+---
+
+## 📦 安装包文件信息 (标准三件套之一)
+- **文件名称**：\`${setupExeName}\`
+- **文件体积**：\`${setupSizeMb} MB\` (\`${setupSizeBytes}\` 字节)
+- **构建代码**：\`${timeCode}\`
+- **SHA-256 哈希值**：\`${setupSha256}\`
+`;
+
+  const releaseChangelogMd = `# 🚀 AstraFlux-HUB 更新日志 - V${version}
 
 - **发布版本**：V${version} (构建码: ${timeCode})
 - **发布日期**：${now.toLocaleDateString('zh-CN')}
@@ -164,6 +233,8 @@ async function main() {
 - **构建代码**：\`${timeCode}\`
 - **SHA-256 哈希值**：\`${setupSha256}\`
 `;
+
+  const changelogMdContent = isBeta ? betaChangelogMd : releaseChangelogMd;
 
   const changelogFilePath = path.join(releaseDirPath, '更新日志.md');
   fs.writeFileSync(changelogFilePath, changelogMdContent, 'utf-8');

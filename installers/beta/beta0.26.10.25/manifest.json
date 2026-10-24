@@ -1,0 +1,20 @@
+{
+  "manifestVersion": "1.4.1",
+  "appVersion": "beta0.26.10.25",
+  "buildTimeCode": "26.10.25",
+  "buildDate": "2026-10-25",
+  "channel": "beta",
+  "prerelease": true,
+  "appDownloadUrl": "https://gitee.com/Kutaze/astra-flux-hub/releases/download/beta0.26.10.25/AstraFlux-HUB_Setup_beta0.26.10.25.exe",
+  "cdnDownloadUrl": "https://ghfast.top/https://github.com/onekuta/AstraFlux-Hub/releases/download/beta0.26.10.25/AstraFlux-HUB_Setup_beta0.26.10.25.exe",
+  "githubDownloadUrl": "https://github.com/onekuta/AstraFlux-Hub/releases/download/beta0.26.10.25/AstraFlux-HUB_Setup_beta0.26.10.25.exe",
+  "appReleaseUrl": "https://gitee.com/Kutaze/astra-flux-hub/releases",
+  "appChangelog": "【Beta 0.26.10.25 抢先体验版】\n1. 轴体库校验机制与硬件 PCB 专属库存隔离：接入官方 SDK getAxisList 探针，严格限制江湾 PCB 专属 75 款认证轴体与 DV63 专属出厂轴体，杜绝杂牌未支持轴体混入\n2. 消除轴体切换时序死区白屏 BUG：根治在轴体库配置后跨页面跳转偶发的 ReferenceError 异常拦截\n3. 混轴设置完美支持：修复此前全键强制统一修改问题，现已支持单颗按键 / 局部框选多键独立配置不同轴体\n4. 校准视窗 UI 架构重构：解决校准说明展开/折叠时底部按键与 ADC 采样子窗口挤压拉伸变形，移除左上角多余轴体设置入口，补齐未校准智能提示\n5. GitHub 官方仓库定位全面恢复：修复跳转链接与国内高速加速下载镜像\n6. 键盘型号识别与配列修复：修复 AE61 Pro 等 61 键键盘在驱动中被误识别为 68 配列的问题\n7. 软件防崩溃与稳定性全面强化：WebHID 握手容错优化与本地存储脏数据防御保护\n8. PCB 板载轴体独立探针系统 (DevLab)：支持穿透直读主控烧录轴体 ID 与电气寄存器参数",
+  "appForceUpdate": false,
+  "appFileSize": "93.52 MB",
+  "setupSha256": "fc60b52268a435287f2dcf9392ebb048fffc3b4b92957519f022337d60e595af",
+  "libVersion": "2026.10.20.1",
+  "libDownloadUrl": "https://gitee.com/Kutaze/astra-flux-hub/raw/main/database/device_database.spkdb",
+  "totalDevices": 638,
+  "updatedAt": "2026-10-24T17:03:10.619Z"
+}
