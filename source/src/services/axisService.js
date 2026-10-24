@@ -14,14 +14,14 @@ const RAW_PRIMARY_AXES = [
     axisCoefficient: 18600,
     name: '天际线轴',
     shortName: '天际线',
-    brand: '江湾 (Everglide)',
+    brand: '其它品牌',
     maxTravel: 3.55,
     driveRange: 3.35,
     deadzone: 0.20,
     color: '#4dd1f9',
     badge: '高导光柱',
     recommendedAP: 0.35,
-    description: '江湾天际线磁轴，高导光柱，极速回弹，3.55mm 黄金行程。',
+    description: '天际线磁轴，高导光柱，极速回弹，3.55mm 黄金行程 (官方 V3 归类于其它客制化兼容轴)。',
   },
   {
     id: 1219,
@@ -36,9 +36,9 @@ const RAW_PRIMARY_AXES = [
     driveRange: 3.40,
     deadzone: 0.20,
     color: '#eaeaea',
-    badge: '江湾原厂',
+    badge: '江湾原厂自研',
     recommendedAP: 0.40,
-    description: '江湾库里南磁轴，双轨超顺滑，HiFi 敲击音。',
+    description: '江湾原厂自研库里南磁轴 (江湾唯一原厂自制旗舰磁轴)，双轨超顺滑，HiFi 敲击音。',
   },
   {
     id: 1002,
@@ -218,10 +218,10 @@ export function getDefaultAxisForProfile(profile) {
 /**
  * 依据硬件 Esc/Space 键底层上报的电气性能结构实时解密真实轴体：
  * 实测：AE64-MAX 固件返回 { axis: 0, axisV2Id: 12608, axisRangeMax: 3550, axisCoefficient: 18600 }
- * 对应官网 V3 轴体库: detailId 12608 -> 天际线轴 (3.55mm, 江湾)
- * 库里南轴: axisV2Id: 19504, axisRangeMax: 3600, axisCoefficient: 19456
- * 磁玉Pro: axisV2Id: 4128, axisRangeMax: 3390, axisCoefficient: 20000
- * 磁玉轴: axisV2Id: 4112, axisRangeMax: 3430, axisCoefficient: 22800
+ * 对应官网 V3 轴体库: detailId 12608 -> 天际线轴 (3.55mm, 其它品牌客制化兼容轴)
+ * 江湾原厂自研轴体: 库里南轴 (axisV2Id: 19504, 3.60mm, 江湾唯一原厂自制旗舰磁轴)
+ * 佳达隆磁玉Pro: axisV2Id: 4128, axisRangeMax: 3390, axisCoefficient: 20000
+ * 佳达隆磁玉轴: axisV2Id: 4112, axisRangeMax: 3430, axisCoefficient: 22800
  */
 export function resolveAxisByHardwarePerf(perf, profile, candidateList = null) {
   if (!perf) return getDefaultAxisForProfile(profile);

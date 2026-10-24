@@ -1158,7 +1158,7 @@ export default function DevLabModal({
                         <span className="text-[10px] px-1.5 py-0.2 rounded bg-sky-500/15 text-sky-400">75 款分类预设</span>
                       </div>
                       <p className="text-[11px] text-[var(--text-tertiary)] leading-tight">
-                        江湾、佳达隆、正牌科电及客制化多品牌分类层级结构，内含天际线轴 3.55mm、库里南轴 3.60mm 等真实电气 Detail ID。
+                        官网 V3 轴体映射库。收录江湾原厂自研库里南轴 3.60mm、佳达隆磁玉系列、正牌科电及客制化兼容轴 (天际线轴 3.55mm) 等真实电气 Detail ID。
                       </p>
                     </div>
 
@@ -1180,7 +1180,7 @@ export default function DevLabModal({
                         <span className="text-[10px] px-1.5 py-0.2 rounded bg-amber-500/15 text-amber-400">出厂原厂级</span>
                       </div>
                       <p className="text-[11px] text-[var(--text-tertiary)] leading-tight">
-                        硬件级原生出厂特调标定。DV63 原生神马轴 3.45mm、AE64-MAX 江湾天际线轴、ES68 磁玉 Pro 超竞版出厂调优。
+                        硬件级原生出厂特调标定。DV63 原生神马轴 3.45mm、AE64-MAX 库里南/天际线轴、ES68 磁玉 Pro 超竞版出厂调优。
                       </p>
                     </div>
                   </div>
