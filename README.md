@@ -228,8 +228,8 @@ flowchart LR
 ## 📈 Star History
 
 <div align="center">
-  <a href="https://star-history.com/#Kutaze/AstraFlux-Hub&Date" target="_blank" rel="noopener noreferrer">
-    <img src="https://api.star-history.com/svg?repos=Kutaze/AstraFlux-Hub&type=Date" alt="Star History Chart" />
+  <a href="https://star-history.com/#onekuta/AstraFlux-Hub&Date" target="_blank" rel="noopener noreferrer">
+    <img src="https://api.star-history.com/svg?repos=onekuta/AstraFlux-Hub&type=Date" alt="Star History Chart" />
   </a>
 </div>
 
