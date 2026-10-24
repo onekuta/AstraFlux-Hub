@@ -215,6 +215,16 @@ export function getDefaultAxisForProfile(profile) {
   return PRIMARY_AXES.find(a => a.name === '天际线轴') || PRIMARY_AXES.find(a => a.name === '磁玉 Pro') || PRIMARY_AXES[0];
 }
 
+// 规范化轴体归一化名称（去除空格、大小写、后缀“轴”，用于精准去重）
+export function getAxisCanonicalKey(name) {
+  if (!name) return '';
+  return String(name)
+    .trim()
+    .toLowerCase()
+    .replace(/\s+/g, '')
+    .replace(/轴$/, '');
+}
+
 /**
  * 依据硬件 Esc/Space 键底层上报的电气性能结构实时解密真实轴体：
  * 实测：AE64-MAX 固件返回 { axis: 0, axisV2Id: 12608, axisRangeMax: 3550, axisCoefficient: 18600 }
@@ -294,25 +304,135 @@ export function resolveAxisByHardwarePerf(perf, profile, candidateList = null) {
 
 class AxisService {
   constructor() {
-    this.axes = [...DV63_PRIMARY_AXES];
+    this.axes = [...PRIMARY_AXES];
     this.isLoaded = false;
     this.isLoading = false;
-    this.activeAxis = DV63_PRIMARY_AXES[0];
+    this.activeAxis = PRIMARY_AXES[0];
+    // 构造阶段预先构建无重复的轴体库
+    this.rebuildAxes(ae64AxisListV3, cachedAxes);
   }
 
   resolveAxisByHardwarePerf(perf, profile) {
     return resolveAxisByHardwarePerf(perf, profile, this.axes);
   }
 
+  // 核心去重重构器：通过 getAxisCanonicalKey 消除版本差异/中英粘连引起的 70+ 款重复项
+  rebuildAxes(v3Categories = ae64AxisListV3, cloudList = cachedAxes) {
+    const unifiedList = [];
+    const seenKeys = new Map();
+
+    // 1. 优先注册出厂特调核心标配 SKU (PRIMARY_AXES)
+    PRIMARY_AXES.forEach((p) => {
+      const k = getAxisCanonicalKey(p.name);
+      seenKeys.set(k, p);
+      unifiedList.push({ ...p, isOfficial: true, verified: true });
+    });
+
+    // 2. 融入官方 V3 分类轴体库 (优先保留官方 aixsDetail 真实电气参数与分类)
+    if (Array.isArray(v3Categories)) {
+      v3Categories.forEach((cat) => {
+        if (!Array.isArray(cat?.list)) return;
+        cat.list.forEach((raw) => {
+          if (!raw || raw.axis_id === undefined) return;
+          const k = getAxisCanonicalKey(raw.axis_name);
+          const detail = raw.aixsDetail?.[0] || {};
+          const detailId = detail.axis_id ?? (Number(raw.axis_id) << 4);
+          const rangeMax = Number(detail.axis_range_max || raw.axis_range_max || 3550);
+          const coeff = Number(detail.axis_coefficient || 20000);
+          const maxTravel = Number((rangeMax / 1000).toFixed(2));
+          const driveRange = Number((Math.max(1000, rangeMax - 200) / 1000).toFixed(2));
+          const imgUrl = raw.image_url && raw.image_url !== '#' ? raw.image_url : null;
+          const brandName = cat.type_name === '江湾' ? '江湾 (Everglide)' : (cat.type_name === '其它' ? '其它品牌' : (cat.type_name || raw.brand || '星闪校准'));
+
+          if (seenKeys.has(k)) {
+            // 已存在核心 SKU，深度补全官方真实硬件电气 Detail ID 与图像，绝不新增重复项
+            const existing = seenKeys.get(k);
+            existing.axisV2Id = existing.axisV2Id || detailId;
+            existing.axisRangeMax = existing.axisRangeMax || rangeMax;
+            existing.axisCoefficient = existing.axisCoefficient || coeff;
+            if (!existing.imageUrl && imgUrl) existing.imageUrl = imgUrl;
+          } else {
+            const newItem = {
+              id: Number(raw.axis_id),
+              hardwareAxisId: Number(raw.axis_id),
+              axisV2Id: detailId,
+              axisRangeMax: rangeMax,
+              axisCoefficient: coeff,
+              name: raw.axis_name,
+              shortName: raw.axis_name,
+              brand: brandName,
+              maxTravel,
+              travel: maxTravel,
+              driveRange,
+              deadzone: 0.20,
+              color: raw.axis_color ? (raw.axis_color.startsWith('#') ? raw.axis_color : '#' + raw.axis_color) : '#4dd1f9',
+              imageUrl: imgUrl,
+              badge: brandName.includes('江湾') ? '江湾原厂自研' : (brandName.includes('TTC') ? 'TTC原厂' : '星闪校准'),
+              recommendedAP: 0.35,
+              isOfficial: true,
+              verified: true,
+              description: `${brandName} ${raw.axis_name} 磁轴，行程 ${maxTravel}mm (官方 V3 校准)`
+            };
+            seenKeys.set(k, newItem);
+            unifiedList.push(newItem);
+          }
+        });
+      });
+    }
+
+    // 3. 补充云端全量 API / 缓存库中的其余独立轴体 (按规范键深度去重，只追加真正的新轴体)
+    if (Array.isArray(cloudList)) {
+      cloudList.forEach((raw) => {
+        if (!raw || raw.axis_id === undefined) return;
+        const k = getAxisCanonicalKey(raw.axis_name);
+        const imgUrl = raw.image_url && raw.image_url !== '#' ? raw.image_url : null;
+
+        if (seenKeys.has(k)) {
+          // 已存在轴体，仅补充缺失的云端图片，不重复添加
+          const existing = seenKeys.get(k);
+          if (!existing.imageUrl && imgUrl) existing.imageUrl = imgUrl;
+        } else {
+          const id = Number(raw.axis_id);
+          const maxTravel = parseFloat(raw.doctrine_range_left || raw.drive_range || 3.50);
+          const driveRange = parseFloat(raw.drive_range || raw.doctrine_range_left || 3.30);
+          const deadzone = parseFloat(raw.doctrine_range_right || 0.20);
+          const safeTravel = maxTravel > 0 ? maxTravel : 3.50;
+          const brand = raw.factory_name || raw.brand || (typeof raw.axi_brands === 'object' ? raw.axi_brands?.brand_name_cn : '') || '其它品牌';
+          const newItem = {
+            id,
+            hardwareAxisId: id,
+            axisV2Id: id << 4,
+            axisRangeMax: Math.round(safeTravel * 1000),
+            axisCoefficient: 20000,
+            name: raw.axis_name,
+            shortName: raw.axis_name,
+            brand,
+            maxTravel: safeTravel,
+            travel: safeTravel,
+            driveRange: driveRange > 0 ? driveRange : safeTravel,
+            deadzone,
+            color: raw.axis_color ? (raw.axis_color.startsWith('#') ? raw.axis_color : '#' + raw.axis_color) : '#2563eb',
+            imageUrl: imgUrl,
+            badge: raw.factory_name ? `${raw.factory_name}原厂` : '星闪校准',
+            recommendedAP: 0.40,
+            description: `${brand} ${raw.axis_name} 磁轴，行程 ${safeTravel}mm (有效行程 ${driveRange}mm)`,
+            isOfficial: true,
+            verified: true,
+          };
+          seenKeys.set(k, newItem);
+          unifiedList.push(newItem);
+        }
+      });
+    }
+
+    this.axes = unifiedList;
+    return this.axes;
+  }
+
   // 获取完整轴体校准列表（优先星闪云端 API，离线时回退到缓存）
   async loadAxisList() {
     if (this.isLoaded) return this.axes;
     this.isLoading = true;
-
-    // 1. 优先载入官网 V3 最新轴体库 (包含 AE64-MAX 江湾天际线轴 3.55mm 及各品牌分类)
-    if (Array.isArray(ae64AxisListV3) && ae64AxisListV3.length > 0) {
-      this.mergeV3Axes(ae64AxisListV3);
-    }
 
     try {
       // 尝试向星闪官方 API 动态拉取最新校准库
@@ -330,7 +450,7 @@ class AxisService {
       if (resp.ok) {
         const json = await resp.json();
         if (json.code === 200 && Array.isArray(json.data)) {
-          this.mergeCloudAxes(json.data);
+          this.rebuildAxes(ae64AxisListV3, json.data);
           this.isLoaded = true;
           this.isLoading = false;
           return this.axes;
@@ -340,11 +460,8 @@ class AxisService {
       console.warn('[AxisService] 云端轴体库拉取超时或离线，采用本地官方缓存库:', err);
     }
 
-    // 回退到本地缓存库
-    if (Array.isArray(cachedAxes) && cachedAxes.length > 0) {
-      this.mergeCloudAxes(cachedAxes);
-    }
-
+    // 回退到本地缓存库构建
+    this.rebuildAxes(ae64AxisListV3, cachedAxes);
     this.isLoaded = true;
     this.isLoading = false;
     return this.axes;
@@ -375,7 +492,7 @@ class AxisService {
         const json = await resp.json();
         if (json.code === 200 && Array.isArray(json.data) && json.data.length > 0) {
           console.log('[AxisService] 成功从星闪云端拉取当前键盘专有 V3 轴体库:', json.data.length, '个分类');
-          this.mergeV3Axes(json.data);
+          this.rebuildAxes(json.data, cachedAxes);
           return this.axes;
         }
       }
@@ -386,152 +503,11 @@ class AxisService {
   }
 
   mergeV3Axes(v3Categories) {
-    if (!Array.isArray(v3Categories)) return;
-    const v3Map = new Map();
-    v3Categories.forEach((cat) => {
-      if (!Array.isArray(cat?.list)) return;
-      cat.list.forEach((raw) => {
-        if (!raw || raw.axis_id === undefined) return;
-        const id = Number(raw.axis_id);
-        const name = raw.axis_name || `磁轴 #${id}`;
-        const detail = raw.aixsDetail?.[0] || {};
-        const detailId = detail.axis_id ?? (id << 4);
-        const rangeMax = Number(detail.axis_range_max || raw.axis_range_max || 3550);
-        const coeff = Number(detail.axis_coefficient || 20000);
-        const maxTravel = Number((rangeMax / 1000).toFixed(2));
-        const driveRange = Number((Math.max(1000, rangeMax - 200) / 1000).toFixed(2));
-        v3Map.set(id, {
-          id,
-          hardwareAxisId: id,
-          axisV2Id: detailId,
-          axisRangeMax: rangeMax,
-          axisCoefficient: coeff,
-          name,
-          shortName: name,
-          brand: cat.type_name || raw.brand || '星闪校准',
-          maxTravel,
-          travel: maxTravel,
-          driveRange,
-          deadzone: 0.20,
-          color: raw.axis_color ? (raw.axis_color.startsWith('#') ? raw.axis_color : '#' + raw.axis_color) : '#4dd1f9',
-          imageUrl: raw.image_url && raw.image_url !== '#' ? raw.image_url : null,
-          badge: id === 788 ? '高导光柱' : (cat.type_name ? `${cat.type_name}原厂` : '星闪校准'),
-          recommendedAP: 0.35,
-          isOfficial: true,
-          verified: true,
-          description: `${cat.type_name || ''} ${name} 磁轴，行程 ${maxTravel}mm (官方 V3 校准)`
-        });
-      });
-    });
-
-    const featuredList = PRIMARY_AXES.map((f) => {
-      const m = v3Map.get(f.id) || (f.axisV2Id ? Array.from(v3Map.values()).find(x => x.axisV2Id === f.axisV2Id) : null);
-      if (m) {
-        const trav = f.maxTravel || m.maxTravel || 3.50;
-        return {
-          ...f,
-          maxTravel: trav,
-          travel: trav,
-          driveRange: f.driveRange || m.driveRange,
-          axisV2Id: f.axisV2Id || m.axisV2Id,
-          axisRangeMax: f.axisRangeMax || m.axisRangeMax,
-          axisCoefficient: f.axisCoefficient || m.axisCoefficient,
-          isOfficial: true,
-          verified: true,
-        };
-      }
-      return { ...f, travel: f.maxTravel, isOfficial: true, verified: true };
-    });
-
-    const finalAxes = [...featuredList];
-    const includedIds = new Set(finalAxes.map(a => a.id));
-    v3Map.forEach((item, id) => {
-      if (!includedIds.has(id)) {
-        finalAxes.push(item);
-        includedIds.add(id);
-      }
-    });
-
-    this.axes = finalAxes;
+    return this.rebuildAxes(v3Categories, cachedAxes);
   }
 
   mergeCloudAxes(cloudList) {
-    if (!Array.isArray(cloudList)) return;
-
-    // 1. 建立官方云端轴体字典 (通过 axis_id 唯一确权)
-    const officialMap = new Map();
-    cloudList.forEach((raw) => {
-      if (!raw || raw.axis_id === undefined) return;
-      const id = Number(raw.axis_id);
-      const name = raw.axis_name || `磁轴 #${id}`;
-      const maxTravel = parseFloat(raw.doctrine_range_left || raw.drive_range || 3.50);
-      const driveRange = parseFloat(raw.drive_range || raw.doctrine_range_left || 3.30);
-      const deadzone = parseFloat(raw.doctrine_range_right || 0.20);
-      const brand = raw.factory_name || raw.brand || (typeof raw.axi_brands === 'object' ? raw.axi_brands?.brand_name_cn : '') || '其他';
-      const color = raw.axis_color ? (raw.axis_color.startsWith('#') ? raw.axis_color : '#' + raw.axis_color) : '#2563eb';
-      const imageUrl = raw.image_url && raw.image_url !== '#' ? raw.image_url : null;
-      const safeTravel = maxTravel > 0 ? maxTravel : 3.50;
-      const axisV2Id = id << 4;
-      const axisRangeMax = Math.round(safeTravel * 1000);
-      const axisCoefficient = 20000;
-
-      officialMap.set(id, {
-        id,
-        hardwareAxisId: id,
-        axisV2Id,
-        axisRangeMax,
-        axisCoefficient,
-        name,
-        shortName: name,
-        brand,
-        maxTravel: safeTravel,
-        travel: safeTravel,
-        driveRange: driveRange > 0 ? driveRange : safeTravel,
-        deadzone,
-        color,
-        imageUrl,
-        badge: raw.factory_name ? `${raw.factory_name}原厂` : '星闪校准',
-        recommendedAP: 0.40,
-        description: `${brand} ${name} 磁轴，行程 ${safeTravel}mm (有效行程 ${driveRange}mm)`,
-        isOfficial: true,
-        verified: true,
-      });
-    });
-
-    // 2. 将核心特调预设与官方数据深度联动融合
-    const featuredList = PRIMARY_AXES.map((featured) => {
-      const officialMatch = officialMap.get(featured.hardwareAxisId ?? featured.id);
-      const trav = featured.maxTravel || officialMatch?.maxTravel || 3.50;
-      if (officialMatch) {
-        return {
-          ...featured,
-          maxTravel: trav,
-          travel: trav,
-          driveRange: featured.driveRange || officialMatch.driveRange,
-          deadzone: featured.deadzone || officialMatch.deadzone,
-          imageUrl: featured.imageUrl || officialMatch.imageUrl,
-          color: featured.color || officialMatch.color,
-          isOfficial: true,
-          verified: true,
-        };
-      }
-      return { ...featured, maxTravel: trav, travel: trav, isOfficial: true, verified: true };
-    });
-
-    // 3. 构建全量平铺列表：先放核心推荐轴体，再按 ID 顺序追加其余全部官方云端校准轴体
-    const finalAxes = [...featuredList];
-    const includedIds = new Set(finalAxes.map((a) => a.id));
-
-    // 按 axis_id 升序排列追加其余轴体
-    const sortedOfficial = Array.from(officialMap.values()).sort((a, b) => a.id - b.id);
-    sortedOfficial.forEach((item) => {
-      if (!includedIds.has(item.id)) {
-        finalAxes.push(item);
-        includedIds.add(item.id);
-      }
-    });
-
-    this.axes = finalAxes;
+    return this.rebuildAxes(ae64AxisListV3, cloudList);
   }
 
   // 获取全部轴体（默认过滤掉未鉴权/未核准的实验轴体，实现鉴权门禁）

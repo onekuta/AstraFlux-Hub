@@ -108,31 +108,37 @@ export default function SwitchSettingTab({
   const isFinishedKeyboard = Array.isArray(supportedList) && supportedList.length > 0;
   const [onlyShowSupported, setOnlyShowSupported] = useState(isFinishedKeyboard);
 
-  // 全量已鉴权官方真实轴体库 (通过官网与驱动官方库鉴权，排除未核准的虚假/实验轴体)
+  // 全量已鉴权官方真实轴体库 (通过官网与驱动官方库鉴权，排除未核准的虚假/实验轴体，并严格按归一化键消除重复项)
   const authenticatedAxes = useMemo(() => {
     const rawList = (allAxes && allAxes.length > 0) ? allAxes : (axisService.axes || PRIMARY_AXES);
-    return rawList
-      .filter(a => a && a.verified !== false && a.isOfficial !== false)
-      .map(a => {
-        const safeTravel = Number(a.maxTravel || a.travel || 3.50);
-        return {
-          ...a,
-          id: a.id,
-          hardwareAxisId: a.hardwareAxisId || a.id,
-          name: formatAxisName(a.name),
-          travel: safeTravel,
-          maxTravel: safeTravel,
-          driveRange: Number(a.driveRange || safeTravel - 0.20),
-          recommendedAP: Number(a.recommendedAP || (safeTravel > 3.0 ? 0.35 : 0.30)),
-          minActuationPoint: Number(a.minActuationPoint || 0.05),
-          brand: a.brand || '星闪校准',
-          color: a.color || '#2563eb',
-          badge: a.badge || (a.name.includes(primaryAxisKeyword) ? primaryAxisBadge : '官方核准'),
-          desc: a.description || `${a.brand || ''} ${a.name} 磁轴，行程 ${safeTravel}mm`,
-          isOfficial: true,
-          verified: true
-        };
+    const seen = new Set();
+    const result = [];
+    rawList.forEach((a) => {
+      if (!a || a.verified === false || a.isOfficial === false) return;
+      const formattedName = formatAxisName(a.name);
+      const canonicalKey = formattedName.toLowerCase().replace(/\s+/g, '').replace(/轴$/, '');
+      if (seen.has(canonicalKey)) return; // 界面层双重保险过滤重复项
+      seen.add(canonicalKey);
+      const safeTravel = Number(a.maxTravel || a.travel || 3.50);
+      result.push({
+        ...a,
+        id: a.id,
+        hardwareAxisId: a.hardwareAxisId || a.id,
+        name: formattedName,
+        travel: safeTravel,
+        maxTravel: safeTravel,
+        driveRange: Number(a.driveRange || safeTravel - 0.20),
+        recommendedAP: Number(a.recommendedAP || (safeTravel > 3.0 ? 0.35 : 0.30)),
+        minActuationPoint: Number(a.minActuationPoint || 0.05),
+        brand: a.brand || '星闪校准',
+        color: a.color || '#2563eb',
+        badge: a.badge || (a.name.includes(primaryAxisKeyword) ? primaryAxisBadge : '官方核准'),
+        desc: a.description || `${a.brand || ''} ${formattedName} 磁轴，行程 ${safeTravel}mm`,
+        isOfficial: true,
+        verified: true
       });
+    });
+    return result;
   }, [allAxes, primaryAxisKeyword, primaryAxisBadge]);
 
   // 当前机型官方专属支持的轴体列表 (针对 DV63、AE64、ES68 等成品键盘过滤)
