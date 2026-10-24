@@ -308,27 +308,22 @@ class AxisService {
     this.isLoaded = false;
     this.isLoading = false;
     this.activeAxis = PRIMARY_AXES[0];
-    // 构造阶段预先构建无重复的轴体库
-    this.rebuildAxes(ae64AxisListV3, cachedAxes);
+    // 构造阶段依据官方 V3 认证库严格构建（绝不引入未经认证的杂质轴体）
+    this.rebuildAxes(ae64AxisListV3, null);
   }
 
   resolveAxisByHardwarePerf(perf, profile) {
     return resolveAxisByHardwarePerf(perf, profile, this.axes);
   }
 
-  // 核心去重重构器：通过 getAxisCanonicalKey 消除版本差异/中英粘连引起的 70+ 款重复项
-  rebuildAxes(v3Categories = ae64AxisListV3, cloudList = cachedAxes) {
+  // 核心官方轴体重构器：以官方 ae64AxisListV3 (75款) 为严格鉴权基准
+  // 品牌精确划分：江湾 (1款: 库里南轴), 佳达隆 (30款), 正牌科电 (19款), 其它品牌 (25款)
+  // 每款轴体均包含官方真实 axis_range_max 行程与 axis_coefficient 磁通量电气参数
+  rebuildAxes(v3Categories = ae64AxisListV3, cloudList = null) {
     const unifiedList = [];
     const seenKeys = new Map();
 
-    // 1. 优先注册出厂特调核心标配 SKU (PRIMARY_AXES)
-    PRIMARY_AXES.forEach((p) => {
-      const k = getAxisCanonicalKey(p.name);
-      seenKeys.set(k, p);
-      unifiedList.push({ ...p, isOfficial: true, verified: true });
-    });
-
-    // 2. 融入官方 V3 分类轴体库 (优先保留官方 aixsDetail 真实电气参数与分类)
+    // 1. 优先融入官方 V3 分类轴体库 (优先保留官方 aixsDetail 真实电气参数与分类)
     if (Array.isArray(v3Categories)) {
       v3Categories.forEach((cat) => {
         if (!Array.isArray(cat?.list)) return;
@@ -344,51 +339,51 @@ class AxisService {
           const imgUrl = raw.image_url && raw.image_url !== '#' ? raw.image_url : null;
           const brandName = cat.type_name === '江湾' ? '江湾 (Everglide)' : (cat.type_name === '其它' ? '其它品牌' : (cat.type_name || raw.brand || '星闪校准'));
 
-          if (seenKeys.has(k)) {
-            // 已存在核心 SKU，深度补全官方真实硬件电气 Detail ID 与图像，绝不新增重复项
-            const existing = seenKeys.get(k);
-            existing.axisV2Id = existing.axisV2Id || detailId;
-            existing.axisRangeMax = existing.axisRangeMax || rangeMax;
-            existing.axisCoefficient = existing.axisCoefficient || coeff;
-            if (!existing.imageUrl && imgUrl) existing.imageUrl = imgUrl;
-          } else {
-            const newItem = {
-              id: Number(raw.axis_id),
-              hardwareAxisId: Number(raw.axis_id),
-              axisV2Id: detailId,
-              axisRangeMax: rangeMax,
-              axisCoefficient: coeff,
-              name: raw.axis_name,
-              shortName: raw.axis_name,
-              brand: brandName,
-              maxTravel,
-              travel: maxTravel,
-              driveRange,
-              deadzone: 0.20,
-              color: raw.axis_color ? (raw.axis_color.startsWith('#') ? raw.axis_color : '#' + raw.axis_color) : '#4dd1f9',
-              imageUrl: imgUrl,
-              badge: brandName.includes('江湾') ? '江湾原厂自研' : (brandName.includes('TTC') ? 'TTC原厂' : '星闪校准'),
-              recommendedAP: 0.35,
-              isOfficial: true,
-              verified: true,
-              description: `${brandName} ${raw.axis_name} 磁轴，行程 ${maxTravel}mm (官方 V3 校准)`
-            };
-            seenKeys.set(k, newItem);
-            unifiedList.push(newItem);
+          const newItem = {
+            id: Number(raw.axis_id),
+            hardwareAxisId: Number(raw.axis_id),
+            axisV2Id: detailId,
+            axisRangeMax: rangeMax,
+            axisCoefficient: coeff,
+            name: raw.axis_name,
+            shortName: raw.axis_name,
+            brand: brandName,
+            maxTravel,
+            travel: maxTravel,
+            driveRange,
+            deadzone: 0.20,
+            color: raw.axis_color ? (raw.axis_color.startsWith('#') ? raw.axis_color : '#' + raw.axis_color) : '#4dd1f9',
+            imageUrl: imgUrl,
+            badge: brandName.includes('江湾') ? '江湾原厂自研' : (brandName.includes('TTC') ? 'TTC原厂' : '官方认证'),
+            recommendedAP: 0.35,
+            isOfficial: true,
+            verified: true,
+            description: `${brandName} ${raw.axis_name} 磁轴，行程 ${maxTravel}mm (官方 V3 校准)`
+          };
+
+          // 匹配 PRIMARY_AXES 中出厂定制的增强描述或推荐 AP
+          const primaryMatch = PRIMARY_AXES.find(p => getAxisCanonicalKey(p.name) === k);
+          if (primaryMatch) {
+            newItem.badge = primaryMatch.badge || newItem.badge;
+            newItem.recommendedAP = primaryMatch.recommendedAP || newItem.recommendedAP;
+            if (primaryMatch.description) newItem.description = primaryMatch.description;
+            if (primaryMatch.color) newItem.color = primaryMatch.color;
           }
+
+          seenKeys.set(k, newItem);
+          unifiedList.push(newItem);
         });
       });
     }
 
-    // 3. 补充云端全量 API / 缓存库中的其余独立轴体 (按规范键深度去重，只追加真正的新轴体)
-    if (Array.isArray(cloudList)) {
+    // 2. 仅在显式传入特定设备扩展 cloudList 时才按键追加 (杜绝无限制全局混入)
+    if (Array.isArray(cloudList) && cloudList.length > 0) {
       cloudList.forEach((raw) => {
         if (!raw || raw.axis_id === undefined) return;
         const k = getAxisCanonicalKey(raw.axis_name);
         const imgUrl = raw.image_url && raw.image_url !== '#' ? raw.image_url : null;
 
         if (seenKeys.has(k)) {
-          // 已存在轴体，仅补充缺失的云端图片，不重复添加
           const existing = seenKeys.get(k);
           if (!existing.imageUrl && imgUrl) existing.imageUrl = imgUrl;
         } else {
@@ -429,39 +424,13 @@ class AxisService {
     return this.axes;
   }
 
-  // 获取完整轴体校准列表（优先星闪云端 API，离线时回退到缓存）
+  // 获取完整轴体校准列表（严格采用官方 75 款认证轴体库）
   async loadAxisList() {
     if (this.isLoaded) return this.axes;
     this.isLoading = true;
 
-    try {
-      // 尝试向星闪官方 API 动态拉取最新校准库
-      const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), 3500);
-
-      const resp = await fetch('https://api.sparklinkplayjoy.com/api/v1/getAxisList', {
-        headers: {
-          'Xs-API-Key': '860DE3DB584158536BC89030D8640E29',
-        },
-        signal: controller.signal,
-      });
-      clearTimeout(timeoutId);
-
-      if (resp.ok) {
-        const json = await resp.json();
-        if (json.code === 200 && Array.isArray(json.data)) {
-          this.rebuildAxes(ae64AxisListV3, json.data);
-          this.isLoaded = true;
-          this.isLoading = false;
-          return this.axes;
-        }
-      }
-    } catch (err) {
-      console.warn('[AxisService] 云端轴体库拉取超时或离线，采用本地官方缓存库:', err);
-    }
-
-    // 回退到本地缓存库构建
-    this.rebuildAxes(ae64AxisListV3, cachedAxes);
+    // 直接加载官方 V3 认证 75 款轴体库（江湾 1款，佳达隆 30款，正牌科电 19款，其它 25款）
+    this.rebuildAxes(ae64AxisListV3, null);
     this.isLoaded = true;
     this.isLoading = false;
     return this.axes;
@@ -709,11 +678,17 @@ class AxisService {
     }
 
     try {
-      // 1. 获取硬件板载支持轴体列表
+      // 1. 获取硬件板载支持轴体列表 (官方 SDK ServiceKeyboard.getAxisList)
       if (typeof service.getAxisList === 'function') {
         const axisListRes = await service.getAxisList();
         if (axisListRes) {
-          probeReport.rawList = Array.isArray(axisListRes) ? axisListRes : (axisListRes.list || []);
+          const rawItems = Array.isArray(axisListRes) 
+            ? axisListRes 
+            : (axisListRes.axisList || axisListRes.list || []);
+          // 过滤掉硬件固件填充的 0 (占位字节)
+          probeReport.rawList = rawItems.filter((id) => typeof id === 'number' ? id > 0 : !!id);
+          probeReport.hasAxisSetting = axisListRes.hasAxisSetting ?? (probeReport.rawList.length > 0);
+          probeReport.isV3Protocol = probeReport.rawList.length === 0;
         }
       }
 

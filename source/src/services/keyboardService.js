@@ -593,6 +593,15 @@ class KeyboardService {
               sdkRates = rateRes.list;
             }
 
+            // 4.1 读取硬件板载支持的轴体列表 (官方 SDK ServiceKeyboard.getAxisList)
+            const hwAxisRes = await safeQuery(async () => {
+              return await this.getAxisList();
+            }, 800);
+            if (hwAxisRes) {
+              this.hardwareAxisList = hwAxisRes;
+              console.log('[SparkLink HID] 成功读取键盘硬件板载支持轴体列表:', hwAxisRes);
+            }
+
             // 5. 读取硬件 USB 模式与 3.0 驱动状态
             const usbRes = await safeQuery(async () => {
               if (typeof this.sdk.getUSBModeStatus === 'function') {
@@ -1442,12 +1451,21 @@ class KeyboardService {
     }
   }
 
-  // 获取键盘支持的轴体列表 (硬件端)
+  // 获取键盘支持的轴体列表 (官方 SDK 硬件探针接口 ServiceKeyboard.getAxisList)
+  // 返回 { hasAxisSetting: boolean, axisList: number[] }
   async getAxisList() {
     if (!this.sdk || !this.connected) return null;
     try {
       if (typeof this.sdk.getAxisList === 'function') {
-        return await this.sdk.getAxisList();
+        const res = await this.sdk.getAxisList();
+        if (res) {
+          const list = Array.isArray(res) ? res : (res.axisList || res.list || []);
+          return {
+            hasAxisSetting: res.hasAxisSetting ?? (list.length > 0),
+            axisList: list,
+            list: list,
+          };
+        }
       }
     } catch (e) {
       console.warn('获取键盘硬件轴体列表失败:', e);

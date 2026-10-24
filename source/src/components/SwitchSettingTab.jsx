@@ -1,6 +1,7 @@
 import React, { useState, useMemo, useEffect } from 'react';
 import { Check, CheckCircle2, Sparkles, Layers, Search, ShieldCheck, Cpu } from 'lucide-react';
 import { axisService, PRIMARY_AXES } from '../services/axisService';
+import { JIANGWAN_OFFICIAL_SWITCHES } from '../constants/deviceProfiles.js';
 
 // 精确还原星闪驱动与轴体品牌分类 (首项遵从用户需求命名为常用/本机轴体)
 export const SPARK_SWITCH_BRANDS = [
@@ -134,10 +135,22 @@ export default function SwitchSettingTab({
   const [searchQuery, setSearchQuery] = useState('');
   const [hoveredSwitch, setHoveredSwitch] = useState(null);
 
+  // 精确识别是否为江湾 PCB 系列（AE64-MAX, AE64 Pro, AE61 Pro, SU66 等）
+  const isJiangwanBoard = useMemo(() => {
+    const b = (deviceProfile?.brand || '').toLowerCase();
+    const m = (deviceProfile?.model || '').toLowerCase();
+    const n = (deviceProfile?.name || '').toLowerCase();
+    const s = (deviceProfile?.shortName || '').toLowerCase();
+    return b.includes('江湾') || b.includes('everglide') ||
+      m.includes('ae64') || m.includes('ae61') || m.includes('su66') ||
+      n.includes('ae64') || n.includes('ae61') || n.includes('su66') ||
+      s.includes('ae64') || s.includes('ae61') || s.includes('su66');
+  }, [deviceProfile]);
+
   // 检测是否为具有特定出厂支持轴体库的成品键盘 (如 VICTKONG DV63、ES68、AE64-MAX)
-  const supportedList = deviceProfile?.supportedSwitches;
-  const isFinishedKeyboard = Array.isArray(supportedList) && supportedList.length > 0;
-  const isStrictlyIsolated = !!deviceProfile?.isolateSwitches;
+  const supportedList = deviceProfile?.supportedSwitches || (isJiangwanBoard ? JIANGWAN_OFFICIAL_SWITCHES : null);
+  const isFinishedKeyboard = (Array.isArray(supportedList) && supportedList.length > 0) || isJiangwanBoard;
+  const isStrictlyIsolated = !!deviceProfile?.isolateSwitches || isJiangwanBoard;
   const [onlyShowSupported, setOnlyShowSupported] = useState(isFinishedKeyboard);
 
   // 若机型配置了严格库存隔离，强制锁定为仅显示本机受支持的轴体
@@ -176,18 +189,15 @@ export default function SwitchSettingTab({
     return result;
   }, [allAxes, primaryAxisKeyword, primaryAxisBadge]);
 
-  // 当前机型官方专属支持的轴体列表 (针对 DV63、AE64、ES68 等成品键盘过滤)
+  // 当前机型官方专属支持的轴体列表 (针对 DV63、AE64、ES68 等成品键盘过滤，严格规范键精准匹配，绝不漏匹配或串台)
   const supportedAxes = useMemo(() => {
-    if (!isFinishedKeyboard) return authenticatedAxes;
-    const supSet = new Set(supportedList.map(s => s.toLowerCase().replace(/\s+/g, '')));
+    if (!isFinishedKeyboard || !Array.isArray(supportedList)) return authenticatedAxes;
+    const normalizeName = (s) => (s || '').toLowerCase().replace(/\s+/g, '').replace(/轴$/, '');
+    const supCanonicalSet = new Set(supportedList.map(normalizeName));
     const matched = authenticatedAxes.filter(a => {
-      const n = a.name.toLowerCase().replace(/\s+/g, '');
-      const sn = (a.shortName || '').toLowerCase().replace(/\s+/g, '');
-      if (supSet.has(n) || supSet.has(sn)) return true;
-      return supportedList.some(k => {
-        const cleanK = k.toLowerCase().replace(/\s+/g, '');
-        return n.includes(cleanK) || cleanK.includes(n);
-      });
+      const n = normalizeName(a.name);
+      const sn = normalizeName(a.shortName);
+      return supCanonicalSet.has(n) || supCanonicalSet.has(sn);
     });
     return matched.length > 0 ? matched : authenticatedAxes;
   }, [authenticatedAxes, isFinishedKeyboard, supportedList]);

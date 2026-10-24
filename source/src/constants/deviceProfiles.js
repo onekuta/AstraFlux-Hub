@@ -922,8 +922,11 @@ export function analyzeDeviceCapabilities(descriptor = {}) {
       labelFormatted: item.val >= 1000 ? `${item.val / 1000}k` : `${item.val}Hz`,
     }));
 
-  // 严格库存隔离：若设备为江湾系列 PCB 或 DV63 等成品键盘，保障其专属轴体库挂载
-  if ((name.includes('江湾') || name.includes('EVERGLIDE')) && !baseProfile.supportedSwitches) {
+  // 严格库存隔离：若设备为江湾系列 PCB (AE64-MAX, AE64 Pro, AE61 Pro, SU66 等) 或 DV63 等成品键盘，保障其专属轴体库挂载
+  const isJiangwan = name.includes('江湾') || name.includes('EVERGLIDE') ||
+    name.includes('AE64') || name.includes('AE61') || name.includes('SU66') ||
+    (baseProfile.id && (baseProfile.id.includes('ae64') || baseProfile.id.includes('ae61') || baseProfile.id.includes('su66')));
+  if (isJiangwan) {
     baseProfile.supportedSwitches = JIANGWAN_OFFICIAL_SWITCHES;
     baseProfile.isolateSwitches = true;
   }
