@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>星闪客制化键盘 PCB 板载轴体探针与独立映射工具</title>
+  <style>
+    :root {
+      --bg-dark: #0a0d14;
+      --card-bg: #121722;
+      --card-border: #1f293d;
+      --primary: #3b82f6;
+      --primary-hover: #2563eb;
+      --accent: #10b981;
+      --text-main: #f8fafc;
+      --text-sub: #94a3b8;
+      --terminal-bg: #06090e;
+      --terminal-border: #182232;
+      --success: #10b981;
+      --warning: #f59e0b;
+      --danger: #ef4444;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "PingFang SC", "Microsoft YaHei", sans-serif; }
+    body { background: var(--bg-dark); color: var(--text-main); min-height: 100vh; padding: 24px 16px; display: flex; flex-direction: column; align-items: center; }
+    .container { width: 100%; max-width: 980px; display: flex; flex-direction: column; gap: 20px; }
+    .header { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 16px; padding: 20px 24px; display: flex; align-items: center; justify-content: space-between; box-shadow: 0 4px 20px rgba(0,0,0,0.3); }
+    .badge { font-size: 11px; padding: 3px 8px; border-radius: 6px; font-weight: 700; font-family: monospace; }
+    .badge-blue { background: rgba(59,130,246,0.15); color: #60a5fa; border: 1px solid rgba(59,130,246,0.3); }
+    .badge-green { background: rgba(16,185,129,0.15); color: #34d399; border: 1px solid rgba(16,185,129,0.3); }
+    .card { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 16px; padding: 20px; box-shadow: 0 4px 16px rgba(0,0,0,0.25); }
+    .btn { display: inline-flex; align-items: center; gap: 6px; padding: 10px 18px; border-radius: 10px; font-size: 13px; font-weight: 700; cursor: pointer; transition: all 0.2s; border: none; }
+    .btn-primary { background: var(--primary); color: #fff; box-shadow: 0 2px 10px rgba(59,130,246,0.3); }
+    .btn-primary:hover { background: var(--primary-hover); }
+    .btn-success { background: var(--accent); color: #fff; box-shadow: 0 2px 10px rgba(16,185,129,0.3); }
+    .btn-success:hover { background: #059669; }
+    .btn-outline { background: transparent; border: 1px solid var(--card-border); color: var(--text-main); }
+    .btn-outline:hover { background: rgba(255,255,255,0.05); border-color: var(--primary); }
+    .grid-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; margin-top: 14px; }
+    .stat-card { background: rgba(255,255,255,0.02); border: 1px solid var(--card-border); border-radius: 12px; padding: 14px; }
+    .stat-val { font-size: 22px; font-weight: 800; font-family: monospace; color: var(--primary); margin-top: 4px; }
+    .switch-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 10px; margin-top: 14px; max-height: 400px; overflow-y: auto; padding-right: 4px; }
+    .switch-card { background: rgba(255,255,255,0.03); border: 1px solid var(--card-border); border-radius: 10px; padding: 12px; display: flex; align-items: center; justify-content: space-between; transition: all 0.2s; }
+    .switch-card:hover { border-color: var(--primary); background: rgba(59,130,246,0.06); }
+    .terminal { background: var(--terminal-bg); border: 1px solid var(--terminal-border); border-radius: 12px; padding: 14px; font-family: monospace; font-size: 11px; color: #a5b4fc; max-height: 220px; overflow-y: auto; white-space: pre-wrap; line-height: 1.6; }
+    .tip-box { background: rgba(16,185,129,0.08); border: 1px solid rgba(16,185,129,0.25); border-radius: 12px; padding: 14px 18px; font-size: 12px; color: #a7f3d0; line-height: 1.6; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- 顶栏 -->
+    <div class="header">
+      <div>
+        <div style="display: flex; align-items: center; gap: 8px;">
+          <h1 style="font-size: 18px; font-weight: 800;">星闪 PCB 板载轴体探针与独立映射器</h1>
+          <span class="badge badge-green">v1.5.0 Standalone</span>
+        </div>
+        <p style="font-size: 12px; color: var(--text-sub); margin-top: 4px;">
+          通过 WebHID 私有协议穿透直读键盘硬件固件中烧录的轴体列表与电气参数，杜绝跨机型轴体污染与错误映射
+        </p>
+      </div>
+      <div>
+        <button id="btnConnect" class="btn btn-primary">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M2 12h20"/></svg>
+          连接键盘并执行探针
+        </button>
+      </div>
+    </div>
+
+    <!-- 提示框 -->
+    <div class="tip-box">
+      <strong>🎯 原理与库存隔离规范：</strong>
+      成品键盘（如 VICTKONG DV63）出厂固件只支持特定闭环轴体库（神马轴、磁玉系列、万磁王系列共6款），硬写未适配轴体会导致固件错乱；江湾客制化 PCB（AE64-MAX、AE64 Pro、AE61 Pro、SU66）则支持官网鉴权的 75 款轴体。本探针直读硬件真实支持的 Axis ID，自动隔离并生成专属适配文件。
+    </div>
+
+    <!-- 硬件状态卡 -->
+    <div class="card">
+      <div style="display: flex; justify-content: space-between; align-items: center;">
+        <h2 style="font-size: 14px; font-weight: 700;">硬件连接与探针状态</h2>
+        <span id="connStatus" class="badge badge-blue">未连接 (点击右上角开始)</span>
+      </div>
+
+      <div class="grid-stats">
+        <div class="stat-card">
+          <div style="font-size: 11px; color: var(--text-sub);">检测到产品型号</div>
+          <div id="statDevice" class="stat-val" style="font-size: 14px; color: #fff;">-</div>
+        </div>
+        <div class="stat-card">
+          <div style="font-size: 11px; color: var(--text-sub);">板载支持轴体数</div>
+          <div id="statCount" class="stat-val">0 <span style="font-size: 12px; font-weight: 400; color: var(--text-sub);">款</span></div>
+        </div>
+        <div class="stat-card">
+          <div style="font-size: 11px; color: var(--text-sub);">出厂默认轴体</div>
+          <div id="statDefault" class="stat-val" style="font-size: 14px; color: var(--accent);">-</div>
+        </div>
+        <div class="stat-card">
+          <div style="font-size: 11px; color: var(--text-sub);">Esc键电气参数</div>
+          <div id="statEsc" class="stat-val" style="font-size: 12px; color: #fff;">-</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 探针探测到的轴体网格 -->
+    <div class="card">
+      <div style="display: flex; justify-content: space-between; align-items: center;">
+        <div>
+          <h2 style="font-size: 14px; font-weight: 700;">硬件真实支持轴体列表</h2>
+          <span style="font-size: 11px; color: var(--text-sub);">已核验与板载 ID 精准匹配</span>
+        </div>
+        <div style="display: flex; gap: 8px;">
+          <button id="btnExportJson" class="btn btn-outline" style="font-size: 11px; padding: 6px 12px;" disabled>
+            导出适配 JSON
+          </button>
+          <button id="btnCopySnippet" class="btn btn-outline" style="font-size: 11px; padding: 6px 12px;" disabled>
+            复制代码片段
+          </button>
+        </div>
+      </div>
+
+      <div id="switchContainer" class="switch-grid">
+        <div style="grid-column: 1/-1; text-align: center; padding: 32px; color: var(--text-sub); font-size: 12px;">
+          等待连接星闪键盘... 点击右上角「连接键盘并执行探针」后将实时列出所有板载支持轴体
+        </div>
+      </div>
+    </div>
+
+    <!-- 实时探测日志 -->
+    <div class="card">
+      <h2 style="font-size: 14px; font-weight: 700; margin-bottom: 10px;">探针执行日志 (Protocol Communication Dump)</h2>
+      <div id="terminalLog" class="terminal">[System] 等待用户授权 WebHID 接口...</div>
+    </div>
+  </div>
+
+  <script type="module">
+    import { KeyboardSDK, cachedAxes, PRIMARY_AXES } from './core-src/sdk/sparklink-sdk-bundle.js';
+
+    // 官方鉴权全量轴体基准库 (对齐官网最新 75 款)
+    const JIANGWAN_OFFICIAL_75 = [
+      '库里南轴', '磁玉轴', '磁白轴', '磁玉Gaming', '磁玉Pro', '玉子轴', '琉璃轴', '阿波罗轴', '磁玉Max', '花火轴', '磁玉Pom', '龙发轴',
+      '佳达隆双轨磁白轴', '磁青轴', '金珀轴', '婷婷魔王/轴', '铜锣烧', '可拉轴', '灰木磁Pro', '双轨磁青轴', '双轨磁红轴', '双轨磁黄轴', '磁黄轴',
+      '枫糖轴', '甜甜圈', '抹茶轴', '惰野轴', '甜珠玉轴Pro', '糯玉轴', '翠玉轴', '玉刃轴',
+      '万磁王', '万磁王RGB', '烈焰红', '神马轴', '炽热金', '爱心万磁王', '寂心万磁王', '圣心万磁王', '太阳神轴', '天王轴', '天王轴电竞',
+      '天王SE', '炎王轴', '炎王轴Pro', '凌云轴', '分神轴', '暗黑王轴', '太阳炎轴', '科索轴',
+      '冰皇轴', '001', '琉璃Pro', '冰极万磁轴', '国度轴', '悟空轴', '悟空轴(3.45mm)', '孤傲轴', '天际线轴', '磁神轴', '天方轴Pro',
+      '双星轴', '赤乌轴', '磁神轴Pro+', '磁神轴Pro', '磁神轴RGB', '磁神Pro半轴', '磁神·三元素', '翡翠·魔王轴', '灵双轴', '天际线轴(3.5mm)',
+      '冰雪轴', '苍雪轴', '白色悟空轴', '极光轴'
+    ];
+
+    const DV63_OFFICIAL_6 = [
+      '神马轴', '磁玉轴', '磁玉 Pro', '磁玉 Gaming', '万磁王', '万磁王 RGB'
+    ];
+
+    let currentProbeResult = null;
+
+    function log(msg, type = 'info') {
+      const term = document.getElementById('terminalLog');
+      const time = new Date().toLocaleTimeString();
+      term.innerHTML += `\n[${time}] ${msg}`;
+      term.scrollTop = term.scrollHeight;
+    }
+
+    document.getElementById('btnConnect').addEventListener('click', async () => {
+      try {
+        if (!navigator.hid) {
+          alert('当前浏览器不支持 WebHID，请使用 Chrome 或 Edge 浏览器打开！');
+          return;
+        }
+
+        log('正在请求用户选择星闪键盘 (0xFFB0 接口)...');
+        const devices = await navigator.hid.requestDevice({
+          filters: [
+            { usagePage: 0xffb0, usage: 0x01 },
+            { vendorId: 0x1ca6 },
+            { usagePage: 0xff00 }
+          ]
+        });
+
+        if (!devices || devices.length === 0) {
+          log('用户取消了设备选择', 'warn');
+          return;
+        }
+
+        const hidDevice = devices[0];
+        log(`选中设备: ${hidDevice.productName} (VID:0x${hidDevice.vendorId.toString(16)} PID:0x${hidDevice.productId.toString(16)})`);
+
+        if (!hidDevice.opened) {
+          await hidDevice.open();
+        }
+
+        const sdk = new KeyboardSDK({ device: hidDevice, debug: false });
+        await sdk.init();
+        log('星闪私有协议握手成功 (0xFFB0 通信建立)', 'success');
+
+        document.getElementById('connStatus').textContent = `已连接: ${hidDevice.productName}`;
+        document.getElementById('connStatus').className = 'badge badge-green';
+        document.getElementById('statDevice').textContent = hidDevice.productName || '星闪键盘';
+
+        // 1. 读取板载轴体列表
+        log('正在查询板载轴体表 (getAxisList)...');
+        let rawAxisIds = [];
+        try {
+          const listRes = await sdk.getAxisList();
+          if (listRes && Array.isArray(listRes.list)) {
+            rawAxisIds = listRes.list;
+            log(`板载支持轴体数: ${rawAxisIds.length} 款`);
+          }
+        } catch (e) {
+          log(`查询 getAxisList 略过: ${e.message}`, 'warn');
+        }
+
+        // 2. 读取默认轴体
+        log('正在查询出厂默认轴体 (getDefaultAxis)...');
+        let defaultAxisId = 1;
+        try {
+          const defRes = await sdk.getDefaultAxis();
+          if (defRes !== undefined && defRes !== null) {
+            defaultAxisId = typeof defRes === 'object' ? (defRes.id ?? defRes.value) : defRes;
+            log(`出厂默认轴体 ID: ${defaultAxisId}`);
+          }
+        } catch (e) {
+          log(`查询 getDefaultAxis 略过: ${e.message}`, 'warn');
+        }
+
+        // 3. 读取 Esc 键电气配置
+        let escPerf = null;
+        try {
+          escPerf = await sdk.getPerformance({ row: 1, col: 0 });
+          if (escPerf) {
+            log(`Esc 键电气参数: axisV2Id=${escPerf.axisV2Id}, rangeMax=${escPerf.axisRangeMax}, ap=${escPerf.normalPress}`);
+            document.getElementById('statEsc').textContent = `v2Id:${escPerf.axisV2Id || 0} max:${escPerf.axisRangeMax || 0}`;
+          }
+        } catch (e) {}
+
+        // 4. 解析与映射轴体
+        const isDv63 = (hidDevice.productName || '').toUpperCase().includes('DV63') || hidDevice.productId === 0x7a02;
+        const resolvedSwitches = [];
+        const seenNames = new Set();
+
+        const allKnown = [...cachedAxes, ...PRIMARY_AXES];
+
+        rawAxisIds.forEach(id => {
+          const matched = allKnown.find(a => (a.axis_id ?? a.id) === id);
+          if (matched) {
+            const name = matched.axis_name || matched.name;
+            if (!seenNames.has(name)) {
+              seenNames.add(name);
+              resolvedSwitches.push({
+                id,
+                name,
+                brand: matched.factory_name || matched.brand || '星闪官方',
+                travel: Number(matched.doctrine_range_left || matched.maxTravel || matched.travel || 3.5),
+                color: matched.axis_color || '#3b82f6',
+                badge: isDv63 ? 'DV63出厂支持' : '官方核准'
+              });
+            }
+          } else {
+            const placeholder = `板载磁轴 #${id}`;
+            seenNames.add(placeholder);
+            resolvedSwitches.push({
+              id,
+              name: placeholder,
+              brand: '板载固件',
+              travel: 3.5,
+              color: '#64748b',
+              badge: '硬件上报'
+            });
+          }
+        });
+
+        // 渲染
+        document.getElementById('statCount').innerHTML = `${resolvedSwitches.length} <span style="font-size:12px;font-weight:400;color:var(--text-sub);">款</span>`;
+        document.getElementById('statDefault').textContent = resolvedSwitches[0]?.name || '神马轴';
+
+        const container = document.getElementById('switchContainer');
+        container.innerHTML = '';
+        resolvedSwitches.forEach((sw, idx) => {
+          const card = document.createElement('div');
+          card.className = 'switch-card';
+          card.innerHTML = `
+            <div style="display:flex; align-items:center; gap:8px;">
+              <div style="width:10px; height:10px; border-radius:50%; background:${sw.color}; shrink:0;"></div>
+              <div>
+                <div style="font-weight:700; font-size:12px;">${sw.name}</div>
+                <div style="font-size:10px; color:var(--text-sub);">${sw.brand} · ${sw.travel}mm</div>
+              </div>
+            </div>
+            <span class="badge badge-blue">ID:${sw.id}</span>
+          `;
+          container.appendChild(card);
+        });
+
+        currentProbeResult = {
+          model: hidDevice.productName || 'SparkLink_Keyboard',
+          vendorId: hidDevice.vendorId,
+          productId: hidDevice.productId,
+          probedAt: new Date().toISOString(),
+          defaultAxis: resolvedSwitches[0]?.name || '神马轴',
+          isolateSwitches: true,
+          supportedSwitches: resolvedSwitches.map(s => s.name),
+          hardwareAxisIds: rawAxisIds,
+          escElectrical: escPerf
+        };
+
+        document.getElementById('btnExportJson').disabled = false;
+        document.getElementById('btnCopySnippet').disabled = false;
+
+        log(`探针完成！发现 ${resolvedSwitches.length} 款支持轴体，已启用严格库存隔离。`, 'success');
+      } catch (err) {
+        log(`探针执行失败: ${err.message}`, 'danger');
+        alert(`探针执行失败: ${err.message}`);
+      }
+    });
+
+    document.getElementById('btnExportJson').addEventListener('click', () => {
+      if (!currentProbeResult) return;
+      const blob = new Blob([JSON.stringify(currentProbeResult, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `PCB_Axis_Adapter_${currentProbeResult.model.replace(/\s+/g, '_')}_${Date.now()}.json`;
+      a.click();
+      URL.revokeObjectURL(url);
+    });
+
+    document.getElementById('btnCopySnippet').addEventListener('click', () => {
+      if (!currentProbeResult) return;
+      const snippet = JSON.stringify({
+        model: currentProbeResult.model,
+        defaultAxis: currentProbeResult.defaultAxis,
+        isolateSwitches: true,
+        supportedSwitches: currentProbeResult.supportedSwitches
+      }, null, 2);
+      navigator.clipboard.writeText(snippet).then(() => {
+        alert('已成功复制配置代码片段至剪贴板！');
+      });
+    });
+  </script>
+</body>
+</html>

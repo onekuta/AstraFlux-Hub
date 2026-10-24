@@ -31,10 +31,15 @@ import {
   EyeOff,
   Search,
   FileText,
+  Target,
+  Crosshair,
+  Terminal,
+  Copy,
 } from 'lucide-react';
 import { customDeviceRegistry } from '../services/customDeviceRegistry';
 import { updaterService } from '../services/updaterService';
 import { axisService } from '../services/axisService';
+import { keyboardService } from '../services/keyboardService';
 import { useToast } from './ToastProvider';
 
 const DEV_PASSWORD = 'kutaze1234';
@@ -82,14 +87,19 @@ export default function DevLabModal({
   const [isExportingPatch, setIsExportingPatch] = useState(false);
   const [isExportingBundle, setIsExportingBundle] = useState(false);
 
-  // 开发者后台主导航 (外设库管理 vs 轴体库管理)
-  const [activeDevTab, setActiveDevTab] = useState('devices'); // 'devices' | 'switches'
+  // 开发者后台主导航 (外设库管理 vs 轴体库管理 vs 硬件轴体探针)
+  const [activeDevTab, setActiveDevTab] = useState('devices'); // 'devices' | 'switches' | 'probe'
   const [axesList, setAxesList] = useState(() => axisService.axes || []);
   const [switchSearchQuery, setSwitchSearchQuery] = useState('');
   const [switchBrandFilter, setSwitchBrandFilter] = useState('all');
   const [switchAuthFilter, setSwitchAuthFilter] = useState('all'); // 'all' | 'official' | 'unverified'
   const [switchDeviceFilter, setSwitchDeviceFilter] = useState('all'); // 'all' | 'dv63' | 'ae64' | 'es68'
   const [isSyncingAxes, setIsSyncingAxes] = useState(false);
+
+  // 🎯 硬件板载轴体探针专属状态
+  const [isProbingAxis, setIsProbingAxis] = useState(false);
+  const [probeReport, setProbeReport] = useState(null);
+  const [probeCopied, setProbeCopied] = useState(false);
 
   // 初始化加载
   useEffect(() => {
@@ -492,6 +502,94 @@ export default function DevLabModal({
     return list;
   }, [axesList, switchBrandFilter, switchAuthFilter, switchDeviceFilter, switchSearchQuery]);
 
+  // 运行 PCB 轴体探针
+  const handleRunAxisProbe = async () => {
+    setIsProbingAxis(true);
+    setProbeCopied(false);
+    try {
+      const activeDev = keyboardService.currentDevice || keyboardService.openedDevice;
+      const currentProfile = activeDev
+        ? {
+            model: activeDev.productName || 'SparkLink Keyboard',
+            name: activeDev.productName,
+            vendorId: activeDev.vendorId,
+            productId: activeDev.productId,
+          }
+        : null;
+      const rep = await axisService.probePcbSupportedAxes(keyboardService, currentProfile);
+      setProbeReport(rep);
+      if (rep.error) {
+        addToast({ message: rep.error, type: 'warning' });
+      } else {
+        addToast({
+          message: `探针执行完毕：发现 ${rep.rawList?.length || 0} 个板载轴体，成功映射 ${rep.resolvedSwitches?.length || 0} 款轴体`,
+          type: 'success',
+        });
+      }
+    } catch (e) {
+      addToast({ message: `探针探测异常: ${e.message}`, type: 'error' });
+    } finally {
+      setIsProbingAxis(false);
+    }
+  };
+
+  // 一键将探针结果同步写入当前机型配置
+  const handleSyncProbeToRegistry = () => {
+    if (!probeReport || !probeReport.supportedSwitchNames || probeReport.supportedSwitchNames.length === 0) {
+      addToast({ message: '暂无可同步的探针轴体数据，请先执行探测', type: 'warning' });
+      return;
+    }
+    const dev = keyboardService.currentDevice || keyboardService.openedDevice;
+    if (!dev) {
+      addToast({ message: '未检测到在线设备，请先连接键盘', type: 'warning' });
+      return;
+    }
+    const vid = dev.vendorId;
+    const pid = dev.productId;
+    const existing = customDeviceRegistry.getProfile(vid, pid) || {};
+    const updated = {
+      ...existing,
+      vendorId: vid,
+      productId: pid,
+      model: existing.model || dev.productName || 'Custom_SparkLink_Keyboard',
+      name: existing.name || dev.productName || '自定义星闪键盘',
+      supportedSwitches: probeReport.supportedSwitchNames,
+      defaultAxis: probeReport.resolvedSwitches[0]?.name || existing.defaultAxis || '神马轴',
+      isolateSwitches: true,
+      lastProbedAt: probeReport.timestamp,
+    };
+    customDeviceRegistry.saveCustomProfile(updated);
+    setAllProfiles(customDeviceRegistry.getAllProfiles());
+    addToast({
+      message: `已成功将探针提取的 ${probeReport.supportedSwitchNames.length} 款轴体同步至该机型硬件数据库！`,
+      type: 'success',
+    });
+  };
+
+  // 导出探针适配 JSON
+  const handleExportProbeJson = () => {
+    if (!probeReport) return;
+    const content = probeReport.codeSnippet || JSON.stringify(probeReport, null, 2);
+    const blob = new Blob([content], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `PCB_Axis_Adapter_${(probeReport.deviceModel || 'Keyboard').replace(/\s+/g, '_')}_${Date.now()}.json`;
+    a.click();
+    URL.revokeObjectURL(url);
+    addToast({ message: '已导出轴体探针报告 JSON 文件', type: 'success' });
+  };
+
+  // 复制探针代码片段
+  const handleCopyProbeSnippet = () => {
+    if (!probeReport?.codeSnippet) return;
+    navigator.clipboard.writeText(probeReport.codeSnippet).then(() => {
+      setProbeCopied(true);
+      addToast({ message: '已复制 JSON 配置代码到剪贴板', type: 'success' });
+      setTimeout(() => setProbeCopied(false), 2000);
+    });
+  };
+
   if (!isOpen) return null;
 
   return (
@@ -597,6 +695,21 @@ export default function DevLabModal({
                   <span>轴体库与底层校准文件管理</span>
                   <span className="text-[10px] px-1.5 py-0.2 rounded-full bg-amber-500/20 text-amber-300 font-mono font-bold">
                     {axesList.length}款
+                  </span>
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setActiveDevTab('probe')}
+                  className={`px-4 py-1.5 rounded-lg text-xs font-bold transition flex items-center space-x-2 cursor-pointer ${
+                    activeDevTab === 'probe'
+                      ? 'bg-[var(--info-color)] text-white shadow-xs'
+                      : 'text-[var(--text-tertiary)] hover:text-[var(--text-primary)]'
+                  }`}
+                >
+                  <Target className="w-3.5 h-3.5" />
+                  <span>板载轴体探针</span>
+                  <span className="text-[10px] px-1.5 py-0.2 rounded-full bg-emerald-500/20 text-emerald-300 font-mono font-bold">
+                    PCB硬件直读
                   </span>
                 </button>
               </div>
@@ -1397,6 +1510,204 @@ export default function DevLabModal({
                     })}
                   </div>
                 </div>
+              </div>
+            )}
+
+            {/* 🎯 硬件板载轴体探针专属面板 (PCB Axis Probe Engine) */}
+            {activeDevTab === 'probe' && (
+              <div className="space-y-4">
+                {/* 1. 探针说明与设备连接状态 */}
+                <div className="p-4 rounded-xl border border-[var(--border-color)] bg-[var(--bg-tertiary)] flex flex-col md:flex-row md:items-center justify-between gap-4">
+                  <div className="space-y-1">
+                    <div className="flex items-center space-x-2">
+                      <Target className="w-4 h-4 text-emerald-500 shrink-0" />
+                      <h3 className="text-xs font-bold text-[var(--text-primary)]">
+                        星闪硬件板载轴体探针 (PCB Axis Table Hardware Probe)
+                      </h3>
+                      <span className="text-[10px] px-2 py-0.5 rounded-full bg-emerald-500/15 text-emerald-500 font-bold font-mono">
+                        Direct WebHID
+                      </span>
+                    </div>
+                    <p className="text-[11px] text-[var(--text-tertiary)] max-w-xl leading-relaxed">
+                      通过私有协议握手直读键盘固件中实际烧录的板载轴体列表 (getAxisList)、出厂默认轴体 (getDefaultAxis) 与 Esc 键电气配置，自动消除重复，映射到真实轴体参数，并直接同步到该键盘适配库。
+                    </p>
+                  </div>
+
+                  <div className="flex items-center gap-2 shrink-0">
+                    <button
+                      type="button"
+                      disabled={isProbingAxis}
+                      onClick={handleRunAxisProbe}
+                      className="px-4 py-2 rounded-xl bg-[var(--info-color)] hover:opacity-90 disabled:opacity-50 text-white font-bold text-xs shadow-md transition flex items-center space-x-2 cursor-pointer"
+                    >
+                      {isProbingAxis ? (
+                        <>
+                          <RefreshCw className="w-3.5 h-3.5 animate-spin" />
+                          <span>正在穿透探针...</span>
+                        </>
+                      ) : (
+                        <>
+                          <Crosshair className="w-3.5 h-3.5" />
+                          <span>一键执行 PCB 轴体探针</span>
+                        </>
+                      )}
+                    </button>
+                  </div>
+                </div>
+
+                {/* 2. 在线连接状态指示 */}
+                <div className="flex items-center justify-between px-3.5 py-2 bg-[var(--bg-secondary)] border border-[var(--border-color)] rounded-xl text-xs">
+                  <div className="flex items-center gap-2">
+                    <span className={`w-2 h-2 rounded-full ${keyboardService.connected ? 'bg-emerald-500 animate-pulse' : 'bg-rose-500'}`} />
+                    <span className="font-bold text-[var(--text-primary)]">
+                      {keyboardService.connected ? '硬件连接就绪' : '未检测到键盘连接'}
+                    </span>
+                    {keyboardService.connected && (
+                      <span className="font-mono text-[var(--text-secondary)]">
+                        ({keyboardService.currentDevice?.productName || keyboardService.openedDevice?.productName || 'SparkLink Keyboard'} · VID:0x{(keyboardService.currentDevice?.vendorId || 0x1ca6).toString(16).toUpperCase()})
+                      </span>
+                    )}
+                  </div>
+                  {probeReport && (
+                    <div className="text-[11px] text-[var(--text-tertiary)] font-mono">
+                      探针时间: {new Date(probeReport.timestamp).toLocaleTimeString()}
+                    </div>
+                  )}
+                </div>
+
+                {/* 3. 探针结果面板 */}
+                {probeReport ? (
+                  <div className="space-y-4">
+                    {/* 探针指标统计卡 */}
+                    <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+                      <div className="p-3 bg-[var(--bg-tertiary)] border border-[var(--border-color)] rounded-xl">
+                        <div className="text-[10px] text-[var(--text-tertiary)] font-bold">板载支持轴体数</div>
+                        <div className="text-xl font-bold font-mono text-[var(--info-color)] mt-0.5">
+                          {probeReport.rawList?.length || probeReport.resolvedSwitches?.length || 0}
+                          <span className="text-xs font-normal text-[var(--text-tertiary)] ml-1">款</span>
+                        </div>
+                      </div>
+                      <div className="p-3 bg-[var(--bg-tertiary)] border border-[var(--border-color)] rounded-xl">
+                        <div className="text-[10px] text-[var(--text-tertiary)] font-bold">成功映射官方轴体</div>
+                        <div className="text-xl font-bold font-mono text-emerald-500 mt-0.5">
+                          {probeReport.resolvedSwitches?.length || 0}
+                          <span className="text-xs font-normal text-[var(--text-tertiary)] ml-1">款</span>
+                        </div>
+                      </div>
+                      <div className="p-3 bg-[var(--bg-tertiary)] border border-[var(--border-color)] rounded-xl">
+                        <div className="text-[10px] text-[var(--text-tertiary)] font-bold">出厂默认标配轴体</div>
+                        <div className="text-xs font-bold font-title text-[var(--text-primary)] mt-1 truncate" title={probeReport.resolvedSwitches[0]?.name}>
+                          {probeReport.resolvedSwitches[0]?.name || '神马轴'}
+                        </div>
+                      </div>
+                      <div className="p-3 bg-[var(--bg-tertiary)] border border-[var(--border-color)] rounded-xl">
+                        <div className="text-[10px] text-[var(--text-tertiary)] font-bold">Esc 键电气参数</div>
+                        <div className="text-[11px] font-mono text-[var(--text-secondary)] mt-1 truncate">
+                          {probeReport.escPerformance ? `v2Id:${probeReport.escPerformance.axisV2Id || 0} max:${probeReport.escPerformance.axisRangeMax || 0}` : '未上报'}
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* 操作按钮组：同步到机型数据库 / 导出 JSON / 复制代码 */}
+                    <div className="flex flex-wrap items-center justify-between gap-2 p-3 bg-emerald-500/10 border border-emerald-500/20 rounded-xl">
+                      <div className="flex items-center space-x-2 text-xs font-bold text-emerald-600 dark:text-emerald-400">
+                        <CheckCircle2 className="w-4 h-4 shrink-0" />
+                        <span>探针提取成功！可直接将该硬件轴体库存一键更新到本地适配数据库</span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <button
+                          type="button"
+                          onClick={handleSyncProbeToRegistry}
+                          className="px-3 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs shadow-xs transition flex items-center space-x-1.5 cursor-pointer"
+                        >
+                          <Save className="w-3.5 h-3.5" />
+                          <span>一键同步到机型配置</span>
+                        </button>
+                        <button
+                          type="button"
+                          onClick={handleExportProbeJson}
+                          className="px-3 py-1.5 rounded-lg bg-[var(--bg-secondary)] border border-[var(--border-color)] hover:bg-[var(--border-color)] text-[var(--text-primary)] font-bold text-xs transition flex items-center space-x-1.5 cursor-pointer"
+                        >
+                          <Download className="w-3.5 h-3.5" />
+                          <span>导出适配 JSON</span>
+                        </button>
+                        <button
+                          type="button"
+                          onClick={handleCopyProbeSnippet}
+                          className="px-3 py-1.5 rounded-lg bg-[var(--bg-secondary)] border border-[var(--border-color)] hover:bg-[var(--border-color)] text-[var(--text-primary)] font-bold text-xs transition flex items-center space-x-1.5 cursor-pointer"
+                        >
+                          <Copy className="w-3.5 h-3.5" />
+                          <span>{probeCopied ? '已复制！' : '复制代码片段'}</span>
+                        </button>
+                      </div>
+                    </div>
+
+                    {/* 探测到的轴体列表网格 */}
+                    <div className="border border-[var(--border-color)] rounded-xl overflow-hidden bg-[var(--bg-tertiary)]">
+                      <div className="px-4 py-2.5 border-b border-[var(--border-color)] bg-[var(--bg-secondary)] flex items-center justify-between text-xs font-bold text-[var(--text-primary)]">
+                        <div className="flex items-center space-x-2">
+                          <Layers className="w-3.5 h-3.5 text-[var(--info-color)]" />
+                          <span>探测到的支持轴体明细清单 ({probeReport.resolvedSwitches?.length || 0}款)</span>
+                        </div>
+                        <span className="text-[10px] font-mono text-[var(--text-tertiary)] font-normal">
+                          出厂硬件独立库存隔离
+                        </span>
+                      </div>
+                      <div className="max-h-60 overflow-y-auto divide-y divide-[var(--border-color)]/60">
+                        {probeReport.resolvedSwitches?.map((sw, idx) => (
+                          <div key={idx} className="px-4 py-2 flex items-center justify-between text-xs hover:bg-[var(--bg-secondary)]/50 transition">
+                            <div className="flex items-center space-x-3">
+                              <span className="font-mono text-[10px] text-[var(--text-tertiary)] w-5">
+                                #{idx + 1}
+                              </span>
+                              <div
+                                className="w-3 h-3 rounded-full shrink-0"
+                                style={{ backgroundColor: sw.color || '#2563eb' }}
+                              />
+                              <div>
+                                <span className="font-bold text-[var(--text-primary)]">{sw.name}</span>
+                                <span className="text-[10px] text-[var(--text-tertiary)] ml-2">({sw.brand || '未知品牌'})</span>
+                              </div>
+                            </div>
+                            <div className="flex items-center space-x-3 text-[11px] font-mono">
+                              <span className="text-[var(--info-color)] font-bold">{sw.travel || sw.maxTravel || 3.5}mm</span>
+                              <span className="text-[var(--text-tertiary)]">ID: {sw.hardwareAxisId ?? sw.id}</span>
+                              <span className="px-1.5 py-0.5 rounded text-[10px] bg-emerald-500/10 text-emerald-500 border border-emerald-500/20 font-sans font-bold">
+                                {sw.source === 'hardware_esc_active' ? '当前Esc安装' : '固件支持'}
+                              </span>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* JSON 预览区 */}
+                    <div className="border border-[var(--border-color)] rounded-xl overflow-hidden bg-[var(--bg-tertiary)]">
+                      <div className="px-4 py-2 border-b border-[var(--border-color)] bg-[var(--bg-secondary)] flex items-center justify-between text-xs font-bold text-[var(--text-primary)]">
+                        <div className="flex items-center space-x-2">
+                          <Terminal className="w-3.5 h-3.5 text-[var(--info-color)]" />
+                          <span>PCB 轴体配置代码预览 (可直接注入 deviceProfiles.js)</span>
+                        </div>
+                      </div>
+                      <pre className="p-3 text-[11px] font-mono text-[var(--text-secondary)] overflow-x-auto max-h-40 bg-black/20 select-all">
+                        {probeReport.codeSnippet}
+                      </pre>
+                    </div>
+                  </div>
+                ) : (
+                  /* 未执行探测状态下的空白占位 */
+                  <div className="p-12 text-center border border-dashed border-[var(--border-color)] rounded-2xl bg-[var(--bg-tertiary)]/50 space-y-3">
+                    <div className="w-12 h-12 rounded-2xl bg-[var(--bg-secondary)] border border-[var(--border-color)] flex items-center justify-center mx-auto text-[var(--text-tertiary)]">
+                      <Crosshair className="w-6 h-6" />
+                    </div>
+                    <div className="space-y-1">
+                      <h4 className="text-xs font-bold text-[var(--text-primary)]">尚未执行 PCB 硬件探针</h4>
+                      <p className="text-[11px] text-[var(--text-tertiary)] max-w-md mx-auto">
+                        请确保星闪键盘已通过 USB 有线或星闪接收器连接至电脑，点击上方「一键执行 PCB 轴体探针」开始穿透读取板载轴体库。
+                      </p>
+                    </div>
+                  </div>
+                )}
               </div>
             )}
           </div>

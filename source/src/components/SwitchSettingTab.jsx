@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { Check, CheckCircle2, Sparkles, Layers, Search, ShieldCheck, Cpu } from 'lucide-react';
 import { axisService, PRIMARY_AXES } from '../services/axisService';
 
@@ -11,6 +11,37 @@ export const SPARK_SWITCH_BRANDS = [
   { id: 'other', label: '其它品牌' },
   { id: 'all', label: '全部官方校准库' },
 ];
+
+/**
+ * 严格轴体品牌归类函数：
+ * - 江湾 (Everglide): 品牌含江湾/Everglide 或 库里南轴
+ * - 佳达隆 (Gateron): 品牌含佳达隆/Gateron
+ * - 正牌科电 (TTC): 品牌含正牌科电/TTC、神马轴 (DV63原厂标配)、万磁王、烈焰红、炽热金等
+ * - 其它品牌: 冰皇、天际线、悟空、磁神等第三方/定制品牌
+ */
+export function getSwitchBrandCategory(sw) {
+  if (!sw) return 'other';
+  const brand = (sw.brand || '').toLowerCase();
+  const name = (sw.name || '').toLowerCase();
+
+  if (brand.includes('江湾') || brand.includes('everglide') || name.includes('库里南')) {
+    return 'jiangwan';
+  }
+  if (brand.includes('佳达隆') || brand.includes('gateron')) {
+    return 'gateron';
+  }
+  if (
+    brand.includes('正牌科电') ||
+    brand.includes('ttc') ||
+    name.includes('神马') ||
+    name.includes('万磁王') ||
+    name.includes('烈焰红') ||
+    name.includes('炽热金')
+  ) {
+    return 'ttc';
+  }
+  return 'other';
+}
 
 // 紧凑轻量 3D 机械轴体 SVG 图标组件 (尺寸 26~32px)
 function Switch3DIcon({ color = '#2563eb', size = 28 }) {
@@ -106,7 +137,11 @@ export default function SwitchSettingTab({
   // 检测是否为具有特定出厂支持轴体库的成品键盘 (如 VICTKONG DV63、ES68、AE64-MAX)
   const supportedList = deviceProfile?.supportedSwitches;
   const isFinishedKeyboard = Array.isArray(supportedList) && supportedList.length > 0;
+  const isStrictlyIsolated = !!deviceProfile?.isolateSwitches;
   const [onlyShowSupported, setOnlyShowSupported] = useState(isFinishedKeyboard);
+
+  // 若机型配置了严格库存隔离，强制锁定为仅显示本机受支持的轴体
+  const effectiveOnlySupported = isStrictlyIsolated ? true : onlyShowSupported;
 
   // 全量已鉴权官方真实轴体库 (通过官网与驱动官方库鉴权，排除未核准的虚假/实验轴体，并严格按归一化键消除重复项)
   const authenticatedAxes = useMemo(() => {
@@ -159,26 +194,50 @@ export default function SwitchSettingTab({
 
   // 根据当前过滤模式决定的轴体集合
   const currentScopeAxes = useMemo(() => {
-    if (isFinishedKeyboard && onlyShowSupported) {
+    if (isFinishedKeyboard && effectiveOnlySupported) {
       return supportedAxes;
     }
     return authenticatedAxes;
-  }, [isFinishedKeyboard, onlyShowSupported, supportedAxes, authenticatedAxes]);
+  }, [isFinishedKeyboard, effectiveOnlySupported, supportedAxes, authenticatedAxes]);
 
-  // 动态品牌分类选项
+  // 动态品牌分类选项 (当开启库存隔离时，过滤隐藏当前键盘不支持的品牌分类，如 DV63 隐藏江湾与其他)
   const brandTabs = useMemo(() => {
-    const customLabel = isFinishedKeyboard && onlyShowSupported 
-      ? `${deviceProfile.shortName || deviceProfile.model} 专属支持` 
+    const customLabel = isFinishedKeyboard && effectiveOnlySupported 
+      ? `${deviceProfile?.shortName || deviceProfile?.model || '本机'} 专属支持` 
       : '常用推荐轴体';
-    return [
-      { id: 'custom', label: customLabel },
-      { id: 'jiangwan', label: '江湾 (Everglide)' },
-      { id: 'gateron', label: '佳达隆 (Gateron)' },
-      { id: 'ttc', label: '正牌科电 (TTC)' },
-      { id: 'other', label: '其它品牌' },
-      { id: 'all', label: `全部校准库 (${currentScopeAxes.length}款)` },
-    ];
-  }, [isFinishedKeyboard, onlyShowSupported, deviceProfile, currentScopeAxes.length]);
+    
+    const tabs = [{ id: 'custom', label: customLabel }];
+
+    // 计算各大品牌在当前有效轴体范围内的真实数量
+    const jwCount = currentScopeAxes.filter(s => getSwitchBrandCategory(s) === 'jiangwan').length;
+    const gatCount = currentScopeAxes.filter(s => getSwitchBrandCategory(s) === 'gateron').length;
+    const ttcCount = currentScopeAxes.filter(s => getSwitchBrandCategory(s) === 'ttc').length;
+    const otherCount = currentScopeAxes.filter(s => getSwitchBrandCategory(s) === 'other').length;
+
+    if (!isStrictlyIsolated || jwCount > 0) {
+      tabs.push({ id: 'jiangwan', label: `江湾 (Everglide)${jwCount > 0 ? ` (${jwCount})` : ''}` });
+    }
+    if (!isStrictlyIsolated || gatCount > 0) {
+      tabs.push({ id: 'gateron', label: `佳达隆 (Gateron)${gatCount > 0 ? ` (${gatCount})` : ''}` });
+    }
+    if (!isStrictlyIsolated || ttcCount > 0) {
+      tabs.push({ id: 'ttc', label: `正牌科电 (TTC)${ttcCount > 0 ? ` (${ttcCount})` : ''}` });
+    }
+    if (!isStrictlyIsolated || otherCount > 0) {
+      tabs.push({ id: 'other', label: `其它品牌${otherCount > 0 ? ` (${otherCount})` : ''}` });
+    }
+
+    tabs.push({ id: 'all', label: `全部支持轴体 (${currentScopeAxes.length}款)` });
+
+    return tabs;
+  }, [isFinishedKeyboard, effectiveOnlySupported, isStrictlyIsolated, deviceProfile, currentScopeAxes]);
+
+  // 当可用品牌切换时，若当前选中的分类在新列表中不存在，平滑回落到第一分类
+  useEffect(() => {
+    if (!brandTabs.some(b => b.id === activeBrand)) {
+      setActiveBrand(brandTabs[0]?.id || 'custom');
+    }
+  }, [brandTabs, activeBrand]);
 
   // 综合计算在当前选中品牌及搜索关键词下展示的轴体列表
   const displayedSwitches = useMemo(() => {
@@ -198,21 +257,13 @@ export default function SwitchSettingTab({
         if (list.length === 0) list = currentScopeAxes.slice(0, 8);
       }
     } else if (activeBrand === 'jiangwan') {
-      list = currentScopeAxes.filter(a => a.brand?.includes('江湾') || a.brand?.toLowerCase().includes('everglide'));
+      list = currentScopeAxes.filter(a => getSwitchBrandCategory(a) === 'jiangwan');
     } else if (activeBrand === 'gateron') {
-      list = currentScopeAxes.filter(a => a.brand?.includes('佳达隆') || a.brand?.toLowerCase().includes('gateron'));
+      list = currentScopeAxes.filter(a => getSwitchBrandCategory(a) === 'gateron');
     } else if (activeBrand === 'ttc') {
-      list = currentScopeAxes.filter(a => a.brand?.includes('正牌科电') || a.brand?.toUpperCase().includes('TTC') || a.name?.includes('神马'));
+      list = currentScopeAxes.filter(a => getSwitchBrandCategory(a) === 'ttc');
     } else if (activeBrand === 'other') {
-      list = currentScopeAxes.filter(a => 
-        !a.brand?.includes('江湾') && 
-        !a.brand?.toLowerCase().includes('everglide') && 
-        !a.brand?.includes('佳达隆') && 
-        !a.brand?.toLowerCase().includes('gateron') && 
-        !a.brand?.includes('正牌科电') && 
-        !a.brand?.toUpperCase().includes('TTC') &&
-        !a.name?.includes('神马')
-      );
+      list = currentScopeAxes.filter(a => getSwitchBrandCategory(a) === 'other');
     }
 
     if (searchQuery.trim()) {
@@ -229,6 +280,19 @@ export default function SwitchSettingTab({
 
   // 点击选轴安全包裹：保证传递给外部的轴体对象 100% 具备 travel、maxTravel、recommendedAP
   const handleSelectAxis = (sw) => {
+    // 严苛库存隔离拦截保护
+    if (isStrictlyIsolated && Array.isArray(supportedList)) {
+      const isAllowed = supportedList.some(name => {
+        const cleanName = name.toLowerCase().replace(/\s+/g, '');
+        const targetName = (sw.name || '').toLowerCase().replace(/\s+/g, '');
+        const targetShort = (sw.shortName || '').toLowerCase().replace(/\s+/g, '');
+        return cleanName === targetName || cleanName === targetShort || targetName.includes(cleanName) || cleanName.includes(targetName);
+      });
+      if (!isAllowed) {
+        alert(`【${deviceProfile?.shortName || deviceProfile?.model}】硬件出厂不支持【${sw.name}】，写入会导致轴体识别错乱，已拦截！`);
+        return;
+      }
+    }
     const travelVal = Number(sw.maxTravel || sw.travel || 3.50);
     const safeSw = {
       ...sw,
@@ -314,34 +378,41 @@ export default function SwitchSettingTab({
                   </span>
                 </h3>
 
-                {/* 成品键盘 (如 DV63) 专属支持库与全量官方库快速切换 */}
+                {/* 成品键盘 (如 DV63、AE64-MAX) 专属支持库与全量官方库快速切换 */}
                 {isFinishedKeyboard && (
-                  <div className="flex items-center bg-[var(--bg-secondary)] border border-[var(--border-color)] rounded-lg p-0.5 text-[10px] font-bold shrink-0">
-                    <button
-                      type="button"
-                      onClick={() => setOnlyShowSupported(true)}
-                      className={`px-2 py-0.5 rounded transition cursor-pointer ${
-                        onlyShowSupported 
-                          ? 'bg-[var(--info-color)] text-white shadow-2xs font-extrabold' 
-                          : 'text-[var(--text-tertiary)] hover:text-[var(--text-primary)]'
-                      }`}
-                      title={`仅显示 ${deviceProfile?.shortName || '本机'} 出厂与硬件官方适配支持的轴体`}
-                    >
-                      本机专属支持 ({supportedAxes.length}款)
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => setOnlyShowSupported(false)}
-                      className={`px-2 py-0.5 rounded transition cursor-pointer ${
-                        !onlyShowSupported 
-                          ? 'bg-[var(--info-color)] text-white shadow-2xs font-extrabold' 
-                          : 'text-[var(--text-tertiary)] hover:text-[var(--text-primary)]'
-                      }`}
-                      title="放开限制查看全部已鉴权的 220+ 款官方真实磁轴库"
-                    >
-                      全量官方库 ({authenticatedAxes.length}款)
-                    </button>
-                  </div>
+                  isStrictlyIsolated ? (
+                    <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-emerald-500/10 border border-emerald-500/30 text-emerald-600 dark:text-emerald-400 text-[10px] font-bold shrink-0">
+                      <ShieldCheck className="w-3.5 h-3.5 shrink-0" />
+                      <span>{deviceProfile?.shortName || deviceProfile?.model} 官方硬件隔离 ({supportedAxes.length}款)</span>
+                    </div>
+                  ) : (
+                    <div className="flex items-center bg-[var(--bg-secondary)] border border-[var(--border-color)] rounded-lg p-0.5 text-[10px] font-bold shrink-0">
+                      <button
+                        type="button"
+                        onClick={() => setOnlyShowSupported(true)}
+                        className={`px-2 py-0.5 rounded transition cursor-pointer ${
+                          effectiveOnlySupported 
+                            ? 'bg-[var(--info-color)] text-white shadow-2xs font-extrabold' 
+                            : 'text-[var(--text-tertiary)] hover:text-[var(--text-primary)]'
+                        }`}
+                        title={`仅显示 ${deviceProfile?.shortName || '本机'} 出厂与硬件官方适配支持的轴体`}
+                      >
+                        本机专属支持 ({supportedAxes.length}款)
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => setOnlyShowSupported(false)}
+                        className={`px-2 py-0.5 rounded transition cursor-pointer ${
+                          !effectiveOnlySupported 
+                            ? 'bg-[var(--info-color)] text-white shadow-2xs font-extrabold' 
+                            : 'text-[var(--text-tertiary)] hover:text-[var(--text-primary)]'
+                        }`}
+                        title="放开限制查看全部已鉴权的 220+ 款官方真实磁轴库"
+                      >
+                        全量官方库 ({authenticatedAxes.length}款)
+                      </button>
+                    </div>
+                  )
                 )}
               </div>
 

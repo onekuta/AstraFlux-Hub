@@ -4542,8 +4542,31 @@ export default function App() {
                   recommendedAP: Number(sw.recommendedAP || (safeTravel > 3.0 ? 0.35 : 0.30)),
                   minActuationPoint: Number(sw.minActuationPoint || 0.05),
                 };
+
+                // 严苛库存隔离拦截保护
+                if (deviceProfile?.isolateSwitches && Array.isArray(deviceProfile.supportedSwitches)) {
+                  const isAllowed = deviceProfile.supportedSwitches.some((name) => {
+                    const cleanName = name.toLowerCase().replace(/\s+/g, '');
+                    const targetName = (sw.name || '').toLowerCase().replace(/\s+/g, '');
+                    const targetShort = (sw.shortName || '').toLowerCase().replace(/\s+/g, '');
+                    return cleanName === targetName || cleanName === targetShort || targetName.includes(cleanName) || cleanName.includes(targetName);
+                  });
+                  if (!isAllowed) {
+                    addToast({
+                      message: `【${deviceProfile.shortName || deviceProfile.model}】硬件出厂不支持【${sw.name}】，已阻止写入！`,
+                      type: 'warning',
+                    });
+                    return;
+                  }
+                }
+
                 setCurrentAxis(normalized);
-                axisService.applyAxisToKeyboard(normalized);
+                try {
+                  await axisService.applyAxisToKeyboard(normalized, deviceProfile);
+                } catch (err) {
+                  addToast({ message: err.message, type: 'error' });
+                  return;
+                }
                 if (actuationPoint > safeTravel) setActuationPoint(safeTravel);
 
                 const targetKeys = selectedKeys.size > 0 ? [...selectedKeys] : VISUAL_KEY_ORDER.map((k) => k.id);

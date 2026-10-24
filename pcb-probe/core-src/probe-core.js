@@ -790,6 +790,8 @@ export class SparkLinkPcbProbeEngine {
     result.axisAndCalibration = {
       defaultAxis: defaultAxisObj,
       boardAxisSkuList,
+      supportedSwitches: boardAxisSkuList.map((s) => s.name).filter(Boolean),
+      isolateSwitches: true,
       rawBoardAxisIds: boardAxisIds,
       hallCalibrationSupported: true,
     };
@@ -935,6 +937,8 @@ export class SparkLinkPcbProbeEngine {
       defaultPollingRate: maxRate,
       minActuationPoint: 0.001,
       defaultAxis: defaultAxisObj?.name || '板载出厂磁轴',
+      supportedSwitches: boardAxisSkuList.map((s) => s.name).filter(Boolean),
+      isolateSwitches: true,
       features: {
         magneticAxis: true,
         rtSupport: true,

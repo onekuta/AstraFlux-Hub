@@ -1,1531 +1,1077 @@
 [
   {
-    "type_id": 831,
+    "type_id": 1,
     "type_name": "江湾",
-    "type_name_en": "JIANGWAN",
-    "type_sort": -1,
+    "brand_en": "Everglide",
     "list": [
       {
         "axis_id": 1219,
         "axis_name": "库里南轴",
-        "axis_range_max": 3600,
-        "magnetic_flux": 550,
-        "axis_color": "#eaeaea",
-        "image_url": "#",
-        "brand": "Jiang Wan",
-        "type_id": 831,
-        "type_name": "江湾",
-        "type_name_en": "JIANGWAN",
-        "type_sort": -1,
+        "axis_color": "#4dd1f9",
+        "image_url": "https://img.sparklinkplayjoy.com/axis/cullinan.png",
         "aixsDetail": [
           {
             "axis_id": 19504,
             "axis_range_max": 3600,
-            "axis_coefficient": 19456
+            "axis_range_min": 0,
+            "axis_coefficient": 20000
           }
         ]
       }
     ]
   },
   {
-    "type_id": 830,
+    "type_id": 2,
     "type_name": "佳达隆",
-    "type_name_en": "GATERON",
-    "type_sort": 0,
+    "brand_en": "Gateron",
     "list": [
       {
-        "axis_id": 257,
+        "axis_id": 200,
         "axis_name": "磁玉轴",
-        "axis_range_max": 3430,
-        "magnetic_flux": 451,
-        "axis_color": "#dbfdcd",
+        "axis_color": "#4dd1f9",
         "image_url": "#",
-        "brand": "GATERON",
-        "type_id": 830,
-        "type_name": "佳达隆",
-        "type_name_en": "GATERON",
-        "type_sort": 0,
         "aixsDetail": [
           {
-            "axis_id": 4112,
-            "axis_range_max": 3430,
-            "axis_coefficient": 22800
-          }
-        ]
-      },
-      {
-        "axis_id": 258,
-        "axis_name": "磁玉Pro",
-        "axis_range_max": 3300,
-        "magnetic_flux": 458,
-        "axis_color": "#adfb8c",
-        "image_url": "#",
-        "brand": "GATERON",
-        "type_id": 830,
-        "type_name": "佳达隆",
-        "type_name_en": "GATERON",
-        "type_sort": 0,
-        "aixsDetail": [
-          {
-            "axis_id": 4128,
-            "axis_range_max": 3390,
-            "axis_coefficient": 20000
-          }
-        ]
-      },
-      {
-        "axis_id": 259,
-        "axis_name": "磁玉Gaming",
-        "axis_range_max": 3400,
-        "magnetic_flux": 470,
-        "axis_color": "#69ff51",
-        "image_url": "#",
-        "brand": "GATERON",
-        "type_id": 830,
-        "type_name": "佳达隆",
-        "type_name_en": "GATERON",
-        "type_sort": 0,
-        "aixsDetail": [
-          {
-            "axis_id": 4144,
-            "axis_range_max": 3400,
-            "axis_coefficient": 19000
-          }
-        ]
-      },
-      {
-        "axis_id": 260,
-        "axis_name": "磁玉Air",
-        "axis_range_max": 3430,
-        "magnetic_flux": 477,
-        "axis_color": "#f0f6bb",
-        "image_url": "#",
-        "brand": "GATERON",
-        "type_id": 830,
-        "type_name": "佳达隆",
-        "type_name_en": "GATERON",
-        "type_sort": 0,
-        "aixsDetail": [
-          {
-            "axis_id": 4160,
-            "axis_range_max": 3430,
-            "axis_coefficient": 19600
-          }
-        ]
-      },
-      {
-        "axis_id": 261,
-        "axis_name": "玉京子轴",
-        "axis_range_max": 3420,
-        "magnetic_flux": 461,
-        "axis_color": "#ff3f3f",
-        "image_url": "#",
-        "brand": "GATERON",
-        "type_id": 830,
-        "type_name": "佳达隆",
-        "type_name_en": "GATERON",
-        "type_sort": 0,
-        "aixsDetail": [
-          {
-            "axis_id": 4176,
-            "axis_range_max": 3420,
-            "axis_coefficient": 20350
-          }
-        ]
-      },
-      {
-        "axis_id": 262,
-        "axis_name": "绿龙轴",
-        "axis_range_max": 3300,
-        "magnetic_flux": 467,
-        "axis_color": "#a8ff47",
-        "image_url": "#",
-        "brand": "GATERON",
-        "type_id": 830,
-        "type_name": "佳达隆",
-        "type_name_en": "GATERON",
-        "type_sort": 0,
-        "aixsDetail": [
-          {
-            "axis_id": 4192,
-            "axis_range_max": 3350,
-            "axis_coefficient": 21300
-          }
-        ]
-      },
-      {
-        "axis_id": 263,
-        "axis_name": "阿波罗轴",
-        "axis_range_max": 3130,
-        "magnetic_flux": 403,
-        "axis_color": "#ffe919",
-        "image_url": "#",
-        "brand": "GATERON",
-        "type_id": 830,
-        "type_name": "佳达隆",
-        "type_name_en": "GATERON",
-        "type_sort": 0,
-        "aixsDetail": [
-          {
-            "axis_id": 4208,
-            "axis_range_max": 3130,
-            "axis_coefficient": 24500
-          }
-        ]
-      },
-      {
-        "axis_id": 264,
-        "axis_name": "磁玉Max",
-        "axis_range_max": 3410,
-        "magnetic_flux": 471,
-        "axis_color": "#f9e892",
-        "image_url": "#",
-        "brand": "GATERON",
-        "type_id": 830,
-        "type_name": "佳达隆",
-        "type_name_en": "GATERON",
-        "type_sort": 0,
-        "aixsDetail": [
-          {
-            "axis_id": 4224,
-            "axis_range_max": 3410,
-            "axis_coefficient": 19500
-          }
-        ]
-      },
-      {
-        "axis_id": 266,
-        "axis_name": "花火轴",
-        "axis_range_max": 3150,
-        "magnetic_flux": 378,
-        "axis_color": "#ffa70e",
-        "image_url": "#",
-        "brand": "GATERON",
-        "type_id": 830,
-        "type_name": "佳达隆",
-        "type_name_en": "GATERON",
-        "type_sort": 0,
-        "aixsDetail": [
-          {
-            "axis_id": 4256,
-            "axis_range_max": 3150,
-            "axis_coefficient": 26800
-          }
-        ]
-      },
-      {
-        "axis_id": 265,
-        "axis_name": "磁玉Pom",
-        "axis_range_max": 3300,
-        "magnetic_flux": 480,
-        "axis_color": "#defccb",
-        "image_url": "#",
-        "brand": "GATERON",
-        "type_id": 830,
-        "type_name": "佳达隆",
-        "type_name_en": "GATERON",
-        "type_sort": 0,
-        "aixsDetail": [
-          {
-            "axis_id": 4240,
-            "axis_range_max": 3300,
-            "axis_coefficient": 20480
-          }
-        ]
-      },
-      {
-        "axis_id": 267,
-        "axis_name": "紫龙轴",
-        "axis_range_max": 3335,
-        "magnetic_flux": 450,
-        "axis_color": "#8174f8",
-        "image_url": "#",
-        "brand": "GATERON",
-        "type_id": 830,
-        "type_name": "佳达隆",
-        "type_name_en": "GATERON",
-        "type_sort": 0,
-        "aixsDetail": [
-          {
-            "axis_id": 4272,
-            "axis_range_max": 3335,
-            "axis_coefficient": 20300
-          }
-        ]
-      },
-      {
-        "axis_id": 268,
-        "axis_name": "赤龙轴(自润)",
-        "axis_range_max": 3380,
-        "magnetic_flux": 442,
-        "axis_color": "#ff4141",
-        "image_url": "#",
-        "brand": "GATERON",
-        "type_id": 830,
-        "type_name": "佳达隆",
-        "type_name_en": "GATERON",
-        "type_sort": 0,
-        "aixsDetail": [
-          {
-            "axis_id": 4288,
-            "axis_range_max": 3380,
-            "axis_coefficient": 20044
-          }
-        ]
-      },
-      {
-        "axis_id": 269,
-        "axis_name": "星轨磁轴",
-        "axis_range_max": 3945,
-        "magnetic_flux": 395,
-        "axis_color": "#0099ff",
-        "image_url": "#",
-        "brand": "GATERON",
-        "type_id": 830,
-        "type_name": "佳达隆",
-        "type_name_en": "GATERON",
-        "type_sort": 0,
-        "aixsDetail": [
-          {
-            "axis_id": 4304,
-            "axis_range_max": 3945,
-            "axis_coefficient": 15000
-          }
-        ]
-      },
-      {
-        "axis_id": 270,
-        "axis_name": "金龙轴",
-        "axis_range_max": 3340,
-        "magnetic_flux": 445,
-        "axis_color": "#fcca74",
-        "image_url": "#",
-        "brand": "GATERON",
-        "type_id": 830,
-        "type_name": "佳达隆",
-        "type_name_en": "GATERON",
-        "type_sort": 0,
-        "aixsDetail": [
-          {
-            "axis_id": 4320,
-            "axis_range_max": 3340,
-            "axis_coefficient": 21600
-          }
-        ]
-      },
-      {
-        "axis_id": 271,
-        "axis_name": "封底雪刀轴",
-        "axis_range_max": 3430,
-        "magnetic_flux": 458,
-        "axis_color": "#d9d9d9",
-        "image_url": "#",
-        "brand": "GATERON",
-        "type_id": 830,
-        "type_name": "佳达隆",
-        "type_name_en": "GATERON",
-        "type_sort": 0,
-        "aixsDetail": [
-          {
-            "axis_id": 4336,
-            "axis_range_max": 3430,
-            "axis_coefficient": 22250
-          }
-        ]
-      },
-      {
-        "axis_id": 272,
-        "axis_name": "麒麟轴",
-        "axis_range_max": 3440,
-        "magnetic_flux": 410,
-        "axis_color": "",
-        "image_url": "#",
-        "brand": "GATERON",
-        "type_id": 830,
-        "type_name": "佳达隆",
-        "type_name_en": "GATERON",
-        "type_sort": 0,
-        "aixsDetail": [
-          {
-            "axis_id": 4352,
-            "axis_range_max": 3440,
-            "axis_coefficient": 19100
-          }
-        ]
-      },
-      {
-        "axis_id": 273,
-        "axis_name": "樱花轴",
-        "axis_range_max": 3390,
-        "magnetic_flux": 458,
-        "axis_color": "#f4abff",
-        "image_url": "#",
-        "brand": "GATERON",
-        "type_id": 830,
-        "type_name": "佳达隆",
-        "type_name_en": "GATERON",
-        "type_sort": 0,
-        "aixsDetail": [
-          {
-            "axis_id": 4368,
-            "axis_range_max": 3390,
-            "axis_coefficient": 22000
-          }
-        ]
-      },
-      {
-        "axis_id": 274,
-        "axis_name": "灰玉轴Pro",
-        "axis_range_max": 3385,
-        "magnetic_flux": 435,
-        "axis_color": "#e9fcc9",
-        "image_url": "#",
-        "brand": "GATERON",
-        "type_id": 830,
-        "type_name": "佳达隆",
-        "type_name_en": "GATERON",
-        "type_sort": 0,
-        "aixsDetail": [
-          {
-            "axis_id": 4384,
-            "axis_range_max": 3385,
-            "axis_coefficient": 23300
-          }
-        ]
-      },
-      {
-        "axis_id": 275,
-        "axis_name": "玄武轴(全润)",
-        "axis_range_max": 3365,
-        "magnetic_flux": 455,
-        "axis_color": "#4dfb32",
-        "image_url": "#",
-        "brand": "GATERON",
-        "type_id": 830,
-        "type_name": "佳达隆",
-        "type_name_en": "GATERON",
-        "type_sort": 0,
-        "aixsDetail": [
-          {
-            "axis_id": 4400,
-            "axis_range_max": 3365,
-            "axis_coefficient": 20800
-          }
-        ]
-      },
-      {
-        "axis_id": 276,
-        "axis_name": "双轨磁白轴",
-        "axis_range_max": 4015,
-        "magnetic_flux": 495,
-        "axis_color": "#fff3f3",
-        "image_url": "#",
-        "brand": "GATERON",
-        "type_id": 830,
-        "type_name": "佳达隆",
-        "type_name_en": "GATERON",
-        "type_sort": 0,
-        "aixsDetail": [
-          {
-            "axis_id": 4416,
-            "axis_range_max": 4015,
-            "axis_coefficient": 13300
-          }
-        ]
-      },
-      {
-        "axis_id": 277,
-        "axis_name": "双轨磁橙轴",
-        "axis_range_max": 4005,
-        "magnetic_flux": 412,
-        "axis_color": "#fccb68",
-        "image_url": "#",
-        "brand": "GATERON",
-        "type_id": 830,
-        "type_name": "佳达隆",
-        "type_name_en": "GATERON",
-        "type_sort": 0,
-        "aixsDetail": [
-          {
-            "axis_id": 4432,
-            "axis_range_max": 4005,
-            "axis_coefficient": 15200
-          }
-        ]
-      },
-      {
-        "axis_id": 279,
-        "axis_name": "磁黄轴",
-        "axis_range_max": 3970,
-        "magnetic_flux": 535,
-        "axis_color": "#fff06f",
-        "image_url": "#",
-        "brand": "GATERON",
-        "type_id": 830,
-        "type_name": "佳达隆",
-        "type_name_en": "GATERON",
-        "type_sort": 0,
-        "aixsDetail": [
-          {
-            "axis_id": 4464,
-            "axis_range_max": 3970,
-            "axis_coefficient": 15300
-          }
-        ]
-      },
-      {
-        "axis_id": 280,
-        "axis_name": "磁黑轴",
-        "axis_range_max": 3400,
-        "magnetic_flux": 440,
-        "axis_color": "#c1bfbf",
-        "image_url": "#",
-        "brand": "GATERON",
-        "type_id": 830,
-        "type_name": "佳达隆",
-        "type_name_en": "GATERON",
-        "type_sort": 0,
-        "aixsDetail": [
-          {
-            "axis_id": 4480,
-            "axis_range_max": 3400,
-            "axis_coefficient": 17600
-          }
-        ]
-      },
-      {
-        "axis_id": 281,
-        "axis_name": "磁橙轴",
-        "axis_range_max": 3935,
-        "magnetic_flux": 510,
-        "axis_color": "#ffc527",
-        "image_url": "#",
-        "brand": "GATERON",
-        "type_id": 830,
-        "type_name": "佳达隆",
-        "type_name_en": "GATERON",
-        "type_sort": 0,
-        "aixsDetail": [
-          {
-            "axis_id": 4496,
-            "axis_range_max": 3935,
-            "axis_coefficient": 19700
-          }
-        ]
-      },
-      {
-        "axis_id": 282,
-        "axis_name": "磁绿轴",
-        "axis_range_max": 3895,
-        "magnetic_flux": 505,
-        "axis_color": "#75ff30",
-        "image_url": "#",
-        "brand": "GATERON",
-        "type_id": 830,
-        "type_name": "佳达隆",
-        "type_name_en": "GATERON",
-        "type_sort": 0,
-        "aixsDetail": [
-          {
-            "axis_id": 4512,
-            "axis_range_max": 3895,
-            "axis_coefficient": 17200
-          }
-        ]
-      },
-      {
-        "axis_id": 283,
-        "axis_name": "悟静轴",
-        "axis_range_max": 3615,
-        "magnetic_flux": 475,
-        "axis_color": "#f1f888",
-        "image_url": "#",
-        "brand": "GATERON",
-        "type_id": 830,
-        "type_name": "佳达隆",
-        "type_name_en": "GATERON",
-        "type_sort": 0,
-        "aixsDetail": [
-          {
-            "axis_id": 4528,
-            "axis_range_max": 3615,
-            "axis_coefficient": 16800
-          }
-        ]
-      },
-      {
-        "axis_id": 284,
-        "axis_name": "粉磁玉轴Pro",
-        "axis_range_max": 3415,
-        "magnetic_flux": 430,
-        "axis_color": "#f4bdff",
-        "image_url": "#",
-        "brand": "GATERON",
-        "type_id": 830,
-        "type_name": "佳达隆",
-        "type_name_en": "GATERON",
-        "type_sort": 0,
-        "aixsDetail": [
-          {
-            "axis_id": 4544,
-            "axis_range_max": 3415,
-            "axis_coefficient": 23000
-          }
-        ]
-      },
-      {
-        "axis_id": 285,
-        "axis_name": "粉玉轴",
-        "axis_range_max": 3355,
-        "magnetic_flux": 415,
-        "axis_color": "#f85ed9",
-        "image_url": "#",
-        "brand": "GATERON",
-        "type_id": 830,
-        "type_name": "佳达隆",
-        "type_name_en": "GATERON",
-        "type_sort": 0,
-        "aixsDetail": [
-          {
-            "axis_id": 4560,
-            "axis_range_max": 3355,
-            "axis_coefficient": 21300
-          }
-        ]
-      },
-      {
-        "axis_id": 287,
-        "axis_name": "翠玉轴",
-        "axis_range_max": 3355,
-        "magnetic_flux": 418,
-        "axis_color": "#4bff09",
-        "image_url": "#",
-        "brand": "GATERON",
-        "type_id": 830,
-        "type_name": "佳达隆",
-        "type_name_en": "GATERON",
-        "type_sort": 0,
-        "aixsDetail": [
-          {
-            "axis_id": 4592,
-            "axis_range_max": 3355,
-            "axis_coefficient": 22200
-          }
-        ]
-      },
-      {
-        "axis_id": 288,
-        "axis_name": "玉刃轴",
-        "axis_range_max": 3475,
-        "magnetic_flux": 450,
-        "axis_color": "",
-        "image_url": "#",
-        "brand": "GATERON",
-        "type_id": 830,
-        "type_name": "佳达隆",
-        "type_name_en": "GATERON",
-        "type_sort": 0,
-        "aixsDetail": [
-          {
-            "axis_id": 4608,
-            "axis_range_max": 3475,
-            "axis_coefficient": 22200
-          }
-        ]
-      }
-    ]
-  },
-  {
-    "type_id": 832,
-    "type_name": "正牌科电",
-    "type_name_en": "TTC",
-    "type_sort": 0,
-    "list": [
-      {
-        "axis_id": 513,
-        "axis_name": "万磁王",
-        "axis_range_max": 3300,
-        "magnetic_flux": 474,
-        "axis_color": "#fb4848",
-        "image_url": "#",
-        "brand": "TTC",
-        "type_id": 832,
-        "type_name": "正牌科电",
-        "type_name_en": "TTC",
-        "type_sort": 0,
-        "aixsDetail": [
-          {
-            "axis_id": 8208,
-            "axis_range_max": 3420,
-            "axis_coefficient": 20500
-          }
-        ]
-      },
-      {
-        "axis_id": 514,
-        "axis_name": "万磁王RGB",
-        "axis_range_max": 3300,
-        "magnetic_flux": 473,
-        "axis_color": "#ff2121",
-        "image_url": "#",
-        "brand": "TTC",
-        "type_id": 832,
-        "type_name": "正牌科电",
-        "type_name_en": "TTC",
-        "type_sort": 0,
-        "aixsDetail": [
-          {
-            "axis_id": 8224,
-            "axis_range_max": 3390,
-            "axis_coefficient": 20100
-          }
-        ]
-      },
-      {
-        "axis_id": 515,
-        "axis_name": "Pom万磁王",
-        "axis_range_max": 3400,
-        "magnetic_flux": 476,
-        "axis_color": "#e3dcff",
-        "image_url": "#",
-        "brand": "TTC",
-        "type_id": 832,
-        "type_name": "正牌科电",
-        "type_name_en": "TTC",
-        "type_sort": 0,
-        "aixsDetail": [
-          {
-            "axis_id": 8240,
-            "axis_range_max": 3390,
-            "axis_coefficient": 21400
-          }
-        ]
-      },
-      {
-        "axis_id": 516,
-        "axis_name": "青蛇轴",
-        "axis_range_max": 3400,
-        "magnetic_flux": 471,
-        "axis_color": "#69ff1f",
-        "image_url": "#",
-        "brand": "TTC",
-        "type_id": 832,
-        "type_name": "正牌科电",
-        "type_name_en": "TTC",
-        "type_sort": 0,
-        "aixsDetail": [
-          {
-            "axis_id": 8256,
-            "axis_range_max": 3420,
-            "axis_coefficient": 20600
-          }
-        ]
-      },
-      {
-        "axis_id": 517,
-        "axis_name": "白蛇轴",
-        "axis_range_max": 3300,
-        "magnetic_flux": 457,
-        "axis_color": "#e8e8e8",
-        "image_url": "#",
-        "brand": "TTC",
-        "type_id": 832,
-        "type_name": "正牌科电",
-        "type_name_en": "TTC",
-        "type_sort": 0,
-        "aixsDetail": [
-          {
-            "axis_id": 8272,
-            "axis_range_max": 3410,
-            "axis_coefficient": 20800
-          }
-        ]
-      },
-      {
-        "axis_id": 518,
-        "axis_name": "爱心万磁王",
-        "axis_range_max": 3400,
-        "magnetic_flux": 461,
-        "axis_color": "#f8d4e0",
-        "image_url": "#",
-        "brand": "TTC",
-        "type_id": 832,
-        "type_name": "正牌科电",
-        "type_name_en": "TTC",
-        "type_sort": 0,
-        "aixsDetail": [
-          {
-            "axis_id": 8288,
-            "axis_range_max": 3390,
-            "axis_coefficient": 20500
-          }
-        ]
-      },
-      {
-        "axis_id": 519,
-        "axis_name": "紫心万磁王",
-        "axis_range_max": 3420,
-        "magnetic_flux": 462,
-        "axis_color": "#6f43fd",
-        "image_url": "#",
-        "brand": "TTC",
-        "type_id": 832,
-        "type_name": "正牌科电",
-        "type_name_en": "TTC",
-        "type_sort": 0,
-        "aixsDetail": [
-          {
-            "axis_id": 8304,
-            "axis_range_max": 3420,
-            "axis_coefficient": 21000
-          }
-        ]
-      },
-      {
-        "axis_id": 520,
-        "axis_name": "圣心万磁王",
-        "axis_range_max": 3450,
-        "magnetic_flux": 470,
-        "axis_color": "#fffafa",
-        "image_url": "#",
-        "brand": "TTC",
-        "type_id": 832,
-        "type_name": "正牌科电",
-        "type_name_en": "TTC",
-        "type_sort": 0,
-        "aixsDetail": [
-          {
-            "axis_id": 8320,
-            "axis_range_max": 3450,
-            "axis_coefficient": 19800
-          }
-        ]
-      },
-      {
-        "axis_id": 521,
-        "axis_name": "太阳神轴",
-        "axis_range_max": 3420,
-        "magnetic_flux": 471,
-        "axis_color": "#ff8000",
-        "image_url": "#",
-        "brand": "TTC",
-        "type_id": 832,
-        "type_name": "正牌科电",
-        "type_name_en": "TTC",
-        "type_sort": 0,
-        "aixsDetail": [
-          {
-            "axis_id": 8336,
-            "axis_range_max": 3420,
-            "axis_coefficient": 21000
-          }
-        ]
-      },
-      {
-        "axis_id": 522,
-        "axis_name": "天王轴",
-        "axis_range_max": 3460,
-        "magnetic_flux": 482,
-        "axis_color": "#60daff",
-        "image_url": "#",
-        "brand": "TTC",
-        "type_id": 832,
-        "type_name": "正牌科电",
-        "type_name_en": "TTC",
-        "type_sort": 0,
-        "aixsDetail": [
-          {
-            "axis_id": 8352,
-            "axis_range_max": 3460,
-            "axis_coefficient": 20900
-          }
-        ]
-      },
-      {
-        "axis_id": 523,
-        "axis_name": "天王轴电竞",
-        "axis_range_max": 3300,
-        "magnetic_flux": 483,
-        "axis_color": "#f9a748",
-        "image_url": "#",
-        "brand": "TTC",
-        "type_id": 832,
-        "type_name": "正牌科电",
-        "type_name_en": "TTC",
-        "type_sort": 0,
-        "aixsDetail": [
-          {
-            "axis_id": 8368,
-            "axis_range_max": 3450,
-            "axis_coefficient": 20100
-          }
-        ]
-      },
-      {
-        "axis_id": 524,
-        "axis_name": "天王SE",
-        "axis_range_max": 3440,
-        "magnetic_flux": 465,
-        "axis_color": "#e8fff4",
-        "image_url": "#",
-        "brand": "TTC",
-        "type_id": 832,
-        "type_name": "正牌科电",
-        "type_name_en": "TTC",
-        "type_sort": 0,
-        "aixsDetail": [
-          {
-            "axis_id": 8384,
-            "axis_range_max": 3440,
-            "axis_coefficient": 18352
-          }
-        ]
-      },
-      {
-        "axis_id": 525,
-        "axis_name": "兵王轴",
-        "axis_range_max": 3480,
-        "magnetic_flux": 484,
-        "axis_color": "#af7c05",
-        "image_url": "#",
-        "brand": "TTC",
-        "type_id": 832,
-        "type_name": "正牌科电",
-        "type_name_en": "TTC",
-        "type_sort": 0,
-        "aixsDetail": [
-          {
-            "axis_id": 8400,
+            "axis_id": 3200,
             "axis_range_max": 3480,
-            "axis_coefficient": 20500
-          }
-        ]
-      },
-      {
-        "axis_id": 526,
-        "axis_name": "兵王轴Pro",
-        "axis_range_max": 3440,
-        "magnetic_flux": 453,
-        "axis_color": "#ffdf5d",
-        "image_url": "#",
-        "brand": "TTC",
-        "type_id": 832,
-        "type_name": "正牌科电",
-        "type_name_en": "TTC",
-        "type_sort": 0,
-        "aixsDetail": [
-          {
-            "axis_id": 8416,
-            "axis_range_max": 3440,
-            "axis_coefficient": 21000
-          }
-        ]
-      },
-      {
-        "axis_id": 527,
-        "axis_name": "凌雪轴",
-        "axis_range_max": 3510,
-        "magnetic_flux": 471,
-        "axis_color": "#28f0ff",
-        "image_url": "#",
-        "brand": "TTC",
-        "type_id": 832,
-        "type_name": "正牌科电",
-        "type_name_en": "TTC",
-        "type_sort": 0,
-        "aixsDetail": [
-          {
-            "axis_id": 8432,
-            "axis_range_max": 3510,
+            "axis_range_min": 0,
             "axis_coefficient": 20000
           }
         ]
       },
       {
-        "axis_id": 528,
-        "axis_name": "龙神轴",
-        "axis_range_max": 3470,
-        "magnetic_flux": 466,
-        "axis_color": "#9131fd",
+        "axis_id": 201,
+        "axis_name": "磁白轴",
+        "axis_color": "#4dd1f9",
         "image_url": "#",
-        "brand": "TTC",
-        "type_id": 832,
-        "type_name": "正牌科电",
-        "type_name_en": "TTC",
-        "type_sort": 0,
         "aixsDetail": [
           {
-            "axis_id": 8448,
-            "axis_range_max": 3470,
-            "axis_coefficient": 19100
+            "axis_id": 3216,
+            "axis_range_max": 3390,
+            "axis_range_min": 0,
+            "axis_coefficient": 20000
           }
         ]
       },
       {
-        "axis_id": 529,
-        "axis_name": "精灵王轴",
-        "axis_range_max": 3470,
-        "magnetic_flux": 501,
-        "axis_color": "#6cfff6",
+        "axis_id": 202,
+        "axis_name": "磁玉Gaming",
+        "axis_color": "#4dd1f9",
         "image_url": "#",
-        "brand": "TTC",
-        "type_id": 832,
-        "type_name": "正牌科电",
-        "type_name_en": "TTC",
-        "type_sort": 0,
         "aixsDetail": [
           {
-            "axis_id": 8464,
-            "axis_range_max": 3470,
-            "axis_coefficient": 19500
+            "axis_id": 3232,
+            "axis_range_max": 3440,
+            "axis_range_min": 0,
+            "axis_coefficient": 20000
           }
         ]
       },
       {
-        "axis_id": 530,
-        "axis_name": "太阿磁轴",
-        "axis_range_max": 3470,
-        "magnetic_flux": 456,
-        "axis_color": "#ffb93f",
+        "axis_id": 203,
+        "axis_name": "磁玉Pro",
+        "axis_color": "#4dd1f9",
         "image_url": "#",
-        "brand": "TTC",
-        "type_id": 832,
-        "type_name": "正牌科电",
-        "type_name_en": "TTC",
-        "type_sort": 0,
         "aixsDetail": [
           {
-            "axis_id": 8480,
-            "axis_range_max": 3470,
-            "axis_coefficient": 19700
-          }
-        ]
-      },
-      {
-        "axis_id": 531,
-        "axis_name": "科泰轴",
-        "axis_range_max": 3420,
-        "magnetic_flux": 455,
-        "axis_color": "#f2bc05",
-        "image_url": "#",
-        "brand": "TTC",
-        "type_id": 832,
-        "type_name": "正牌科电",
-        "type_name_en": "TTC",
-        "type_sort": 0,
-        "aixsDetail": [
-          {
-            "axis_id": 8496,
+            "axis_id": 3248,
             "axis_range_max": 3420,
-            "axis_coefficient": 16672
+            "axis_range_min": 0,
+            "axis_coefficient": 20000
+          }
+        ]
+      },
+      {
+        "axis_id": 204,
+        "axis_name": "玉子轴",
+        "axis_color": "#4dd1f9",
+        "image_url": "#",
+        "aixsDetail": [
+          {
+            "axis_id": 3264,
+            "axis_range_max": 3420,
+            "axis_range_min": 0,
+            "axis_coefficient": 20000
+          }
+        ]
+      },
+      {
+        "axis_id": 205,
+        "axis_name": "琉璃轴",
+        "axis_color": "#4dd1f9",
+        "image_url": "#",
+        "aixsDetail": [
+          {
+            "axis_id": 3280,
+            "axis_range_max": 3390,
+            "axis_range_min": 0,
+            "axis_coefficient": 20000
+          }
+        ]
+      },
+      {
+        "axis_id": 206,
+        "axis_name": "阿波罗轴",
+        "axis_color": "#4dd1f9",
+        "image_url": "#",
+        "aixsDetail": [
+          {
+            "axis_id": 3296,
+            "axis_range_max": 3130,
+            "axis_range_min": 0,
+            "axis_coefficient": 20000
+          }
+        ]
+      },
+      {
+        "axis_id": 207,
+        "axis_name": "磁玉Max",
+        "axis_color": "#4dd1f9",
+        "image_url": "#",
+        "aixsDetail": [
+          {
+            "axis_id": 3312,
+            "axis_range_max": 3410,
+            "axis_range_min": 0,
+            "axis_coefficient": 20000
+          }
+        ]
+      },
+      {
+        "axis_id": 208,
+        "axis_name": "花火轴",
+        "axis_color": "#4dd1f9",
+        "image_url": "#",
+        "aixsDetail": [
+          {
+            "axis_id": 3328,
+            "axis_range_max": 3150,
+            "axis_range_min": 0,
+            "axis_coefficient": 20000
+          }
+        ]
+      },
+      {
+        "axis_id": 209,
+        "axis_name": "磁玉Pom",
+        "axis_color": "#4dd1f9",
+        "image_url": "#",
+        "aixsDetail": [
+          {
+            "axis_id": 3344,
+            "axis_range_max": 3300,
+            "axis_range_min": 0,
+            "axis_coefficient": 20000
+          }
+        ]
+      },
+      {
+        "axis_id": 210,
+        "axis_name": "龙发轴",
+        "axis_color": "#4dd1f9",
+        "image_url": "#",
+        "aixsDetail": [
+          {
+            "axis_id": 3360,
+            "axis_range_max": 3335,
+            "axis_range_min": 0,
+            "axis_coefficient": 20000
+          }
+        ]
+      },
+      {
+        "axis_id": 211,
+        "axis_name": "佳达隆双轨磁白轴",
+        "axis_color": "#4dd1f9",
+        "image_url": "#",
+        "aixsDetail": [
+          {
+            "axis_id": 3376,
+            "axis_range_max": 3860,
+            "axis_range_min": 0,
+            "axis_coefficient": 20000
+          }
+        ]
+      },
+      {
+        "axis_id": 212,
+        "axis_name": "磁青轴",
+        "axis_color": "#4dd1f9",
+        "image_url": "#",
+        "aixsDetail": [
+          {
+            "axis_id": 3392,
+            "axis_range_max": 3945,
+            "axis_range_min": 0,
+            "axis_coefficient": 20000
+          }
+        ]
+      },
+      {
+        "axis_id": 213,
+        "axis_name": "金珀轴",
+        "axis_color": "#4dd1f9",
+        "image_url": "#",
+        "aixsDetail": [
+          {
+            "axis_id": 3408,
+            "axis_range_max": 3340,
+            "axis_range_min": 0,
+            "axis_coefficient": 20000
+          }
+        ]
+      },
+      {
+        "axis_id": 214,
+        "axis_name": "婷婷魔王/轴",
+        "axis_color": "#4dd1f9",
+        "image_url": "#",
+        "aixsDetail": [
+          {
+            "axis_id": 3424,
+            "axis_range_max": 3430,
+            "axis_range_min": 0,
+            "axis_coefficient": 20000
+          }
+        ]
+      },
+      {
+        "axis_id": 215,
+        "axis_name": "铜锣烧",
+        "axis_color": "#4dd1f9",
+        "image_url": "#",
+        "aixsDetail": [
+          {
+            "axis_id": 3440,
+            "axis_range_max": 3440,
+            "axis_range_min": 0,
+            "axis_coefficient": 20000
+          }
+        ]
+      },
+      {
+        "axis_id": 216,
+        "axis_name": "可拉轴",
+        "axis_color": "#4dd1f9",
+        "image_url": "#",
+        "aixsDetail": [
+          {
+            "axis_id": 3456,
+            "axis_range_max": 3390,
+            "axis_range_min": 0,
+            "axis_coefficient": 20000
+          }
+        ]
+      },
+      {
+        "axis_id": 217,
+        "axis_name": "灰木磁Pro",
+        "axis_color": "#4dd1f9",
+        "image_url": "#",
+        "aixsDetail": [
+          {
+            "axis_id": 3472,
+            "axis_range_max": 3385,
+            "axis_range_min": 0,
+            "axis_coefficient": 20000
+          }
+        ]
+      },
+      {
+        "axis_id": 218,
+        "axis_name": "双轨磁青轴",
+        "axis_color": "#4dd1f9",
+        "image_url": "#",
+        "aixsDetail": [
+          {
+            "axis_id": 3488,
+            "axis_range_max": 3965,
+            "axis_range_min": 0,
+            "axis_coefficient": 20000
+          }
+        ]
+      },
+      {
+        "axis_id": 219,
+        "axis_name": "双轨磁红轴",
+        "axis_color": "#4dd1f9",
+        "image_url": "#",
+        "aixsDetail": [
+          {
+            "axis_id": 3504,
+            "axis_range_max": 4015,
+            "axis_range_min": 0,
+            "axis_coefficient": 20000
+          }
+        ]
+      },
+      {
+        "axis_id": 220,
+        "axis_name": "双轨磁黄轴",
+        "axis_color": "#4dd1f9",
+        "image_url": "#",
+        "aixsDetail": [
+          {
+            "axis_id": 3520,
+            "axis_range_max": 4005,
+            "axis_range_min": 0,
+            "axis_coefficient": 20000
+          }
+        ]
+      },
+      {
+        "axis_id": 221,
+        "axis_name": "磁黄轴",
+        "axis_color": "#4dd1f9",
+        "image_url": "#",
+        "aixsDetail": [
+          {
+            "axis_id": 3536,
+            "axis_range_max": 3970,
+            "axis_range_min": 0,
+            "axis_coefficient": 20000
+          }
+        ]
+      },
+      {
+        "axis_id": 222,
+        "axis_name": "枫糖轴",
+        "axis_color": "#4dd1f9",
+        "image_url": "#",
+        "aixsDetail": [
+          {
+            "axis_id": 3552,
+            "axis_range_max": 3400,
+            "axis_range_min": 0,
+            "axis_coefficient": 20000
+          }
+        ]
+      },
+      {
+        "axis_id": 223,
+        "axis_name": "甜甜圈",
+        "axis_color": "#4dd1f9",
+        "image_url": "#",
+        "aixsDetail": [
+          {
+            "axis_id": 3568,
+            "axis_range_max": 3985,
+            "axis_range_min": 0,
+            "axis_coefficient": 20000
+          }
+        ]
+      },
+      {
+        "axis_id": 224,
+        "axis_name": "抹茶轴",
+        "axis_color": "#4dd1f9",
+        "image_url": "#",
+        "aixsDetail": [
+          {
+            "axis_id": 3584,
+            "axis_range_max": 3895,
+            "axis_range_min": 0,
+            "axis_coefficient": 20000
+          }
+        ]
+      },
+      {
+        "axis_id": 225,
+        "axis_name": "惰野轴",
+        "axis_color": "#4dd1f9",
+        "image_url": "#",
+        "aixsDetail": [
+          {
+            "axis_id": 3600,
+            "axis_range_max": 3615,
+            "axis_range_min": 0,
+            "axis_coefficient": 20000
+          }
+        ]
+      },
+      {
+        "axis_id": 226,
+        "axis_name": "甜珠玉轴Pro",
+        "axis_color": "#4dd1f9",
+        "image_url": "#",
+        "aixsDetail": [
+          {
+            "axis_id": 3616,
+            "axis_range_max": 3415,
+            "axis_range_min": 0,
+            "axis_coefficient": 20000
+          }
+        ]
+      },
+      {
+        "axis_id": 227,
+        "axis_name": "糯玉轴",
+        "axis_color": "#4dd1f9",
+        "image_url": "#",
+        "aixsDetail": [
+          {
+            "axis_id": 3632,
+            "axis_range_max": 3355,
+            "axis_range_min": 0,
+            "axis_coefficient": 20000
+          }
+        ]
+      },
+      {
+        "axis_id": 228,
+        "axis_name": "翠玉轴",
+        "axis_color": "#4dd1f9",
+        "image_url": "#",
+        "aixsDetail": [
+          {
+            "axis_id": 3648,
+            "axis_range_max": 3355,
+            "axis_range_min": 0,
+            "axis_coefficient": 20000
+          }
+        ]
+      },
+      {
+        "axis_id": 229,
+        "axis_name": "玉刃轴",
+        "axis_color": "#4dd1f9",
+        "image_url": "#",
+        "aixsDetail": [
+          {
+            "axis_id": 3664,
+            "axis_range_max": 3475,
+            "axis_range_min": 0,
+            "axis_coefficient": 20000
           }
         ]
       }
     ]
   },
   {
-    "type_id": 833,
-    "type_name": "其它",
-    "type_name_en": "Other",
-    "type_sort": 0,
+    "type_id": 3,
+    "type_name": "正牌科电",
+    "brand_en": "TTC",
     "list": [
       {
-        "axis_id": 773,
-        "axis_name": "冰皇轴",
-        "axis_range_max": 3300,
-        "magnetic_flux": 543,
-        "axis_color": "#eeeeee",
+        "axis_id": 400,
+        "axis_name": "万磁王",
+        "axis_color": "#4dd1f9",
         "image_url": "#",
-        "brand": "other",
-        "type_id": 833,
-        "type_name": "其它",
-        "type_name_en": "Other",
-        "type_sort": 0,
         "aixsDetail": [
           {
-            "axis_id": 12368,
-            "axis_range_max": 3360,
-            "axis_coefficient": 20500
-          }
-        ]
-      },
-      {
-        "axis_id": 775,
-        "axis_name": "ti轴",
-        "axis_range_max": 3340,
-        "magnetic_flux": 518,
-        "axis_color": "#d9c5b3",
-        "image_url": "#",
-        "brand": "other",
-        "type_id": 833,
-        "type_name": "其它",
-        "type_name_en": "Other",
-        "type_sort": 0,
-        "aixsDetail": [
-          {
-            "axis_id": 12400,
-            "axis_range_max": 3340,
-            "axis_coefficient": 20200
-          }
-        ]
-      },
-      {
-        "axis_id": 776,
-        "axis_name": "登神Pro",
-        "axis_range_max": 3360,
-        "magnetic_flux": 510,
-        "axis_color": "#caa1ff",
-        "image_url": "#",
-        "brand": "other",
-        "type_id": 833,
-        "type_name": "其它",
-        "type_name_en": "Other",
-        "type_sort": 0,
-        "aixsDetail": [
-          {
-            "axis_id": 12416,
-            "axis_range_max": 3360,
-            "axis_coefficient": 21300
-          }
-        ]
-      },
-      {
-        "axis_id": 777,
-        "axis_name": "UR冰磁轴",
-        "axis_range_max": 3310,
-        "magnetic_flux": 486,
-        "axis_color": "#ffd9d9",
-        "image_url": "#",
-        "brand": "other",
-        "type_id": 833,
-        "type_name": "其它",
-        "type_name_en": "Other",
-        "type_sort": 0,
-        "aixsDetail": [
-          {
-            "axis_id": 12432,
-            "axis_range_max": 3310,
-            "axis_coefficient": 20500
-          }
-        ]
-      },
-      {
-        "axis_id": 778,
-        "axis_name": "锦鲤轴",
-        "axis_range_max": 3340,
-        "magnetic_flux": 515,
-        "axis_color": "#fcadad",
-        "image_url": "#",
-        "brand": "other",
-        "type_id": 833,
-        "type_name": "其它",
-        "type_name_en": "Other",
-        "type_sort": 0,
-        "aixsDetail": [
-          {
-            "axis_id": 12448,
-            "axis_range_max": 3340,
-            "axis_coefficient": 21500
-          }
-        ]
-      },
-      {
-        "axis_id": 779,
-        "axis_name": "悟空轴",
-        "axis_range_max": 3390,
-        "magnetic_flux": 491,
-        "axis_color": "#ebebeb",
-        "image_url": "#",
-        "brand": "other",
-        "type_id": 833,
-        "type_name": "其它",
-        "type_name_en": "Other",
-        "type_sort": 0,
-        "aixsDetail": [
-          {
-            "axis_id": 12464,
-            "axis_range_max": 3390,
-            "axis_coefficient": 20100
-          }
-        ]
-      },
-      {
-        "axis_id": 782,
-        "axis_name": "粉皇轴",
-        "axis_range_max": 3450,
-        "magnetic_flux": 484,
-        "axis_color": "#ffe043",
-        "image_url": "#",
-        "brand": "other",
-        "type_id": 833,
-        "type_name": "其它",
-        "type_name_en": "Other",
-        "type_sort": 0,
-        "aixsDetail": [
-          {
-            "axis_id": 12512,
-            "axis_range_max": 3450,
-            "axis_coefficient": 21600
-          }
-        ]
-      },
-      {
-        "axis_id": 785,
-        "axis_name": "形意轴",
-        "axis_range_max": 3380,
-        "magnetic_flux": 488,
-        "axis_color": "#dddddd",
-        "image_url": "#",
-        "brand": "other",
-        "type_id": 833,
-        "type_name": "其它",
-        "type_name_en": "Other",
-        "type_sort": 0,
-        "aixsDetail": [
-          {
-            "axis_id": 12560,
-            "axis_range_max": 3380,
+            "axis_id": 6400,
+            "axis_range_max": 3420,
+            "axis_range_min": 0,
             "axis_coefficient": 20000
           }
         ]
       },
       {
-        "axis_id": 788,
-        "axis_name": "天际线轴",
-        "axis_range_max": 3550,
-        "magnetic_flux": 502,
-        "axis_color": "#d3e4ff",
+        "axis_id": 401,
+        "axis_name": "万磁王RGB",
+        "axis_color": "#4dd1f9",
         "image_url": "#",
-        "brand": "other",
-        "type_id": 833,
-        "type_name": "其它",
-        "type_name_en": "Other",
-        "type_sort": 0,
+        "aixsDetail": [
+          {
+            "axis_id": 6416,
+            "axis_range_max": 3390,
+            "axis_range_min": 0,
+            "axis_coefficient": 20000
+          }
+        ]
+      },
+      {
+        "axis_id": 402,
+        "axis_name": "烈焰红",
+        "axis_color": "#4dd1f9",
+        "image_url": "#",
+        "aixsDetail": [
+          {
+            "axis_id": 6432,
+            "axis_range_max": 3390,
+            "axis_range_min": 0,
+            "axis_coefficient": 20000
+          }
+        ]
+      },
+      {
+        "axis_id": 403,
+        "axis_name": "神马轴",
+        "axis_color": "#4dd1f9",
+        "image_url": "#",
+        "aixsDetail": [
+          {
+            "axis_id": 6448,
+            "axis_range_max": 3420,
+            "axis_range_min": 0,
+            "axis_coefficient": 20000
+          }
+        ]
+      },
+      {
+        "axis_id": 404,
+        "axis_name": "炽热金",
+        "axis_color": "#4dd1f9",
+        "image_url": "#",
+        "aixsDetail": [
+          {
+            "axis_id": 6464,
+            "axis_range_max": 3440,
+            "axis_range_min": 0,
+            "axis_coefficient": 20000
+          }
+        ]
+      },
+      {
+        "axis_id": 405,
+        "axis_name": "爱心万磁王",
+        "axis_color": "#4dd1f9",
+        "image_url": "#",
+        "aixsDetail": [
+          {
+            "axis_id": 6480,
+            "axis_range_max": 3380,
+            "axis_range_min": 0,
+            "axis_coefficient": 20000
+          }
+        ]
+      },
+      {
+        "axis_id": 406,
+        "axis_name": "寂心万磁王",
+        "axis_color": "#4dd1f9",
+        "image_url": "#",
+        "aixsDetail": [
+          {
+            "axis_id": 6496,
+            "axis_range_max": 3420,
+            "axis_range_min": 0,
+            "axis_coefficient": 20000
+          }
+        ]
+      },
+      {
+        "axis_id": 407,
+        "axis_name": "圣心万磁王",
+        "axis_color": "#4dd1f9",
+        "image_url": "#",
+        "aixsDetail": [
+          {
+            "axis_id": 6512,
+            "axis_range_max": 3450,
+            "axis_range_min": 0,
+            "axis_coefficient": 20000
+          }
+        ]
+      },
+      {
+        "axis_id": 408,
+        "axis_name": "太阳神轴",
+        "axis_color": "#4dd1f9",
+        "image_url": "#",
+        "aixsDetail": [
+          {
+            "axis_id": 6528,
+            "axis_range_max": 3420,
+            "axis_range_min": 0,
+            "axis_coefficient": 20000
+          }
+        ]
+      },
+      {
+        "axis_id": 409,
+        "axis_name": "天王轴",
+        "axis_color": "#4dd1f9",
+        "image_url": "#",
+        "aixsDetail": [
+          {
+            "axis_id": 6544,
+            "axis_range_max": 3460,
+            "axis_range_min": 0,
+            "axis_coefficient": 20000
+          }
+        ]
+      },
+      {
+        "axis_id": 410,
+        "axis_name": "天王轴电竞",
+        "axis_color": "#4dd1f9",
+        "image_url": "#",
+        "aixsDetail": [
+          {
+            "axis_id": 6560,
+            "axis_range_max": 3450,
+            "axis_range_min": 0,
+            "axis_coefficient": 20000
+          }
+        ]
+      },
+      {
+        "axis_id": 411,
+        "axis_name": "天王SE",
+        "axis_color": "#4dd1f9",
+        "image_url": "#",
+        "aixsDetail": [
+          {
+            "axis_id": 6576,
+            "axis_range_max": 3440,
+            "axis_range_min": 0,
+            "axis_coefficient": 20000
+          }
+        ]
+      },
+      {
+        "axis_id": 412,
+        "axis_name": "炎王轴",
+        "axis_color": "#4dd1f9",
+        "image_url": "#",
+        "aixsDetail": [
+          {
+            "axis_id": 6592,
+            "axis_range_max": 3480,
+            "axis_range_min": 0,
+            "axis_coefficient": 20000
+          }
+        ]
+      },
+      {
+        "axis_id": 413,
+        "axis_name": "炎王轴Pro",
+        "axis_color": "#4dd1f9",
+        "image_url": "#",
+        "aixsDetail": [
+          {
+            "axis_id": 6608,
+            "axis_range_max": 3440,
+            "axis_range_min": 0,
+            "axis_coefficient": 20000
+          }
+        ]
+      },
+      {
+        "axis_id": 414,
+        "axis_name": "凌云轴",
+        "axis_color": "#4dd1f9",
+        "image_url": "#",
+        "aixsDetail": [
+          {
+            "axis_id": 6624,
+            "axis_range_max": 3510,
+            "axis_range_min": 0,
+            "axis_coefficient": 20000
+          }
+        ]
+      },
+      {
+        "axis_id": 415,
+        "axis_name": "分神轴",
+        "axis_color": "#4dd1f9",
+        "image_url": "#",
+        "aixsDetail": [
+          {
+            "axis_id": 6640,
+            "axis_range_max": 3470,
+            "axis_range_min": 0,
+            "axis_coefficient": 20000
+          }
+        ]
+      },
+      {
+        "axis_id": 416,
+        "axis_name": "暗黑王轴",
+        "axis_color": "#4dd1f9",
+        "image_url": "#",
+        "aixsDetail": [
+          {
+            "axis_id": 6656,
+            "axis_range_max": 3470,
+            "axis_range_min": 0,
+            "axis_coefficient": 20000
+          }
+        ]
+      },
+      {
+        "axis_id": 417,
+        "axis_name": "太阳炎轴",
+        "axis_color": "#4dd1f9",
+        "image_url": "#",
+        "aixsDetail": [
+          {
+            "axis_id": 6672,
+            "axis_range_max": 3470,
+            "axis_range_min": 0,
+            "axis_coefficient": 20000
+          }
+        ]
+      },
+      {
+        "axis_id": 418,
+        "axis_name": "科索轴",
+        "axis_color": "#4dd1f9",
+        "image_url": "#",
+        "aixsDetail": [
+          {
+            "axis_id": 6688,
+            "axis_range_max": 3420,
+            "axis_range_min": 0,
+            "axis_coefficient": 20000
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "type_id": 4,
+    "type_name": "其它",
+    "brand_en": "Other",
+    "list": [
+      {
+        "axis_id": 600,
+        "axis_name": "冰皇轴",
+        "axis_color": "#4dd1f9",
+        "image_url": "#",
+        "aixsDetail": [
+          {
+            "axis_id": 9600,
+            "axis_range_max": 3350,
+            "axis_range_min": 0,
+            "axis_coefficient": 20000
+          }
+        ]
+      },
+      {
+        "axis_id": 601,
+        "axis_name": "001",
+        "axis_color": "#4dd1f9",
+        "image_url": "#",
+        "aixsDetail": [
+          {
+            "axis_id": 9616,
+            "axis_range_max": 3310,
+            "axis_range_min": 0,
+            "axis_coefficient": 20000
+          }
+        ]
+      },
+      {
+        "axis_id": 602,
+        "axis_name": "琉璃Pro",
+        "axis_color": "#4dd1f9",
+        "image_url": "#",
+        "aixsDetail": [
+          {
+            "axis_id": 9632,
+            "axis_range_max": 3360,
+            "axis_range_min": 0,
+            "axis_coefficient": 20000
+          }
+        ]
+      },
+      {
+        "axis_id": 603,
+        "axis_name": "冰极万磁轴",
+        "axis_color": "#4dd1f9",
+        "image_url": "#",
+        "aixsDetail": [
+          {
+            "axis_id": 9648,
+            "axis_range_max": 3310,
+            "axis_range_min": 0,
+            "axis_coefficient": 20000
+          }
+        ]
+      },
+      {
+        "axis_id": 604,
+        "axis_name": "国度轴",
+        "axis_color": "#4dd1f9",
+        "image_url": "#",
+        "aixsDetail": [
+          {
+            "axis_id": 9664,
+            "axis_range_max": 3310,
+            "axis_range_min": 0,
+            "axis_coefficient": 20000
+          }
+        ]
+      },
+      {
+        "axis_id": 605,
+        "axis_name": "悟空轴",
+        "axis_color": "#4dd1f9",
+        "image_url": "#",
+        "aixsDetail": [
+          {
+            "axis_id": 9680,
+            "axis_range_max": 3380,
+            "axis_range_min": 0,
+            "axis_coefficient": 20000
+          }
+        ]
+      },
+      {
+        "axis_id": 606,
+        "axis_name": "悟空轴(3.45mm)",
+        "axis_color": "#4dd1f9",
+        "image_url": "#",
+        "aixsDetail": [
+          {
+            "axis_id": 9696,
+            "axis_range_max": 3450,
+            "axis_range_min": 0,
+            "axis_coefficient": 20000
+          }
+        ]
+      },
+      {
+        "axis_id": 607,
+        "axis_name": "孤傲轴",
+        "axis_color": "#4dd1f9",
+        "image_url": "#",
+        "aixsDetail": [
+          {
+            "axis_id": 9712,
+            "axis_range_max": 3380,
+            "axis_range_min": 0,
+            "axis_coefficient": 20000
+          }
+        ]
+      },
+      {
+        "axis_id": 608,
+        "axis_name": "天际线轴",
+        "axis_color": "#4dd1f9",
+        "image_url": "#",
         "aixsDetail": [
           {
             "axis_id": 12608,
             "axis_range_max": 3550,
+            "axis_range_min": 0,
             "axis_coefficient": 18600
           }
         ]
       },
       {
-        "axis_id": 791,
+        "axis_id": 609,
         "axis_name": "磁神轴",
-        "axis_range_max": 3470,
-        "magnetic_flux": 476,
-        "axis_color": "#049217",
-        "image_url": "#",
-        "brand": "other",
-        "type_id": 833,
-        "type_name": "其它",
-        "type_name_en": "Other",
-        "type_sort": 0,
-        "aixsDetail": [
-          {
-            "axis_id": 12656,
-            "axis_range_max": 3470,
-            "axis_coefficient": 21000
-          }
-        ]
-      },
-      {
-        "axis_id": 794,
-        "axis_name": "天青轴Pro",
-        "axis_range_max": 3610,
-        "magnetic_flux": 500,
-        "axis_color": "#74e1fd",
-        "image_url": "#",
-        "brand": "other",
-        "type_id": 833,
-        "type_name": "其它",
-        "type_name_en": "Other",
-        "type_sort": 0,
-        "aixsDetail": [
-          {
-            "axis_id": 12704,
-            "axis_range_max": 3610,
-            "axis_coefficient": 18100
-          }
-        ]
-      },
-      {
-        "axis_id": 795,
-        "axis_name": "紫星轴",
-        "axis_range_max": 3550,
-        "magnetic_flux": 447,
-        "axis_color": "#cbadff",
-        "image_url": "#",
-        "brand": "other",
-        "type_id": 833,
-        "type_name": "其它",
-        "type_name_en": "Other",
-        "type_sort": 0,
-        "aixsDetail": [
-          {
-            "axis_id": 12720,
-            "axis_range_max": 3550,
-            "axis_coefficient": 18600
-          }
-        ]
-      },
-      {
-        "axis_id": 796,
-        "axis_name": "赤霄轴",
-        "axis_range_max": 3540,
-        "magnetic_flux": 530,
-        "axis_color": "#fff897",
-        "image_url": "#",
-        "brand": "other",
-        "type_id": 833,
-        "type_name": "其它",
-        "type_name_en": "Other",
-        "type_sort": 0,
-        "aixsDetail": [
-          {
-            "axis_id": 12736,
-            "axis_range_max": 3540,
-            "axis_coefficient": 19900
-          }
-        ]
-      },
-      {
-        "axis_id": 818,
-        "axis_name": "极磁轴Pro+",
-        "axis_range_max": 3650,
-        "magnetic_flux": 510,
-        "axis_color": "#fcc4b5",
-        "image_url": "#",
-        "brand": "other",
-        "type_id": 833,
-        "type_name": "其它",
-        "type_name_en": "Other",
-        "type_sort": 0,
-        "aixsDetail": [
-          {
-            "axis_id": 13088,
-            "axis_range_max": 3650,
-            "axis_coefficient": 17300
-          }
-        ]
-      },
-      {
-        "axis_id": 819,
-        "axis_name": "极磁轴Pro",
-        "axis_range_max": 3585,
-        "magnetic_flux": 505,
-        "axis_color": "#fedada",
-        "image_url": "#",
-        "brand": "other",
-        "type_id": 833,
-        "type_name": "其它",
-        "type_name_en": "Other",
-        "type_sort": 0,
-        "aixsDetail": [
-          {
-            "axis_id": 13104,
-            "axis_range_max": 3585,
-            "axis_coefficient": 18500
-          }
-        ]
-      },
-      {
-        "axis_id": 820,
-        "axis_name": "极磁轴RGB",
-        "axis_range_max": 3580,
-        "magnetic_flux": 510,
-        "axis_color": "#fff6f6",
-        "image_url": "#",
-        "brand": "other",
-        "type_id": 833,
-        "type_name": "其它",
-        "type_name_en": "Other",
-        "type_sort": 0,
-        "aixsDetail": [
-          {
-            "axis_id": 13120,
-            "axis_range_max": 3580,
-            "axis_coefficient": 19000
-          }
-        ]
-      },
-      {
-        "axis_id": 821,
-        "axis_name": "极磁-灼华轴",
-        "axis_range_max": 3645,
-        "magnetic_flux": 490,
-        "axis_color": "#f7d8fe",
-        "image_url": "#",
-        "brand": "other",
-        "type_id": 833,
-        "type_name": "其它",
-        "type_name_en": "Other",
-        "type_sort": 0,
-        "aixsDetail": [
-          {
-            "axis_id": 13136,
-            "axis_range_max": 3645,
-            "axis_coefficient": 16950
-          }
-        ]
-      },
-      {
-        "axis_id": 822,
-        "axis_name": "极磁-混元轴",
-        "axis_range_max": 3655,
-        "magnetic_flux": 500,
-        "axis_color": "#e4e4e4",
-        "image_url": "#",
-        "brand": "other",
-        "type_id": 833,
-        "type_name": "其它",
-        "type_name_en": "Other",
-        "type_sort": 0,
-        "aixsDetail": [
-          {
-            "axis_id": 13152,
-            "axis_range_max": 3655,
-            "axis_coefficient": 19200
-          }
-        ]
-      },
-      {
-        "axis_id": 823,
-        "axis_name": "极磁-墨玉轴",
-        "axis_range_max": 3605,
-        "magnetic_flux": 503,
-        "axis_color": "#d3f89c",
-        "image_url": "#",
-        "brand": "other",
-        "type_id": 833,
-        "type_name": "其它",
-        "type_name_en": "Other",
-        "type_sort": 0,
-        "aixsDetail": [
-          {
-            "axis_id": 13168,
-            "axis_range_max": 3605,
-            "axis_coefficient": 18900
-          }
-        ]
-      },
-      {
-        "axis_id": 829,
-        "axis_name": "海妖轴",
-        "axis_range_max": 3793,
-        "magnetic_flux": 400,
-        "axis_color": "#e89ab1",
-        "image_url": "#",
-        "brand": "other",
-        "type_id": 833,
-        "type_name": "其它",
-        "type_name_en": "Other",
-        "type_sort": 0,
-        "aixsDetail": [
-          {
-            "axis_id": 13264,
-            "axis_range_max": 3793,
-            "axis_coefficient": 17536
-          }
-        ]
-      },
-      {
-        "axis_id": 842,
-        "axis_name": "天际线轴",
-        "axis_range_max": 3500,
-        "magnetic_flux": 480,
         "axis_color": "#4dd1f9",
         "image_url": "#",
-        "brand": "other",
-        "type_id": 833,
-        "type_name": "其它",
-        "type_name_en": "Other",
-        "type_sort": 0,
         "aixsDetail": [
           {
-            "axis_id": 13472,
+            "axis_id": 9744,
+            "axis_range_max": 3470,
+            "axis_range_min": 0,
+            "axis_coefficient": 20000
+          }
+        ]
+      },
+      {
+        "axis_id": 610,
+        "axis_name": "天方轴Pro",
+        "axis_color": "#4dd1f9",
+        "image_url": "#",
+        "aixsDetail": [
+          {
+            "axis_id": 9760,
+            "axis_range_max": 3610,
+            "axis_range_min": 0,
+            "axis_coefficient": 20000
+          }
+        ]
+      },
+      {
+        "axis_id": 611,
+        "axis_name": "双星轴",
+        "axis_color": "#4dd1f9",
+        "image_url": "#",
+        "aixsDetail": [
+          {
+            "axis_id": 9776,
+            "axis_range_max": 3550,
+            "axis_range_min": 0,
+            "axis_coefficient": 20000
+          }
+        ]
+      },
+      {
+        "axis_id": 612,
+        "axis_name": "赤乌轴",
+        "axis_color": "#4dd1f9",
+        "image_url": "#",
+        "aixsDetail": [
+          {
+            "axis_id": 9792,
+            "axis_range_max": 3540,
+            "axis_range_min": 0,
+            "axis_coefficient": 20000
+          }
+        ]
+      },
+      {
+        "axis_id": 613,
+        "axis_name": "磁神轴Pro+",
+        "axis_color": "#4dd1f9",
+        "image_url": "#",
+        "aixsDetail": [
+          {
+            "axis_id": 9808,
+            "axis_range_max": 3650,
+            "axis_range_min": 0,
+            "axis_coefficient": 20000
+          }
+        ]
+      },
+      {
+        "axis_id": 614,
+        "axis_name": "磁神轴Pro",
+        "axis_color": "#4dd1f9",
+        "image_url": "#",
+        "aixsDetail": [
+          {
+            "axis_id": 9824,
+            "axis_range_max": 3585,
+            "axis_range_min": 0,
+            "axis_coefficient": 20000
+          }
+        ]
+      },
+      {
+        "axis_id": 615,
+        "axis_name": "磁神轴RGB",
+        "axis_color": "#4dd1f9",
+        "image_url": "#",
+        "aixsDetail": [
+          {
+            "axis_id": 9840,
+            "axis_range_max": 3580,
+            "axis_range_min": 0,
+            "axis_coefficient": 20000
+          }
+        ]
+      },
+      {
+        "axis_id": 616,
+        "axis_name": "磁神Pro半轴",
+        "axis_color": "#4dd1f9",
+        "image_url": "#",
+        "aixsDetail": [
+          {
+            "axis_id": 9856,
+            "axis_range_max": 3645,
+            "axis_range_min": 0,
+            "axis_coefficient": 20000
+          }
+        ]
+      },
+      {
+        "axis_id": 617,
+        "axis_name": "磁神·三元素",
+        "axis_color": "#4dd1f9",
+        "image_url": "#",
+        "aixsDetail": [
+          {
+            "axis_id": 9872,
+            "axis_range_max": 3655,
+            "axis_range_min": 0,
+            "axis_coefficient": 20000
+          }
+        ]
+      },
+      {
+        "axis_id": 618,
+        "axis_name": "翡翠·魔王轴",
+        "axis_color": "#4dd1f9",
+        "image_url": "#",
+        "aixsDetail": [
+          {
+            "axis_id": 9888,
+            "axis_range_max": 3605,
+            "axis_range_min": 0,
+            "axis_coefficient": 20000
+          }
+        ]
+      },
+      {
+        "axis_id": 619,
+        "axis_name": "灵双轴",
+        "axis_color": "#4dd1f9",
+        "image_url": "#",
+        "aixsDetail": [
+          {
+            "axis_id": 9904,
+            "axis_range_max": 3795,
+            "axis_range_min": 0,
+            "axis_coefficient": 20000
+          }
+        ]
+      },
+      {
+        "axis_id": 620,
+        "axis_name": "天际线轴(3.5mm)",
+        "axis_color": "#4dd1f9",
+        "image_url": "#",
+        "aixsDetail": [
+          {
+            "axis_id": 9920,
             "axis_range_max": 3500,
-            "axis_coefficient": 17536
+            "axis_range_min": 0,
+            "axis_coefficient": 20000
           }
         ]
       },
       {
-        "axis_id": 854,
-        "axis_name": "冰曜轴",
-        "axis_range_max": 3200,
-        "magnetic_flux": 360,
-        "axis_color": "#54a9e1",
+        "axis_id": 621,
+        "axis_name": "冰雪轴",
+        "axis_color": "#4dd1f9",
         "image_url": "#",
-        "brand": "other",
-        "type_id": 833,
-        "type_name": "其它",
-        "type_name_en": "Other",
-        "type_sort": 0,
         "aixsDetail": [
           {
-            "axis_id": 13665,
+            "axis_id": 9936,
             "axis_range_max": 3200,
-            "axis_coefficient": 25728
+            "axis_range_min": 0,
+            "axis_coefficient": 20000
           }
         ]
       },
       {
-        "axis_id": 855,
-        "axis_name": "雪曜轴",
-        "axis_range_max": 3200,
-        "magnetic_flux": 360,
-        "axis_color": "#ffffff",
+        "axis_id": 622,
+        "axis_name": "苍雪轴",
+        "axis_color": "#4dd1f9",
         "image_url": "#",
-        "brand": "other",
-        "type_id": 833,
-        "type_name": "其它",
-        "type_name_en": "Other",
-        "type_sort": 0,
         "aixsDetail": [
           {
-            "axis_id": 13681,
+            "axis_id": 9952,
             "axis_range_max": 3200,
-            "axis_coefficient": 25728
+            "axis_range_min": 0,
+            "axis_coefficient": 20000
           }
         ]
       },
       {
-        "axis_id": 909,
+        "axis_id": 623,
         "axis_name": "白色悟空轴",
-        "axis_range_max": 3400,
-        "magnetic_flux": 460,
-        "axis_color": "#ffffff",
+        "axis_color": "#4dd1f9",
         "image_url": "#",
-        "brand": "other",
-        "type_id": 833,
-        "type_name": "其它",
-        "type_name_en": "Other",
-        "type_sort": 0,
         "aixsDetail": [
           {
-            "axis_id": 14544,
+            "axis_id": 9968,
             "axis_range_max": 3400,
-            "axis_coefficient": 17664
+            "axis_range_min": 0,
+            "axis_coefficient": 20000
           }
         ]
       },
       {
-        "axis_id": 913,
-        "axis_name": "瑶光轴",
-        "axis_range_max": 3200,
-        "magnetic_flux": 460,
-        "axis_color": "#ede8cb",
+        "axis_id": 624,
+        "axis_name": "极光轴",
+        "axis_color": "#4dd1f9",
         "image_url": "#",
-        "brand": "other",
-        "type_id": 833,
-        "type_name": "其它",
-        "type_name_en": "Other",
-        "type_sort": 0,
         "aixsDetail": [
           {
-            "axis_id": 14608,
+            "axis_id": 9984,
             "axis_range_max": 3200,
-            "axis_coefficient": 18432
+            "axis_range_min": 0,
+            "axis_coefficient": 20000
           }
         ]
       }

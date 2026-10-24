@@ -652,16 +652,161 @@ class AxisService {
   }
 
   // 将选中的轴体下发到硬件并保存
-  async applyAxisToKeyboard(axis) {
+  async applyAxisToKeyboard(axis, profile = null) {
+    if (!axis) return { success: false, reason: 'missing_axis' };
+
+    // 严苛库存隔离安全门禁：当键盘启用了 isolateSwitches，严禁将未适配的异构轴体写入固件，避免轴体映射乱码或固件崩溃
+    if (profile && profile.isolateSwitches && Array.isArray(profile.supportedSwitches)) {
+      const allowed = profile.supportedSwitches.some((name) => {
+        const cleanName = name.toLowerCase().replace(/\s+/g, '');
+        const targetName = (axis.name || '').toLowerCase().replace(/\s+/g, '');
+        const targetShort = (axis.shortName || '').toLowerCase().replace(/\s+/g, '');
+        return cleanName === targetName || cleanName === targetShort || targetName.includes(cleanName) || cleanName.includes(targetName);
+      });
+      if (!allowed) {
+        console.warn(`[AxisService] 键盘【${profile.model || profile.name}】已启用库存严格隔离，已安全拦截写入不支持轴体: ${axis.name}`);
+        throw new Error(`当前键盘(${profile.shortName || profile.model})出厂硬件不支持【${axis.name}】，写入会导致轴体识别错乱或固件异常，已安全拦截！`);
+      }
+    }
+
     this.activeAxis = axis;
     if (keyboardService.connected) {
       try {
         const hwId = axis.hardwareAxisId ?? (axis.id <= 255 ? axis.id : 1);
         await keyboardService.setDefaultAxis(hwId);
         console.log(`[AxisService] 已同步默认轴体到键盘: ${axis.name} (硬件ID: ${hwId})`);
+        return { success: true, hwId };
       } catch (e) {
         console.warn('[AxisService] 同步到键盘硬件略过:', e);
+        return { success: false, error: e.message };
       }
+    }
+    return { success: true, offline: true };
+  }
+
+  /**
+   * 硬件板载轴体探针引擎 (PCB Axis Probe)
+   * 穿透连接的键盘底层，实时读取硬件固件中烧录的轴体表 (getAxisList, getDefaultAxis, 按键电气寄存器)
+   * 并全自动与官方 75 款/220+ 款轴体库比对映射，生成支持列表与专属配置 JSON
+   */
+  async probePcbSupportedAxes(service = keyboardService, profile = null) {
+    const probeReport = {
+      timestamp: new Date().toISOString(),
+      connected: !!service?.connected,
+      deviceModel: profile?.model || profile?.name || '未知键盘',
+      rawList: [],
+      rawDefault: null,
+      escPerformance: null,
+      resolvedSwitches: [],
+      supportedSwitchNames: [],
+      unmatchedCount: 0,
+      codeSnippet: '',
+    };
+
+    if (!service || !service.connected) {
+      probeReport.error = '键盘未连接，无法执行硬件探针';
+      return probeReport;
+    }
+
+    try {
+      // 1. 获取硬件板载支持轴体列表
+      if (typeof service.getAxisList === 'function') {
+        const axisListRes = await service.getAxisList();
+        if (axisListRes) {
+          probeReport.rawList = Array.isArray(axisListRes) ? axisListRes : (axisListRes.list || []);
+        }
+      }
+
+      // 2. 获取当前固件默认轴体
+      if (typeof service.getDefaultAxis === 'function') {
+        const defRes = await service.getDefaultAxis();
+        if (defRes !== undefined && defRes !== null) {
+          probeReport.rawDefault = typeof defRes === 'object' ? (defRes.id ?? defRes.value) : defRes;
+        }
+      }
+
+      // 3. 读取 Esc (Row 1, Col 0) 的硬件电气寄存器参数
+      if (typeof service.getPerformance === 'function') {
+        try {
+          const escPerf = await service.getPerformance(1, 0);
+          if (escPerf) {
+            probeReport.escPerformance = {
+              axis: escPerf.axis,
+              axisV2Id: escPerf.axisV2Id,
+              axisRangeMax: escPerf.axisRangeMax,
+              axisCoefficient: escPerf.axisCoefficient,
+              ap: escPerf.normalPress,
+              rt: escPerf.rtFirstTouch,
+            };
+          }
+        } catch (e) {
+          console.warn('[AxisService Probe] 读取 Esc 键电气参数跳过:', e);
+        }
+      }
+
+      // 4. 解析与映射轴体表
+      const resolved = [];
+      const seenNames = new Set();
+
+      // 先加入 Esc 键识别出的真实轴体 (若有)
+      if (probeReport.escPerformance) {
+        const fromPerf = this.resolveAxisByHardwarePerf(probeReport.escPerformance, profile);
+        if (fromPerf && fromPerf.name && !seenNames.has(fromPerf.name)) {
+          seenNames.add(fromPerf.name);
+          resolved.push({ ...fromPerf, source: 'hardware_esc_active' });
+        }
+      }
+
+      // 遍历硬件返回的 rawList
+      probeReport.rawList.forEach((item) => {
+        const rawId = typeof item === 'object' ? (item.id ?? item.axis_id ?? item.value) : item;
+        const matched = this.getAxisById(rawId) || this.axes.find((a) => a.hardwareAxisId === rawId || a.id === rawId);
+        if (matched) {
+          if (!seenNames.has(matched.name)) {
+            seenNames.add(matched.name);
+            resolved.push({ ...matched, rawId, source: 'pcb_axis_table' });
+          }
+        } else {
+          probeReport.unmatchedCount++;
+          const placeholderName = `板载磁轴 #${rawId}`;
+          if (!seenNames.has(placeholderName)) {
+            seenNames.add(placeholderName);
+            resolved.push({
+              id: rawId,
+              hardwareAxisId: rawId,
+              name: placeholderName,
+              brand: '板载未收录',
+              travel: 3.50,
+              maxTravel: 3.50,
+              badge: '硬件上报',
+              source: 'pcb_raw_unknown',
+            });
+          }
+        }
+      });
+
+      probeReport.resolvedSwitches = resolved;
+      probeReport.supportedSwitchNames = resolved.map((s) => s.name);
+
+      // 5. 生成可直接复制或导出的配置代码片段
+      probeReport.codeSnippet = JSON.stringify(
+        {
+          model: profile?.model || 'KEYBOARD',
+          probedAt: probeReport.timestamp,
+          defaultAxis: resolved[0]?.name || '神马轴',
+          isolateSwitches: true,
+          supportedSwitches: probeReport.supportedSwitchNames,
+          hardwareAxisIds: probeReport.rawList,
+        },
+        null,
+        2
+      );
+
+      return probeReport;
+    } catch (err) {
+      console.error('[AxisService Probe] 执行板载探针失败:', err);
+      probeReport.error = err.message;
+      return probeReport;
     }
   }
 }

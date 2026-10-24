@@ -107,6 +107,33 @@ export function isSupportedSparklinkDevice(vendorId, productId) {
   return false;
 }
 
+// DV63 官方出厂硬件严格支持轴体清单 (严禁混入其它不支持轴体，防止写入后映射错乱)
+export const DV63_SUPPORTED_SWITCHES = [
+  '神马轴',
+  '磁玉轴',
+  '磁玉 Pro',
+  '磁玉 Gaming',
+  '万磁王',
+  '万磁王 RGB',
+];
+
+// 江湾 Everglide 硬件 PCB (AE64-MAX, AE64 Pro, AE61 Pro, SU66等) 官方全量 75 款认证轴体库 (对齐官网最新实测)
+export const JIANGWAN_OFFICIAL_SWITCHES = [
+  // 江湾原厂自研 (唯一原厂旗舰)
+  '库里南轴',
+  // 佳达隆 (Gateron 30款)
+  '磁玉轴', '磁白轴', '磁玉Gaming', '磁玉Pro', '玉子轴', '琉璃轴', '阿波罗轴', '磁玉Max', '花火轴', '磁玉Pom', '龙发轴',
+  '佳达隆双轨磁白轴', '磁青轴', '金珀轴', '婷婷魔王/轴', '铜锣烧', '可拉轴', '灰木磁Pro', '双轨磁青轴', '双轨磁红轴', '双轨磁黄轴', '磁黄轴',
+  '枫糖轴', '甜甜圈', '抹茶轴', '惰野轴', '甜珠玉轴Pro', '糯玉轴', '翠玉轴', '玉刃轴',
+  // 正牌科电 (TTC 19款)
+  '万磁王', '万磁王RGB', '烈焰红', '神马轴', '炽热金', '爱心万磁王', '寂心万磁王', '圣心万磁王', '太阳神轴', '天王轴', '天王轴电竞',
+  '天王SE', '炎王轴', '炎王轴Pro', '凌云轴', '分神轴', '暗黑王轴', '太阳炎轴', '科索轴',
+  // 其它品牌 (25款)
+  '冰皇轴', '001', '琉璃Pro', '冰极万磁轴', '国度轴', '悟空轴', '悟空轴(3.45mm)', '孤傲轴', '天际线轴', '磁神轴', '天方轴Pro',
+  '双星轴', '赤乌轴', '磁神轴Pro+', '磁神轴Pro', '磁神轴RGB', '磁神Pro半轴', '磁神·三元素', '翡翠·魔王轴', '灵双轴', '天际线轴(3.5mm)',
+  '冰雪轴', '苍雪轴', '白色悟空轴', '极光轴'
+];
+
 // 已知星闪设备配置库
 export const DEVICE_PROFILES = {
   DV63: {
@@ -130,15 +157,9 @@ export const DEVICE_PROFILES = {
     defaultPollingRate: 8000,
     minActuationPoint: 0.01,
     defaultAxis: '神马轴',
-    supportedSwitches: [
-      '神马轴',
-      '磁玉 Pro',
-      '磁玉轴',
-      '磁玉 Pro 超竞版',
-      '万磁王',
-      '万磁王 RGB',
-      '天际线轴',
-    ],
+    supportedSwitches: DV63_SUPPORTED_SWITCHES,
+    isolateSwitches: true,
+    isFinishedKeyboard: true,
     features: {
       magneticAxis: true,
       rtSupport: true,
@@ -171,14 +192,8 @@ export const DEVICE_PROFILES = {
     defaultPollingRate: 8000,
     minActuationPoint: 0.001,
     defaultAxis: '天际线轴', // 官网 V3 轴体映射实测（0x1CA6:0x300D 硬件板载 axisV2Id: 12608 对应天际线轴 3.55mm）
-    supportedSwitches: [
-      '天际线轴',
-      '库里南轴',
-      '磁神轴',
-      '磁玉 Pro',
-      '磁玉轴',
-      '万磁王',
-    ],
+    supportedSwitches: JIANGWAN_OFFICIAL_SWITCHES,
+    isolateSwitches: true,
     features: {
       magneticAxis: true,
       rtSupport: true,
@@ -225,14 +240,8 @@ export const DEVICE_PROFILES = {
     defaultPollingRate: 8000,
     minActuationPoint: 0.001,
     defaultAxis: '磁玉 Pro',
-    supportedSwitches: [
-      '磁玉 Pro',
-      '磁玉轴',
-      '库里南轴',
-      '天际线轴',
-      '神马轴',
-      '万磁王',
-    ],
+    supportedSwitches: JIANGWAN_OFFICIAL_SWITCHES,
+    isolateSwitches: true,
     features: {
       magneticAxis: true,
       rtSupport: true,
@@ -245,6 +254,69 @@ export const DEVICE_PROFILES = {
       continuousRt: false,
       doubleLighting: true,
       stripLighting: true,
+    },
+  },
+  AE64_PRO: {
+    id: 'ae64_pro',
+    brand: '江湾 Everglide',
+    model: 'AE64 Pro',
+    name: '江湾 AE64 Pro 磁轴键盘',
+    shortName: 'AE64 Pro',
+    type: 'keyboard',
+    layout: '64keys',
+    layoutName: '左移64配列',
+    totalKeys: 64,
+    vendorId: 0x1ca6,
+    connectionType: 'wired',
+    connectionLabel: 'USB 极速有线',
+    isWired: true,
+    hasBattery: false,
+    maxPollingRate: 8000,
+    supportedPollingRates: [1000, 2000, 4000, 8000],
+    defaultPollingRate: 8000,
+    minActuationPoint: 0.001,
+    defaultAxis: '天际线轴',
+    supportedSwitches: JIANGWAN_OFFICIAL_SWITCHES,
+    isolateSwitches: true,
+    features: {
+      magneticAxis: true,
+      rtSupport: true,
+      socdSupport: true,
+      furyMode: true,
+      rgbLighting: true,
+      hallCalibration: true,
+      continuousRt: false,
+    },
+  },
+  SU66: {
+    id: 'su66',
+    brand: '江湾 Everglide',
+    model: 'SU66',
+    name: '江湾 SU66 磁轴键盘',
+    shortName: 'SU66',
+    type: 'keyboard',
+    layout: '66keys',
+    layoutName: '66配列',
+    totalKeys: 66,
+    vendorId: 0x1ca6,
+    connectionType: 'wired',
+    connectionLabel: 'USB 极速有线',
+    isWired: true,
+    hasBattery: false,
+    maxPollingRate: 8000,
+    supportedPollingRates: [1000, 2000, 4000, 8000],
+    defaultPollingRate: 8000,
+    minActuationPoint: 0.001,
+    defaultAxis: '库里南轴',
+    supportedSwitches: JIANGWAN_OFFICIAL_SWITCHES,
+    isolateSwitches: true,
+    features: {
+      magneticAxis: true,
+      rtSupport: true,
+      socdSupport: true,
+      furyMode: true,
+      rgbLighting: true,
+      hallCalibration: true,
     },
   },
   ES68: {
@@ -637,6 +709,16 @@ export function analyzeDeviceCapabilities(descriptor = {}) {
       productId,
     };
   } else if (
+    name.includes('SU66') || name.includes('SU-66')
+  ) {
+    baseProfile = {
+      ...DEVICE_PROFILES.SU66,
+      name: productName || DEVICE_PROFILES.SU66.name,
+      shortName: productName ? productName.split(' ')[0] : DEVICE_PROFILES.SU66.shortName,
+      vendorId: vendorId || 0x1ca6,
+      productId: productId || 0x300e,
+    };
+  } else if (
     (vendorId === 0x1ca6 && (productId === 0x300b || productId === 12299)) ||
     (vendorId === 7334 && (productId === 12299 || productId === 0x300b)) ||
     name.includes('AE61') || name.includes('AE61PRO') || name.includes('AE61-PRO')
@@ -647,6 +729,16 @@ export function analyzeDeviceCapabilities(descriptor = {}) {
       shortName: productName ? productName.split(' ')[0] : DEVICE_PROFILES.AE61_PRO.shortName,
       vendorId: vendorId || 0x1ca6,
       productId: productId || 0x300b,
+    };
+  } else if (
+    name.includes('AE64 PRO') || name.includes('AE64PRO') || name.includes('AE64-PRO')
+  ) {
+    baseProfile = {
+      ...DEVICE_PROFILES.AE64_PRO,
+      name: productName || DEVICE_PROFILES.AE64_PRO.name,
+      shortName: productName ? productName.split(' ')[0] : DEVICE_PROFILES.AE64_PRO.shortName,
+      vendorId: vendorId || 0x1ca6,
+      productId: productId || 0x300c,
     };
   } else if (
     (vendorId === 0x1ca6 && (productId === 0x300d || productId === 12301)) ||
@@ -829,6 +921,12 @@ export function analyzeDeviceCapabilities(descriptor = {}) {
       isMaxTier: item.val === effectiveMaxRate,
       labelFormatted: item.val >= 1000 ? `${item.val / 1000}k` : `${item.val}Hz`,
     }));
+
+  // 严格库存隔离：若设备为江湾系列 PCB 或 DV63 等成品键盘，保障其专属轴体库挂载
+  if ((name.includes('江湾') || name.includes('EVERGLIDE')) && !baseProfile.supportedSwitches) {
+    baseProfile.supportedSwitches = JIANGWAN_OFFICIAL_SWITCHES;
+    baseProfile.isolateSwitches = true;
+  }
 
   return {
     ...baseProfile,
