@@ -66,21 +66,21 @@ export default function KeyTravelIndicator({
       </div>
 
       {/* 中间核心视觉联动区：轴体线框 + 标尺刻度 + 水银柱 */}
-      <div className={`flex items-center justify-center my-auto ${isCompact ? 'py-0.5 gap-3' : isMedium ? 'py-1 gap-5' : 'py-2 gap-6 sm:gap-8'}`}>
+      <div className={`flex items-center justify-center my-auto ${isCompact ? 'py-0.5 gap-3' : isMedium ? 'py-0.5 gap-4' : 'py-2 gap-6 sm:gap-8'}`}>
         
         {/* 1. 轴体剖面图 (黑白线稿剖面风格，轴柱下沉位移) */}
         <div className="flex flex-col items-center justify-center shrink-0">
           <SwitchCrossSection
             travel={currentDepth}
             maxTravel={safeMax}
-            width={isCompact ? 66 : isMedium ? 88 : 108}
-            height={isCompact ? 76 : isMedium ? 114 : 136}
+            width={isCompact ? 66 : isMedium ? 76 : 108}
+            height={isCompact ? 76 : isMedium ? 96 : 136}
             strokeColor={isDark ? '#71717a' : '#475569'}
           />
         </div>
 
         {/* 2. 标尺刻度 + 水银深度柱 (1:1 还原迈从截图) */}
-        <div className={`flex items-stretch relative shrink-0 ${isCompact ? 'h-[78px]' : isMedium ? 'h-[114px]' : 'h-[154px]'}`}>
+        <div className={`flex items-stretch relative shrink-0 ${isCompact ? 'h-[78px]' : isMedium ? 'h-[96px]' : 'h-[154px]'}`}>
           
           {/* 左侧刻度数值与横向细刻度线 */}
           <div className={`flex flex-col justify-between items-end pr-1.5 py-[1px] font-mono select-none text-zinc-400 dark:text-zinc-500 ${isCompact ? 'text-[8px]' : isMedium ? 'text-[9px]' : 'text-[10.5px]'}`}>

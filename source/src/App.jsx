@@ -816,6 +816,48 @@ export default function App() {
   const [showCalibrateModal, setShowCalibrateModal] = useState(qs.get('modal') === 'calibration');
   const [isCalibrating, setIsCalibrating] = useState(false);
 
+  // 已校准按键状态管理 (按机型隔离，并持久化到本地存储)
+  const [calibratedKeys, setCalibratedKeys] = useState(() => {
+    try {
+      const pId = deviceProfile?.id || deviceProfile?.model || 'default';
+      const saved = localStorage.getItem(`sparklink_calibrated_keys_${pId}`);
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        if (Array.isArray(parsed)) return new Set(parsed);
+      }
+    } catch (e) {}
+    return new Set(VISUAL_KEY_ORDER.map(k => k.id));
+  });
+
+  // 重新校准提示弹窗 (1:1 官方逻辑：当有按键未校准时，每次重进驱动或连接键盘提示用户重新校准)
+  const [showCalibPrompt, setShowCalibPrompt] = useState(false);
+
+  // 设备切换时加载对应的校准状态
+  useEffect(() => {
+    const pId = deviceProfile?.id || deviceProfile?.model || 'default';
+    try {
+      const saved = localStorage.getItem(`sparklink_calibrated_keys_${pId}`);
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        if (Array.isArray(parsed)) {
+          setCalibratedKeys(new Set(parsed));
+          return;
+        }
+      }
+    } catch (e) {}
+    setCalibratedKeys(new Set(VISUAL_KEY_ORDER.map(k => k.id)));
+  }, [deviceProfile?.id, deviceProfile?.model]);
+
+  // 当重进驱动页面或设备连接时，检测是否存在待校准按键；若有，弹出官方同款提示
+  useEffect(() => {
+    if (!deviceProfile) return;
+    const allKeyIds = VISUAL_KEY_ORDER.map(k => k.id);
+    const hasUncalibrated = allKeyIds.some(id => !calibratedKeys.has(id));
+    if (hasUncalibrated) {
+      setShowCalibPrompt(true);
+    }
+  }, [isConnected, deviceProfile?.id, deviceProfile?.model]);
+
   // 高级按键 SOCD 对冲按键对状态 (按设备独立隔离，默认不配置)
   const [socdKeys, setSocdKeys] = useState({ keyA: null, keyB: null });
 
@@ -4576,6 +4618,17 @@ export default function App() {
                 });
                 setPerKeySwitches(updated);
 
+                // 官方核心逻辑：对按键修改完轴体设置后，将这些按键标记为待校准，并在重进驱动时弹窗提示
+                setCalibratedKeys((prev) => {
+                  const next = new Set(prev);
+                  targetKeys.forEach((id) => next.delete(id));
+                  try {
+                    const pId = deviceProfile?.id || deviceProfile?.model || 'default';
+                    localStorage.setItem(`sparklink_calibrated_keys_${pId}`, JSON.stringify([...next]));
+                  } catch (e) {}
+                  return next;
+                });
+
                 // 核心修复：将真实电气参数 (axisV2Id, axisRangeMax, axisCoefficient) 写入硬件闪存
                 if (isConnected) {
                   const axisV2Id = Number(normalized.axisV2Id) || (Number(normalized.id) ? (Number(normalized.id) << 4) : 0);
@@ -5237,7 +5290,65 @@ export default function App() {
         theme={theme}
         hwKeyCoords={hwKeyCoords}
         findHwCoords={findHwCoords}
+        initialCalibratedKeys={calibratedKeys}
+        onUpdateCalibratedKeys={(newSet) => {
+          setCalibratedKeys(newSet);
+          try {
+            const pId = deviceProfile?.id || deviceProfile?.model || 'default';
+            localStorage.setItem(`sparklink_calibrated_keys_${pId}`, JSON.stringify([...newSet]));
+          } catch (e) {}
+        }}
       />
+
+      {/* 官方同款：待校准按键提醒弹窗 (1:1 还原 media_1792854463419_bd6de908.png) */}
+      {showCalibPrompt && (
+        <div className="fixed inset-0 z-[600] flex items-center justify-center bg-black/60 backdrop-blur-xs p-4 select-none animate-in fade-in duration-150">
+          <div className="bg-[#1e222b] border border-[var(--border-color)] rounded-2xl w-full max-w-[390px] shadow-2xl overflow-hidden p-5 animate-in zoom-in-95 duration-150 space-y-4">
+            {/* 顶部标题栏 */}
+            <div className="flex items-center justify-between">
+              <div className="flex items-center space-x-2">
+                <div className="w-5 h-5 rounded-full bg-amber-500/20 text-amber-500 flex items-center justify-center text-xs font-black shrink-0">
+                  !
+                </div>
+                <h3 className="text-sm font-bold text-[var(--text-primary)]">提示</h3>
+              </div>
+              <button
+                type="button"
+                onClick={() => setShowCalibPrompt(false)}
+                className="text-[var(--text-tertiary)] hover:text-[var(--text-primary)] p-1 rounded-lg transition cursor-pointer"
+              >
+                <X className="w-4 h-4" />
+              </button>
+            </div>
+
+            {/* 内容说明 */}
+            <p className="text-xs text-[var(--text-secondary)] leading-relaxed font-medium">
+              为了更好的体验，请重新校准键盘
+            </p>
+
+            {/* 操作按钮 */}
+            <div className="flex items-center justify-end space-x-2.5 pt-2">
+              <button
+                type="button"
+                onClick={() => setShowCalibPrompt(false)}
+                className="px-4 py-1.5 rounded-lg bg-[var(--bg-tertiary)] hover:bg-[var(--border-color)] text-[var(--text-secondary)] hover:text-[var(--text-primary)] text-xs font-medium transition cursor-pointer"
+              >
+                取消
+              </button>
+              <button
+                type="button"
+                onClick={() => {
+                  setShowCalibPrompt(false);
+                  setShowCalibrateModal(true);
+                }}
+                className="px-4 py-1.5 rounded-lg bg-[var(--info-color)] hover:opacity-90 text-white text-xs font-bold transition shadow-xs cursor-pointer"
+              >
+                确认
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* 全局设置弹窗 (完全还原迈从 图一/图二/图三) */}
       <GlobalSettingsModal 

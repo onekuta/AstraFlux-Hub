@@ -59,6 +59,8 @@ export default function CalibrationModal({
   layout = DV63_LAYOUT,
   hwKeyCoords = null,
   findHwCoords = null,
+  initialCalibratedKeys = null,
+  onUpdateCalibratedKeys = () => {},
 }) {
   const { t } = useI18n();
   const KEYBOARD_LAYOUT = layout || DV63_LAYOUT;
@@ -74,9 +76,7 @@ export default function CalibrationModal({
     return true;
   });
 
-  const [selectedAxisOverride, setSelectedAxisOverride] = useState(null);
-  const [showAxisDropdown, setShowAxisDropdown] = useState(false);
-  const effectiveCurrentAxis = selectedAxisOverride || currentAxis || { name: '天际线轴', maxTravel: 3.55 };
+  const effectiveCurrentAxis = currentAxis || { name: '天际线轴', maxTravel: 3.55 };
 
   // 所有扁平按键列表（自适应所有真实设备：AE64, ES68, DV63, 75, 87, 98, 104等）
   const flatKeys = useMemo(() => {
@@ -96,13 +96,31 @@ export default function CalibrationModal({
   const TOTAL_KEYS = flatKeys.length;
 
   const calBounds = useMemo(() => getLayoutBounds(KEYBOARD_LAYOUT), [KEYBOARD_LAYOUT]);
-  // 放大校准按键阵列尺寸：calUnit 上调至 56~58px，键高 49~51px，让按键在大窗口下更加大气饱满、清晰易点
-  const calUnit = Math.max(30, Math.min(58, Math.floor(1000 / (calBounds.widthUnits || 16))));
-  const calKeyHeight = Math.max(26, Math.round(calUnit * 0.88));
+  // 紧凑黄金比例：根据是否展开说明动态计算键宽与键高，展开说明时使用 46px/38px，收起说明时使用 52px/42px，无论何种状态均杜绝挤压
+  const calUnit = Math.max(26, Math.min(showInstructions ? 46 : 52, Math.floor(940 / (calBounds.widthUnits || 16))));
+  const calKeyHeight = Math.max(24, Math.round(calUnit * 0.82));
   const calGap = 3;
 
   // 已完成校准的按键集合 (Key ID)
-  const [calibratedKeys, setCalibratedKeys] = useState(new Set());
+  const [calibratedKeys, setCalibratedKeys] = useState(() => {
+    if (initialCalibratedKeys && initialCalibratedKeys instanceof Set) {
+      return new Set(initialCalibratedKeys);
+    }
+    if (Array.isArray(initialCalibratedKeys)) {
+      return new Set(initialCalibratedKeys);
+    }
+    return new Set();
+  });
+
+  // 当外部传入的已校准按键集合更新时同步
+  useEffect(() => {
+    if (initialCalibratedKeys && initialCalibratedKeys instanceof Set) {
+      setCalibratedKeys(new Set(initialCalibratedKeys));
+    } else if (Array.isArray(initialCalibratedKeys)) {
+      setCalibratedKeys(new Set(initialCalibratedKeys));
+    }
+  }, [initialCalibratedKeys]);
+
   // 当前处于物理按压状态的按键集合
   const [pressedKeyIds, setPressedKeyIds] = useState(new Set());
   // 最近处于焦点的按键
@@ -428,7 +446,9 @@ export default function CalibrationModal({
   };
 
   const handleRestart = async () => {
-    setCalibratedKeys(new Set());
+    const emptySet = new Set();
+    setCalibratedKeys(emptySet);
+    onUpdateCalibratedKeys(emptySet);
     setPressedKeyIds(new Set());
     setCurrentTravel(0);
     setActiveKey(null);
@@ -442,12 +462,14 @@ export default function CalibrationModal({
   const handleCalibrateAll = () => {
     const allSet = new Set(flatKeys.map((k) => k.id));
     setCalibratedKeys(allSet);
+    onUpdateCalibratedKeys(allSet);
   };
 
   const handleExit = async () => {
     if (keyboardService.connected) {
       await keyboardService.finishCalibration().catch(() => {});
     }
+    onUpdateCalibratedKeys(calibratedKeys);
     onClose();
   };
 
@@ -456,67 +478,15 @@ export default function CalibrationModal({
 
   return (
     <div className="fixed inset-0 z-[500] flex items-center justify-center p-2 sm:p-2.5 select-none bg-black/60 backdrop-blur-sm transition-colors animate-in fade-in duration-150">
-      <div className="w-[calc(100vw-24px)] max-w-[1344px] h-[calc(100vh-24px)] max-h-[834px] rounded-[14px] border border-[var(--border-color)] bg-[var(--bg-secondary)] text-[var(--text-primary)] shadow-2xl flex flex-col overflow-hidden animate-in zoom-in-95 duration-150">
+      <div className="w-[calc(100vw-24px)] max-w-[1344px] h-[calc(100vh-20px)] max-h-[860px] rounded-[14px] border border-[var(--border-color)] bg-[var(--bg-secondary)] text-[var(--text-primary)] shadow-2xl flex flex-col overflow-hidden animate-in zoom-in-95 duration-150">
         
-        {/* 顶部标题栏 */}
-        <div className="h-12 px-4 border-b border-[var(--border-color)] bg-[var(--bg-tertiary)] flex items-center justify-between shrink-0">
+        {/* 顶部标题栏 (去除非官方的轴体下拉菜单，校准继承自轴体设置页面的真实配置) */}
+        <div className="h-11 px-4 border-b border-[var(--border-color)] bg-[var(--bg-tertiary)] flex items-center justify-between shrink-0">
           <div className="flex items-center space-x-3 min-w-0">
             <h2 className="text-sm font-bold font-title modal-title flex items-center truncate text-[var(--text-primary)]">
               <Sparkles className="w-4 h-4 mr-1.5 text-[var(--info-color)] shrink-0" />
               {t('calibration.title')}
             </h2>
-
-            {/* 轴体型号切换与展示 (1:1 映射官网 V3 轴体库，支持切换) */}
-            <div className="relative">
-              <button
-                type="button"
-                onClick={() => setShowAxisDropdown(!showAxisDropdown)}
-                className="text-xs font-mono font-bold text-[var(--info-color)] bg-[var(--primary-04)] hover:bg-[var(--primary-09)] px-3 py-1 rounded-[6px] border border-[var(--primary-15)] hover:border-[var(--info-color)] transition cursor-pointer flex items-center gap-1.5 shrink-0 shadow-2xs"
-                title="点击切换校准所用轴体基准"
-              >
-                <span>{effectiveCurrentAxis?.name || '天际线轴'}</span>
-                <span className="text-[10.5px] opacity-75 font-normal">(Max {(maxTravel || 3.55).toFixed(2)}mm)</span>
-                <ChevronDown className="w-3 h-3 opacity-70" />
-              </button>
-
-              {showAxisDropdown && (
-                <div className="absolute left-0 top-full mt-1 w-60 max-h-60 overflow-y-auto rounded-lg bg-[var(--bg-secondary)] border border-[var(--border-color)] shadow-2xl z-[600] py-1 text-xs divide-y divide-[var(--border-color)]/40">
-                  <div className="px-3 py-1.5 text-[10.5px] font-bold text-[var(--text-secondary)] bg-[var(--bg-tertiary)] flex items-center justify-between">
-                    <span>{t('calibration.selectAxisSku')}</span>
-                    <span className="text-[9.5px] text-[var(--info-color)] font-mono">{t('calibration.officialV3Mapping')}</span>
-                  </div>
-                  {(axisList && axisList.length > 0 ? axisList : [
-                    { id: 788, name: '天际线轴', maxTravel: 3.55, badge: '高导光柱' },
-                    { id: 1219, name: '库里南轴', maxTravel: 3.60, badge: '江湾原厂' },
-                    { id: 1, name: '磁玉 Pro', maxTravel: 3.50, badge: '佳达隆标配' },
-                    { id: 1002, name: '神马轴', maxTravel: 3.45, badge: '初始高磁通' },
-                  ]).slice(0, 16).map((ax) => {
-                    const isAxSelected = (effectiveCurrentAxis?.name === ax.name) || (effectiveCurrentAxis?.id === ax.id);
-                    return (
-                      <button
-                        key={ax.id || ax.name}
-                        type="button"
-                        onClick={() => {
-                          setSelectedAxisOverride(ax);
-                          setShowAxisDropdown(false);
-                        }}
-                        className={`w-full px-3 py-2 text-left flex items-center justify-between transition cursor-pointer hover:bg-[var(--primary-04)] ${
-                          isAxSelected ? 'text-[var(--info-color)] font-bold bg-[var(--primary-04)]' : 'text-[var(--text-primary)]'
-                        }`}
-                      >
-                        <div className="flex flex-col min-w-0">
-                          <span className="truncate text-xs font-medium">{ax.name}</span>
-                          <span className="text-[10.5px] text-[var(--text-secondary)] font-mono">
-                            {ax.badge || ax.brand || ''} · {parseFloat(ax.maxTravel || 3.50).toFixed(2)}mm
-                          </span>
-                        </div>
-                        {isAxSelected && <Check className="w-4 h-4 text-[var(--info-color)] shrink-0" />}
-                      </button>
-                    );
-                  })}
-                </div>
-              )}
-            </div>
 
             <span className="text-xs font-mono shrink-0 text-[var(--text-secondary)]">
               {t('calibration.progress')}: <strong className="text-emerald-500 font-bold">{calibratedKeys.size}</strong> / {TOTAL_KEYS} {t('calibration.keysUnit')}
@@ -593,60 +563,60 @@ export default function CalibrationModal({
         )}
 
         {/* 滚动容器 */}
-        <div className="flex-1 overflow-y-auto min-h-0 flex flex-col">
+        <div className="flex-1 overflow-y-auto min-h-0 flex flex-col justify-between">
 
-          {/* 1. 校准说明与步骤提示折叠栏 (默认展开说明) */}
+          {/* 1. 校准说明与步骤提示折叠栏 (默认展开说明，精致紧凑无挤压) */}
           {showInstructions && (
-            <div className="p-2.5 px-3.5 bg-[var(--bg-primary)] border-b border-[var(--border-color)] grid grid-cols-1 md:grid-cols-2 gap-3 shrink-0">
-              <div className="p-2.5 rounded-[9px] border border-[var(--border-color)] bg-[var(--bg-tertiary)] flex flex-col justify-between shadow-2xs">
+            <div className="p-2 px-3.5 bg-[var(--bg-primary)] border-b border-[var(--border-color)] grid grid-cols-1 md:grid-cols-2 gap-2.5 shrink-0">
+              <div className="p-2 rounded-[8px] border border-[var(--border-color)] bg-[var(--bg-tertiary)] flex flex-col justify-between shadow-2xs">
                 <div>
                   <h4 className="text-xs font-bold text-[var(--text-primary)] mb-0.5 flex items-center">
                     <span className="w-1.5 h-2.5 bg-[var(--info-color)] rounded-full mr-1.5 inline-block"></span>
                     {t('calibration.notesTitle')}
                   </h4>
-                  <p className="text-[10.5px] text-[var(--text-secondary)] leading-normal">
+                  <p className="text-[10px] text-[var(--text-secondary)] leading-tight">
                     {t('calibration.notesDesc')}
                   </p>
                 </div>
-                <div className="flex items-center justify-center space-x-6 pt-1.5 mt-1 border-t border-[var(--border-color)]/60">
-                  <div className="flex flex-col items-center">
-                    <div className="w-6 h-6 rounded-[5px] bg-[var(--bg-secondary)] border border-[var(--border-color)] flex items-center justify-center font-bold text-[11px] text-[var(--text-primary)] shadow-2xs">
+                <div className="flex items-center justify-center space-x-6 pt-1 mt-1 border-t border-[var(--border-color)]/60">
+                  <div className="flex items-center gap-1.5">
+                    <div className="w-5 h-5 rounded-[4px] bg-[var(--bg-secondary)] border border-[var(--border-color)] flex items-center justify-center font-bold text-[10px] text-[var(--text-primary)] shadow-2xs">
                       A
                     </div>
-                    <span className="text-[9px] text-[var(--text-disabled)] mt-0.5">{t('calibration.uncalibrated')}</span>
+                    <span className="text-[9px] text-[var(--text-disabled)]">{t('calibration.uncalibrated')}</span>
                   </div>
-                  <ArrowRight className="w-3.5 h-3.5 text-[var(--text-disabled)]" />
-                  <div className="flex flex-col items-center">
-                    <div className="w-6 h-6 rounded-[5px] bg-emerald-500 border border-emerald-600 flex items-center justify-center font-bold text-[11px] text-white shadow-xs">
+                  <ArrowRight className="w-3 h-3 text-[var(--text-disabled)]" />
+                  <div className="flex items-center gap-1.5">
+                    <div className="w-5 h-5 rounded-[4px] bg-emerald-500 border border-emerald-600 flex items-center justify-center font-bold text-[10px] text-white shadow-xs">
                       A
                     </div>
-                    <span className="text-[9px] text-emerald-600 dark:text-emerald-400 mt-0.5 font-bold">{t('calibration.calibratedSuccess')}</span>
+                    <span className="text-[9px] text-emerald-600 dark:text-emerald-400 font-bold">{t('calibration.calibratedSuccess')}</span>
                   </div>
                 </div>
               </div>
 
-              <div className="p-2.5 rounded-[9px] border border-[var(--border-color)] bg-[var(--bg-tertiary)] flex flex-col justify-between shadow-2xs">
+              <div className="p-2 rounded-[8px] border border-[var(--border-color)] bg-[var(--bg-tertiary)] flex flex-col justify-between shadow-2xs">
                 <div>
                   <h4 className="text-xs font-bold text-[var(--text-primary)] mb-0.5 flex items-center">
                     <span className="w-1.5 h-2.5 bg-emerald-500 rounded-full mr-1.5 inline-block"></span>
                     {t('calibration.stepsTitle')}
                   </h4>
-                  <p className="text-[10.5px] text-[var(--text-secondary)] leading-normal">
+                  <p className="text-[10px] text-[var(--text-secondary)] leading-tight">
                     {t('calibration.stepsDesc')}
                   </p>
                 </div>
-                <div className="grid grid-cols-3 gap-1.5 pt-1.5 mt-1 border-t border-[var(--border-color)]/60 text-center">
-                  <div className="py-1 px-1 rounded-[6px] bg-[var(--bg-secondary)] border border-[var(--border-color)] flex flex-col items-center">
-                    <span className="text-[10.5px] font-bold text-[var(--text-primary)]">{t('calibration.step1Title')}</span>
-                    <span className="text-[9.5px] text-[var(--text-disabled)] truncate">{t('calibration.step1Desc')}</span>
+                <div className="grid grid-cols-3 gap-1.5 pt-1 mt-1 border-t border-[var(--border-color)]/60 text-center">
+                  <div className="py-0.5 px-1 rounded-[5px] bg-[var(--bg-secondary)] border border-[var(--border-color)] flex flex-col items-center">
+                    <span className="text-[10px] font-bold text-[var(--text-primary)]">{t('calibration.step1Title')}</span>
+                    <span className="text-[9px] text-[var(--text-disabled)] truncate">{t('calibration.step1Desc')}</span>
                   </div>
-                  <div className="py-1 px-1 rounded-[6px] bg-[var(--bg-secondary)] border border-[var(--border-color)] flex flex-col items-center">
-                    <span className="text-[10.5px] font-bold text-[var(--info-color)]">{t('calibration.step2Title')}</span>
-                    <span className="text-[9.5px] text-[var(--text-disabled)] truncate">{t('calibration.step2Desc')}</span>
+                  <div className="py-0.5 px-1 rounded-[5px] bg-[var(--bg-secondary)] border border-[var(--border-color)] flex flex-col items-center">
+                    <span className="text-[10px] font-bold text-[var(--info-color)]">{t('calibration.step2Title')}</span>
+                    <span className="text-[9px] text-[var(--text-disabled)] truncate">{t('calibration.step2Desc')}</span>
                   </div>
-                  <div className="py-1 px-1 rounded-[6px] bg-emerald-500/10 border border-emerald-500/40 flex flex-col items-center">
-                    <span className="text-[10.5px] font-bold text-emerald-600 dark:text-emerald-400">{t('calibration.step3Title')}</span>
-                    <span className="text-[9.5px] text-emerald-600 dark:text-emerald-400 truncate font-medium">{t('calibration.step3Desc')}</span>
+                  <div className="py-0.5 px-1 rounded-[5px] bg-emerald-500/10 border border-emerald-500/40 flex flex-col items-center">
+                    <span className="text-[10px] font-bold text-emerald-600 dark:text-emerald-400">{t('calibration.step3Title')}</span>
+                    <span className="text-[9px] text-emerald-600 dark:text-emerald-400 truncate font-medium">{t('calibration.step3Desc')}</span>
                   </div>
                 </div>
               </div>
@@ -654,7 +624,7 @@ export default function CalibrationModal({
           )}
 
           {/* 2. 键盘物理阵列俯视区 */}
-          <div className="py-2 px-3.5 flex flex-col items-center justify-center shrink-0 bg-[var(--bg-primary)]">
+          <div className="py-1.5 px-3.5 flex flex-col items-center justify-center shrink-0 bg-[var(--bg-primary)]">
             <div className="p-1.5 rounded-[10px] border border-[var(--border-color)] bg-[var(--bg-secondary)] shadow-xs flex flex-col items-center">
               <div 
                 className="relative select-none mx-auto"
@@ -691,7 +661,7 @@ export default function CalibrationModal({
                           ? { borderColor: 'var(--info-color)' }
                           : {})
                       }}
-                      title={`键位: ${k.label} | 霍尔AD: ${hallVal} | 状态: ${isCalibrated ? '已校准' : '未校准'}`}
+                      title={`键位: ${k.label} | 霍尔AD: ${hallVal} | 状态: ${isCalibrated ? '已校准' : '待校准'}`}
                       className={`rounded-[5px] border flex flex-col items-center justify-between py-0.5 px-0.5 transition-all duration-75 select-none cursor-pointer ${
                         isPressed
                           ? 'scale-[0.96] z-10'
@@ -702,19 +672,30 @@ export default function CalibrationModal({
                           : 'bg-[var(--bg-tertiary)] border-[var(--border-color)] text-[var(--text-primary)] hover:border-[var(--info-color)] shadow-2xs'
                       }`}
                     >
+                      {/* 顶部：1:1 还原官方校准页面的 已校准 / 待校准 状态字样 (未校准高亮鲜红，校准后白绿色) */}
+                      <span 
+                        className={`text-[8px] font-bold leading-none ${
+                          isPressed || isCalibrated
+                            ? 'text-emerald-100 opacity-90'
+                            : 'text-rose-500 dark:text-rose-400 font-extrabold'
+                        }`}
+                      >
+                        {isCalibrated ? '已校准' : '待校准'}
+                      </span>
+
                       <span 
                         style={{ color: isPressed || isCalibrated ? '#ffffff' : undefined }}
-                        className={`font-mono font-bold text-xs sm:text-[13px] leading-tight my-auto ${
+                        className={`font-mono font-bold text-[11px] sm:text-xs leading-none my-0.5 ${
                           isPressed || isCalibrated ? 'text-white' : 'text-[var(--text-primary)]'
                         }`}
                       >
                         {k.label}
                       </span>
 
-                      <div className="h-1.5 flex items-center justify-center w-full">
+                      <div className="h-1 flex items-center justify-center w-full">
                         <span 
                           style={{ color: isPressed || isCalibrated ? '#d1fae5' : undefined }}
-                          className={`text-[8.5px] font-mono leading-none tracking-tighter ${
+                          className={`text-[7.5px] font-mono leading-none tracking-tighter ${
                             isPressed || isCalibrated
                               ? 'text-emerald-100 font-medium'
                               : 'text-[var(--text-disabled)]'
@@ -730,33 +711,33 @@ export default function CalibrationModal({
             </div>
           </div>
 
-          {/* 3. 实时行程深度波形监控 (自适应弹性填充高度) */}
-          <div className="p-2.5 mx-3.5 mb-2.5 rounded-[10px] border border-[var(--border-color)] bg-[var(--bg-secondary)] flex flex-col flex-1 min-h-[125px] shadow-2xs">
-            <div className="flex items-center justify-between pb-1.5 mb-1.5 border-b border-[var(--border-color)]">
+          {/* 3. 实时行程深度波形监控 (紧凑规整，高为 76px，绝不挤占下方卡片空间) */}
+          <div className="p-2 px-3 mx-3.5 mb-2 rounded-[9px] border border-[var(--border-color)] bg-[var(--bg-secondary)] flex flex-col shrink-0 h-[76px] shadow-2xs">
+            <div className="flex items-center justify-between pb-1 mb-1 border-b border-[var(--border-color)]">
               <span className="text-xs font-bold text-[var(--text-primary)] flex items-center gap-1.5">
-                <Activity className="w-4 h-4 text-[#0052ef]" />
+                <Activity className="w-3.5 h-3.5 text-[#0052ef]" />
                 {t('calibration.waveformTitle')}
               </span>
-              <span className="text-xs font-mono text-[var(--text-secondary)]">
+              <span className="text-[11px] font-mono text-[var(--text-secondary)]">
                 {t('calibration.currentKeyLabel')} <strong className="text-[#0052ef]">{activeKey?.label || t('calibration.noneKey')}</strong> ({activeAxisInfo.name} · {t('calibration.maxTravelPrefix')} {maxTravel.toFixed(2)}mm) | {t('calibration.currentDepthLabel')} <strong className="text-emerald-500 font-bold">{currentTravel.toFixed(2)} mm</strong>
               </span>
             </div>
 
-            <div className="relative flex-1 w-full min-h-[75px] flex items-stretch">
-              <div className="w-12 h-full flex flex-col justify-between items-end pr-2 text-[9.5px] font-mono text-zinc-400 select-none shrink-0 py-1">
+            <div className="relative flex-1 w-full min-h-0 flex items-stretch">
+              <div className="w-10 h-full flex flex-col justify-between items-end pr-1.5 text-[9px] font-mono text-zinc-400 select-none shrink-0 py-0.5">
                 <span>{maxTravel.toFixed(1)}mm</span>
                 <span>{(maxTravel * 0.50).toFixed(1)}mm</span>
                 <span>0mm</span>
               </div>
 
-              <div className="flex-1 h-full relative overflow-hidden bg-slate-50/50 dark:bg-zinc-800/40 rounded-[6px] border border-zinc-200/60 dark:border-zinc-700/60">
-                <div className="absolute inset-0 flex flex-col justify-between pointer-events-none py-1">
+              <div className="flex-1 h-full relative overflow-hidden bg-slate-50/50 dark:bg-zinc-800/40 rounded-[5px] border border-zinc-200/60 dark:border-zinc-700/60">
+                <div className="absolute inset-0 flex flex-col justify-between pointer-events-none py-0.5">
                   <div className="w-full h-[1px] bg-zinc-200/50 dark:bg-zinc-700/50" />
                   <div className="w-full h-[1px] bg-zinc-200/50 dark:bg-zinc-700/50" />
                   <div className="w-full h-[1px] bg-zinc-300 dark:bg-zinc-600" />
                 </div>
 
-                <svg className="w-full h-full" preserveAspectRatio="none" viewBox="0 0 650 100">
+                <svg className="w-full h-full" preserveAspectRatio="none" viewBox="0 0 650 60">
                   <defs>
                     <linearGradient id="waveGradient" x1="0" y1="0" x2="0" y2="1">
                       <stop offset="0%" stopColor="#0052ef" stopOpacity="0.45" />
@@ -766,11 +747,11 @@ export default function CalibrationModal({
                   {(() => {
                     const points = travelHistory.map((val, idx) => {
                       const x = (idx / (travelHistory.length - 1)) * 650;
-                      const y = 92 - (Math.min(maxTravel, Math.max(0, val)) / (maxTravel || 3.55)) * 84;
+                      const y = 54 - (Math.min(maxTravel, Math.max(0, val)) / (maxTravel || 3.55)) * 48;
                       return `${x.toFixed(1)},${y.toFixed(1)}`;
                     });
                     const dLine = `M ${points.join(' L ')}`;
-                    const dArea = `${dLine} L 650,100 L 0,100 Z`;
+                    const dArea = `${dLine} L 650,60 L 0,60 Z`;
                     return (
                       <>
                         <path d={dArea} fill="url(#waveGradient)" />
@@ -783,8 +764,8 @@ export default function CalibrationModal({
             </div>
           </div>
 
-          {/* 4. 下方分栏：左侧触发键程剖面标尺 + 右侧实时监控统计 (弹性填充剩余高度) */}
-          <div className="p-2.5 mx-3.5 mb-3 grid grid-cols-12 gap-3 border border-[var(--border-color)] rounded-[10px] bg-[var(--bg-tertiary)] flex-[1.15] min-h-[175px] shadow-2xs">
+          {/* 4. 下方分栏：左侧触发键程剖面标尺 + 右侧实时监控统计 (高度固定 172px，绝不挤压拉伸，展开/收起说明均100%完美契合) */}
+          <div className="p-2.5 mx-3.5 mb-2.5 grid grid-cols-12 gap-3 border border-[var(--border-color)] rounded-[10px] bg-[var(--bg-tertiary)] shrink-0 h-[172px] shadow-2xs">
             {/* 左侧：迈从同款触发键程 2D 剖面与刻度柱 */}
             <div className="col-span-12 md:col-span-5 flex flex-col justify-stretch h-full">
               <KeyTravelIndicator
