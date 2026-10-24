@@ -49,7 +49,7 @@ import {
   VENDOR_BRANDS,
   getSparklinkDeviceMeta,
   getDriverRoute,
-} from './sparklinkDevices';
+} from './sparklinkDevices.js';
 
 export {
   SPARKLINK_DEVICE_LIST,
@@ -96,7 +96,7 @@ export const SPARKLINK_PRIMARY_VIDS = [0x1ca6];
  * ③ 其它 VID 且未入库           → 不可见
  *    （例：Dragonfly 0x391D:0x1A36、iKF / MCHOSE 0x38xx 等历史授权残留，避免首页杂乱）
  */
-import { customDeviceRegistry } from '../services/customDeviceRegistry';
+import { customDeviceRegistry } from '../services/customDeviceRegistry.js';
 
 export function isSupportedSparklinkDevice(vendorId, productId) {
   if (vendorId == null || productId == null) return false;
@@ -200,6 +200,51 @@ export const DEVICE_PROFILES = {
       rowLayout: [17, 17],
       name: '装饰灯1',
       isStripTube: true,
+    },
+  },
+  AE61_PRO: {
+    id: 'ae61_pro',
+    brand: '江湾 Everglide',
+    model: 'AE61 Pro',
+    name: '江湾 AE61 Pro 磁轴键盘',
+    shortName: 'AE61 Pro',
+    type: 'keyboard',
+    layout: '60keys',
+    layoutCategory: '61keys',
+    layoutName: '60%经典配列 (61键)',
+    totalKeys: 61,
+    totalKeyCount: 61,
+    vendorId: 0x1ca6,
+    productId: 0x300b,
+    connectionType: 'wired',
+    connectionLabel: 'USB 极速有线',
+    isWired: true,
+    hasBattery: false,
+    maxPollingRate: 8000,
+    supportedPollingRates: [250, 500, 1000, 2000, 4000, 8000],
+    defaultPollingRate: 8000,
+    minActuationPoint: 0.001,
+    defaultAxis: '磁玉 Pro',
+    supportedSwitches: [
+      '磁玉 Pro',
+      '磁玉轴',
+      '库里南轴',
+      '天际线轴',
+      '神马轴',
+      '万磁王',
+    ],
+    features: {
+      magneticAxis: true,
+      rtSupport: true,
+      socdSupport: true,
+      dksSupport: true,
+      mptSupport: true,
+      furyMode: true,
+      rgbLighting: true,
+      hallCalibration: true,
+      continuousRt: false,
+      doubleLighting: true,
+      stripLighting: true,
     },
   },
   ES68: {
@@ -592,6 +637,18 @@ export function analyzeDeviceCapabilities(descriptor = {}) {
       productId,
     };
   } else if (
+    (vendorId === 0x1ca6 && (productId === 0x300b || productId === 12299)) ||
+    (vendorId === 7334 && (productId === 12299 || productId === 0x300b)) ||
+    name.includes('AE61') || name.includes('AE61PRO') || name.includes('AE61-PRO')
+  ) {
+    baseProfile = {
+      ...DEVICE_PROFILES.AE61_PRO,
+      name: productName || DEVICE_PROFILES.AE61_PRO.name,
+      shortName: productName ? productName.split(' ')[0] : DEVICE_PROFILES.AE61_PRO.shortName,
+      vendorId: vendorId || 0x1ca6,
+      productId: productId || 0x300b,
+    };
+  } else if (
     (vendorId === 0x1ca6 && (productId === 0x300d || productId === 12301)) ||
     (vendorId === 7334 && (productId === 12301 || productId === 0x300d)) ||
     name.includes('AE64') || name.includes('AE64MAX') || name.includes('AE64-MAX')
@@ -676,32 +733,25 @@ export function analyzeDeviceCapabilities(descriptor = {}) {
       shortName: productName ? productName.split(' ')[0] : DEVICE_PROFILES.SPARKLINK_104.shortName,
     };
   } else if (
-    // 60 配列 (60, 61, META60, XS60, FLUX60, V60 等)
-    name.includes('60') || name.includes('61') || name.includes('META60') || name.includes('FLUX60')
+    // 60 / 61 配列 (60, 61, META60, XS60, FLUX60, V60, Chase 61 等)
+    name.includes('60') || name.includes('61') || name.includes('META60') || name.includes('FLUX60') || name.includes('CHASE 61')
   ) {
     baseProfile = {
       ...DEVICE_PROFILES.SPARKLINK_60,
+      layout: '60keys',
+      layoutCategory: '61keys',
+      layoutName: '60%经典配列 (61键)',
+      totalKeys: 61,
+      totalKeyCount: 61,
       name: productName || DEVICE_PROFILES.SPARKLINK_60.name,
       shortName: productName ? productName.split(' ')[0] : DEVICE_PROFILES.SPARKLINK_60.shortName,
     };
-  } else if (
-    (vendorId === 0x1ca6 && (productId === 0x300d || productId === 12301)) ||
-    (vendorId === 7334 && (productId === 12301 || productId === 0x300d)) ||
-    name.includes('AE64') || name.includes('AE64MAX') || name.includes('AE64-MAX')
-  ) {
-    baseProfile = {
-      ...DEVICE_PROFILES.AE64_MAX,
-      name: productName || DEVICE_PROFILES.AE64_MAX.name,
-      shortName: productName ? productName.split(' ')[0] : DEVICE_PROFILES.AE64_MAX.shortName,
-      vendorId: vendorId || 0x1ca6,
-      productId: productId || 0x300d,
-    };
-  } else if (productName) {
+  } else if (productName || typeof keyCount === 'number') {
     // 根据硬件按键数量做二次推断
     let fallbackLayout = '64keys';
     let fallbackLayoutName = '左移64配列';
     if (typeof keyCount === 'number') {
-      if (keyCount <= 61) { fallbackLayout = '60keys'; fallbackLayoutName = '60%经典配列'; }
+      if (keyCount <= 61) { fallbackLayout = '60keys'; fallbackLayoutName = '60%经典配列 (61键)'; }
       else if (keyCount <= 64) { fallbackLayout = '64keys'; fallbackLayoutName = '左移64配列'; }
       else if (keyCount <= 70) { fallbackLayout = '68keys'; fallbackLayoutName = '紧凑68配列'; }
       else if (keyCount <= 84) { fallbackLayout = '75keys'; fallbackLayoutName = '75%电竞配列'; }
@@ -710,22 +760,38 @@ export function analyzeDeviceCapabilities(descriptor = {}) {
       else { fallbackLayout = '104keys'; fallbackLayoutName = '104全尺寸配列'; }
     }
     const brand = catalogMeta ? catalogMeta.brand : null;
+    const is61 = (keyCount && keyCount <= 61) || fallbackLayout === '60keys';
     baseProfile = {
       ...DEVICE_PROFILES.GENERIC_KEYBOARD,
       brand: brand || baseProfile.brand,
-      name: productName,
-      shortName: productName.split(' ')[0] || productName,
+      name: productName || (brand ? `${brand} 客制化磁轴键盘` : (keyCount ? `${fallbackLayoutName} 磁轴键盘` : '星闪客制化磁轴键盘')),
+      shortName: productName ? (productName.split(' ')[0] || productName) : (brand || '客制化键盘'),
       layout: fallbackLayout,
+      layoutCategory: is61 ? '61keys' : undefined,
       layoutName: fallbackLayoutName,
+      totalKeys: is61 ? 61 : (keyCount || undefined),
+      totalKeyCount: is61 ? 61 : (keyCount || undefined),
+      keyCount: keyCount || (is61 ? 61 : undefined),
       vendorId,
       productId,
     };
   } else if (catalogMeta) {
+    const is61or60 = (catalogMeta.layout && (catalogMeta.layout.includes('60') || catalogMeta.layout.includes('61'))) ||
+      (catalogMeta.layoutCategory && (catalogMeta.layoutCategory.includes('60') || catalogMeta.layoutCategory.includes('61'))) ||
+      catalogMeta.totalKeyCount === 61 || catalogMeta.totalKeyCount === 60 ||
+      (catalogMeta.productName && (catalogMeta.productName.includes('61') || catalogMeta.productName.includes('60')));
+    const metaLayout = is61or60 ? '60keys' : (catalogMeta.layout || 'standard');
+    const metaLayoutName = is61or60 ? '60%经典配列 (61键)' : (catalogMeta.layoutName || '标准配列');
     baseProfile = {
       ...DEVICE_PROFILES.GENERIC_KEYBOARD,
-      brand: catalogMeta.brand,
-      name: `${catalogMeta.brand} 极速星闪键盘`,
-      shortName: catalogMeta.brand,
+      brand: catalogMeta.brand || baseProfile.brand,
+      name: catalogMeta.productName || (catalogMeta.brand ? `${catalogMeta.brand} 极速星闪键盘` : '星闪客制化磁轴键盘'),
+      shortName: catalogMeta.brand || '星闪键盘',
+      layout: metaLayout,
+      layoutCategory: is61or60 ? '61keys' : undefined,
+      layoutName: metaLayoutName,
+      totalKeys: is61or60 ? 61 : (catalogMeta.totalKeyCount || undefined),
+      totalKeyCount: is61or60 ? 61 : (catalogMeta.totalKeyCount || undefined),
       vendorId,
       productId,
     };

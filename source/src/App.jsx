@@ -2030,7 +2030,38 @@ export default function App() {
   useEffect(() => {
     if (isConnected) {
       keyboardService.getKeyMatrix().then((matrix) => {
-        if (matrix && matrix.length === VISUAL_KEY_ORDER.length) {
+        if (!matrix || !matrix.length) {
+          setHwKeyCoords(null);
+          return;
+        }
+
+        // 硬件物理矩阵自愈：若当前视觉配列键数与硬件底层矩阵不一致且未手动指定覆盖，自愈切换至真实物理配列
+        if (!overrideLayoutKey && matrix.length !== VISUAL_KEY_ORDER.length) {
+          if (matrix.length === 60 || matrix.length === 61) {
+            setOverrideLayoutKey('60');
+            return;
+          } else if (matrix.length === 63 || matrix.length === 64) {
+            setOverrideLayoutKey('64');
+            return;
+          } else if (matrix.length >= 67 && matrix.length <= 71) {
+            setOverrideLayoutKey('68');
+            return;
+          } else if (matrix.length >= 80 && matrix.length <= 84) {
+            setOverrideLayoutKey('75');
+            return;
+          } else if (matrix.length >= 87 && matrix.length <= 89) {
+            setOverrideLayoutKey('87');
+            return;
+          } else if (matrix.length >= 95 && matrix.length <= 100) {
+            setOverrideLayoutKey('98');
+            return;
+          } else if (matrix.length >= 104) {
+            setOverrideLayoutKey('104');
+            return;
+          }
+        }
+
+        if (matrix.length === VISUAL_KEY_ORDER.length) {
           // 按序对齐：视觉键位 i ↔ 硬件矩阵第 i 个键
           const map = {};
           VISUAL_KEY_ORDER.forEach((k, i) => {
@@ -2045,15 +2076,14 @@ export default function App() {
           console.log('[SparkLink HID] 设备矩阵坐标已同步 (官方 getKeyLayoutStyle)');
         } else {
           setHwKeyCoords(null);
-          if (matrix) {
-            console.warn('[Spark HID] 设备矩阵键数与视觉布局不一致:', matrix.length, '回落视觉坐标');
-          }
+          console.warn('[Spark HID] 设备矩阵键数与视觉布局不一致:', matrix.length, '回落视觉坐标');
         }
       });
     } else {
       setHwKeyCoords(null);
+      setOverrideLayoutKey(null);
     }
-  }, [isConnected]);
+  }, [isConnected, overrideLayoutKey, VISUAL_KEY_ORDER.length]);
 
   // 解析按键的硬件矩阵坐标 (优先经过真机校验的精确行列坐标，支持空格 5 颗独立灯珠，回落动态探针)
   const findHwCoords = useCallback((id) => {

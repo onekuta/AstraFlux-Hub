@@ -531,7 +531,8 @@ export const LAYOUT_98 = [
 ];
 
 export const SUPPORTED_KEYBOARD_LAYOUTS = [
-  { key: '60', name: '60% 经典配列', keyCount: 61, layout: LAYOUT_60, widthUnits: 15, heightUnits: 5 },
+  { key: '60', name: '60% 经典配列 (61键)', keyCount: 61, layout: LAYOUT_60, widthUnits: 15, heightUnits: 5 },
+  { key: '61', name: '60% 经典配列 (61键)', keyCount: 61, layout: LAYOUT_60, widthUnits: 15, heightUnits: 5 },
   { key: '64', name: '左移 64 配列', keyCount: 64, layout: LAYOUT_64, widthUnits: 15, heightUnits: 5 },
   { key: '68', name: '紧凑 68 配列', keyCount: 68, layout: LAYOUT_68, widthUnits: 16, heightUnits: 5 },
   { key: '75', name: '75% 电竞配列', keyCount: 82, layout: LAYOUT_75, widthUnits: 16, heightUnits: 6.15 },
@@ -560,28 +561,65 @@ export function getLayoutBounds(layout) {
 
 export function getLayoutDisplayName(layout) {
   const count = getKeyCountForLayout(layout);
+  if (count === 61 || count === 60) return '60% 经典配列 (61键)';
   const found = SUPPORTED_KEYBOARD_LAYOUTS.find((item) => item.keyCount === count);
   if (found) return found.name;
   return `自定义配列 (${count}键)`;
 }
 
 export function getLayoutByKey(key) {
+  if (key === '61' || key === '60') return LAYOUT_60;
   const item = SUPPORTED_KEYBOARD_LAYOUTS.find((l) => l.key === key);
   return item ? item.layout : LAYOUT_68;
 }
 
 export function resolveLayoutForProfile(profile) {
   if (!profile) return LAYOUT_68;
-  const lKey = (profile.layout || '').toLowerCase();
+  const lKey = (profile.layout || profile.layoutCategory || '').toLowerCase();
   const mName = (profile.model || profile.name || '').toUpperCase();
+  const keyCount = Number(
+    profile.totalKeyCount ||
+    profile.totalKeys ||
+    profile.keyCount ||
+    profile.matrixLayout?.totalKeys ||
+    profile._hardwareDetails?.totalKeys ||
+    0
+  );
 
+  // 1. 优先按 61 键/60 键核心强特征精确识别 (解决各类 61 键适配文件或硬件上报失效被回落至 68 键的致命 Bug)
+  if (
+    keyCount === 61 ||
+    keyCount === 60 ||
+    lKey.includes('61') ||
+    lKey.includes('60') ||
+    mName.includes('AE61') ||
+    mName.includes('CHASE 61') ||
+    mName.includes('61 PRO') ||
+    mName.includes('61KEY') ||
+    /\b61\b/.test(mName) ||
+    /\b60\b/.test(mName)
+  ) {
+    return LAYOUT_60;
+  }
+
+  // 2. 按其它总键数硬件真实数值判定
+  if (keyCount === 63 || keyCount === 64) return LAYOUT_64;
+  if (keyCount >= 67 && keyCount <= 71) return LAYOUT_68;
+  if (keyCount >= 75 && keyCount <= 84) return LAYOUT_75;
+  if (keyCount >= 87 && keyCount <= 89) return LAYOUT_87;
+  if (keyCount >= 95 && keyCount <= 100) return LAYOUT_98;
+  if (keyCount >= 104) return LAYOUT_104;
+
+  // 3. 按型号名和 layout 关键词判定
   if (lKey.includes('104') || mName.includes('104') || mName.includes('108')) return LAYOUT_104;
   if (lKey.includes('98') || mName.includes('98') || mName.includes('980') || mName.includes('100')) return LAYOUT_98;
   if (lKey.includes('87') || lKey.includes('80') || lKey.includes('tkl') || mName.includes('87') || mName.includes('80') || mName.includes('TKL')) return LAYOUT_87;
   if (lKey.includes('75') || mName.includes('75')) return LAYOUT_75;
   if (lKey.includes('68') || mName.includes('68') || mName.includes('ES68')) return LAYOUT_68;
   if (lKey.includes('64') || mName.includes('64') || mName.includes('DV63') || mName.includes('AE64')) return LAYOUT_64;
-  if (lKey.includes('60') || lKey.includes('61') || mName.includes('60') || mName.includes('61')) return LAYOUT_60;
+
+  // 4. 兜底保护：若 keyCount <= 61 且 > 0，按 61 键处理
+  if (keyCount > 0 && keyCount <= 61) return LAYOUT_60;
 
   return LAYOUT_68;
 }

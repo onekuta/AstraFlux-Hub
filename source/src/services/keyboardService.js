@@ -18,11 +18,13 @@ import { customDeviceRegistry } from './customDeviceRegistry';
 const MODEL_KEYWORDS = [
   { keyword: 'ES68', profile: 'ES68' },
   { keyword: 'AE64', profile: 'AE64_MAX' },
+  { keyword: 'AE61', profile: 'AE61_PRO' },
   { keyword: 'DV63', profile: 'DV63' },
   { keyword: '75', profile: 'SPARKLINK_75' },
   { keyword: '87', profile: 'SPARKLINK_87' },
   { keyword: '98', profile: 'SPARKLINK_98' },
   { keyword: '104', profile: 'SPARKLINK_104' },
+  { keyword: '61', profile: 'AE61_PRO' },
   { keyword: '60', profile: 'SPARKLINK_60' },
 ];
 
@@ -513,7 +515,7 @@ class KeyboardService {
         this.deviceProfile = analyzeDeviceCapabilities({
           vendorId: targetDevice.vendorId,
           productId: targetDevice.productId,
-          productName: targetDevice.productName || '',
+          productName: chipUsbName || targetDevice.productName || '',
         });
 
         // 关键性能优化：握手成功后立即广播已连接状态，实现 0 毫秒感知即刻点亮 UI
@@ -602,11 +604,19 @@ class KeyboardService {
               this.usbModeStatus = usbRes;
             }
 
+            // 6. 尝试读取物理硬件按键矩阵总键数（用于无损纠正配列与键位数量）
+            let matrixKeys = null;
+            try {
+              matrixKeys = await safeQuery(() => this.getKeyMatrix(), 800);
+            } catch (e) {}
+
+            const resolvedName = this.deviceInfo?.name || this.deviceInfo?.model || targetDevice.productName || '';
             this.deviceProfile = analyzeDeviceCapabilities({
               vendorId: targetDevice.vendorId,
               productId: targetDevice.productId,
-              productName: targetDevice.productName || '',
+              productName: resolvedName,
               sdkRates,
+              keyCount: matrixKeys?.length || undefined,
             });
 
             this.emitChange();
