@@ -10,6 +10,8 @@ const RAW_PRIMARY_AXES = [
     id: 788,
     hardwareAxisId: 788,
     axisV2Id: 12608,
+    axisRangeMax: 3550,
+    axisCoefficient: 18600,
     name: '天际线轴',
     shortName: '天际线',
     brand: '江湾 (Everglide)',
@@ -19,13 +21,14 @@ const RAW_PRIMARY_AXES = [
     color: '#4dd1f9',
     badge: '高导光柱',
     recommendedAP: 0.35,
-    axisCoefficient: 1.0,
     description: '江湾天际线磁轴，高导光柱，极速回弹，3.55mm 黄金行程。',
   },
   {
     id: 1219,
     hardwareAxisId: 1219,
     axisV2Id: 19504,
+    axisRangeMax: 3600,
+    axisCoefficient: 19456,
     name: '库里南轴',
     shortName: '库里南',
     brand: '江湾 (Everglide)',
@@ -35,12 +38,14 @@ const RAW_PRIMARY_AXES = [
     color: '#eaeaea',
     badge: '江湾原厂',
     recommendedAP: 0.40,
-    axisCoefficient: 1.0,
     description: '江湾库里南磁轴，双轨超顺滑，HiFi 敲击音。',
   },
   {
     id: 1002,
     hardwareAxisId: 102,
+    axisV2Id: 1632,
+    axisRangeMax: 3450,
+    axisCoefficient: 20000,
     name: '神马轴',
     shortName: '神马',
     brand: '神马 (Shenma)',
@@ -50,72 +55,82 @@ const RAW_PRIMARY_AXES = [
     color: '#2563eb',
     badge: '初始高磁通',
     recommendedAP: 0.35,
-    axisCoefficient: 1.0,
     description: '神马磁轴，初始磁通量高，手感清脆顺滑，支持 0.001mm 极限响应。',
   },
   {
-    id: 1,
-    hardwareAxisId: 1,
+    id: 258,
+    hardwareAxisId: 258,
+    axisV2Id: 4128,
+    axisRangeMax: 3390,
+    axisCoefficient: 20000,
     name: '磁玉 Pro',
     shortName: '磁玉Pro',
     brand: '佳达隆 (GATERON)',
-    maxTravel: 3.50,
+    maxTravel: 3.39,
     driveRange: 3.30,
     deadzone: 0.20,
     color: '#70cb9a',
     badge: '佳达隆标配',
     recommendedAP: 0.40,
-    axisCoefficient: 1.0,
-    description: '佳达隆原厂磁玉 Pro 磁轴，双轨结构，高透光上盖，3.5mm 顺滑低抖，出色的 HiFi 声音表现。',
+    description: '佳达隆原厂磁玉 Pro 磁轴，双轨结构，高透光上盖，顺滑低抖，出色的 HiFi 声音表现。',
   },
   {
     id: 1003,
-    hardwareAxisId: 1,
+    hardwareAxisId: 258,
+    axisV2Id: 4128,
+    axisRangeMax: 3390,
+    axisCoefficient: 20000,
     name: '磁玉 Pro 超竞版',
     shortName: '磁玉超竞',
     brand: '佳达隆 (GATERON)',
-    maxTravel: 3.50,
+    maxTravel: 3.39,
     driveRange: 3.30,
     deadzone: 0.20,
     color: '#3b82f6',
     badge: '超竞特调',
     recommendedAP: 0.35,
-    axisCoefficient: 1.0,
     description: '佳达隆特调定制超竞版磁轴，双轨结构，高频电竞调校，极速触发。',
   },
   {
-    id: 18,
-    hardwareAxisId: 18,
+    id: 257,
+    hardwareAxisId: 257,
+    axisV2Id: 4112,
+    axisRangeMax: 3430,
+    axisCoefficient: 22800,
     name: '磁玉轴',
     shortName: '磁玉',
     brand: '佳达隆 (GATERON)',
-    maxTravel: 3.30,
+    maxTravel: 3.43,
     driveRange: 3.30,
     deadzone: 0.20,
     color: '#a04444',
     badge: '经典HiFi',
     recommendedAP: 0.40,
-    axisCoefficient: 1.0,
     description: '全POM材质，顺滑度极高，经典声音表现。',
   },
   {
-    id: 4,
-    hardwareAxisId: 4,
+    id: 259,
+    hardwareAxisId: 259,
+    axisV2Id: 4144,
+    axisRangeMax: 3400,
+    axisCoefficient: 19000,
     name: '磁玉 Gaming',
     shortName: '磁玉Gaming',
     brand: '佳达隆 (GATERON)',
-    maxTravel: 3.50,
+    maxTravel: 3.40,
     driveRange: 3.30,
     deadzone: 0.20,
     color: '#a7e1d6',
     badge: '电竞强化',
     recommendedAP: 0.35,
-    axisCoefficient: 1.0,
     description: '聚光大通孔，触发行程短，回弹跟手迅速。',
   },
   {
     id: 3,
     hardwareAxisId: 3,
+    axisV2Id: 48,
+    axisRangeMax: 3500,
+    axisCoefficient: 20000,
     name: 'TTC 万磁王',
     shortName: '万磁王',
     brand: 'TTC',
@@ -125,12 +140,14 @@ const RAW_PRIMARY_AXES = [
     color: '#5f3873',
     badge: '极速响应',
     recommendedAP: 0.30,
-    axisCoefficient: 1.0,
     description: '聚光镜大通孔设计，初始磁通量高，RT 响应极佳。',
   },
   {
     id: 2,
     hardwareAxisId: 2,
+    axisV2Id: 32,
+    axisRangeMax: 3400,
+    axisCoefficient: 20000,
     name: 'TTC 万磁王 RGB',
     shortName: '万磁王RGB',
     brand: 'TTC',
@@ -140,12 +157,14 @@ const RAW_PRIMARY_AXES = [
     color: '#a04444',
     badge: 'RGB聚光',
     recommendedAP: 0.30,
-    axisCoefficient: 1.0,
     description: '全透聚光柱设计，灯光效果拔群。',
   },
   {
     id: 8,
     hardwareAxisId: 8,
+    axisV2Id: 128,
+    axisRangeMax: 4000,
+    axisCoefficient: 20000,
     name: '佳达隆双轨磁白轴',
     shortName: '双轨磁白',
     brand: '佳达隆 (GATERON)',
@@ -155,7 +174,6 @@ const RAW_PRIMARY_AXES = [
     color: '#c45353',
     badge: '经典电竞',
     recommendedAP: 0.35,
-    axisCoefficient: 1.0,
     description: '双轨导向结构，4.0mm 舒适触发行程，手感顺滑。',
   },
 ];
@@ -201,37 +219,72 @@ export function getDefaultAxisForProfile(profile) {
  * 依据硬件 Esc/Space 键底层上报的电气性能结构实时解密真实轴体：
  * 实测：AE64-MAX 固件返回 { axis: 0, axisV2Id: 12608, axisRangeMax: 3550, axisCoefficient: 18600 }
  * 对应官网 V3 轴体库: detailId 12608 -> 天际线轴 (3.55mm, 江湾)
+ * 库里南轴: axisV2Id: 19504, axisRangeMax: 3600, axisCoefficient: 19456
+ * 磁玉Pro: axisV2Id: 4128, axisRangeMax: 3390, axisCoefficient: 20000
+ * 磁玉轴: axisV2Id: 4112, axisRangeMax: 3430, axisCoefficient: 22800
  */
-export function resolveAxisByHardwarePerf(perf, profile) {
+export function resolveAxisByHardwarePerf(perf, profile, candidateList = null) {
   if (!perf) return getDefaultAxisForProfile(profile);
 
+  const list = Array.isArray(candidateList) && candidateList.length > 0 ? candidateList : PRIMARY_AXES;
+
   // 1. 优先根据硬件上报的真实 axisV2Id 精准匹配
-  const v2Id = perf.axisV2Id;
-  if (v2Id) {
-    if (v2Id === 12608) {
-      return PRIMARY_AXES.find(a => a.name === '天际线轴') || PRIMARY_AXES[0];
+  const v2Id = Number(perf.axisV2Id);
+  if (v2Id && v2Id > 0) {
+    if (v2Id === 12608 || v2Id === 13472) {
+      const match = list.find(a => a.name === '天际线轴');
+      if (match) return match;
     }
     if (v2Id === 19504) {
-      return PRIMARY_AXES.find(a => a.name === '库里南轴') || PRIMARY_AXES[1];
+      const match = list.find(a => a.name === '库里南轴');
+      if (match) return match;
     }
-    const foundV2 = PRIMARY_AXES.find(a => a.axisV2Id === v2Id);
+    if (v2Id === 4128) {
+      const match = list.find(a => a.name === '磁玉 Pro' || a.name === '磁玉Pro');
+      if (match) return match;
+    }
+    if (v2Id === 4112) {
+      const match = list.find(a => a.name === '磁玉轴');
+      if (match) return match;
+    }
+    const foundV2 = list.find(a => Number(a.axisV2Id) === v2Id);
     if (foundV2) return foundV2;
+
+    const baseId = Math.floor(v2Id / 16);
+    const foundById = list.find(a => Number(a.id) === baseId || Number(a.hardwareAxisId) === baseId);
+    if (foundById) return foundById;
   }
 
   // 2. 根据硬件上报的真实行程极限 axisRangeMax 精准匹配 (3550 -> 3.55mm 天际线轴)
-  if (perf.axisRangeMax === 3550) {
-    return PRIMARY_AXES.find(a => a.name === '天际线轴') || PRIMARY_AXES[0];
-  }
-  if (perf.axisRangeMax === 3600) {
-    return PRIMARY_AXES.find(a => a.name === '库里南轴') || PRIMARY_AXES[1];
-  }
-  if (perf.axisRangeMax === 3450) {
-    return PRIMARY_AXES.find(a => a.name === '神马轴') || PRIMARY_AXES[2];
+  const rangeMax = Number(perf.axisRangeMax);
+  if (rangeMax && rangeMax > 0) {
+    if (rangeMax === 3550 || rangeMax === 3500) {
+      const match = list.find(a => a.name === '天际线轴');
+      if (match) return match;
+    }
+    if (rangeMax === 3600) {
+      const match = list.find(a => a.name === '库里南轴');
+      if (match) return match;
+    }
+    if (rangeMax === 3390) {
+      const match = list.find(a => a.name === '磁玉 Pro' || a.name === '磁玉Pro');
+      if (match) return match;
+    }
+    if (rangeMax === 3430) {
+      const match = list.find(a => a.name === '磁玉轴');
+      if (match) return match;
+    }
+    if (rangeMax === 3450) {
+      const match = list.find(a => a.name === '神马轴');
+      if (match) return match;
+    }
+    const foundByRange = list.find(a => Number(a.axisRangeMax) === rangeMax);
+    if (foundByRange) return foundByRange;
   }
 
-  // 3. 根据硬件 axis id 匹配
+  // 3. 根据硬件 axis id 匹配 (v1 模式)
   if (perf.axis !== undefined && perf.axis !== null && perf.axis > 0) {
-    const foundAxis = PRIMARY_AXES.find(a => a.hardwareAxisId === perf.axis || a.id === perf.axis);
+    const foundAxis = list.find(a => a.hardwareAxisId === perf.axis || a.id === perf.axis);
     if (foundAxis) return foundAxis;
   }
 
@@ -248,7 +301,7 @@ class AxisService {
   }
 
   resolveAxisByHardwarePerf(perf, profile) {
-    return resolveAxisByHardwarePerf(perf, profile);
+    return resolveAxisByHardwarePerf(perf, profile, this.axes);
   }
 
   // 获取完整轴体校准列表（优先星闪云端 API，离线时回退到缓存）
@@ -297,6 +350,41 @@ class AxisService {
     return this.axes;
   }
 
+  // 针对已连接键盘动态拉取官方 V3 分类轴体库 (若键盘提供 boardId / vid / pid)
+  async loadAxisListV3({ boardId, vid, pid }) {
+    if (!boardId && !vid && !pid) return this.axes;
+    try {
+      const bId = String(boardId || '').includes('0x')
+        ? String(boardId).replace('0x', '').padStart(8, '0')
+        : Number(boardId || 0).toString(16).padStart(8, '0');
+      const v = typeof vid === 'number' ? vid.toString(16).padStart(4, '0') : String(vid || '').padStart(4, '0');
+      const p = typeof pid === 'number' ? pid.toString(16).padStart(4, '0') : String(pid || '').padStart(4, '0');
+      
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 3500);
+      const url = `https://api.sparklinkplayjoy.com/api/v1/getAxisListV3?board_id=${bId}&vid=${v}&pid=${p}&t=${Date.now()}`;
+      
+      const resp = await fetch(url, {
+        headers: {
+          'Xs-API-Key': '860DE3DB584158536BC89030D8640E29',
+        },
+        signal: controller.signal,
+      });
+      clearTimeout(timeoutId);
+      if (resp.ok) {
+        const json = await resp.json();
+        if (json.code === 200 && Array.isArray(json.data) && json.data.length > 0) {
+          console.log('[AxisService] 成功从星闪云端拉取当前键盘专有 V3 轴体库:', json.data.length, '个分类');
+          this.mergeV3Axes(json.data);
+          return this.axes;
+        }
+      }
+    } catch (err) {
+      console.warn('[AxisService] 键盘专有 V3 轴体库拉取略过:', err);
+    }
+    return this.axes;
+  }
+
   mergeV3Axes(v3Categories) {
     if (!Array.isArray(v3Categories)) return;
     const v3Map = new Map();
@@ -306,15 +394,17 @@ class AxisService {
         if (!raw || raw.axis_id === undefined) return;
         const id = Number(raw.axis_id);
         const name = raw.axis_name || `磁轴 #${id}`;
-        const maxTravel = Number(((raw.axis_range_max || 3550) / 1000).toFixed(2));
-        const driveRange = Number((Math.max(1000, (raw.axis_range_max || 3550) - 200) / 1000).toFixed(2));
-        const detailId = raw.aixsDetail?.[0]?.axis_id;
-        const coeff = raw.aixsDetail?.[0]?.axis_coefficient;
+        const detail = raw.aixsDetail?.[0] || {};
+        const detailId = detail.axis_id ?? (id << 4);
+        const rangeMax = Number(detail.axis_range_max || raw.axis_range_max || 3550);
+        const coeff = Number(detail.axis_coefficient || 20000);
+        const maxTravel = Number((rangeMax / 1000).toFixed(2));
+        const driveRange = Number((Math.max(1000, rangeMax - 200) / 1000).toFixed(2));
         v3Map.set(id, {
           id,
           hardwareAxisId: id,
           axisV2Id: detailId,
-          axisRangeMax: raw.axis_range_max,
+          axisRangeMax: rangeMax,
           axisCoefficient: coeff,
           name,
           shortName: name,
@@ -380,22 +470,29 @@ class AxisService {
       const brand = raw.factory_name || raw.brand || (typeof raw.axi_brands === 'object' ? raw.axi_brands?.brand_name_cn : '') || '其他';
       const color = raw.axis_color ? (raw.axis_color.startsWith('#') ? raw.axis_color : '#' + raw.axis_color) : '#2563eb';
       const imageUrl = raw.image_url && raw.image_url !== '#' ? raw.image_url : null;
+      const safeTravel = maxTravel > 0 ? maxTravel : 3.50;
+      const axisV2Id = id << 4;
+      const axisRangeMax = Math.round(safeTravel * 1000);
+      const axisCoefficient = 20000;
 
       officialMap.set(id, {
         id,
+        hardwareAxisId: id,
+        axisV2Id,
+        axisRangeMax,
+        axisCoefficient,
         name,
         shortName: name,
         brand,
-        maxTravel: maxTravel > 0 ? maxTravel : 3.50,
-        travel: maxTravel > 0 ? maxTravel : 3.50,
-        driveRange: driveRange > 0 ? driveRange : maxTravel,
+        maxTravel: safeTravel,
+        travel: safeTravel,
+        driveRange: driveRange > 0 ? driveRange : safeTravel,
         deadzone,
         color,
         imageUrl,
         badge: raw.factory_name ? `${raw.factory_name}原厂` : '星闪校准',
         recommendedAP: 0.40,
-        axisCoefficient: 1.0,
-        description: `${brand} ${name} 磁轴，行程 ${maxTravel}mm (有效行程 ${driveRange}mm)`,
+        description: `${brand} ${name} 磁轴，行程 ${safeTravel}mm (有效行程 ${driveRange}mm)`,
         isOfficial: true,
         verified: true,
       });

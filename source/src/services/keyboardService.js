@@ -739,6 +739,27 @@ class KeyboardService {
     }
   }
 
+  // 批量回读所有按键的性能配置 (axisV2Id, AP, RT, 死区)
+  async readAllPerformance(keys) {
+    if (!this.sdk || !this.connected || !Array.isArray(keys) || keys.length === 0) return {};
+    const results = {};
+    const chunkSize = 10;
+    for (let i = 0; i < keys.length; i += chunkSize) {
+      const chunk = keys.slice(i, i + chunkSize);
+      await Promise.all(chunk.map(async (k) => {
+        try {
+          const perf = await this.getPerformance(k.row, k.col);
+          if (perf && typeof perf === 'object') {
+            results[k.id] = perf;
+          }
+        } catch (e) {
+          // 单键容错
+        }
+      }));
+    }
+    return results;
+  }
+
   // 批量合并写入性能参数 (官方姿势：Promise.all 并发 + GFSParamSave 提交闪存)
   // entries: [{ row, col, overrides }]
   async writePerformanceBatch(entries) {
@@ -756,6 +777,11 @@ class KeyboardService {
           normalPress: defaultAP,
           normalRelease: overrides?.normalRelease ?? base?.normalRelease ?? defaultAP,
           rtFirstTouch: overrides?.rtFirstTouch ?? overrides?.normalPress ?? base?.rtFirstTouch ?? defaultAP,
+          axis: overrides?.axis ?? base?.axis ?? 0,
+          calibrate: 0,
+          axisV2Id: overrides?.axisV2Id ?? base?.axisV2Id ?? 0,
+          axisRangeMax: overrides?.axisRangeMax ?? base?.axisRangeMax ?? 0,
+          axisCoefficient: overrides?.axisCoefficient ?? base?.axisCoefficient ?? 0,
           ...overrides,
         };
         const res = await this.sdk.setPerformance(merged);

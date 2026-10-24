@@ -1658,6 +1658,33 @@ export default function App() {
         } catch (e) {
           console.log('回读键盘触发参数跳过', e);
         }
+
+        // 关键增强：并发回读全键真实硬件轴体电气参数 (axisV2Id)，精准还原每一颗按键安装的真实轴体
+        try {
+          const allKeys = VISUAL_KEY_ORDER.map((k) => {
+            const hw = findHwCoords(k.id);
+            return hw ? { id: k.id, row: hw.row, col: hw.col } : null;
+          }).filter(Boolean);
+          if (allKeys.length > 0) {
+            const allPerf = await keyboardService.readAllPerformance(allKeys);
+            if (allPerf && Object.keys(allPerf).length > 0) {
+              const detectedSwitches = {};
+              Object.entries(allPerf).forEach(([kId, p]) => {
+                const axis = axisService.resolveAxisByHardwarePerf(p, deviceProfile);
+                if (axis && axis.name) {
+                  detectedSwitches[kId] = axis.name;
+                }
+              });
+              if (Object.keys(detectedSwitches).length > 0) {
+                setPerKeySwitches(prev => ({ ...prev, ...detectedSwitches }));
+                console.log('[SparkLink HID] 已成功从硬件回读全键轴体配置:', Object.keys(detectedSwitches).length, '颗');
+              }
+              setPerKeyPerformances(prev => ({ ...prev, ...allPerf }));
+            }
+          }
+        } catch (e) {
+          console.warn('回读全键真实轴体失败略过:', e);
+        }
       }
     });
 
@@ -2193,6 +2220,10 @@ export default function App() {
             pressDeadStroke: overrides.pressDeadStroke ?? deadzone,
             releaseDeadStroke: overrides.releaseDeadStroke ?? (separateDeadzone ? bottomDeadzone : deadzone),
             mode: overrides.mode ?? (rtEnabled ? 1 : 0),
+            ...(overrides.axisV2Id !== undefined ? { axisV2Id: overrides.axisV2Id } : {}),
+            ...(overrides.axisRangeMax !== undefined ? { axisRangeMax: overrides.axisRangeMax } : {}),
+            ...(overrides.axisCoefficient !== undefined ? { axisCoefficient: overrides.axisCoefficient } : {}),
+            ...(overrides.axis !== undefined ? { axis: overrides.axis } : {}),
           };
         });
         return next;
@@ -2236,9 +2267,6 @@ export default function App() {
         rtRelease: rtEnabled ? rtRelease : 0,
         pressDeadStroke: deadzone,
         releaseDeadStroke: separateDeadzone ? bottomDeadzone : deadzone,
-        axisV2Id: currentAxis?.id,
-        axisRangeMax: parseFloat(currentAxis?.maxTravel) || 3.4,
-        axisCoefficient: 1,
         ...(canContinuousRt ? { continuousRt: continuousRt ? 1 : 0 } : {}),
       }, null);
     }, 120);
@@ -4475,7 +4503,7 @@ export default function App() {
               allAxes={axisList}
               primaryAxisKeyword={deviceProfile?.defaultAxis || '神马'}
               primaryAxisBadge='出厂标配'
-              onSelectAxis={(sw) => {
+              onSelectAxis={async (sw) => {
                 const safeTravel = Number(sw.maxTravel || sw.travel || 3.50);
                 const normalized = {
                   ...sw,
@@ -4487,18 +4515,31 @@ export default function App() {
                 setCurrentAxis(normalized);
                 axisService.applyAxisToKeyboard(normalized);
                 if (actuationPoint > safeTravel) setActuationPoint(safeTravel);
-                if (selectedKeys.size > 0) {
-                  const updated = { ...perKeySwitches };
-                  selectedKeys.forEach(id => {
-                    updated[id] = normalized.name;
-                  });
-                  setPerKeySwitches(updated);
-                } else {
-                  const updated = {};
-                  ACTIVE_LAYOUT.forEach(r => r.forEach(k => {
-                    updated[k.id] = normalized.name;
-                  }));
-                  setPerKeySwitches(updated);
+
+                const targetKeys = selectedKeys.size > 0 ? [...selectedKeys] : VISUAL_KEY_ORDER.map((k) => k.id);
+                const updated = { ...perKeySwitches };
+                targetKeys.forEach(id => {
+                  updated[id] = normalized.name;
+                });
+                setPerKeySwitches(updated);
+
+                // 核心修复：将真实电气参数 (axisV2Id, axisRangeMax, axisCoefficient) 写入硬件闪存
+                if (isConnected) {
+                  const axisV2Id = Number(normalized.axisV2Id) || (Number(normalized.id) ? (Number(normalized.id) << 4) : 0);
+                  const axisRangeMax = Number(normalized.axisRangeMax) || Math.round(safeTravel * 1000);
+                  const axisCoefficient = Number(normalized.axisCoefficient) || 20000;
+                  const overrides = {
+                    axis: 0,
+                    calibrate: 0,
+                    axisV2Id,
+                    axisRangeMax,
+                    axisCoefficient,
+                  };
+                  if (actuationPoint > safeTravel) {
+                    overrides.normalPress = safeTravel;
+                    overrides.rtFirstTouch = safeTravel;
+                  }
+                  await writePerformanceToKeys(overrides, `${normalized.name}`, targetKeys);
                 }
               }}
             />
