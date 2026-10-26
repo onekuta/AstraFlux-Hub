@@ -1,6 +1,6 @@
 {
   "manifestVersion": "1.4.1",
-  "libVersion": "2026.10.26.2",
+  "libVersion": "2026.10.26.1",
   "libDownloadUrl": "https://gitee.com/kutaze/astra-flux-hub/raw/main/database/device_database.spkdb",
   "axisDownloadUrl": "https://gitee.com/kutaze/astra-flux-hub/raw/main/database/axis_database.json",
   "githubDownloadUrl": "https://github.com/onekuta/AstraFlux-Hub/raw/main/database/device_database.spkdb",
@@ -8,5 +8,5 @@
   "totalDevices": 624,
   "totalAxes": 222,
   "libChangelog": "修复一些数据库",
-  "updatedAt": "2026-10-26T11:54:18.702Z"
+  "updatedAt": "2026-10-26T11:55:01.851Z"
 }
