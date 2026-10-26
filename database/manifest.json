@@ -5,8 +5,8 @@
   "axisDownloadUrl": "https://gitee.com/kutaze/astra-flux-hub/raw/main/database/axis_database.json",
   "githubDownloadUrl": "https://github.com/onekuta/AstraFlux-Hub/raw/main/database/device_database.spkdb",
   "githubAxisDownloadUrl": "https://github.com/onekuta/AstraFlux-Hub/raw/main/database/axis_database.json",
-  "totalDevices": 623,
+  "totalDevices": 624,
   "totalAxes": 222,
   "libChangelog": "检查新数据库，删减了重复污染的vid设备，修改为623款设备ID，同步收录 253 款轴体",
-  "updatedAt": "2026-10-26T10:22:36.747Z"
+  "updatedAt": "2026-10-26T10:23:43.002Z"
 }
