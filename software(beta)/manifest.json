@@ -1,20 +1,12 @@
 {
   "manifestVersion": "1.4.1",
-  "appVersion": "beta0.26.10.25",
-  "buildTimeCode": "26.10.25",
-  "buildDate": "2026-10-25",
   "channel": "beta",
-  "prerelease": true,
-  "appDownloadUrl": "https://gitee.com/Kutaze/astra-flux-hub/releases/download/beta0.26.10.25/AstraFlux-HUB_Setup_beta0.26.10.25.exe",
-  "cdnDownloadUrl": "https://ghfast.top/https://github.com/onekuta/AstraFlux-Hub/releases/download/beta0.26.10.25/AstraFlux-HUB_Setup_beta0.26.10.25.exe",
-  "githubDownloadUrl": "https://github.com/onekuta/AstraFlux-Hub/releases/download/beta0.26.10.25/AstraFlux-HUB_Setup_beta0.26.10.25.exe",
-  "appReleaseUrl": "https://gitee.com/Kutaze/astra-flux-hub/releases",
-  "appChangelog": "【Beta 0.26.10.25 抢先体验版】\n1. 轴体库校验机制与硬件 PCB 专属库存隔离：接入官方 SDK getAxisList 探针，严格限制江湾 PCB 专属 75 款认证轴体与 DV63 专属出厂轴体，杜绝杂牌未支持轴体混入\n2. 消除轴体切换时序死区白屏 BUG：根治在轴体库配置后跨页面跳转偶发的 ReferenceError 异常拦截\n3. 混轴设置完美支持：修复此前全键强制统一修改问题，现已支持单颗按键 / 局部框选多键独立配置不同轴体\n4. 校准视窗 UI 架构重构：解决校准说明展开/折叠时底部按键与 ADC 采样子窗口挤压拉伸变形，移除左上角多余轴体设置入口，补齐未校准智能提示\n5. GitHub 官方仓库定位全面恢复：修复跳转链接与国内高速加速下载镜像\n6. 键盘型号识别与配列修复：修复 AE61 Pro 等 61 键键盘在驱动中被误识别为 68 配列的问题\n7. 软件防崩溃与稳定性全面强化：WebHID 握手容错优化与本地存储脏数据防御保护\n8. PCB 板载轴体独立探针系统 (DevLab)：支持穿透直读主控烧录轴体 ID 与电气寄存器参数",
+  "appVersion": "beta0.26.10.26",
+  "buildTimeCode": "26.10.26",
+  "buildDate": "2026-10-26",
+  "appDownloadUrl": "https://gitee.com/Kutaze/astra-flux-hub/releases/download/beta0.26.10.26/AstraFlux-HUB_Setup_beta0.26.10.26.exe",
+  "appChangelog": "【Beta 0.26.10.26 抢先体验版】\n1. 【问题修复】键盘性能触发重构（高性能模式绑定实时数据，防重启重置RT）；修复选中按键反向覆盖与多选连锁篡改。\n2. 【核心解耦】配置切换与物理轴体解耦，单键触发参数随配置切换，轴体装配与霍尔校准全局锁定，切配置绝不重复校准。\n3. 【配置导入导出】重构配置导出引擎，单键特调（AP/RT/死区/混轴/改键/灯光/高级键）100% 随文件保存与还原。\n4. 【校准系统大修】校准三状态重构（未校准白底红字、已校准蓝底、当次完成绿底），根治页面闪烁与采样迟钝。\n5. 【混轴与轴体库】结合 PCB 探针隔离出厂轴体与官方鉴权轴体，开放全轴体库支持；方向键轴体排版修复。\n6. 【新特性】全配列轴体标识主题色统一；杜绝虚假品牌套用，未独立适配硬件统一规范为客制化方案。\n7. 【开源纯净化】全面去官方化与过度捆绑，水印升级为 AstraFlux，文案安全化。\n8. 【探针工具升级】PCB 独立探针升级至 v1.5.6，支持独立检索对应轴体库数据；补齐三语多语言与 FN 层按键穿透机制。",
   "appForceUpdate": false,
-  "appFileSize": "93.52 MB",
-  "setupSha256": "fc60b52268a435287f2dcf9392ebb048fffc3b4b92957519f022337d60e595af",
-  "libVersion": "2026.10.20.1",
-  "libDownloadUrl": "https://gitee.com/Kutaze/astra-flux-hub/raw/main/database/device_database.spkdb",
-  "totalDevices": 638,
-  "updatedAt": "2026-10-24T17:03:10.619Z"
+  "appFileSize": "93.6 MB",
+  "updatedAt": "2026-10-26T09:45:37.550Z"
 }
