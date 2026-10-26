@@ -1,12 +1,12 @@
 {
   "manifestVersion": "1.4.1",
-  "libVersion": "2026.10.26.1",
+  "libVersion": "2026.10.26.2",
   "libDownloadUrl": "https://gitee.com/kutaze/astra-flux-hub/raw/main/database/device_database.spkdb",
   "axisDownloadUrl": "https://gitee.com/kutaze/astra-flux-hub/raw/main/database/axis_database.json",
   "githubDownloadUrl": "https://github.com/onekuta/AstraFlux-Hub/raw/main/database/device_database.spkdb",
   "githubAxisDownloadUrl": "https://github.com/onekuta/AstraFlux-Hub/raw/main/database/axis_database.json",
   "totalDevices": 624,
   "totalAxes": 222,
-  "libChangelog": "检查新数据库，删减了重复污染的vid设备，修改为623款设备ID，同步收录 253 款轴体",
-  "updatedAt": "2026-10-26T10:23:43.002Z"
+  "libChangelog": "修复一些数据库",
+  "updatedAt": "2026-10-26T11:54:18.702Z"
 }
