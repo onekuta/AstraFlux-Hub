@@ -1,6 +1,6 @@
 {
   "manifestVersion": "1.4.1",
-  "libVersion": "2026.10.27.1",
+  "libVersion": "2026.10.27.3",
   "libDownloadUrl": "https://gitee.com/kutaze/astra-flux-hub/raw/main/database/device_database.spkdb",
   "axisDownloadUrl": "https://gitee.com/kutaze/astra-flux-hub/raw/main/database/axis_database.json",
   "githubDownloadUrl": "https://github.com/onekuta/AstraFlux-Hub/raw/main/database/device_database.spkdb",
@@ -8,5 +8,5 @@
   "totalDevices": 624,
   "totalAxes": 292,
   "libChangelog": "修复了一些Bug,同步收录 291 款官方认证磁轴",
-  "updatedAt": "2026-10-27T05:45:36.171Z"
+  "updatedAt": "2026-10-27T05:47:54.192Z"
 }
