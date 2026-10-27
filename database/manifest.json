@@ -1,12 +1,12 @@
 {
   "manifestVersion": "1.4.1",
-  "libVersion": "2026.10.26.1",
+  "libVersion": "2026.10.27.1",
   "libDownloadUrl": "https://gitee.com/kutaze/astra-flux-hub/raw/main/database/device_database.spkdb",
   "axisDownloadUrl": "https://gitee.com/kutaze/astra-flux-hub/raw/main/database/axis_database.json",
   "githubDownloadUrl": "https://github.com/onekuta/AstraFlux-Hub/raw/main/database/device_database.spkdb",
   "githubAxisDownloadUrl": "https://github.com/onekuta/AstraFlux-Hub/raw/main/database/axis_database.json",
   "totalDevices": 624,
-  "totalAxes": 222,
-  "libChangelog": "修复一些数据库",
-  "updatedAt": "2026-10-26T11:55:01.851Z"
+  "totalAxes": 292,
+  "libChangelog": "新增适配了几款PCB的灯位校准；同步收录 292 款官方认证磁轴",
+  "updatedAt": "2026-10-27T05:43:39.771Z"
 }
